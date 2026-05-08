@@ -1,0 +1,17 @@
+export const FORBIDDEN_AI_PHRASES = [
+  "accept this offer",
+  "reject this offer",
+  "you are entitled to",
+  "the court will",
+  "your spouse must",
+  "you should sue",
+  "hide assets",
+  "transfer assets before",
+  "move assets before",
+  "do not tell",
+  "conceal",
+  "you will win",
+  "you will lose",
+  "you deserve",
+  "this is unfair",
+];

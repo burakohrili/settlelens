@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "siteName": "SettleLens",
+    "tagline": "Anlaşmanı Net Gör",
+    "description": "Yapay zeka destekli boşanma finansal modelleme. Her senaryoda 10 yıllık finansal tablonu dakikalar içinde gör."
+  },
+  "nav": {
+    "howItWorks": "Nasıl Çalışır",
+    "pricing": "Fiyatlar",
+    "blog": "Blog",
+    "login": "Giriş Yap",
+    "startFree": "Ücretsiz Analiz"
+  },
+  "hero": {
+    "h1": "Avukata Para Ödemeden\nFinansal Geleceğini Gör.",
+    "h2": "Yapay zeka destekli boşanma finansal modelleme. Her anlaşma senaryosunda 10 yıllık finansal tablonu dakikalar içinde gör.",
+    "cta": "Ücretsiz Analiz Başlat",
+    "sub": "Avukat gerekmez. 20 dakika yeterli. Raporunu indir."
+  },
+  "fearHook": {
+    "stat": "50.000 ₺+",
+    "statLabel": "ortalama boşanma hukuki masrafı",
+    "hook": "Bu masrafın ne kadarı avukatınıza kendi başınıza hesaplayabileceğiniz sayıları açıklatmak için?",
+    "cta": "Ücretsiz Hesapla"
+  },
+  "howItWorks": {
+    "title": "Finansal Netliğe 3 Adım",
+    "steps": [
+      { "n": "01", "title": "Finansal Durumunu Gir", "desc": "Varlıklar, borçlar, gelir, çocuklar. Güvenli, özel, 20 dakika." },
+      { "n": "02", "title": "Senaryolarını Oluştur", "desc": "Evi sen mi alıyorsun? Satıyor musunuz? En fazla 3 sonucu modelle." },
+      { "n": "03", "title": "10 Yıllık Projeksiyonunu Al", "desc": "Yapay zeka hukuk formüllerini uygular, her senaryoyu ileriye taşır. PDF indir." }
+    ]
+  },
+  "features": {
+    "title": "Güçlü Müzakere İçin Her Şey",
+    "items": [
+      { "title": "Her Senaryo, Yan Yana", "desc": "Karar vermeden önce her seçeneğin 10 yıllık etkisini gör." },
+      { "title": "Türk Hukukuna Göre Hesaplama", "desc": "TMK 179 mal paylaşımı, edinilmiş mallara katılma, yoksulluk nafakası formülleri." },
+      { "title": "Avukatının Saygı Duyacağı Rapor", "desc": "Profesyonel PDF: varlık dökümü, projeksiyon grafikleri, müzakere stratejisi." }
+    ]
+  },
+  "social": {
+    "title": "Aynı Yoldan Geçenlerin Deneyimleri",
+    "quotes": [
+      { "text": "Arabuluculuğa tam olarak hangi teklifi kabul edeceğimi bilerek girdim. O netlik paha biçilemezdi.", "author": "Ayşe K., İstanbul" },
+      { "text": "Avukatım raporun ne kadar iyi hazırlanmış olduğunu söyledi.", "author": "Murat D., Ankara" },
+      { "text": "Üç senaryo, yan yana. Evi almak demek gerçekte ne demek, sonunda anladım.", "author": "Selin T., İzmir" }
+    ]
+  },
+  "pricing": {
+    "title": "Şeffaf Fiyatlandırma",
+    "plans": [
+      { "id": "discovery", "name": "Discovery", "price": "Ücretsiz", "period": "süresiz", "features": ["Varlık ve borç envanteri", "Net varlık özeti", "AI analiz yok", "İstediğiniz zaman yükseltin"], "cta": "Ücretsiz Başla" },
+      { "id": "clarified", "name": "Clarified", "price": "899 ₺", "period": "tek seferlik · 14 gün erişim", "features": ["1 AI destekli analiz", "1 anlaşma senaryosu", "Profesyonel PDF rapor", "14 gün erişim"], "cta": "Netliğe Kavuş" },
+      { "id": "strategist", "name": "Strategist", "price": "1.299 ₺", "period": "aylık", "badge": "En Popüler", "features": ["Sınırsız analiz", "Sınırsız senaryo", "Premium PDF raporlar", "10 yıllık projeksiyon", "Enflasyon ayarlı projeksiyon"], "cta": "Strategist'e Başla" },
+      { "id": "professional", "name": "Professional", "price": "3.299 ₺", "period": "aylık", "features": ["Strategist'teki her şey", "Avukata hazır Excel + PDF", "Kanıt organizatörü", "Öncelikli destek"], "cta": "Professional'a Geç" }
+    ]
+  },
+  "finalCta": {
+    "title": "Anlaşmanı Net Gör",
+    "sub": "Müzakereye hazırlıklı girenlere katıl.",
+    "cta": "Ücretsiz Analiz Başlat",
+    "note": "Temel analiz için kredi kartı gerekmez."
+  },
+  "footer": {
+    "disclaimer": "SettleLens yalnızca bilgilendirme amaçlı finansal modelleme sunar. Hukuki veya finansal tavsiye değildir. Lütfen nitelikli bir avukana danışın.",
+    "links": {
+      "howItWorks": "Nasıl Çalışır",
+      "pricing": "Fiyatlar",
+      "blog": "Blog",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Kullanım Koşulları",
+      "cookies": "Çerez Politikası",
+      "about": "Hakkında",
+      "contact": "İletişim"
+    },
+    "copyright": "© 2026 SettleLens. Finansal modelleme, hukuki tavsiye değil."
+  },
+  "auth": {
+    "loginTitle": "Tekrar hoş geldiniz",
+    "registerTitle": "Ücretsiz analizine başla",
+    "email": "E-posta adresi",
+    "password": "Şifre",
+    "name": "Ad Soyad",
+    "loginCta": "Giriş yap",
+    "registerCta": "Hesap oluştur",
+    "switchToLogin": "Zaten hesabın var mı? Giriş yap",
+    "switchToRegister": "Hesabın yok mu? Kayıt ol",
+    "googleCta": "Google ile devam et",
+    "termsConsent": "Kullanım Koşulları ve Gizlilik Politikasını okudum, kabul ediyorum",
+    "dataConsent": "Kişisel verilerimin işlenmesine onay veriyorum",
+    "marketingConsent": "İpuçları ve ürün güncellemeleri almak istiyorum (isteğe bağlı)",
+    "forgotPassword": "Şifreni mi unuttun?"
+  },
+  "onboarding": {
+    "steps": [
+      { "title": "Nerede yaşıyorsunuz?", "subtitle": "Yargı alanınıza göre finansal formüller uygulanır." },
+      { "title": "Varlıklarınız", "subtitle": "Sahip olduğunuz her şeyi listeleyin." },
+      { "title": "Borçlarınız", "subtitle": "İpotekler, krediler, kredi kartları — tam tablo." },
+      { "title": "Gelir", "subtitle": "Sizin ve eşinizin brüt ve net geliri." },
+      { "title": "Çocuklar", "subtitle": "Varsa — yaşlar ve velayet düzenlemesi." },
+      { "title": "Senaryolarınızı Oluşturun", "subtitle": "Olası sonuçlar neler? Hepsini modelleyelim." }
+    ],
+    "next": "Devam",
+    "back": "Geri",
+    "save": "Kaydet ve Devam"
+  },
+  "disclaimer": {
+    "short": "Hukuki tavsiye değildir.",
+    "full": "SettleLens yalnızca bilgilendirme amaçlı finansal modelleme sunar. Sonuçlar, kamuya açık hukuki formüllere dayalı tahminlerdir ve hukuki, vergisel veya finansal tavsiye teşkil etmez. Herhangi bir karar vermeden önce nitelikli bir avukata danışın."
+  },
+  "userScenarios": {
+    "title": "Hangi kararı vermeye çalışıyorsun?",
+    "sub": "SettleLens duygusal açıdan karmaşık kararları karşılaştırılabilir finansal senaryolara dönüştürür.",
+    "cards": [
+      { "icon": "🏠", "title": "Evi alsam ne olur?", "desc": "Evi almak, satmak veya eşe devretmek — uzun vadeli nakit akışı etkisini karşılaştır." },
+      { "icon": "⚖️", "title": "Gelen teklif benim için mantıklı mı?", "desc": "Varlıklar, borçlar ve nafaka ödemeleri üzerinden önerilen paylaşımı modelleyerek 10 yıllık sonuçları gör." },
+      { "icon": "📋", "title": "Avukata gitmeden önce ne hazırlamalıyım?", "desc": "Varlıklarını, borçlarını, gelirini ve senaryolarını toplantıdan önce profesyonel bir raporda düzenle." }
+    ]
+  },
+  "whatItDoesNot": {
+    "title": "Ne yapar, ne yapmaz?",
+    "doesTitle": "Yapar",
+    "doesNot": "Yapmaz",
+    "does": ["Finansal senaryo modelleme", "Varlık, borç ve gelir karşılaştırması", "10 yıllık nakit akışı projeksiyonu", "Nafaka etkisi analizi", "Avukata hazır finansal özet"],
+    "not": ["Hukuki tavsiye", "Mahkeme sonucu tahmini", "Avukat yerine geçme", "Garantili anlaşma rakamları", "Karmaşık veya çekişmeli dava kararları"],
+    "note": "Karmaşık veya yüksek riskli davalar profesyonel hukuki destek gerektirir.",
+    "link": "Sınırlamalarımız hakkında daha fazla bilgi →"
+  },
+  "trust": {
+    "title": "Hassas bir süreç için güven temelli tasarlandı",
+    "cards": [
+      { "icon": "🔒", "title": "Verilerin satılmaz", "desc": "Finansal girişler reklam amaçlı kullanılmaz veya üçüncü taraflarla paylaşılmaz." },
+      { "icon": "🖥️", "title": "Hassas veriler loglanmaz", "desc": "Varlık değerleri, gelir ve senaryo detayları geliştirici loglarına yazılmaz." },
+      { "icon": "🗂️", "title": "Verilerini sen kontrol edersin", "desc": "Tüm finansal verilerini dışa aktar veya hesabını istediğin zaman kalıcı olarak sil." },
+      { "icon": "⚖️", "title": "Finansal modelleme, hukuki tavsiye değil", "desc": "SettleLens bir hazırlık aracıdır. Karmaşık davalar için nitelikli avukat gerekir." }
+    ],
+    "link": "Verilerini nasıl koruyoruz →"
+  },
+  "countryCoverage": {
+    "title": "Yargı alanına göre hesaplama",
+    "sub": "SettleLens, finansal senaryo modellemesi için ülkeye özgü mal reji varsayımları uygular.",
+    "note": "Yerel yargısal takdir, gizli varlıklar ve karmaşık anlaşmalar farklı sonuçlar doğurabilir. Her zaman nitelikli bir avukatla doğrulayın.",
+    "link": "Ülkene göre metodoloji →",
+    "countries": [
+      { "flag": "🇺🇸", "name": "ABD", "law": "Community & equitable distribution" },
+      { "flag": "🇬🇧", "name": "Birleşik Krallık", "law": "MCA 1973 Section 25" },
+      { "flag": "🇩🇪", "name": "Almanya", "law": "Zugewinngemeinschaft" },
+      { "flag": "🇫🇷", "name": "Fransa", "law": "Communauté réduite aux acquêts" },
+      { "flag": "🇪🇸", "name": "İspanya", "law": "Régimen de gananciales" },
+      { "flag": "🇹🇷", "name": "Türkiye", "law": "TMK Madde 179" }
+    ]
+  },
+  "attorneyPrep": {
+    "title": "Avukat görüşmesine hazırlıklı gir",
+    "sub": "Dağınık notlar yerine yapılandırılmış bir finansal özet getir — varlıklar, borçlar, gelir, çocuklar ve senaryolar tek bir profesyonel raporda.",
+    "cta": "Finansal Özetimi Oluştur",
+    "note": "Finansal modelleme, hukuki tavsiye değil."
+  },
+  "houseDemo": {
+    "title": "Ev genellikle en büyük karardır.",
+    "sub": "Evi almak, satmak veya devretmek arasındaki finansal farkı görün.",
+    "sliderLabel": "Ev değeri",
+    "iKeep": "Ben Alıyorum",
+    "theyKeep": "Eşim Alıyor",
+    "weSell": "Satıyoruz",
+    "netPosition": "Net pozisyon",
+    "fullAnalysis": "Tam ev analizi →",
+    "note": "Basitleştirilmiş model — %3 değer artışı, %5 yatırım getirisi, %6 satış maliyeti varsayılır."
+  },
+  "waitlist": {
+    "placeholder": "E-posta adresiniz",
+    "cta": "Bekleme listesine katıl",
+    "success": "Listedesiniz. Yakında haber vereceğiz.",
+    "duplicate": "Zaten listedesiniz."
+  }
+}

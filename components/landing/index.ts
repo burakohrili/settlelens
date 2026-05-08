@@ -1,0 +1,13 @@
+export { Hero } from "./Hero";
+export { FearHook } from "./FearHook";
+export { HowItWorks } from "./HowItWorks";
+export { FeatureGrid } from "./FeatureGrid";
+export { UserScenarios } from "./UserScenarios";
+export { WhatItDoesNotDo } from "./WhatItDoesNotDo";
+export { ScenarioDemo } from "./ScenarioDemo";
+export { SocialProof } from "./SocialProof";
+export { Pricing } from "./Pricing";
+export { TrustSection } from "./TrustSection";
+export { CountryCoverage } from "./CountryCoverage";
+export { AttorneyPrepCTA } from "./AttorneyPrepCTA";
+export { FinalCTA } from "./FinalCTA";

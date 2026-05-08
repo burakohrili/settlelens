@@ -1,0 +1,182 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { WizardLayout } from "@/components/app/WizardLayout";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
+type Scenario = {
+  id?: string;
+  name: string;
+  house_outcome: string;
+  retirement_split_me: number;
+  alimony_monthly: number;
+  alimony_years: number;
+  alimony_direction: string;
+  child_support_monthly: number;
+  child_support_direction: string;
+};
+
+const HOUSE_OPTIONS = [
+  { value: "i_keep", label: "I keep the house" },
+  { value: "spouse_keeps", label: "Spouse keeps the house" },
+  { value: "sell", label: "We sell the house" },
+  { value: "not_applicable", label: "No house / not applicable" },
+];
+
+function newScenario(name: string): Scenario {
+  return {
+    name,
+    house_outcome: "sell",
+    retirement_split_me: 50,
+    alimony_monthly: 0,
+    alimony_years: 0,
+    alimony_direction: "i_receive",
+    child_support_monthly: 0,
+    child_support_direction: "i_receive",
+  };
+}
+
+function ScenarioCard({ scenario, onChange }: { scenario: Scenario; onChange: (field: keyof Scenario, value: unknown) => void }) {
+  return (
+    <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-3">
+      <div>
+        <Label>Scenario name</Label>
+        <Input value={scenario.name} onChange={(e) => onChange("name", e.target.value)} className="mt-1" placeholder="e.g. Best case" />
+      </div>
+
+      <div>
+        <Label>House outcome</Label>
+        <select value={scenario.house_outcome} onChange={(e) => onChange("house_outcome", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          {HOUSE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+
+      <div>
+        <Label>Retirement / investment split — my share (%)</Label>
+        <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="mt-1" />
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label>Alimony/spousal support ($/mo)</Label>
+          <Input type="number" min={0} value={scenario.alimony_monthly || ""} onChange={(e) => onChange("alimony_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
+        </div>
+        <div>
+          <Label>Duration (years)</Label>
+          <Input type="number" min={0} max={30} value={scenario.alimony_years || ""} onChange={(e) => onChange("alimony_years", parseInt(e.target.value) || 0)} className="mt-1" placeholder="0" />
+        </div>
+        <div className="col-span-2">
+          <Label>Direction</Label>
+          <select value={scenario.alimony_direction} onChange={(e) => onChange("alimony_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <option value="i_receive">I receive</option>
+            <option value="i_pay">I pay</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label>Child support ($/mo)</Label>
+          <Input type="number" min={0} value={scenario.child_support_monthly || ""} onChange={(e) => onChange("child_support_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
+        </div>
+        <div>
+          <Label>Direction</Label>
+          <select value={scenario.child_support_direction} onChange={(e) => onChange("child_support_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <option value="i_receive">I receive</option>
+            <option value="i_pay">I pay</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Step6Page() {
+  const router = useRouter();
+  const params = useParams();
+  const lang = (params.lang as string) ?? "en";
+  const supabase = createClient();
+
+  const [scenarios, setScenarios] = useState<Scenario[]>([
+    newScenario("Scenario A — My proposal"),
+    newScenario("Scenario B — Spouse's proposal"),
+    newScenario("Scenario C — Compromise"),
+  ]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { limit: (n: number) => Promise<{ data: Scenario[] | null }> } } } })
+        .from("scenarios").select("*").eq("user_id", user.id).limit(3);
+      if (data && data.length > 0) setScenarios(data);
+    }
+    load();
+  }, [supabase]);
+
+  function updateScenario(i: number, field: keyof Scenario, value: unknown) {
+    setScenarios((prev) => prev.map((s, idx) => idx === i ? { ...s, [field]: value } : s));
+  }
+
+  async function handleStartAnalysis() {
+    setSaving(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
+        .from("scenarios").delete().eq("user_id", user.id);
+
+      const rows = scenarios.filter((s) => s.name).map((s) => ({
+        ...s,
+        user_id: user.id,
+        id: undefined,
+        scenario_type: "custom",
+        is_active: true,
+      }));
+
+      if (rows.length > 0) {
+        await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+          .from("scenarios").insert(rows);
+      }
+
+      await (supabase as never as { from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<unknown> } } })
+        .from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+    }
+    router.push(`/${lang}/dashboard`);
+  }
+
+  const nextDisabled = saving || scenarios.some((s) => !s.name);
+
+  return (
+    <WizardLayout
+      currentStep={6}
+      onBack={() => router.push(`/${lang}/onboarding/step-5`)}
+      onNext={handleStartAnalysis}
+      nextDisabled={nextDisabled}
+      nextLabel="Go to Dashboard →"
+    >
+      <div className="space-y-4">
+        <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3">
+          <p className="font-ui text-xs text-[var(--brown)]">
+            <strong className="text-[var(--navy)]">Build up to 3 scenarios</strong> — compare different settlement assumptions side by side. Each scenario can have different house, alimony, and child support assumptions. You can edit these later from your dashboard.
+          </p>
+        </div>
+
+        {scenarios.map((scenario, i) => (
+          <div key={i}>
+            <p className="font-ui text-xs font-semibold text-[var(--navy)] mb-2 uppercase tracking-wide">Scenario {i + 1}</p>
+            <ScenarioCard scenario={scenario} onChange={(field, value) => updateScenario(i, field, value)} />
+          </div>
+        ))}
+
+        <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]")}>
+          <strong>Disclaimer:</strong> These scenarios are financial models based on your inputs. They are not legal advice, court predictions, or guaranteed outcomes. Consult a qualified family law attorney before making any decisions.
+        </div>
+      </div>
+    </WizardLayout>
+  );
+}

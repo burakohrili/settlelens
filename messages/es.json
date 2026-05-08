@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "siteName": "SettleLens",
+    "tagline": "Ve tu acuerdo con claridad",
+    "description": "Modelización financiera impulsada por IA para acuerdos de divorcio. Visualiza tu futuro financiero a 10 años en cada escenario."
+  },
+  "nav": {
+    "howItWorks": "Cómo funciona",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "login": "Iniciar sesión",
+    "startFree": "Análisis gratuito"
+  },
+  "hero": {
+    "h1": "Sabe exactamente dónde estás.\nAntes de firmar cualquier cosa.",
+    "h2": "Modelización financiera con IA para divorcios. Ve tu futuro financiero a 10 años en cada escenario de acuerdo – en minutos, no en meses.",
+    "cta": "Iniciar análisis gratuito",
+    "sub": "No se necesita abogado. Tarda 20 minutos. Descarga tu informe."
+  },
+  "fearHook": {
+    "stat": "15.000€+",
+    "statLabel": "honorarios legales medios en divorcios",
+    "hook": "¿Cuánto de eso pagas a tu abogado para explicar cifras que podrías calcular tú mismo?",
+    "cta": "Calcular gratis"
+  },
+  "howItWorks": {
+    "title": "Tres pasos hacia la claridad financiera",
+    "steps": [
+      { "n": "01", "title": "Ingresa tu situación financiera", "desc": "Activos, deudas, ingresos, hijos. Seguro, privado, 20 minutos." },
+      { "n": "02", "title": "Construye tus escenarios", "desc": "¿Quedarte con la casa? ¿Venderla? ¿Dársela? Modela hasta 3 resultados." },
+      { "n": "03", "title": "Obtén tu proyección a 10 años", "desc": "La IA analiza las leyes de tu jurisdicción y proyecta cada escenario. Descarga el PDF." }
+    ]
+  },
+  "features": {
+    "title": "Todo lo que necesitas para negociar desde una posición de fuerza",
+    "items": [
+      { "title": "Cada escenario lado a lado", "desc": "Ve el impacto financiero a 10 años de cada elección antes de decidir." },
+      { "title": "Tu jurisdicción. Tus reglas.", "desc": "¿Gananciales del CC Art. 1344? SettleLens conoce las fórmulas." },
+      { "title": "Un informe que tu abogado respeta", "desc": "PDF profesional: desglose de activos, gráficos de proyección, estrategia de negociación." }
+    ]
+  },
+  "social": {
+    "title": "De personas que han pasado por lo mismo",
+    "quotes": [
+      { "text": "Entré a la mediación sabiendo exactamente qué oferta aceptar. Esa claridad valió más que cualquier abogado.", "author": "Carmen R., Madrid" },
+      { "text": "El informe PDF legitimó mi posición. Mi abogada dijo que era el cliente más preparado que había visto.", "author": "Carlos M., Barcelona" },
+      { "text": "Tres escenarios lado a lado. Por fin entendí lo que significaba quedarse con la casa para la próxima década.", "author": "Laura P., Sevilla" }
+    ]
+  },
+  "pricing": {
+    "title": "Precios simples y transparentes",
+    "plans": [
+      { "id": "discovery", "name": "Discovery", "price": "Gratis", "period": "para siempre", "features": ["Inventario de activos y deudas", "Resumen del patrimonio neto", "Sin análisis de IA", "Actualiza cuando quieras"], "cta": "Empezar gratis" },
+      { "id": "clarified", "name": "Clarified", "price": "27€", "period": "único · acceso 14 días", "features": ["1 análisis con IA", "1 escenario de acuerdo", "Informe PDF profesional", "Acceso 14 días"], "cta": "Obtener claridad" },
+      { "id": "strategist", "name": "Strategist", "price": "36€", "period": "por mes", "badge": "Más popular", "features": ["Análisis ilimitados", "Escenarios ilimitados", "Informes PDF premium", "Proyecciones a 10 años", "Ajustes de inflación"], "cta": "Iniciar Strategist" },
+      { "id": "professional", "name": "Professional", "price": "92€", "period": "por mes", "features": ["Todo en Strategist", "Exportación Excel + PDF lista para abogado", "Organizador de pruebas", "Soporte prioritario"], "cta": "Elegir Professional" }
+    ]
+  },
+  "finalCta": {
+    "title": "Ve tu acuerdo con claridad",
+    "sub": "Únete a miles que han entrado a negociaciones preparados.",
+    "cta": "Iniciar análisis gratuito",
+    "note": "No se necesita tarjeta de crédito para el análisis básico."
+  },
+  "footer": {
+    "disclaimer": "SettleLens proporciona modelización financiera solo con fines informativos. No es asesoramiento legal o financiero. Consulta siempre a un abogado cualificado.",
+    "links": {
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "blog": "Blog",
+      "privacy": "Política de privacidad",
+      "terms": "Términos de servicio",
+      "cookies": "Política de cookies",
+      "about": "Acerca de",
+      "contact": "Contacto"
+    },
+    "copyright": "© 2026 SettleLens. Modelización financiera, no asesoramiento legal."
+  },
+  "auth": {
+    "loginTitle": "Bienvenido de nuevo",
+    "registerTitle": "Inicia tu análisis gratuito",
+    "email": "Dirección de correo",
+    "password": "Contraseña",
+    "name": "Nombre completo",
+    "loginCta": "Iniciar sesión",
+    "registerCta": "Crear cuenta",
+    "switchToLogin": "¿Ya tienes cuenta? Inicia sesión",
+    "switchToRegister": "¿No tienes cuenta? Regístrate",
+    "googleCta": "Continuar con Google",
+    "termsConsent": "Acepto los Términos de servicio y la Política de privacidad",
+    "dataConsent": "Consiento el tratamiento de mis datos personales",
+    "marketingConsent": "Me gustaría recibir consejos y actualizaciones de producto (opcional)",
+    "forgotPassword": "¿Olvidaste tu contraseña?"
+  },
+  "onboarding": {
+    "steps": [
+      { "title": "¿Dónde te encuentras?", "subtitle": "Aplicamos las fórmulas financieras para tu jurisdicción." },
+      { "title": "Tus activos", "subtitle": "Lista todo lo que tú y tu cónyuge poseen." },
+      { "title": "Tus deudas", "subtitle": "Hipotecas, préstamos, tarjetas de crédito — el panorama completo." },
+      { "title": "Ingresos", "subtitle": "Los tuyos y los de tu cónyuge, brutos y netos." },
+      { "title": "Hijos", "subtitle": "Si aplica — edades y régimen de custodia." },
+      { "title": "Construye tus escenarios", "subtitle": "¿Cuáles son los posibles resultados? Modelémoslos." }
+    ],
+    "next": "Continuar",
+    "back": "Atrás",
+    "save": "Guardar y continuar"
+  },
+  "disclaimer": {
+    "short": "No es asesoramiento legal.",
+    "full": "SettleLens proporciona modelización financiera solo con fines informativos. Los resultados son estimaciones basadas en fórmulas legales de acceso público y no constituyen asesoramiento legal, fiscal o financiero. Consulta siempre a un abogado cualificado antes de tomar decisiones."
+  },
+  "userScenarios": { "title": "¿Qué decisión estás tratando de tomar?", "sub": "SettleLens convierte decisiones emocionalmente complejas en escenarios financieros comparables.", "cards": [{ "icon": "🏠", "title": "¿Qué pasa si me quedo con la casa?", "desc": "Compara quedarte, vender o transferir la vivienda y ve el impacto en el flujo de caja." }, { "icon": "⚖️", "title": "¿Esta oferta me conviene?", "desc": "Modela la división propuesta en activos, deudas y pagos para ver los resultados a 10 años." }, { "icon": "📋", "title": "¿Cómo me preparo para mi abogado?", "desc": "Organiza tus activos, deudas, ingresos y escenarios en un informe profesional antes de la reunión." }] },
+  "whatItDoesNot": { "title": "Qué hace SettleLens — y qué no", "doesTitle": "Qué hace", "doesNot": "Qué no hace", "does": ["Modelización de escenarios financieros", "Comparación de activos, deudas e ingresos", "Proyección de flujo de caja a 10 años", "Análisis del impacto de pensiones", "Resumen financiero para tu abogado"], "not": ["Asesoramiento legal", "Predicción de resultados judiciales", "Sustitución de un abogado", "Cifras de acuerdo garantizadas", "Decisiones para casos complejos"], "note": "Los casos complejos o de alto riesgo requieren apoyo legal profesional.", "link": "Más sobre nuestras limitaciones →" },
+  "trust": { "title": "Diseñado para un proceso sensible", "cards": [{ "icon": "🔒", "title": "Tus datos no se venden", "desc": "Las entradas financieras nunca se usan para publicidad ni se comparten con terceros." }, { "icon": "🖥️", "title": "Los datos sensibles nunca se registran", "desc": "Los valores de activos, ingresos y detalles de escenarios no se escriben en registros de desarrollador." }, { "icon": "🗂️", "title": "Tú controlas tus datos", "desc": "Exporta tus datos financieros o elimina tu cuenta permanentemente en cualquier momento." }, { "icon": "⚖️", "title": "Modelización financiera, no asesoramiento legal", "desc": "SettleLens es una herramienta de preparación. Los casos complejos requieren un abogado calificado." }], "link": "Cómo protegemos tus datos →" },
+  "countryCoverage": { "title": "Adaptado a tu jurisdicción", "sub": "SettleLens aplica supuestos de régimen patrimonial específicos de cada país.", "note": "La discreción judicial, los activos ocultos y los acuerdos complejos pueden producir resultados diferentes.", "link": "Ver metodología para tu país →", "countries": [{ "flag": "🇺🇸", "name": "Estados Unidos", "law": "Community & equitable distribution" }, { "flag": "🇬🇧", "name": "Reino Unido", "law": "MCA 1973 Section 25" }, { "flag": "🇩🇪", "name": "Alemania", "law": "Zugewinngemeinschaft" }, { "flag": "🇫🇷", "name": "Francia", "law": "Communauté réduite aux acquêts" }, { "flag": "🇪🇸", "name": "España", "law": "Régimen de gananciales" }, { "flag": "🇹🇷", "name": "Turquía", "law": "TMK Madde 179" }] },
+  "attorneyPrep": { "title": "Entra preparado a tu reunión con el abogado", "sub": "En lugar de notas dispersas, trae un resumen financiero estructurado — activos, deudas, ingresos y escenarios en un informe profesional.", "cta": "Crear mi resumen financiero", "note": "Modelización financiera, no asesoramiento legal." },
+  "houseDemo": { "title": "La vivienda suele ser la mayor decisión.", "sub": "Ve la diferencia financiera entre quedarte, vender o transferirla.", "sliderLabel": "Valor de la vivienda", "iKeep": "Me la quedo", "theyKeep": "Mi cónyuge se la queda", "weSell": "La vendemos", "netPosition": "Posición neta", "fullAnalysis": "Análisis completo →", "note": "Modelo simplificado — 3% de apreciación, 5% de retorno, 6% de costes de venta." },
+  "waitlist": { "placeholder": "Tu correo electrónico", "cta": "Unirse a la lista de espera", "success": "Estás en la lista. Te avisaremos.", "duplicate": "Ya estás en la lista." }
+}

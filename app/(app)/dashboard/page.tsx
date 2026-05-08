@@ -1,0 +1,292 @@
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
+import { ProjectionChart } from "@/components/app/ProjectionChart";
+import { ScenarioComparison } from "@/components/app/ScenarioComparison";
+import { Disclaimer } from "@/components/layout/Disclaimer";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { Plus, Download, Pencil, AlertTriangle, TrendingUp } from "lucide-react";
+
+type Analysis = {
+  net_worth_now: number;
+  net_worth_year1: number;
+  net_worth_year3: number;
+  net_worth_year5: number;
+  net_worth_year10: number;
+  monthly_cash_flow: number;
+  risk_score: number;
+  alimony_range_low: number;
+  alimony_range_high: number;
+  child_support_estimate: number;
+  negotiation_strategy: string;
+  key_risks: string[];
+  confidence_label: string;
+  raw_json: Record<string, unknown>;
+};
+
+function fmt(n: number, currency: string): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(n || 0);
+}
+
+function getHour(): string {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+export default async function DashboardPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/en/login");
+
+  // Fetch profile
+  const { data: profile } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => {
+          single: () => Promise<{ data: Record<string, unknown> | null }>
+        }
+      }
+    }
+  }).from("profiles").select("*").eq("id", user.id).single();
+
+  if (!profile) redirect("/en/login");
+
+  // If onboarding not complete, redirect to step 1
+  if (!profile.onboarding_completed) {
+    const lang = (profile.preferred_language as string) ?? "en";
+    redirect(`/${lang}/onboarding/step-1`);
+  }
+
+  const lang = (profile.preferred_language as string) ?? "en";
+  const country = profile.country as string;
+  const j = getJurisdiction(country, profile.state_province as string);
+  const currency = getCurrency(country);
+  const marriageYears = new Date().getFullYear() - ((profile.marriage_year as number) ?? 2010);
+  const name = (profile.name as string) ?? "there";
+
+  // Fetch scenarios
+  const { data: scenarios } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => Promise<{ data: Record<string, unknown>[] | null }>
+      }
+    }
+  }).from("scenarios").select("*").eq("user_id", user.id);
+
+  const scenarioList = scenarios ?? [];
+
+  // Fetch latest analysis for each scenario
+  const scenariosWithAnalysis = await Promise.all(
+    scenarioList.map(async (s) => {
+      const { data: analyses } = await (supabase as never as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              order: (col: string, opts: { ascending: boolean }) => {
+                limit: (n: number) => Promise<{ data: Analysis[] | null }>
+              }
+            }
+          }
+        }
+      })
+        .from("analyses")
+        .select("*")
+        .eq("scenario_id", s.id as string)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      return { scenario: s, analysis: analyses?.[0] ?? null };
+    })
+  );
+
+  // Summary stats
+  const analyzedScenarios = scenariosWithAnalysis.filter((s) => s.analysis);
+  const bestYear10 = analyzedScenarios.reduce(
+    (best, s) => (s.analysis && s.analysis.net_worth_year10 > best ? s.analysis.net_worth_year10 : best),
+    -Infinity
+  );
+  const firstAnalysis = analyzedScenarios[0]?.analysis;
+  const avgRisk =
+    analyzedScenarios.length > 0
+      ? Math.round(analyzedScenarios.reduce((s, a) => s + (a.analysis?.risk_score ?? 5), 0) / analyzedScenarios.length)
+      : null;
+
+  // Chart data
+  const chartScenarios = analyzedScenarios.map(({ scenario, analysis }) => ({
+    name: scenario.name as string,
+    data: [
+      { year: 0, value: analysis!.net_worth_now },
+      { year: 1, value: analysis!.net_worth_year1 },
+      { year: 3, value: analysis!.net_worth_year3 },
+      { year: 5, value: analysis!.net_worth_year5 },
+      { year: 10, value: analysis!.net_worth_year10 },
+    ],
+  }));
+
+  // Comparison table data
+  const comparisonScenarios = analyzedScenarios.map(({ scenario, analysis }) => ({
+    name: scenario.name as string,
+    net_worth_now: analysis!.net_worth_now,
+    year1: analysis!.net_worth_year1,
+    year3: analysis!.net_worth_year3,
+    year5: analysis!.net_worth_year5,
+    year10: analysis!.net_worth_year10,
+    monthly_cashflow: analysis!.monthly_cash_flow,
+    risk_score: analysis!.risk_score,
+    confidence_label_text: (analysis!.raw_json?.confidence_label_text as string) ?? "",
+  }));
+
+  const hasAnalyses = analyzedScenarios.length > 0;
+  const plan = profile.plan_type as string;
+
+  return (
+    <div className="space-y-6">
+      {/* Welcome header */}
+      <div>
+        <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
+          {getHour()}, {name.split(" ")[0]}.
+        </h1>
+        <p className="font-ui text-sm text-[var(--brown)] mt-1">
+          {getJurisdictionName(j)} · {marriageYears} year{marriageYears !== 1 ? "s" : ""} of marriage ·{" "}
+          <span className="capitalize">{plan}</span> plan
+        </p>
+      </div>
+
+      {/* No analysis yet — onboarding complete but no scenarios analyzed */}
+      {!hasAnalyses && (
+        <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
+          <TrendingUp className="mx-auto text-[var(--gold)] mb-3" size={32} />
+          <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-2">Ready to run your analysis</h2>
+          <p className="font-ui text-sm text-[var(--brown)] mb-4 max-w-sm mx-auto">
+            Your financial data is entered. Select a scenario to run the AI-powered projection.
+          </p>
+          {scenarioList.length > 0 ? (
+            <div className="flex flex-col gap-2 max-w-xs mx-auto">
+              {scenarioList.map((s) => (
+                <Link
+                  key={s.id as string}
+                  href={`/${lang}/scenarios/${s.id}`}
+                  className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+                >
+                  Analyze: {s.name as string}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <Link
+              href={`/${lang}/onboarding/step-6`}
+              className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+            >
+              <Plus size={16} className="mr-1" /> Build scenarios
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* Summary cards */}
+      {hasAnalyses && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Net Worth Now</p>
+            <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}>
+              {fmt(firstAnalysis?.net_worth_now ?? 0, currency)}
+            </p>
+          </div>
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Best 10-Yr Outcome</p>
+            <p className={cn("font-mono text-xl font-bold mt-1 text-[var(--gold)]")}>
+              {bestYear10 === -Infinity ? "—" : fmt(bestYear10, currency)}
+            </p>
+          </div>
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Monthly Cash Flow</p>
+            <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>
+              {fmt(firstAnalysis?.monthly_cash_flow ?? 0, currency)}<span className="text-xs font-normal">/mo</span>
+            </p>
+          </div>
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Risk Score</p>
+            <p className={cn("font-mono text-xl font-bold mt-1", (avgRisk ?? 5) >= 7 ? "text-[var(--danger)]" : (avgRisk ?? 5) >= 4 ? "text-[var(--gold)]" : "text-[var(--gain)]")}>
+              {avgRisk ?? "—"}<span className="text-xs font-normal">/10</span>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Chart */}
+      {hasAnalyses && chartScenarios.length > 0 && (
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">10-Year Net Worth Projection</h2>
+          <ProjectionChart scenarios={chartScenarios} currency={currency} />
+        </div>
+      )}
+
+      {/* Scenario comparison */}
+      {hasAnalyses && comparisonScenarios.length > 1 && (
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">Scenario Comparison</h2>
+          <ScenarioComparison scenarios={comparisonScenarios} currency={currency} />
+        </div>
+      )}
+
+      {/* Key risks */}
+      {hasAnalyses && firstAnalysis?.key_risks && (firstAnalysis.key_risks as string[]).length > 0 && (
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-3 flex items-center gap-2">
+            <AlertTriangle size={16} className="text-[var(--danger)]" /> Key Risk Factors
+          </h2>
+          <ul className="space-y-1.5">
+            {(firstAnalysis.key_risks as string[]).map((risk, i) => (
+              <li key={i} className="font-ui text-sm text-[var(--brown)] flex items-start gap-2">
+                <span className="text-[var(--danger)] mt-0.5">•</span>
+                <span>{risk}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Quick actions */}
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href={`/${lang}/scenarios/offer`}
+          className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+        >
+          <Plus size={16} className="mr-1" /> Analyze New Offer
+        </Link>
+        {plan !== "discovery" && (
+          <Link
+            href={`/${lang}/report`}
+            className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
+          >
+            <Download size={16} className="mr-1" /> Download PDF Report
+          </Link>
+        )}
+        <Link
+          href={`/${lang}/onboarding/step-2`}
+          className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
+        >
+          <Pencil size={16} className="mr-1" /> Edit Assets
+        </Link>
+        {plan === "discovery" && (
+          <Link
+            href={`/${lang}/upgrade`}
+            className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--gold)]")}
+          >
+            Upgrade to run AI analysis →
+          </Link>
+        )}
+      </div>
+
+      <Disclaimer className="mt-4" />
+    </div>
+  );
+}
