@@ -1,17 +1,65 @@
 "use client";
 
-import { useEffect } from "react";
-import { initAnalytics } from "@/lib/analytics";
+import posthog from "posthog-js";
+import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, Suspense } from "react";
+
+function PageviewTracker() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const ph = usePostHog();
+
+  useEffect(() => {
+    if (!pathname || !ph) return;
+    const url =
+      window.location.origin +
+      pathname +
+      (searchParams.toString() ? `?${searchParams.toString()}` : "");
+    ph.capture("$pageview", { $current_url: url });
+  }, [pathname, searchParams, ph]);
+
+  return null;
+}
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Only initialise after consent is stored — CookieBanner sets this
-    const handleConsent = () => initAnalytics();
-    window.addEventListener("sl:cookie-accepted", handleConsent);
-    // Also check on mount in case consent was given in a prior session
-    initAnalytics();
-    return () => window.removeEventListener("sl:cookie-accepted", handleConsent);
+    const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+    if (!key) return;
+
+    const consent = localStorage.getItem("sl_cookie_consent");
+    if (consent !== "accepted") {
+      // Listen for explicit acceptance from CookieBanner
+      const handler = () => {
+        posthog.init(key, {
+          api_host:
+            process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "/ingest",
+          ui_host: "https://us.posthog.com",
+          capture_pageview: false, // manual via PageviewTracker
+          capture_pageleave: true,
+          persistence: "localStorage+cookie",
+        });
+      };
+      window.addEventListener("sl:cookie-accepted", handler, { once: true });
+      return () => window.removeEventListener("sl:cookie-accepted", handler);
+    }
+
+    posthog.init(key, {
+      api_host:
+        process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "/ingest",
+      ui_host: "https://us.posthog.com",
+      capture_pageview: false,
+      capture_pageleave: true,
+      persistence: "localStorage+cookie",
+    });
   }, []);
 
-  return <>{children}</>;
+  return (
+    <PHProvider client={posthog}>
+      <Suspense fallback={null}>
+        <PageviewTracker />
+      </Suspense>
+      {children}
+    </PHProvider>
+  );
 }
