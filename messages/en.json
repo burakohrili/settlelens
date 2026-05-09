@@ -9,7 +9,12 @@
     "pricing": "Pricing",
     "blog": "Blog",
     "login": "Sign In",
-    "startFree": "Start Free Analysis"
+    "startFree": "Start Free Analysis",
+    "upgrade": "Upgrade",
+    "profile": "Profile",
+    "billing": "Billing",
+    "settings": "Settings",
+    "signOut": "Sign out"
   },
   "hero": {
     "h1": "Know Exactly Where You Stand.\nBefore You Sign Anything.",
@@ -173,5 +178,36 @@
     "cta": "Join the waitlist",
     "success": "You're on the list. We'll be in touch.",
     "duplicate": "You're already on the list."
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "netWorthNow": "Net Worth Now",
+    "bestYear10": "Best 10-Yr Outcome",
+    "monthlyCashFlow": "Monthly Cash Flow",
+    "riskScore": "Risk Score",
+    "readyTitle": "Ready to run your analysis",
+    "readyDesc": "Your financial data is entered. Select a scenario to run the AI-powered projection.",
+    "analyzePrefix": "Analyze: ",
+    "buildScenarios": "Build scenarios",
+    "projection": "10-Year Net Worth Projection",
+    "scenarioComparison": "Scenario Comparison",
+    "keyRisks": "Key Risk Factors",
+    "analyzeOffer": "Analyze New Offer",
+    "downloadPDF": "Download PDF Report",
+    "editAssets": "Edit Assets",
+    "upgradeToRun": "Upgrade to run AI analysis →"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "scenarios": "Scenarios",
+    "report": "Report",
+    "settings": "Settings",
+    "upgradeTitle": "Upgrade to Clarified",
+    "upgradeDesc": "Get your first AI analysis",
+    "upgradeButton": "Upgrade"
   }
 }

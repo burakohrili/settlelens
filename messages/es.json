@@ -9,7 +9,12 @@
     "pricing": "Precios",
     "blog": "Blog",
     "login": "Iniciar sesión",
-    "startFree": "Análisis gratuito"
+    "startFree": "Análisis gratuito",
+    "upgrade": "Mejorar plan",
+    "profile": "Perfil",
+    "billing": "Facturación",
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión"
   },
   "hero": {
     "h1": "Sabe exactamente dónde estás.\nAntes de firmar cualquier cosa.",
@@ -115,5 +120,36 @@
   "countryCoverage": { "title": "Adaptado a tu jurisdicción", "sub": "SettleLens aplica supuestos de régimen patrimonial específicos de cada país.", "note": "La discreción judicial, los activos ocultos y los acuerdos complejos pueden producir resultados diferentes.", "link": "Ver metodología para tu país →", "countries": [{ "flag": "🇺🇸", "name": "Estados Unidos", "law": "Community & equitable distribution" }, { "flag": "🇬🇧", "name": "Reino Unido", "law": "MCA 1973 Section 25" }, { "flag": "🇩🇪", "name": "Alemania", "law": "Zugewinngemeinschaft" }, { "flag": "🇫🇷", "name": "Francia", "law": "Communauté réduite aux acquêts" }, { "flag": "🇪🇸", "name": "España", "law": "Régimen de gananciales" }, { "flag": "🇹🇷", "name": "Turquía", "law": "TMK Madde 179" }] },
   "attorneyPrep": { "title": "Entra preparado a tu reunión con el abogado", "sub": "En lugar de notas dispersas, trae un resumen financiero estructurado — activos, deudas, ingresos y escenarios en un informe profesional.", "cta": "Crear mi resumen financiero", "note": "Modelización financiera, no asesoramiento legal." },
   "houseDemo": { "title": "La vivienda suele ser la mayor decisión.", "sub": "Ve la diferencia financiera entre quedarte, vender o transferirla.", "sliderLabel": "Valor de la vivienda", "iKeep": "Me la quedo", "theyKeep": "Mi cónyuge se la queda", "weSell": "La vendemos", "netPosition": "Posición neta", "fullAnalysis": "Análisis completo →", "note": "Modelo simplificado — 3% de apreciación, 5% de retorno, 6% de costes de venta." },
-  "waitlist": { "placeholder": "Tu correo electrónico", "cta": "Unirse a la lista de espera", "success": "Estás en la lista. Te avisaremos.", "duplicate": "Ya estás en la lista." }
+  "waitlist": { "placeholder": "Tu correo electrónico", "cta": "Unirse a la lista de espera", "success": "Estás en la lista. Te avisaremos.", "duplicate": "Ya estás en la lista." },
+  "dashboard": {
+    "greeting": {
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
+    },
+    "netWorthNow": "Valor neto actual",
+    "bestYear10": "Mejor resultado a 10 años",
+    "monthlyCashFlow": "Flujo de caja mensual",
+    "riskScore": "Puntuación de riesgo",
+    "readyTitle": "Listo para ejecutar tu análisis",
+    "readyDesc": "Tus datos financieros están ingresados. Selecciona un escenario para la proyección IA.",
+    "analyzePrefix": "Analizar: ",
+    "buildScenarios": "Crear escenarios",
+    "projection": "Proyección de valor neto a 10 años",
+    "scenarioComparison": "Comparación de escenarios",
+    "keyRisks": "Factores de riesgo clave",
+    "analyzeOffer": "Analizar nueva oferta",
+    "downloadPDF": "Descargar informe PDF",
+    "editAssets": "Editar activos",
+    "upgradeToRun": "Mejora tu plan para análisis IA →"
+  },
+  "sidebar": {
+    "dashboard": "Panel",
+    "scenarios": "Escenarios",
+    "report": "Informe",
+    "settings": "Configuración",
+    "upgradeTitle": "Pasar a Clarified",
+    "upgradeDesc": "Obtén tu primer análisis IA",
+    "upgradeButton": "Mejorar"
+  }
 }

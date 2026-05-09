@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -10,6 +11,9 @@ export default function ErrorPage({
   error: Error;
   reset: () => void;
 }) {
+  const params = useParams();
+  const locale = (params?.lang as string) ?? "en";
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--cream)] px-4">
       <h1 className="font-display text-2xl font-semibold text-[var(--navy)]">
@@ -26,7 +30,7 @@ export default function ErrorPage({
           Try again
         </button>
         <Link
-          href="/en"
+          href={`/${locale}`}
           className={cn(buttonVariants(), "bg-[var(--navy)] text-[var(--cream)] hover:bg-[var(--slate)]")}
         >
           Go home

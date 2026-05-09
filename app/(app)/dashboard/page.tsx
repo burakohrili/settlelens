@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
 import { ProjectionChart } from "@/components/app/ProjectionChart";
 import { ScenarioComparison } from "@/components/app/ScenarioComparison";
@@ -34,17 +35,10 @@ function fmt(n: number, currency: string): string {
   }).format(n || 0);
 }
 
-function getHour(): string {
-  const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
-}
-
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/en/login");
+  if (!user) redirect("/login");
 
   // Fetch profile
   const { data: profile } = await (supabase as never as {
@@ -57,7 +51,7 @@ export default async function DashboardPage() {
     }
   }).from("profiles").select("*").eq("id", user.id).single();
 
-  if (!profile) redirect("/en/login");
+  if (!profile) redirect("/login");
 
   // If onboarding not complete, redirect to step 1
   if (!profile.onboarding_completed) {
@@ -66,6 +60,7 @@ export default async function DashboardPage() {
   }
 
   const lang = (profile.preferred_language as string) ?? "en";
+  const t = await getTranslations({ locale: lang, namespace: "dashboard" });
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
@@ -152,7 +147,7 @@ export default async function DashboardPage() {
       {/* Welcome header */}
       <div>
         <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
-          {getHour()}, {name.split(" ")[0]}.
+          {(() => { const h = new Date().getHours(); return h < 12 ? t("greeting.morning") : h < 17 ? t("greeting.afternoon") : t("greeting.evening"); })()}, {name.split(" ")[0]}.
         </h1>
         <p className="font-ui text-sm text-[var(--brown)] mt-1">
           {getJurisdictionName(j)} · {marriageYears} year{marriageYears !== 1 ? "s" : ""} of marriage ·{" "}
@@ -164,9 +159,9 @@ export default async function DashboardPage() {
       {!hasAnalyses && (
         <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
           <TrendingUp className="mx-auto text-[var(--gold)] mb-3" size={32} />
-          <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-2">Ready to run your analysis</h2>
+          <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-2">{t("readyTitle")}</h2>
           <p className="font-ui text-sm text-[var(--brown)] mb-4 max-w-sm mx-auto">
-            Your financial data is entered. Select a scenario to run the AI-powered projection.
+            {t("readyDesc")}
           </p>
           {scenarioList.length > 0 ? (
             <div className="flex flex-col gap-2 max-w-xs mx-auto">
@@ -176,7 +171,7 @@ export default async function DashboardPage() {
                   href={`/${lang}/scenarios/${s.id}`}
                   className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
                 >
-                  Analyze: {s.name as string}
+                  {t("analyzePrefix")}{s.name as string}
                 </Link>
               ))}
             </div>
@@ -185,7 +180,7 @@ export default async function DashboardPage() {
               href={`/${lang}/onboarding/step-6`}
               className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
             >
-              <Plus size={16} className="mr-1" /> Build scenarios
+              <Plus size={16} className="mr-1" /> {t("buildScenarios")}
             </Link>
           )}
         </div>
@@ -195,25 +190,25 @@ export default async function DashboardPage() {
       {hasAnalyses && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Net Worth Now</p>
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("netWorthNow")}</p>
             <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}>
               {fmt(firstAnalysis?.net_worth_now ?? 0, currency)}
             </p>
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Best 10-Yr Outcome</p>
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("bestYear10")}</p>
             <p className={cn("font-mono text-xl font-bold mt-1 text-[var(--gold)]")}>
               {bestYear10 === -Infinity ? "—" : fmt(bestYear10, currency)}
             </p>
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Monthly Cash Flow</p>
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("monthlyCashFlow")}</p>
             <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>
               {fmt(firstAnalysis?.monthly_cash_flow ?? 0, currency)}<span className="text-xs font-normal">/mo</span>
             </p>
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">Risk Score</p>
+            <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("riskScore")}</p>
             <p className={cn("font-mono text-xl font-bold mt-1", (avgRisk ?? 5) >= 7 ? "text-[var(--danger)]" : (avgRisk ?? 5) >= 4 ? "text-[var(--gold)]" : "text-[var(--gain)]")}>
               {avgRisk ?? "—"}<span className="text-xs font-normal">/10</span>
             </p>
@@ -224,7 +219,7 @@ export default async function DashboardPage() {
       {/* Chart */}
       {hasAnalyses && chartScenarios.length > 0 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">10-Year Net Worth Projection</h2>
+          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("projection")}</h2>
           <ProjectionChart scenarios={chartScenarios} currency={currency} />
         </div>
       )}
@@ -232,7 +227,7 @@ export default async function DashboardPage() {
       {/* Scenario comparison */}
       {hasAnalyses && comparisonScenarios.length > 1 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
-          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">Scenario Comparison</h2>
+          <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("scenarioComparison")}</h2>
           <ScenarioComparison scenarios={comparisonScenarios} currency={currency} />
         </div>
       )}
@@ -241,7 +236,7 @@ export default async function DashboardPage() {
       {hasAnalyses && firstAnalysis?.key_risks && (firstAnalysis.key_risks as string[]).length > 0 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-3 flex items-center gap-2">
-            <AlertTriangle size={16} className="text-[var(--danger)]" /> Key Risk Factors
+            <AlertTriangle size={16} className="text-[var(--danger)]" /> {t("keyRisks")}
           </h2>
           <ul className="space-y-1.5">
             {(firstAnalysis.key_risks as string[]).map((risk, i) => (
@@ -260,28 +255,28 @@ export default async function DashboardPage() {
           href={`/${lang}/scenarios/offer`}
           className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
         >
-          <Plus size={16} className="mr-1" /> Analyze New Offer
+          <Plus size={16} className="mr-1" /> {t("analyzeOffer")}
         </Link>
         {plan !== "discovery" && (
           <Link
             href={`/${lang}/report`}
             className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
           >
-            <Download size={16} className="mr-1" /> Download PDF Report
+            <Download size={16} className="mr-1" /> {t("downloadPDF")}
           </Link>
         )}
         <Link
           href={`/${lang}/onboarding/step-2`}
           className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
         >
-          <Pencil size={16} className="mr-1" /> Edit Assets
+          <Pencil size={16} className="mr-1" /> {t("editAssets")}
         </Link>
         {plan === "discovery" && (
           <Link
             href={`/${lang}/upgrade`}
             className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--gold)]")}
           >
-            Upgrade to run AI analysis →
+            {t("upgradeToRun")}
           </Link>
         )}
       </div>

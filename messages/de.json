@@ -9,7 +9,12 @@
     "pricing": "Preise",
     "blog": "Blog",
     "login": "Anmelden",
-    "startFree": "Kostenlose Analyse"
+    "startFree": "Kostenlose Analyse",
+    "upgrade": "Upgrade",
+    "profile": "Profil",
+    "billing": "Abrechnung",
+    "settings": "Einstellungen",
+    "signOut": "Abmelden"
   },
   "hero": {
     "h1": "Wissen Sie genau, wo Sie stehen.\nBevor Sie irgendetwas unterschreiben.",
@@ -115,5 +120,36 @@
   "countryCoverage": { "title": "Für Ihre Rechtsordnung entwickelt", "sub": "SettleLens wendet länderspezifische Güterrechtsannahmen für die Finanzszenariomodellierung an.", "note": "Richterliches Ermessen, versteckte Vermögenswerte und komplexe Vereinbarungen können zu anderen Ergebnissen führen.", "link": "Methodik für Ihr Land →", "countries": [{ "flag": "🇺🇸", "name": "USA", "law": "Community & equitable distribution" }, { "flag": "🇬🇧", "name": "Vereinigtes Königreich", "law": "MCA 1973 Section 25" }, { "flag": "🇩🇪", "name": "Deutschland", "law": "Zugewinngemeinschaft" }, { "flag": "🇫🇷", "name": "Frankreich", "law": "Communauté réduite aux acquêts" }, { "flag": "🇪🇸", "name": "Spanien", "law": "Régimen de gananciales" }, { "flag": "🇹🇷", "name": "Türkei", "law": "TMK Madde 179" }] },
   "attorneyPrep": { "title": "Gehen Sie vorbereitet in Ihr Anwaltsgespräch", "sub": "Bringen Sie statt verstreuter Notizen eine strukturierte Finanzübersicht — Vermögen, Schulden, Einkommen und Szenarien in einem professionellen Bericht.", "cta": "Meine Finanzübersicht erstellen", "note": "Finanzmodellierung, keine Rechtsberatung." },
   "houseDemo": { "title": "Das Haus ist meist die größte Entscheidung.", "sub": "Sehen Sie den finanziellen Unterschied zwischen Behalten, Verkaufen oder Übertragen.", "sliderLabel": "Hauswert", "iKeep": "Ich behalte es", "theyKeep": "Partner behält es", "weSell": "Wir verkaufen", "netPosition": "Nettoposition", "fullAnalysis": "Vollständige Hausanalyse →", "note": "Vereinfachtes Modell — 3% Wertsteigerung, 5% Anlagerendite, 6% Verkaufskosten." },
-  "waitlist": { "placeholder": "Ihre E-Mail-Adresse", "cta": "Warteliste beitreten", "success": "Sie stehen auf der Liste. Wir melden uns.", "duplicate": "Sie sind bereits auf der Liste." }
+  "waitlist": { "placeholder": "Ihre E-Mail-Adresse", "cta": "Warteliste beitreten", "success": "Sie stehen auf der Liste. Wir melden uns.", "duplicate": "Sie sind bereits auf der Liste." },
+  "dashboard": {
+    "greeting": {
+      "morning": "Guten Morgen",
+      "afternoon": "Guten Tag",
+      "evening": "Guten Abend"
+    },
+    "netWorthNow": "Aktuelles Nettovermögen",
+    "bestYear10": "Bestes 10-Jahres-Ergebnis",
+    "monthlyCashFlow": "Monatlicher Cashflow",
+    "riskScore": "Risikoscore",
+    "readyTitle": "Bereit für Ihre Analyse",
+    "readyDesc": "Ihre Finanzdaten sind eingegeben. Wählen Sie ein Szenario für die KI-Projektion.",
+    "analyzePrefix": "Analysieren: ",
+    "buildScenarios": "Szenarien erstellen",
+    "projection": "10-Jahres-Nettovermögensprognose",
+    "scenarioComparison": "Szenariovergleich",
+    "keyRisks": "Wichtige Risikofaktoren",
+    "analyzeOffer": "Neues Angebot analysieren",
+    "downloadPDF": "PDF-Bericht herunterladen",
+    "editAssets": "Vermögen bearbeiten",
+    "upgradeToRun": "Upgrade für KI-Analyse →"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "scenarios": "Szenarien",
+    "report": "Bericht",
+    "settings": "Einstellungen",
+    "upgradeTitle": "Auf Clarified upgraden",
+    "upgradeDesc": "Erste KI-Analyse erhalten",
+    "upgradeButton": "Upgrade"
+  }
 }

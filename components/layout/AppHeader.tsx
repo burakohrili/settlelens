@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LogOut, Settings, User, CreditCard, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -25,6 +25,7 @@ type Props = {
 
 export function AppHeader({ userEmail = "", userName = "", planType = "discovery" }: Props) {
   const locale = useLocale();
+  const t = useTranslations("nav");
   const router = useRouter();
   const supabase = createClient();
 
@@ -54,7 +55,7 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
             href={`/${locale}/upgrade`}
             className={cn(buttonVariants({ size: "sm" }), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
-            UPGRADE
+            {t("upgrade")}
           </Link>
         )}
 
@@ -78,20 +79,20 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
             <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
-              <User size={14} /> Profile
+              <User size={14} /> {t("profile")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push(`/${locale}/settings/billing`)} className="flex items-center gap-2 cursor-pointer">
-              <CreditCard size={14} /> Billing
+              <CreditCard size={14} /> {t("billing")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
-              <Settings size={14} /> Settings
+              <Settings size={14} /> {t("settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={signOut}
               className="flex items-center gap-2 cursor-pointer text-[var(--danger)]"
             >
-              <LogOut size={14} /> Sign out
+              <LogOut size={14} /> {t("signOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

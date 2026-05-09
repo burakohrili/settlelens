@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/server";
 import { openCheckout, PLAN_PRICE_IDS } from "@/lib/paddle";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
 const PLANS = [
   {
@@ -54,6 +53,8 @@ const PLANS = [
 
 export default function UpgradePage() {
   const router = useRouter();
+  const params = useParams();
+  const lang = (params?.lang as string) ?? "en";
   const [currentPlan, setCurrentPlan] = useState<string>("discovery");
   const [userEmail, setUserEmail] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
@@ -70,7 +71,7 @@ export default function UpgradePage() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        router.push("/en/login");
+        router.push(`/${lang}/login`);
         return;
       }
       setUserEmail(user.email ?? "");
@@ -107,7 +108,7 @@ export default function UpgradePage() {
     try {
       await openCheckout(priceId, userId, userEmail, () => {
         setSuccess(true);
-        setTimeout(() => router.push("/dashboard"), 2000);
+        setTimeout(() => router.push(`/${lang}/dashboard`), 2000);
       });
     } catch {
       // Paddle overlay handles its own errors

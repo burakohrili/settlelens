@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,21 +9,25 @@ import {
   FileText,
   Settings,
   Zap,
+  type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-const NAV_ITEMS = [
-  { key: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: "dashboard" },
-  { key: "scenarios", label: "Scenarios", icon: GitBranch, href: "scenarios" },
-  { key: "report", label: "Report", icon: FileText, href: "report" },
-  { key: "settings", label: "Settings", icon: Settings, href: "settings" },
+type NavItem = { key: string; tKey: string; icon: LucideIcon; href: string };
+
+const NAV_ITEMS: NavItem[] = [
+  { key: "dashboard", tKey: "dashboard", icon: LayoutDashboard, href: "dashboard" },
+  { key: "scenarios", tKey: "scenarios", icon: GitBranch, href: "scenarios" },
+  { key: "report", tKey: "report", icon: FileText, href: "report" },
+  { key: "settings", tKey: "settings", icon: Settings, href: "settings" },
 ];
 
 type Props = { planType?: string };
 
 export function AppSidebar({ planType = "discovery" }: Props) {
   const locale = useLocale();
+  const t = useTranslations("sidebar");
   const pathname = usePathname();
   const isFree = planType === "discovery";
 
@@ -31,7 +35,7 @@ export function AppSidebar({ planType = "discovery" }: Props) {
     <>
       <aside className="hidden w-56 shrink-0 flex-col border-r border-[var(--sand)] bg-[var(--cream)] md:flex">
         <nav className="flex flex-1 flex-col gap-1 p-3 pt-4">
-          {NAV_ITEMS.map(({ key, label, icon: Icon, href }) => {
+          {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
             const fullHref = `/${locale}/${href}`;
             const active = pathname.startsWith(fullHref);
             return (
@@ -46,7 +50,7 @@ export function AppSidebar({ planType = "discovery" }: Props) {
                 )}
               >
                 <Icon size={16} />
-                {label}
+                {t(tKey)}
               </Link>
             );
           })}
@@ -55,23 +59,23 @@ export function AppSidebar({ planType = "discovery" }: Props) {
         {isFree && (
           <div className="m-3 rounded-lg border border-[var(--gold)]/40 bg-[var(--gold)]/10 p-3">
             <p className="font-ui text-xs text-[var(--navy)] font-semibold">
-              Upgrade to Clarified
+              {t("upgradeTitle")}
             </p>
             <p className="mt-0.5 font-ui text-xs text-[var(--brown)]">
-              Get your first AI analysis
+              {t("upgradeDesc")}
             </p>
             <Link
               href={`/${locale}/upgrade`}
               className={cn(buttonVariants({ size: "sm" }), "mt-2 w-full bg-[var(--gold)] text-[var(--navy)] hover:bg-[var(--gold)]/90 text-xs justify-center")}
             >
-              <Zap size={12} className="mr-1" /> Upgrade
+              <Zap size={12} className="mr-1" /> {t("upgradeButton")}
             </Link>
           </div>
         )}
       </aside>
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 flex h-14 items-center justify-around border-t border-[var(--sand)] bg-[var(--cream)] md:hidden">
-        {NAV_ITEMS.map(({ key, label, icon: Icon, href }) => {
+        {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
           const fullHref = `/${locale}/${href}`;
           const active = pathname.startsWith(fullHref);
           return (
@@ -84,7 +88,7 @@ export function AppSidebar({ planType = "discovery" }: Props) {
               )}
             >
               <Icon size={20} />
-              {label}
+              {t(tKey)}
             </Link>
           );
         })}

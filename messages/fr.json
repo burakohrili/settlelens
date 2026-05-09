@@ -9,7 +9,12 @@
     "pricing": "Tarifs",
     "blog": "Blog",
     "login": "Connexion",
-    "startFree": "Analyse gratuite"
+    "startFree": "Analyse gratuite",
+    "upgrade": "Améliorer",
+    "profile": "Profil",
+    "billing": "Facturation",
+    "settings": "Paramètres",
+    "signOut": "Se déconnecter"
   },
   "hero": {
     "h1": "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
@@ -115,5 +120,36 @@
   "countryCoverage": { "title": "Adapté à votre juridiction", "sub": "SettleLens applique des hypothèses de régime matrimonial spécifiques à chaque pays.", "note": "Le pouvoir discrétionnaire judiciaire, les actifs cachés et les accords complexes peuvent produire des résultats différents.", "link": "Voir la méthodologie pour votre pays →", "countries": [{ "flag": "🇺🇸", "name": "États-Unis", "law": "Community & equitable distribution" }, { "flag": "🇬🇧", "name": "Royaume-Uni", "law": "MCA 1973 Section 25" }, { "flag": "🇩🇪", "name": "Allemagne", "law": "Zugewinngemeinschaft" }, { "flag": "🇫🇷", "name": "France", "law": "Communauté réduite aux acquêts" }, { "flag": "🇪🇸", "name": "Espagne", "law": "Régimen de gananciales" }, { "flag": "🇹🇷", "name": "Turquie", "law": "TMK Madde 179" }] },
   "attorneyPrep": { "title": "Préparez-vous pour votre rendez-vous avec l'avocat", "sub": "Apportez un aperçu financier structuré — actifs, dettes, revenus et scénarios dans un rapport professionnel.", "cta": "Créer mon aperçu financier", "note": "Modélisation financière, pas conseil juridique." },
   "houseDemo": { "title": "Le logement est souvent la décision la plus importante.", "sub": "Voyez la différence financière entre garder, vendre ou transférer le bien.", "sliderLabel": "Valeur du bien", "iKeep": "Je le garde", "theyKeep": "Mon conjoint le garde", "weSell": "Nous vendons", "netPosition": "Position nette", "fullAnalysis": "Analyse complète →", "note": "Modèle simplifié — 3% d'appréciation, 5% de rendement, 6% de frais de vente." },
-  "waitlist": { "placeholder": "Votre adresse e-mail", "cta": "Rejoindre la liste d'attente", "success": "Vous êtes sur la liste. Nous vous contacterons.", "duplicate": "Vous êtes déjà sur la liste." }
+  "waitlist": { "placeholder": "Votre adresse e-mail", "cta": "Rejoindre la liste d'attente", "success": "Vous êtes sur la liste. Nous vous contacterons.", "duplicate": "Vous êtes déjà sur la liste." },
+  "dashboard": {
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "netWorthNow": "Valeur nette actuelle",
+    "bestYear10": "Meilleur résultat sur 10 ans",
+    "monthlyCashFlow": "Flux de trésorerie mensuel",
+    "riskScore": "Score de risque",
+    "readyTitle": "Prêt à lancer votre analyse",
+    "readyDesc": "Vos données financières sont saisies. Sélectionnez un scénario pour la projection IA.",
+    "analyzePrefix": "Analyser : ",
+    "buildScenarios": "Créer des scénarios",
+    "projection": "Projection de la valeur nette sur 10 ans",
+    "scenarioComparison": "Comparaison de scénarios",
+    "keyRisks": "Facteurs de risque clés",
+    "analyzeOffer": "Analyser une nouvelle offre",
+    "downloadPDF": "Télécharger le rapport PDF",
+    "editAssets": "Modifier les actifs",
+    "upgradeToRun": "Améliorez pour l'analyse IA →"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "scenarios": "Scénarios",
+    "report": "Rapport",
+    "settings": "Paramètres",
+    "upgradeTitle": "Passer à Clarified",
+    "upgradeDesc": "Obtenez votre première analyse IA",
+    "upgradeButton": "Améliorer"
+  }
 }

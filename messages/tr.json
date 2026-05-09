@@ -9,7 +9,12 @@
     "pricing": "Fiyatlar",
     "blog": "Blog",
     "login": "Giriş Yap",
-    "startFree": "Ücretsiz Analiz"
+    "startFree": "Ücretsiz Analiz",
+    "upgrade": "Yükselt",
+    "profile": "Profil",
+    "billing": "Fatura",
+    "settings": "Ayarlar",
+    "signOut": "Çıkış yap"
   },
   "hero": {
     "h1": "Avukata Para Ödemeden\nFinansal Geleceğini Gör.",
@@ -173,5 +178,36 @@
     "cta": "Bekleme listesine katıl",
     "success": "Listedesiniz. Yakında haber vereceğiz.",
     "duplicate": "Zaten listedesiniz."
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Günaydın",
+      "afternoon": "İyi günler",
+      "evening": "İyi akşamlar"
+    },
+    "netWorthNow": "Anlık Net Varlık",
+    "bestYear10": "En İyi 10 Yıllık Sonuç",
+    "monthlyCashFlow": "Aylık Nakit Akışı",
+    "riskScore": "Risk Skoru",
+    "readyTitle": "Analizinizi çalıştırmaya hazır",
+    "readyDesc": "Finansal verileriniz girildi. Yapay zeka projeksiyonu için bir senaryo seçin.",
+    "analyzePrefix": "Analiz et: ",
+    "buildScenarios": "Senaryo oluştur",
+    "projection": "10 Yıllık Net Varlık Projeksiyonu",
+    "scenarioComparison": "Senaryo Karşılaştırması",
+    "keyRisks": "Temel Risk Faktörleri",
+    "analyzeOffer": "Yeni Teklif Analiz Et",
+    "downloadPDF": "PDF Raporu İndir",
+    "editAssets": "Varlıkları Düzenle",
+    "upgradeToRun": "AI analizi için yükseltin →"
+  },
+  "sidebar": {
+    "dashboard": "Panel",
+    "scenarios": "Senaryolar",
+    "report": "Rapor",
+    "settings": "Ayarlar",
+    "upgradeTitle": "Clarified'a Yükselt",
+    "upgradeDesc": "İlk AI analizini al",
+    "upgradeButton": "Yükselt"
   }
 }
