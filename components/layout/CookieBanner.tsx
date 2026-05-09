@@ -17,15 +17,16 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as ConsentValue;
+    const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) setVisible(true);
-    else setConsent(stored);
+    else setConsent(stored as ConsentValue);
   }, []);
 
   function accept() {
-    localStorage.setItem(STORAGE_KEY, "all");
+    localStorage.setItem(STORAGE_KEY, "accepted");
     setConsent("all");
     setVisible(false);
+    window.dispatchEvent(new Event("sl:cookie-accepted"));
   }
 
   function reject() {

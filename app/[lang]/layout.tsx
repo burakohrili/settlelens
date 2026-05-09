@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { locales, type Locale } from "@/i18n";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostHogProvider } from "@/components/layout/PostHogProvider";
+import { CookieBanner } from "@/components/layout/CookieBanner";
 
 type Props = {
   children: React.ReactNode;
@@ -38,6 +39,7 @@ export default async function LangLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <PostHogProvider>
             <TooltipProvider>{children}</TooltipProvider>
+            <CookieBanner />
           </PostHogProvider>
         </NextIntlClientProvider>
       </body>
