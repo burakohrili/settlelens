@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/client";
-import { sendEmail } from "@/lib/email";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,8 +122,12 @@ export default function RegisterPage() {
         });
     }
 
-    // Welcome email — fire and forget (non-blocking)
-    sendEmail({ type: "welcome", to: data.email, name: data.name }).catch(() => {});
+    // Welcome email via API route (server-side Resend, fire and forget)
+    fetch("/api/email/welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ to: data.email, name: data.name }),
+    }).catch(() => {});
 
     setDone(true);
     setLoading(false);
