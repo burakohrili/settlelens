@@ -56,7 +56,7 @@ export default function LoginPage() {
   async function signInWithGoogle() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/${lang}/dashboard` },
+      options: { redirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? window.location.origin}/${lang}/auth/callback` },
     });
   }
 
