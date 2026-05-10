@@ -3,6 +3,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 type Props = {
   params: Promise<{ lang: string; slug: string }>;
@@ -60,6 +62,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <Header />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -182,6 +185,7 @@ export default async function BlogPostPage({ params }: Props) {
           </aside>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

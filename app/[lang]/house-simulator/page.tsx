@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Disclaimer } from "@/components/layout/Disclaimer";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import { Home, ArrowRight } from "lucide-react";
 
@@ -129,6 +131,8 @@ export default function HouseSimulatorPage() {
   const bestIdx = scenarios.reduce((best, s, i) => s.year5NetWorth > scenarios[best].year5NetWorth ? i : best, 0);
 
   return (
+    <>
+    <Header />
     <div className="min-h-screen bg-[var(--cream)]">
       <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
         <div className="text-center mb-8">
@@ -214,5 +218,7 @@ export default function HouseSimulatorPage() {
         </p>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

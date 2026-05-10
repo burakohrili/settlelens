@@ -38,6 +38,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link
           href={`/${locale}`}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="font-display text-xl font-semibold text-[var(--gold)] hover:opacity-90"
         >
           SettleLens

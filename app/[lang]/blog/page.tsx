@@ -1,6 +1,8 @@
 import { getBlogPosts } from "@/lib/blog";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -40,7 +42,9 @@ export default async function BlogPage({ params }: Props) {
   const posts = getBlogPosts(lang);
 
   return (
-    <div className="mx-auto max-w-4xl py-12 px-4">
+    <>
+      <Header />
+      <main className="mx-auto max-w-4xl py-12 px-4">
       <div className="mb-10 text-center">
         <h1
           className="text-3xl font-bold text-[#1C2B3A] sm:text-4xl"
@@ -132,6 +136,8 @@ export default async function BlogPage({ params }: Props) {
           Start Free Analysis →
         </Link>
       </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 }
