@@ -141,16 +141,16 @@ export default function RegisterPage() {
         <div className="max-w-sm text-center">
           <CheckCircle2 size={48} className="mx-auto text-[var(--gain)]" />
           <h1 className="mt-4 font-display text-2xl font-semibold text-[var(--navy)]">
-            Check your email
+            {t("checkEmail")}
           </h1>
           <p className="mt-2 font-ui text-sm text-[var(--brown)]">
-            We sent a confirmation link to your email. Please verify before signing in.
+            {t("checkEmailDesc")}
           </p>
           <Link
             href={`/${lang}/login`}
             className={cn(buttonVariants(), "mt-6 bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
-            Back to Sign In
+            {t("backToLogin")}
           </Link>
         </div>
       </div>
@@ -213,7 +213,7 @@ export default function RegisterPage() {
               {errors.password && <p className="mt-1 font-ui text-xs text-[var(--danger)]">{errors.password.message}</p>}
             </div>
             <div>
-              <Label htmlFor="password_confirm">Confirm password</Label>
+              <Label htmlFor="password_confirm">{t("confirmPassword")}</Label>
               <Input id="password_confirm" type="password" autoComplete="new-password" className="mt-1" {...register("password_confirm")} />
               {errors.password_confirm && <p className="mt-1 font-ui text-xs text-[var(--danger)]">{errors.password_confirm.message}</p>}
             </div>
@@ -233,7 +233,7 @@ export default function RegisterPage() {
                 (!consentValid) && "opacity-50 cursor-not-allowed"
               )}
             >
-              {loading ? "Creating account…" : t("registerCta")}
+              {loading ? t("creatingAccount") : t("registerCta")}
             </button>
           </form>
 

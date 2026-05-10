@@ -193,7 +193,12 @@
     "termsConsent": "Kullanım Koşulları ve Gizlilik Politikasını okudum, kabul ediyorum",
     "dataConsent": "Kişisel verilerimin işlenmesine onay veriyorum",
     "marketingConsent": "İpuçları ve ürün güncellemeleri almak istiyorum (isteğe bağlı)",
-    "forgotPassword": "Şifreni mi unuttun?"
+    "forgotPassword": "Şifreni mi unuttun?",
+    "confirmPassword": "Şifreyi onayla",
+    "creatingAccount": "Hesap oluşturuluyor...",
+    "checkEmail": "E-postanızı kontrol edin",
+    "checkEmailDesc": "E-posta adresinize onay bağlantısı gönderdik. Giriş yapmadan önce lütfen doğrulayın.",
+    "backToLogin": "Girişe Dön"
   },
   "onboarding": {
     "steps": [

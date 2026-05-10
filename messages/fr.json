@@ -193,7 +193,12 @@
     "termsConsent": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
     "dataConsent": "Je consens au traitement de mes données personnelles",
     "marketingConsent": "Je souhaite recevoir des conseils et mises à jour produit (optionnel)",
-    "forgotPassword": "Mot de passe oublié ?"
+    "forgotPassword": "Mot de passe oublié ?",
+    "confirmPassword": "Confirmer le mot de passe",
+    "creatingAccount": "Création du compte...",
+    "checkEmail": "Vérifiez votre e-mail",
+    "checkEmailDesc": "Nous avons envoyé un lien de confirmation à votre e-mail. Veuillez vérifier avant de vous connecter.",
+    "backToLogin": "Retour à la connexion"
   },
   "onboarding": {
     "steps": [

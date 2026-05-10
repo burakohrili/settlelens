@@ -193,7 +193,12 @@
     "termsConsent": "I agree to the Terms of Service and Privacy Policy",
     "dataConsent": "I consent to the processing of my personal data",
     "marketingConsent": "I'd like to receive tips and product updates (optional)",
-    "forgotPassword": "Forgot your password?"
+    "forgotPassword": "Forgot your password?",
+    "confirmPassword": "Confirm password",
+    "creatingAccount": "Creating account...",
+    "checkEmail": "Check your email",
+    "checkEmailDesc": "We sent a confirmation link to your email. Please verify before signing in.",
+    "backToLogin": "Back to Sign In"
   },
   "onboarding": {
     "steps": [
