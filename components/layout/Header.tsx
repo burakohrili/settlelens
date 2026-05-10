@@ -24,10 +24,19 @@ export function Header() {
   }, []);
 
   const navLinks = [
-    { label: t("howItWorks"), href: `/${locale}/#how-it-works` },
-    { label: t("pricing"), href: `/${locale}/#pricing` },
-    { label: t("blog"), href: `/${locale}/blog` },
+    { label: t("howItWorks"), href: `/${locale}/#how-it-works`, anchor: "how-it-works" },
+    { label: t("pricing"), href: `/${locale}/#pricing`, anchor: "pricing" },
+    { label: t("blog"), href: `/${locale}/blog`, anchor: null },
   ];
+
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, anchor: string | null) {
+    if (!anchor) return;
+    const el = document.getElementById(anchor);
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
   return (
     <header
@@ -49,6 +58,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.anchor)}
               className="font-ui text-sm text-[var(--cream)] opacity-80 hover:opacity-100 transition-opacity"
             >
               {link.label}
@@ -96,7 +106,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => { handleNavClick(e, link.anchor); setMobileOpen(false); }}
                   className="font-ui py-2 text-sm text-[var(--cream)] opacity-80 hover:opacity-100"
                 >
                   {link.label}

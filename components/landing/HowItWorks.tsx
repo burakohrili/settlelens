@@ -12,7 +12,7 @@ export function HowItWorks() {
   const steps = t.raw("steps") as Array<{ n: string; title: string; desc: string }>;
 
   return (
-    <section id="how-it-works" ref={ref} className="bg-white py-24 px-4">
+    <section id="how-it-works" ref={ref} className="bg-white py-24 px-4 scroll-mt-16">
       <div className="max-w-5xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
