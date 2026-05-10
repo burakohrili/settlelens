@@ -24,14 +24,9 @@ function useCountUp(target: number, inView: boolean, duration = 2000) {
   return count;
 }
 
-const STATS = [
-  { num: "73%", label: "of divorcing couples overpay in legal fees" },
-  { num: "20 min", label: "vs. months of attorney back-and-forth" },
-  { num: "50×", label: "estimated ROI vs. average legal fee cost" },
-];
-
 export function FearHook() {
   const t = useTranslations("fearHook");
+  const STATS = t.raw("stats") as Array<{ num: string; label: string }>;
   const lang = useLocale();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -92,7 +87,7 @@ export function FearHook() {
             {t("cta")}
           </Link>
           <p className="mt-3 font-ui text-xs text-[var(--brown)]">
-            Preparation tool — not a replacement for professional legal advice.
+            {t("prepNote")}
           </p>
         </motion.div>
       </div>

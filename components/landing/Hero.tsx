@@ -28,7 +28,7 @@ export function Hero() {
         {/* Badge */}
         <motion.div custom={0} initial="hidden" animate="visible" variants={variants}>
           <span className="font-mono text-xs tracking-[0.25em] text-[var(--gold)] uppercase bg-[var(--gold)]/10 border border-[var(--gold)]/30 px-4 py-1.5 rounded-full">
-            Financial Clarity for Divorce
+            {t("badge")}
           </span>
         </motion.div>
 
@@ -49,7 +49,7 @@ export function Hero() {
         {/* Sub-tagline */}
         <motion.p custom={2.5} initial="hidden" animate="visible" variants={variants}
           className="font-ui text-xs text-[var(--sand)] tracking-wide">
-          Financial modeling, not legal advice.
+          {t("subTagline")}
         </motion.p>
 
         {/* CTA */}

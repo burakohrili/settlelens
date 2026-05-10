@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Disclaimer } from "@/components/layout/Disclaimer";
@@ -112,6 +113,7 @@ function Slider({ label, value, min, max, step, onChange }: {
 }
 
 export default function HouseSimulatorPage() {
+  const t = useTranslations("houseSimulator");
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
 
@@ -141,24 +143,22 @@ export default function HouseSimulatorPage() {
               <Home size={28} className="text-[var(--gold)]" />
             </div>
           </div>
-          <h1 className="font-display text-3xl font-bold text-[var(--navy)]">House Decision Simulator</h1>
-          <p className="font-body text-[var(--brown)] mt-2 max-w-lg mx-auto">
-            The house is usually the biggest financial decision in a divorce. See the real numbers — instantly.
-          </p>
+          <h1 className="font-display text-3xl font-bold text-[var(--navy)]">{t("title")}</h1>
+          <p className="font-body text-[var(--brown)] mt-2 max-w-lg mx-auto">{t("subtitle")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Inputs */}
           <div className="rounded-xl border border-[var(--sand)] bg-white p-5 space-y-5">
-            <h2 className="font-ui text-sm font-semibold text-[var(--navy)]">Your situation</h2>
-            <Slider label="Home value" value={inputs.homeValue} min={50_000} max={2_000_000} step={10_000} onChange={(v) => update("homeValue", v)} />
-            <Slider label="Remaining mortgage" value={inputs.mortgage} min={0} max={inputs.homeValue} step={5_000} onChange={(v) => update("mortgage", v)} />
-            <Slider label="Monthly mortgage payment" value={inputs.monthlyPayment} min={200} max={10_000} step={100} onChange={(v) => update("monthlyPayment", v)} />
-            <Slider label="My annual income" value={inputs.myIncome} min={0} max={500_000} step={5_000} onChange={(v) => update("myIncome", v)} />
-            <Slider label="Spouse annual income" value={inputs.spouseIncome} min={0} max={500_000} step={5_000} onChange={(v) => update("spouseIncome", v)} />
+            <h2 className="font-ui text-sm font-semibold text-[var(--navy)]">{t("situationTitle")}</h2>
+            <Slider label={t("homeValue")} value={inputs.homeValue} min={50_000} max={2_000_000} step={10_000} onChange={(v) => update("homeValue", v)} />
+            <Slider label={t("mortgage")} value={inputs.mortgage} min={0} max={inputs.homeValue} step={5_000} onChange={(v) => update("mortgage", v)} />
+            <Slider label={t("monthlyPayment")} value={inputs.monthlyPayment} min={200} max={10_000} step={100} onChange={(v) => update("monthlyPayment", v)} />
+            <Slider label={t("myIncome")} value={inputs.myIncome} min={0} max={500_000} step={5_000} onChange={(v) => update("myIncome", v)} />
+            <Slider label={t("spouseIncome")} value={inputs.spouseIncome} min={0} max={500_000} step={5_000} onChange={(v) => update("spouseIncome", v)} />
 
             <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 font-ui text-xs text-[var(--brown)]">
-              <strong>Equity:</strong> {fmt(Math.max(inputs.homeValue - inputs.mortgage, 0))} · Assumes 3% annual appreciation, 5% investment return, 6% sale costs.
+              <strong>{t("equity")}</strong> {fmt(Math.max(inputs.homeValue - inputs.mortgage, 0))} · {t("note")}
             </div>
           </div>
 
@@ -197,24 +197,22 @@ export default function HouseSimulatorPage() {
 
         {/* CTA */}
         <div className="mt-8 rounded-xl border border-[var(--navy)] bg-[var(--navy)] p-6 text-center text-white">
-          <h2 className="font-display text-xl font-bold mb-2">See your full financial picture</h2>
-          <p className="font-body text-sm text-[#a0b0c0] mb-4 max-w-md mx-auto">
-            This simulator uses simplified assumptions. Your full analysis — including debts, income, alimony, and 10-year projections — requires your complete financial data.
-          </p>
+          <h2 className="font-display text-xl font-bold mb-2">{t("fullPictureTitle")}</h2>
+          <p className="font-body text-sm text-[#a0b0c0] mb-4 max-w-md mx-auto">{t("fullPictureDesc")}</p>
           <Link
             href={`/${lang}/register`}
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
-            Create my personal analysis <ArrowRight size={16} className="ml-1" />
+            {t("fullPictureButton")} <ArrowRight size={16} className="ml-1" />
           </Link>
-          <p className="font-ui text-xs text-[#6b7f90] mt-2">Free to start · No credit card required</p>
+          <p className="font-ui text-xs text-[#6b7f90] mt-2">{t("fullPictureFree")}</p>
         </div>
 
         <div className="mt-6">
           <Disclaimer />
         </div>
         <p className="font-ui text-xs text-center text-[var(--brown)] mt-3">
-          This is a simplified model for illustrative purposes only. Actual settlement outcomes depend on jurisdiction, legal agreements, and judicial discretion. Not legal or financial advice.
+          {t("disclaimer")}
         </p>
       </div>
     </div>

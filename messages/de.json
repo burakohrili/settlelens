@@ -20,46 +20,144 @@
     "h1": "Wissen Sie genau, wo Sie stehen.\nBevor Sie irgendetwas unterschreiben.",
     "h2": "KI-gestützte Finanzmodellierung für Scheidungen. Sehen Sie Ihre 10-jährige finanzielle Zukunft in jedem Einigungsszenario – in Minuten, nicht Monaten.",
     "cta": "Kostenlose Analyse starten",
-    "sub": "Dauert 20 Minuten. Bereiten Sie sich vor dem Anwaltsgespräch vor."
+    "sub": "Dauert 20 Minuten. Bereiten Sie sich vor dem Anwaltsgespräch vor.",
+    "badge": "Finanzielle Klarheit bei Scheidungen",
+    "subTagline": "Finanzmodellierung, keine Rechtsberatung."
   },
   "fearHook": {
     "stat": "15.000€+",
     "statLabel": "durchschnittliche Scheidungsanwaltskosten",
     "hook": "Wie viel davon zahlen Sie Ihrem Anwalt, um Zahlen zu erklären, die Sie selbst berechnen könnten?",
-    "cta": "Jetzt kostenlos berechnen"
+    "cta": "Jetzt kostenlos berechnen",
+    "stats": [
+      {
+        "num": "73%",
+        "label": "der Scheidungspaare zahlen zu viel an Anwaltskosten"
+      },
+      {
+        "num": "20 Min",
+        "label": "statt monatelangem Anwaltsschriftwechsel"
+      },
+      {
+        "num": "50x",
+        "label": "geschatzter ROI vs. durchschnittliche Anwaltskosten"
+      }
+    ],
+    "prepNote": "Vorbereitungswerkzeug - kein Ersatz fur professionellen Rechtsrat."
   },
   "howItWorks": {
     "title": "Drei Schritte zur finanziellen Klarheit",
     "steps": [
-      { "n": "01", "title": "Ihre finanzielle Situation eingeben", "desc": "Vermögen, Schulden, Einkommen, Kinder. Sicher, privat, dauert 20 Minuten." },
-      { "n": "02", "title": "Szenarien erstellen", "desc": "Haus behalten? Verkaufen? Dem anderen überlassen? Bis zu 3 Ergebnisse modellieren." },
-      { "n": "03", "title": "10-Jahres-Projektion erhalten", "desc": "KI analysiert die Gesetze Ihrer Rechtsordnung und projiziert jedes Szenario. PDF herunterladen." }
+      {
+        "n": "01",
+        "title": "Ihre finanzielle Situation eingeben",
+        "desc": "Vermögen, Schulden, Einkommen, Kinder. Sicher, privat, dauert 20 Minuten."
+      },
+      {
+        "n": "02",
+        "title": "Szenarien erstellen",
+        "desc": "Haus behalten? Verkaufen? Dem anderen überlassen? Bis zu 3 Ergebnisse modellieren."
+      },
+      {
+        "n": "03",
+        "title": "10-Jahres-Projektion erhalten",
+        "desc": "KI analysiert die Gesetze Ihrer Rechtsordnung und projiziert jedes Szenario. PDF herunterladen."
+      }
     ]
   },
   "features": {
     "title": "Alles, was Sie für starke Verhandlungen brauchen",
     "items": [
-      { "title": "Jedes Szenario im Vergleich", "desc": "Sehen Sie die 10-jährige finanzielle Auswirkung jeder Entscheidung, bevor Sie wählen." },
-      { "title": "Ihre Rechtsordnung. Ihre Regeln.", "desc": "Deutsches Zugewinnausgleich (BGB §1363)? SettleLens kennt die Formeln." },
-      { "title": "Ein Bericht, den Ihr Anwalt respektiert", "desc": "Professionelles PDF: Vermögensübersicht, Projektionsdiagramme, Verhandlungsstrategie." }
+      {
+        "title": "Jedes Szenario im Vergleich",
+        "desc": "Sehen Sie die 10-jährige finanzielle Auswirkung jeder Entscheidung, bevor Sie wählen."
+      },
+      {
+        "title": "Ihre Rechtsordnung. Ihre Regeln.",
+        "desc": "Deutsches Zugewinnausgleich (BGB §1363)? SettleLens kennt die Formeln."
+      },
+      {
+        "title": "Ein Bericht, den Ihr Anwalt respektiert",
+        "desc": "Professionelles PDF: Vermögensübersicht, Projektionsdiagramme, Verhandlungsstrategie."
+      }
     ]
   },
   "social": {
     "title": "Von Menschen, die denselben Weg gegangen sind",
     "quotes": [
-      { "text": "Ich ging in die Mediation und wusste genau, welches Angebot ich annehmen sollte. Diese Klarheit war unbezahlbar.", "author": "Anna M., Berlin" },
-      { "text": "Der PDF-Bericht unterstützte meine Position. Mein Anwalt sagte, es war der am besten vorbereitete Mandant.", "author": "Thomas K., München" },
-      { "text": "Drei Szenarien nebeneinander. Endlich verstand ich, was das Behalten des Hauses für das nächste Jahrzehnt bedeutete.", "author": "Sabine W., Hamburg" }
+      {
+        "text": "Ich ging in die Mediation und wusste genau, welches Angebot ich annehmen sollte. Diese Klarheit war unbezahlbar.",
+        "author": "Anna M., Berlin"
+      },
+      {
+        "text": "Der PDF-Bericht unterstützte meine Position. Mein Anwalt sagte, es war der am besten vorbereitete Mandant.",
+        "author": "Thomas K., München"
+      },
+      {
+        "text": "Drei Szenarien nebeneinander. Endlich verstand ich, was das Behalten des Hauses für das nächste Jahrzehnt bedeutete.",
+        "author": "Sabine W., Hamburg"
+      }
     ]
   },
   "pricing": {
     "title": "Einfache, transparente Preise",
     "plans": [
-      { "id": "discovery", "name": "Discovery", "price": "Kostenlos", "period": "für immer", "features": ["Vermögens- und Schuldeninventar", "Nettovermögensübersicht", "Keine KI-Analyse", "Jederzeit upgraden"], "cta": "Kostenlos starten" },
-      { "id": "clarified", "name": "Clarified", "price": "27€", "period": "einmalig · 14-Tage-Zugang", "features": ["1 KI-gestützte Analyse", "1 Einigungsszenario", "Professioneller PDF-Bericht", "14-Tage-Zugang"], "cta": "Klarheit gewinnen" },
-      { "id": "strategist", "name": "Strategist", "price": "36€", "period": "pro Monat", "badge": "Beliebteste Wahl", "features": ["Unbegrenzte Analysen", "Unbegrenzte Szenarien", "Premium-PDF-Berichte", "10-Jahres-Projektionen", "Inflationsanpassungen"], "cta": "Strategist starten" },
-      { "id": "professional", "name": "Professional", "price": "92€", "period": "pro Monat", "features": ["Alles im Strategist", "Anwaltsgerechter Excel + PDF-Export", "Beweisorganisator", "Prioritätssupport"], "cta": "Professional wählen" }
-    ]
+      {
+        "id": "discovery",
+        "name": "Discovery",
+        "price": "Kostenlos",
+        "period": "für immer",
+        "features": [
+          "Vermögens- und Schuldeninventar",
+          "Nettovermögensübersicht",
+          "Keine KI-Analyse",
+          "Jederzeit upgraden"
+        ],
+        "cta": "Kostenlos starten"
+      },
+      {
+        "id": "clarified",
+        "name": "Clarified",
+        "price": "27€",
+        "period": "einmalig · 14-Tage-Zugang",
+        "features": [
+          "1 KI-gestützte Analyse",
+          "1 Einigungsszenario",
+          "Professioneller PDF-Bericht",
+          "14-Tage-Zugang"
+        ],
+        "cta": "Klarheit gewinnen"
+      },
+      {
+        "id": "strategist",
+        "name": "Strategist",
+        "price": "36€",
+        "period": "pro Monat",
+        "badge": "Beliebteste Wahl",
+        "features": [
+          "Unbegrenzte Analysen",
+          "Unbegrenzte Szenarien",
+          "Premium-PDF-Berichte",
+          "10-Jahres-Projektionen",
+          "Inflationsanpassungen"
+        ],
+        "cta": "Strategist starten"
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": "92€",
+        "period": "pro Monat",
+        "features": [
+          "Alles im Strategist",
+          "Anwaltsgerechter Excel + PDF-Export",
+          "Beweisorganisator",
+          "Prioritätssupport"
+        ],
+        "cta": "Professional wählen"
+      }
+    ],
+    "footerNote": "Alle Plane: Sicher, privat. Finanzmodellierung, keine Rechtsberatung."
   },
   "finalCta": {
     "title": "Ihre Einigung klar sehen",
@@ -99,12 +197,30 @@
   },
   "onboarding": {
     "steps": [
-      { "title": "Wo befinden Sie sich?", "subtitle": "Wir wenden die Finanzformeln für Ihre Rechtsordnung an." },
-      { "title": "Ihr Vermögen", "subtitle": "Listen Sie alles auf, was Sie und Ihr Ehepartner besitzen." },
-      { "title": "Ihre Schulden", "subtitle": "Hypotheken, Kredite, Kreditkarten – das vollständige Bild." },
-      { "title": "Einkommen", "subtitle": "Ihr und das Ihres Ehepartners, brutto und netto." },
-      { "title": "Kinder", "subtitle": "Falls zutreffend – Alter und Sorgerechtsregelung." },
-      { "title": "Szenarien erstellen", "subtitle": "Was sind die möglichen Ergebnisse? Lassen Sie uns sie modellieren." }
+      {
+        "title": "Wo befinden Sie sich?",
+        "subtitle": "Wir wenden die Finanzformeln für Ihre Rechtsordnung an."
+      },
+      {
+        "title": "Ihr Vermögen",
+        "subtitle": "Listen Sie alles auf, was Sie und Ihr Ehepartner besitzen."
+      },
+      {
+        "title": "Ihre Schulden",
+        "subtitle": "Hypotheken, Kredite, Kreditkarten – das vollständige Bild."
+      },
+      {
+        "title": "Einkommen",
+        "subtitle": "Ihr und das Ihres Ehepartners, brutto und netto."
+      },
+      {
+        "title": "Kinder",
+        "subtitle": "Falls zutreffend – Alter und Sorgerechtsregelung."
+      },
+      {
+        "title": "Szenarien erstellen",
+        "subtitle": "Was sind die möglichen Ergebnisse? Lassen Sie uns sie modellieren."
+      }
     ],
     "next": "Weiter",
     "back": "Zurück",
@@ -114,13 +230,135 @@
     "short": "Keine Rechtsberatung.",
     "full": "SettleLens bietet Finanzmodellierung nur zu Informationszwecken an. Ergebnisse sind Schätzungen auf Basis öffentlich zugänglicher Rechtsformeln und stellen keine Rechts-, Steuer- oder Finanzberatung dar. Konsultieren Sie immer einen qualifizierten Anwalt, bevor Sie Entscheidungen treffen."
   },
-  "userScenarios": { "title": "Welche Entscheidung möchten Sie treffen?", "sub": "SettleLens wandelt emotional komplexe Entscheidungen in vergleichbare Finanzszenarien um.", "cards": [{ "icon": "🏠", "title": "Was passiert, wenn ich das Haus behalte?", "desc": "Vergleichen Sie Behalten, Verkaufen oder Übertragen des Hauses und sehen Sie die langfristige Wirkung." }, { "icon": "⚖️", "title": "Ist dieses Angebot sinnvoll für mich?", "desc": "Modellieren Sie die vorgeschlagene Aufteilung über Vermögen, Schulden und Unterhaltszahlungen." }, { "icon": "📋", "title": "Wie bereite ich mich auf das Anwaltsgespräch vor?", "desc": "Organisieren Sie Ihre Finanzdaten vor dem Gespräch in einem professionellen Bericht." }] },
-  "whatItDoesNot": { "title": "Was SettleLens tut — und was nicht", "doesTitle": "Was es tut", "doesNot": "Was es nicht tut", "does": ["Finanzielle Szenariomodellierung", "Vermögens- und Schuldenvergleich", "10-Jahres-Cashflow-Prognose", "Unterhaltsfolgenanalyse", "Anwaltsgerechte Finanzübersicht"], "not": ["Rechtsberatung", "Vorhersage von Gerichtsergebnissen", "Anwaltsersatz", "Garantierte Vergleichszahlen", "Entscheidungen bei komplexen Fällen"], "note": "Komplexe oder risikoreiche Fälle erfordern professionelle rechtliche Unterstützung.", "link": "Mehr über unsere Einschränkungen →" },
-  "trust": { "title": "Für einen sensiblen Prozess entwickelt", "cards": [{ "icon": "🔒", "title": "Ihre Daten werden nicht verkauft", "desc": "Finanzielle Eingaben werden nie für Werbezwecke genutzt oder mit Dritten geteilt." }, { "icon": "🖥️", "title": "Sensible Daten werden nie protokolliert", "desc": "Vermögenswerte, Einkommen und Szenariodetails werden nicht in Entwicklerprotokolle geschrieben." }, { "icon": "🗂️", "title": "Sie kontrollieren Ihre Daten", "desc": "Exportieren Sie Ihre Finanzdaten oder löschen Sie Ihr Konto dauerhaft." }, { "icon": "⚖️", "title": "Finanzmodellierung, keine Rechtsberatung", "desc": "SettleLens ist ein Vorbereitungswerkzeug. Komplexe Fälle erfordern einen qualifizierten Anwalt." }], "link": "Wie wir Ihre Daten schützen →" },
-  "countryCoverage": { "title": "Für Ihre Rechtsordnung entwickelt", "sub": "SettleLens wendet länderspezifische Güterrechtsannahmen für die Finanzszenariomodellierung an.", "note": "Richterliches Ermessen, versteckte Vermögenswerte und komplexe Vereinbarungen können zu anderen Ergebnissen führen.", "link": "Methodik für Ihr Land →", "countries": [{ "flag": "🇺🇸", "name": "USA", "law": "Community & equitable distribution" }, { "flag": "🇬🇧", "name": "Vereinigtes Königreich", "law": "MCA 1973 Section 25" }, { "flag": "🇩🇪", "name": "Deutschland", "law": "Zugewinngemeinschaft" }, { "flag": "🇫🇷", "name": "Frankreich", "law": "Communauté réduite aux acquêts" }, { "flag": "🇪🇸", "name": "Spanien", "law": "Régimen de gananciales" }, { "flag": "🇹🇷", "name": "Türkei", "law": "TMK Madde 179" }] },
-  "attorneyPrep": { "title": "Gehen Sie vorbereitet in Ihr Anwaltsgespräch", "sub": "Bringen Sie statt verstreuter Notizen eine strukturierte Finanzübersicht — Vermögen, Schulden, Einkommen und Szenarien in einem professionellen Bericht.", "cta": "Meine Finanzübersicht erstellen", "note": "Finanzmodellierung, keine Rechtsberatung." },
-  "houseDemo": { "title": "Das Haus ist meist die größte Entscheidung.", "sub": "Sehen Sie den finanziellen Unterschied zwischen Behalten, Verkaufen oder Übertragen.", "sliderLabel": "Hauswert", "iKeep": "Ich behalte es", "theyKeep": "Partner behält es", "weSell": "Wir verkaufen", "netPosition": "Nettoposition", "fullAnalysis": "Vollständige Hausanalyse →", "note": "Vereinfachtes Modell — 3% Wertsteigerung, 5% Anlagerendite, 6% Verkaufskosten." },
-  "waitlist": { "placeholder": "Ihre E-Mail-Adresse", "cta": "Warteliste beitreten", "success": "Sie stehen auf der Liste. Wir melden uns.", "duplicate": "Sie sind bereits auf der Liste." },
+  "userScenarios": {
+    "title": "Welche Entscheidung möchten Sie treffen?",
+    "sub": "SettleLens wandelt emotional komplexe Entscheidungen in vergleichbare Finanzszenarien um.",
+    "cards": [
+      {
+        "icon": "🏠",
+        "title": "Was passiert, wenn ich das Haus behalte?",
+        "desc": "Vergleichen Sie Behalten, Verkaufen oder Übertragen des Hauses und sehen Sie die langfristige Wirkung."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Ist dieses Angebot sinnvoll für mich?",
+        "desc": "Modellieren Sie die vorgeschlagene Aufteilung über Vermögen, Schulden und Unterhaltszahlungen."
+      },
+      {
+        "icon": "📋",
+        "title": "Wie bereite ich mich auf das Anwaltsgespräch vor?",
+        "desc": "Organisieren Sie Ihre Finanzdaten vor dem Gespräch in einem professionellen Bericht."
+      }
+    ]
+  },
+  "whatItDoesNot": {
+    "title": "Was SettleLens tut — und was nicht",
+    "doesTitle": "Was es tut",
+    "doesNot": "Was es nicht tut",
+    "does": [
+      "Finanzielle Szenariomodellierung",
+      "Vermögens- und Schuldenvergleich",
+      "10-Jahres-Cashflow-Prognose",
+      "Unterhaltsfolgenanalyse",
+      "Anwaltsgerechte Finanzübersicht"
+    ],
+    "not": [
+      "Rechtsberatung",
+      "Vorhersage von Gerichtsergebnissen",
+      "Anwaltsersatz",
+      "Garantierte Vergleichszahlen",
+      "Entscheidungen bei komplexen Fällen"
+    ],
+    "note": "Komplexe oder risikoreiche Fälle erfordern professionelle rechtliche Unterstützung.",
+    "link": "Mehr über unsere Einschränkungen →"
+  },
+  "trust": {
+    "title": "Für einen sensiblen Prozess entwickelt",
+    "cards": [
+      {
+        "icon": "🔒",
+        "title": "Ihre Daten werden nicht verkauft",
+        "desc": "Finanzielle Eingaben werden nie für Werbezwecke genutzt oder mit Dritten geteilt."
+      },
+      {
+        "icon": "🖥️",
+        "title": "Sensible Daten werden nie protokolliert",
+        "desc": "Vermögenswerte, Einkommen und Szenariodetails werden nicht in Entwicklerprotokolle geschrieben."
+      },
+      {
+        "icon": "🗂️",
+        "title": "Sie kontrollieren Ihre Daten",
+        "desc": "Exportieren Sie Ihre Finanzdaten oder löschen Sie Ihr Konto dauerhaft."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Finanzmodellierung, keine Rechtsberatung",
+        "desc": "SettleLens ist ein Vorbereitungswerkzeug. Komplexe Fälle erfordern einen qualifizierten Anwalt."
+      }
+    ],
+    "link": "Wie wir Ihre Daten schützen →"
+  },
+  "countryCoverage": {
+    "title": "Für Ihre Rechtsordnung entwickelt",
+    "sub": "SettleLens wendet länderspezifische Güterrechtsannahmen für die Finanzszenariomodellierung an.",
+    "note": "Richterliches Ermessen, versteckte Vermögenswerte und komplexe Vereinbarungen können zu anderen Ergebnissen führen.",
+    "link": "Methodik für Ihr Land →",
+    "countries": [
+      {
+        "flag": "🇺🇸",
+        "name": "USA",
+        "law": "Community & equitable distribution"
+      },
+      {
+        "flag": "🇬🇧",
+        "name": "Vereinigtes Königreich",
+        "law": "MCA 1973 Section 25"
+      },
+      {
+        "flag": "🇩🇪",
+        "name": "Deutschland",
+        "law": "Zugewinngemeinschaft"
+      },
+      {
+        "flag": "🇫🇷",
+        "name": "Frankreich",
+        "law": "Communauté réduite aux acquêts"
+      },
+      {
+        "flag": "🇪🇸",
+        "name": "Spanien",
+        "law": "Régimen de gananciales"
+      },
+      {
+        "flag": "🇹🇷",
+        "name": "Türkei",
+        "law": "TMK Madde 179"
+      }
+    ]
+  },
+  "attorneyPrep": {
+    "title": "Gehen Sie vorbereitet in Ihr Anwaltsgespräch",
+    "sub": "Bringen Sie statt verstreuter Notizen eine strukturierte Finanzübersicht — Vermögen, Schulden, Einkommen und Szenarien in einem professionellen Bericht.",
+    "cta": "Meine Finanzübersicht erstellen",
+    "note": "Finanzmodellierung, keine Rechtsberatung."
+  },
+  "houseDemo": {
+    "title": "Das Haus ist meist die größte Entscheidung.",
+    "sub": "Sehen Sie den finanziellen Unterschied zwischen Behalten, Verkaufen oder Übertragen.",
+    "sliderLabel": "Hauswert",
+    "iKeep": "Ich behalte es",
+    "theyKeep": "Partner behält es",
+    "weSell": "Wir verkaufen",
+    "netPosition": "Nettoposition",
+    "fullAnalysis": "Vollständige Hausanalyse →",
+    "note": "Vereinfachtes Modell — 3% Wertsteigerung, 5% Anlagerendite, 6% Verkaufskosten."
+  },
+  "waitlist": {
+    "placeholder": "Ihre E-Mail-Adresse",
+    "cta": "Warteliste beitreten",
+    "success": "Sie stehen auf der Liste. Wir melden uns.",
+    "duplicate": "Sie sind bereits auf der Liste."
+  },
   "dashboard": {
     "greeting": {
       "morning": "Guten Morgen",
@@ -363,5 +601,42 @@
       "weSellHouse": "Wir verkaufen das Haus",
       "noHouse": "Kein Haus / nicht zutreffend"
     }
+  },
+  "blog": {
+    "title": "Finanzielle Scheidungsratgeber",
+    "subtitle": "Verstehen Sie Ihre finanziellen Moglichkeiten, bevor Sie verhandeln.",
+    "disclaimerNote": "Nur zu Informationszwecken. Keine Rechts- oder Finanzberatung.",
+    "empty": "Artikel erscheinen in Kurze.",
+    "backHome": "Zuruck zur Startseite",
+    "ctaTitle": "Bereit, Ihre Einigung zu modellieren?",
+    "ctaDesc": "Vergleichen Sie Szenarien und verstehen Sie Ihre finanzielle Situation.",
+    "ctaButton": "Kostenlose Analyse starten",
+    "allArticles": "Alle Artikel",
+    "disclaimerLabel": "Haftungsausschluss:",
+    "disclaimerText": "Dieser Artikel dient nur zu Informationszwecken. SettleLens bietet finanzielle Szenariomodellierung - keine Rechts- oder Finanzberatung. Konsultieren Sie immer einen qualifizierten Anwalt.",
+    "postCtaTitle": "Modellieren Sie Ihre Einigungsszenarien",
+    "postCtaDesc": "Sehen Sie die 10-Jahres-Finanzauswirkungen verschiedener Scheidungsentscheidungen.",
+    "postCtaButton": "Kostenlose Analyse starten",
+    "relatedArticles": "Verwandte Artikel",
+    "sidebarTitle": "Sehen Sie Ihre Zahlen",
+    "sidebarDesc": "Kostenlose Finanzanalyse - keine Rechtsberatung.",
+    "sidebarButton": "Kostenlos starten"
+  },
+  "houseSimulator": {
+    "title": "Haus-Entscheidungs-Simulator",
+    "subtitle": "Das Haus ist meist die groste finanzielle Entscheidung bei einer Scheidung. Sehen Sie die echten Zahlen sofort.",
+    "situationTitle": "Ihre Situation",
+    "homeValue": "Hauswert",
+    "mortgage": "Verbleibende Hypothek",
+    "monthlyPayment": "Monatliche Hypothekenzahlung",
+    "myIncome": "Mein Jahreseinkommen",
+    "spouseIncome": "Jahreseinkommen des Ehepartners",
+    "equity": "Eigenkapital:",
+    "note": "3% Wertsteigerung, 5% Anlagerendite, 6% Verkaufskosten angenommen.",
+    "fullPictureTitle": "Sehen Sie Ihr vollstandiges Finanzbild",
+    "fullPictureDesc": "Dieser Simulator verwendet vereinfachte Annahmen. Vollstandige Analyse erfordert vollstandige Finanzdaten.",
+    "fullPictureButton": "Meine personliche Analyse erstellen",
+    "fullPictureFree": "Kostenlos starten. Keine Kreditkarte erforderlich.",
+    "disclaimer": "Dies ist ein vereinfachtes Modell zu Illustrationszwecken. Keine Rechts- oder Finanzberatung."
   }
 }

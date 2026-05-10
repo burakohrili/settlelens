@@ -20,46 +20,144 @@
     "h1": "Know Exactly Where You Stand.\nBefore You Sign Anything.",
     "h2": "AI-powered financial modeling for divorce. See your 10-year financial future across every settlement scenario — in minutes, not months.",
     "cta": "Start Free Analysis",
-    "sub": "Takes 20 minutes. Prepare before you meet your attorney."
+    "sub": "Takes 20 minutes. Prepare before you meet your attorney.",
+    "badge": "Financial Clarity for Divorce",
+    "subTagline": "Financial modeling, not legal advice."
   },
   "fearHook": {
     "stat": "$15,000+",
     "statLabel": "average divorce legal fees",
     "hook": "How much of that is paying your attorney to explain numbers you could calculate yourself?",
-    "cta": "Calculate Yours Free"
+    "cta": "Calculate Yours Free",
+    "stats": [
+      {
+        "num": "73%",
+        "label": "of divorcing couples overpay in legal fees"
+      },
+      {
+        "num": "20 min",
+        "label": "vs. months of attorney back-and-forth"
+      },
+      {
+        "num": "50x",
+        "label": "estimated ROI vs. average legal fee cost"
+      }
+    ],
+    "prepNote": "Preparation tool - not a replacement for professional legal advice."
   },
   "howItWorks": {
     "title": "Three Steps to Financial Clarity",
     "steps": [
-      { "n": "01", "title": "Enter Your Financial Picture", "desc": "Assets, debts, income, children. Secure, private, takes 20 minutes." },
-      { "n": "02", "title": "Build Your Scenarios", "desc": "Keep the house? Sell it? Let them have it? Model up to 3 outcomes." },
-      { "n": "03", "title": "Get Your 10-Year Projection", "desc": "AI analyzes your jurisdiction's laws and projects each scenario. Download the PDF." }
+      {
+        "n": "01",
+        "title": "Enter Your Financial Picture",
+        "desc": "Assets, debts, income, children. Secure, private, takes 20 minutes."
+      },
+      {
+        "n": "02",
+        "title": "Build Your Scenarios",
+        "desc": "Keep the house? Sell it? Let them have it? Model up to 3 outcomes."
+      },
+      {
+        "n": "03",
+        "title": "Get Your 10-Year Projection",
+        "desc": "AI analyzes your jurisdiction's laws and projects each scenario. Download the PDF."
+      }
     ]
   },
   "features": {
     "title": "Everything You Need to Negotiate From Strength",
     "items": [
-      { "title": "Every Scenario, Side by Side", "desc": "See the 10-year financial impact of each choice before you decide." },
-      { "title": "Your Jurisdiction. Your Rules.", "desc": "California community property? UK Section 25? German Zugewinn? SettleLens knows the formulas." },
-      { "title": "A Report Your Lawyer Respects", "desc": "Professional PDF: asset breakdown, projection charts, negotiation strategy." }
+      {
+        "title": "Every Scenario, Side by Side",
+        "desc": "See the 10-year financial impact of each choice before you decide."
+      },
+      {
+        "title": "Your Jurisdiction. Your Rules.",
+        "desc": "California community property? UK Section 25? German Zugewinn? SettleLens knows the formulas."
+      },
+      {
+        "title": "A Report Your Lawyer Respects",
+        "desc": "Professional PDF: asset breakdown, projection charts, negotiation strategy."
+      }
     ]
   },
   "social": {
     "title": "From People Who've Been Where You Are",
     "quotes": [
-      { "text": "I walked into mediation knowing exactly which offer to accept. That clarity was worth more than any lawyer.", "author": "Sarah M., California" },
-      { "text": "The PDF report legitimized my position. My attorney said it was the most prepared she'd seen a client.", "author": "James T., London" },
-      { "text": "Three scenarios, side by side. I finally understood what keeping the house actually meant for the next decade.", "author": "Michelle K., Texas" }
+      {
+        "text": "I walked into mediation knowing exactly which offer to accept. That clarity was worth more than any lawyer.",
+        "author": "Sarah M., California"
+      },
+      {
+        "text": "The PDF report legitimized my position. My attorney said it was the most prepared she'd seen a client.",
+        "author": "James T., London"
+      },
+      {
+        "text": "Three scenarios, side by side. I finally understood what keeping the house actually meant for the next decade.",
+        "author": "Michelle K., Texas"
+      }
     ]
   },
   "pricing": {
     "title": "Simple, Transparent Pricing",
     "plans": [
-      { "id": "discovery", "name": "Discovery", "price": "Free", "period": "forever", "features": ["Asset & debt inventory", "Net worth summary", "No AI analysis", "Upgrade anytime"], "cta": "Start Free" },
-      { "id": "clarified", "name": "Clarified", "price": "$29", "period": "one-time · 14-day access", "features": ["1 AI-powered analysis", "1 settlement scenario", "Professional PDF report", "14-day access"], "cta": "Get Clarity" },
-      { "id": "strategist", "name": "Strategist", "price": "$39", "period": "per month", "badge": "Most Popular", "features": ["Unlimited analyses", "Unlimited scenarios", "Premium PDF reports", "10-year projections", "Inflation adjustments"], "cta": "Start Strategist" },
-      { "id": "professional", "name": "Professional", "price": "$99", "period": "per month", "features": ["Everything in Strategist", "Attorney-ready Excel + PDF export", "Evidence organizer", "Priority support"], "cta": "Go Professional" }
-    ]
+      {
+        "id": "discovery",
+        "name": "Discovery",
+        "price": "Free",
+        "period": "forever",
+        "features": [
+          "Asset & debt inventory",
+          "Net worth summary",
+          "No AI analysis",
+          "Upgrade anytime"
+        ],
+        "cta": "Start Free"
+      },
+      {
+        "id": "clarified",
+        "name": "Clarified",
+        "price": "$29",
+        "period": "one-time · 14-day access",
+        "features": [
+          "1 AI-powered analysis",
+          "1 settlement scenario",
+          "Professional PDF report",
+          "14-day access"
+        ],
+        "cta": "Get Clarity"
+      },
+      {
+        "id": "strategist",
+        "name": "Strategist",
+        "price": "$39",
+        "period": "per month",
+        "badge": "Most Popular",
+        "features": [
+          "Unlimited analyses",
+          "Unlimited scenarios",
+          "Premium PDF reports",
+          "10-year projections",
+          "Inflation adjustments"
+        ],
+        "cta": "Start Strategist"
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": "$99",
+        "period": "per month",
+        "features": [
+          "Everything in Strategist",
+          "Attorney-ready Excel + PDF export",
+          "Evidence organizer",
+          "Priority support"
+        ],
+        "cta": "Go Professional"
+      }
+    ],
+    "footerNote": "All plans: Secure, private. Financial modeling, not legal advice."
   },
   "finalCta": {
     "title": "See Your Settlement Clearly",
@@ -99,12 +197,30 @@
   },
   "onboarding": {
     "steps": [
-      { "title": "Where are you located?", "subtitle": "We apply the financial formulas for your jurisdiction." },
-      { "title": "Your Assets", "subtitle": "List everything you and your spouse own." },
-      { "title": "Your Debts", "subtitle": "Mortgages, loans, credit cards — the full picture." },
-      { "title": "Income", "subtitle": "Yours and your spouse's, gross and net." },
-      { "title": "Children", "subtitle": "If applicable — ages and custody arrangement." },
-      { "title": "Build Your Scenarios", "subtitle": "What are the possible outcomes? Let's model them." }
+      {
+        "title": "Where are you located?",
+        "subtitle": "We apply the financial formulas for your jurisdiction."
+      },
+      {
+        "title": "Your Assets",
+        "subtitle": "List everything you and your spouse own."
+      },
+      {
+        "title": "Your Debts",
+        "subtitle": "Mortgages, loans, credit cards — the full picture."
+      },
+      {
+        "title": "Income",
+        "subtitle": "Yours and your spouse's, gross and net."
+      },
+      {
+        "title": "Children",
+        "subtitle": "If applicable — ages and custody arrangement."
+      },
+      {
+        "title": "Build Your Scenarios",
+        "subtitle": "What are the possible outcomes? Let's model them."
+      }
     ],
     "next": "Continue",
     "back": "Back",
@@ -118,27 +234,67 @@
     "title": "What decision are you trying to make?",
     "sub": "SettleLens turns emotionally complex decisions into comparable financial scenarios.",
     "cards": [
-      { "icon": "🏠", "title": "What happens if I keep the house?", "desc": "Compare keeping, selling, or transferring the home — and see the long-term cash flow impact." },
-      { "icon": "⚖️", "title": "Does this offer actually work for me?", "desc": "Model the proposed split across assets, debts, and support payments to see 10-year financial outcomes." },
-      { "icon": "📋", "title": "How do I prepare for my lawyer meeting?", "desc": "Organize your assets, debts, income, and scenarios into a professional report — before the meeting." }
+      {
+        "icon": "🏠",
+        "title": "What happens if I keep the house?",
+        "desc": "Compare keeping, selling, or transferring the home — and see the long-term cash flow impact."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Does this offer actually work for me?",
+        "desc": "Model the proposed split across assets, debts, and support payments to see 10-year financial outcomes."
+      },
+      {
+        "icon": "📋",
+        "title": "How do I prepare for my lawyer meeting?",
+        "desc": "Organize your assets, debts, income, and scenarios into a professional report — before the meeting."
+      }
     ]
   },
   "whatItDoesNot": {
     "title": "What SettleLens does — and what it doesn't",
     "doesTitle": "What it does",
     "doesNot": "What it doesn't",
-    "does": ["Financial scenario modeling", "Asset, debt, and income comparison", "10-year cash flow projection", "Support payment impact analysis", "Attorney-ready financial summary"],
-    "not": ["Legal advice", "Court outcome prediction", "Replacement for a lawyer", "Guaranteed settlement figures", "Complex or contested case decisions"],
+    "does": [
+      "Financial scenario modeling",
+      "Asset, debt, and income comparison",
+      "10-year cash flow projection",
+      "Support payment impact analysis",
+      "Attorney-ready financial summary"
+    ],
+    "not": [
+      "Legal advice",
+      "Court outcome prediction",
+      "Replacement for a lawyer",
+      "Guaranteed settlement figures",
+      "Complex or contested case decisions"
+    ],
     "note": "Complex or high-risk cases require professional legal support.",
     "link": "Learn about our limitations →"
   },
   "trust": {
     "title": "Built for a sensitive process",
     "cards": [
-      { "icon": "🔒", "title": "Your data is not sold", "desc": "Financial inputs are never used for advertising or shared with third parties." },
-      { "icon": "🖥️", "title": "Sensitive data is never logged", "desc": "Asset values, income, and scenario details are not written to developer logs." },
-      { "icon": "🗂️", "title": "You control your data", "desc": "Export your full financial data or permanently delete your account at any time." },
-      { "icon": "⚖️", "title": "Financial modeling, not legal advice", "desc": "SettleLens is a preparation tool. Complex cases require a qualified lawyer." }
+      {
+        "icon": "🔒",
+        "title": "Your data is not sold",
+        "desc": "Financial inputs are never used for advertising or shared with third parties."
+      },
+      {
+        "icon": "🖥️",
+        "title": "Sensitive data is never logged",
+        "desc": "Asset values, income, and scenario details are not written to developer logs."
+      },
+      {
+        "icon": "🗂️",
+        "title": "You control your data",
+        "desc": "Export your full financial data or permanently delete your account at any time."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Financial modeling, not legal advice",
+        "desc": "SettleLens is a preparation tool. Complex cases require a qualified lawyer."
+      }
     ],
     "link": "How we protect your data →"
   },
@@ -148,12 +304,36 @@
     "note": "Local judicial discretion, hidden assets, and complex agreements may produce different outcomes. Always verify with a qualified attorney.",
     "link": "View methodology for your country →",
     "countries": [
-      { "flag": "🇺🇸", "name": "United States", "law": "Community & equitable distribution" },
-      { "flag": "🇬🇧", "name": "United Kingdom", "law": "MCA 1973 Section 25" },
-      { "flag": "🇩🇪", "name": "Germany", "law": "Zugewinngemeinschaft" },
-      { "flag": "🇫🇷", "name": "France", "law": "Communauté réduite aux acquêts" },
-      { "flag": "🇪🇸", "name": "Spain", "law": "Régimen de gananciales" },
-      { "flag": "🇹🇷", "name": "Turkey", "law": "TMK Madde 179" }
+      {
+        "flag": "🇺🇸",
+        "name": "United States",
+        "law": "Community & equitable distribution"
+      },
+      {
+        "flag": "🇬🇧",
+        "name": "United Kingdom",
+        "law": "MCA 1973 Section 25"
+      },
+      {
+        "flag": "🇩🇪",
+        "name": "Germany",
+        "law": "Zugewinngemeinschaft"
+      },
+      {
+        "flag": "🇫🇷",
+        "name": "France",
+        "law": "Communauté réduite aux acquêts"
+      },
+      {
+        "flag": "🇪🇸",
+        "name": "Spain",
+        "law": "Régimen de gananciales"
+      },
+      {
+        "flag": "🇹🇷",
+        "name": "Turkey",
+        "law": "TMK Madde 179"
+      }
     ]
   },
   "attorneyPrep": {
@@ -421,5 +601,42 @@
       "weSellHouse": "We sell the house",
       "noHouse": "No house / not applicable"
     }
+  },
+  "blog": {
+    "title": "Divorce Financial Planning Guides",
+    "subtitle": "Understand your financial options before you negotiate.",
+    "disclaimerNote": "For informational purposes only. Not legal or financial advice.",
+    "empty": "Articles coming soon. Check back shortly.",
+    "backHome": "Back to home",
+    "ctaTitle": "Ready to model your settlement?",
+    "ctaDesc": "Use SettleLens to compare scenarios and understand your financial position.",
+    "ctaButton": "Start Free Analysis",
+    "allArticles": "All articles",
+    "disclaimerLabel": "Disclaimer:",
+    "disclaimerText": "This article is for informational purposes only. SettleLens provides financial scenario modeling - not legal or financial advice. Always consult a qualified attorney before making settlement decisions.",
+    "postCtaTitle": "Model your settlement scenarios",
+    "postCtaDesc": "See the 10-year financial impact of different divorce decisions before you negotiate.",
+    "postCtaButton": "Start Free Analysis",
+    "relatedArticles": "Related Articles",
+    "sidebarTitle": "See your numbers",
+    "sidebarDesc": "Free financial scenario analysis - no legal advice.",
+    "sidebarButton": "Start Free"
+  },
+  "houseSimulator": {
+    "title": "House Decision Simulator",
+    "subtitle": "The house is usually the biggest financial decision in a divorce. See the real numbers instantly.",
+    "situationTitle": "Your situation",
+    "homeValue": "Home value",
+    "mortgage": "Remaining mortgage",
+    "monthlyPayment": "Monthly mortgage payment",
+    "myIncome": "My annual income",
+    "spouseIncome": "Spouse annual income",
+    "equity": "Equity:",
+    "note": "Assumes 3% annual appreciation, 5% investment return, 6% sale costs.",
+    "fullPictureTitle": "See your full financial picture",
+    "fullPictureDesc": "This simulator uses simplified assumptions. Your full analysis including debts, income, alimony, and 10-year projections requires your complete financial data.",
+    "fullPictureButton": "Create my personal analysis",
+    "fullPictureFree": "Free to start. No credit card required.",
+    "disclaimer": "This is a simplified model for illustrative purposes only. Actual outcomes depend on jurisdiction and legal agreements. Not legal or financial advice."
   }
 }

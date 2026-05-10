@@ -100,7 +100,7 @@ export function Pricing() {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="text-center font-ui text-xs text-[var(--brown)] mt-8"
         >
-          All plans: Secure, private. Financial modeling, not legal advice.
+          {t("footerNote")}
         </motion.p>
       </div>
     </section>

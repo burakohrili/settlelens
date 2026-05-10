@@ -20,46 +20,144 @@
     "h1": "Avukata Para Ödemeden\nFinansal Geleceğini Gör.",
     "h2": "Yapay zeka destekli boşanma finansal modelleme. Her anlaşma senaryosunda 10 yıllık finansal tablonu dakikalar içinde gör.",
     "cta": "Ücretsiz Analiz Başlat",
-    "sub": "20 dakika yeterli. Avukatınızla görüşmeden önce hazırlanın."
+    "sub": "20 dakika yeterli. Avukatınızla görüşmeden önce hazırlanın.",
+    "badge": "Bosanmada Finansal Netlik",
+    "subTagline": "Finansal modelleme, hukuki tavsiye degil."
   },
   "fearHook": {
     "stat": "50.000 ₺+",
     "statLabel": "ortalama boşanma hukuki masrafı",
     "hook": "Bu masrafın ne kadarı avukatınıza kendi başınıza hesaplayabileceğiniz sayıları açıklatmak için?",
-    "cta": "Ücretsiz Hesapla"
+    "cta": "Ücretsiz Hesapla",
+    "stats": [
+      {
+        "num": "73%",
+        "label": "bosanan ciftlerin hukuki masraflari gere?inden fazla oduyor"
+      },
+      {
+        "num": "20 dk",
+        "label": "aylarca suren avukat yazismalari yerine"
+      },
+      {
+        "num": "50x",
+        "label": "ortalama hukuki masrafa karsi tahmini yatirim getirisi"
+      }
+    ],
+    "prepNote": "Hazirlik araci - profesyonel hukuki danismanligin yerini almaz."
   },
   "howItWorks": {
     "title": "Finansal Netliğe 3 Adım",
     "steps": [
-      { "n": "01", "title": "Finansal Durumunu Gir", "desc": "Varlıklar, borçlar, gelir, çocuklar. Güvenli, özel, 20 dakika." },
-      { "n": "02", "title": "Senaryolarını Oluştur", "desc": "Evi sen mi alıyorsun? Satıyor musunuz? En fazla 3 sonucu modelle." },
-      { "n": "03", "title": "10 Yıllık Projeksiyonunu Al", "desc": "Yapay zeka hukuk formüllerini uygular, her senaryoyu ileriye taşır. PDF indir." }
+      {
+        "n": "01",
+        "title": "Finansal Durumunu Gir",
+        "desc": "Varlıklar, borçlar, gelir, çocuklar. Güvenli, özel, 20 dakika."
+      },
+      {
+        "n": "02",
+        "title": "Senaryolarını Oluştur",
+        "desc": "Evi sen mi alıyorsun? Satıyor musunuz? En fazla 3 sonucu modelle."
+      },
+      {
+        "n": "03",
+        "title": "10 Yıllık Projeksiyonunu Al",
+        "desc": "Yapay zeka hukuk formüllerini uygular, her senaryoyu ileriye taşır. PDF indir."
+      }
     ]
   },
   "features": {
     "title": "Güçlü Müzakere İçin Her Şey",
     "items": [
-      { "title": "Her Senaryo, Yan Yana", "desc": "Karar vermeden önce her seçeneğin 10 yıllık etkisini gör." },
-      { "title": "Türk Hukukuna Göre Hesaplama", "desc": "TMK 179 mal paylaşımı, edinilmiş mallara katılma, yoksulluk nafakası formülleri." },
-      { "title": "Avukatının Saygı Duyacağı Rapor", "desc": "Profesyonel PDF: varlık dökümü, projeksiyon grafikleri, müzakere stratejisi." }
+      {
+        "title": "Her Senaryo, Yan Yana",
+        "desc": "Karar vermeden önce her seçeneğin 10 yıllık etkisini gör."
+      },
+      {
+        "title": "Türk Hukukuna Göre Hesaplama",
+        "desc": "TMK 179 mal paylaşımı, edinilmiş mallara katılma, yoksulluk nafakası formülleri."
+      },
+      {
+        "title": "Avukatının Saygı Duyacağı Rapor",
+        "desc": "Profesyonel PDF: varlık dökümü, projeksiyon grafikleri, müzakere stratejisi."
+      }
     ]
   },
   "social": {
     "title": "Aynı Yoldan Geçenlerin Deneyimleri",
     "quotes": [
-      { "text": "Arabuluculuğa tam olarak hangi teklifi kabul edeceğimi bilerek girdim. O netlik paha biçilemezdi.", "author": "Ayşe K., İstanbul" },
-      { "text": "Avukatım raporun ne kadar iyi hazırlanmış olduğunu söyledi.", "author": "Murat D., Ankara" },
-      { "text": "Üç senaryo, yan yana. Evi almak demek gerçekte ne demek, sonunda anladım.", "author": "Selin T., İzmir" }
+      {
+        "text": "Arabuluculuğa tam olarak hangi teklifi kabul edeceğimi bilerek girdim. O netlik paha biçilemezdi.",
+        "author": "Ayşe K., İstanbul"
+      },
+      {
+        "text": "Avukatım raporun ne kadar iyi hazırlanmış olduğunu söyledi.",
+        "author": "Murat D., Ankara"
+      },
+      {
+        "text": "Üç senaryo, yan yana. Evi almak demek gerçekte ne demek, sonunda anladım.",
+        "author": "Selin T., İzmir"
+      }
     ]
   },
   "pricing": {
     "title": "Şeffaf Fiyatlandırma",
     "plans": [
-      { "id": "discovery", "name": "Discovery", "price": "Ücretsiz", "period": "süresiz", "features": ["Varlık ve borç envanteri", "Net varlık özeti", "AI analiz yok", "İstediğiniz zaman yükseltin"], "cta": "Ücretsiz Başla" },
-      { "id": "clarified", "name": "Clarified", "price": "899 ₺", "period": "tek seferlik · 14 gün erişim", "features": ["1 AI destekli analiz", "1 anlaşma senaryosu", "Profesyonel PDF rapor", "14 gün erişim"], "cta": "Netliğe Kavuş" },
-      { "id": "strategist", "name": "Strategist", "price": "1.299 ₺", "period": "aylık", "badge": "En Popüler", "features": ["Sınırsız analiz", "Sınırsız senaryo", "Premium PDF raporlar", "10 yıllık projeksiyon", "Enflasyon ayarlı projeksiyon"], "cta": "Strategist'e Başla" },
-      { "id": "professional", "name": "Professional", "price": "3.299 ₺", "period": "aylık", "features": ["Strategist'teki her şey", "Avukata hazır Excel + PDF", "Kanıt organizatörü", "Öncelikli destek"], "cta": "Professional'a Geç" }
-    ]
+      {
+        "id": "discovery",
+        "name": "Discovery",
+        "price": "Ücretsiz",
+        "period": "süresiz",
+        "features": [
+          "Varlık ve borç envanteri",
+          "Net varlık özeti",
+          "AI analiz yok",
+          "İstediğiniz zaman yükseltin"
+        ],
+        "cta": "Ücretsiz Başla"
+      },
+      {
+        "id": "clarified",
+        "name": "Clarified",
+        "price": "899 ₺",
+        "period": "tek seferlik · 14 gün erişim",
+        "features": [
+          "1 AI destekli analiz",
+          "1 anlaşma senaryosu",
+          "Profesyonel PDF rapor",
+          "14 gün erişim"
+        ],
+        "cta": "Netliğe Kavuş"
+      },
+      {
+        "id": "strategist",
+        "name": "Strategist",
+        "price": "1.299 ₺",
+        "period": "aylık",
+        "badge": "En Popüler",
+        "features": [
+          "Sınırsız analiz",
+          "Sınırsız senaryo",
+          "Premium PDF raporlar",
+          "10 yıllık projeksiyon",
+          "Enflasyon ayarlı projeksiyon"
+        ],
+        "cta": "Strategist'e Başla"
+      },
+      {
+        "id": "professional",
+        "name": "Professional",
+        "price": "3.299 ₺",
+        "period": "aylık",
+        "features": [
+          "Strategist'teki her şey",
+          "Avukata hazır Excel + PDF",
+          "Kanıt organizatörü",
+          "Öncelikli destek"
+        ],
+        "cta": "Professional'a Geç"
+      }
+    ],
+    "footerNote": "Tum planlar: Guvenli, gizli. Finansal modelleme, hukuki tavsiye degil."
   },
   "finalCta": {
     "title": "Anlaşmanı Net Gör",
@@ -99,12 +197,30 @@
   },
   "onboarding": {
     "steps": [
-      { "title": "Nerede yaşıyorsunuz?", "subtitle": "Yargı alanınıza göre finansal formüller uygulanır." },
-      { "title": "Varlıklarınız", "subtitle": "Sahip olduğunuz her şeyi listeleyin." },
-      { "title": "Borçlarınız", "subtitle": "İpotekler, krediler, kredi kartları — tam tablo." },
-      { "title": "Gelir", "subtitle": "Sizin ve eşinizin brüt ve net geliri." },
-      { "title": "Çocuklar", "subtitle": "Varsa — yaşlar ve velayet düzenlemesi." },
-      { "title": "Senaryolarınızı Oluşturun", "subtitle": "Olası sonuçlar neler? Hepsini modelleyelim." }
+      {
+        "title": "Nerede yaşıyorsunuz?",
+        "subtitle": "Yargı alanınıza göre finansal formüller uygulanır."
+      },
+      {
+        "title": "Varlıklarınız",
+        "subtitle": "Sahip olduğunuz her şeyi listeleyin."
+      },
+      {
+        "title": "Borçlarınız",
+        "subtitle": "İpotekler, krediler, kredi kartları — tam tablo."
+      },
+      {
+        "title": "Gelir",
+        "subtitle": "Sizin ve eşinizin brüt ve net geliri."
+      },
+      {
+        "title": "Çocuklar",
+        "subtitle": "Varsa — yaşlar ve velayet düzenlemesi."
+      },
+      {
+        "title": "Senaryolarınızı Oluşturun",
+        "subtitle": "Olası sonuçlar neler? Hepsini modelleyelim."
+      }
     ],
     "next": "Devam",
     "back": "Geri",
@@ -118,27 +234,67 @@
     "title": "Hangi kararı vermeye çalışıyorsun?",
     "sub": "SettleLens duygusal açıdan karmaşık kararları karşılaştırılabilir finansal senaryolara dönüştürür.",
     "cards": [
-      { "icon": "🏠", "title": "Evi alsam ne olur?", "desc": "Evi almak, satmak veya eşe devretmek — uzun vadeli nakit akışı etkisini karşılaştır." },
-      { "icon": "⚖️", "title": "Gelen teklif benim için mantıklı mı?", "desc": "Varlıklar, borçlar ve nafaka ödemeleri üzerinden önerilen paylaşımı modelleyerek 10 yıllık sonuçları gör." },
-      { "icon": "📋", "title": "Avukata gitmeden önce ne hazırlamalıyım?", "desc": "Varlıklarını, borçlarını, gelirini ve senaryolarını toplantıdan önce profesyonel bir raporda düzenle." }
+      {
+        "icon": "🏠",
+        "title": "Evi alsam ne olur?",
+        "desc": "Evi almak, satmak veya eşe devretmek — uzun vadeli nakit akışı etkisini karşılaştır."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Gelen teklif benim için mantıklı mı?",
+        "desc": "Varlıklar, borçlar ve nafaka ödemeleri üzerinden önerilen paylaşımı modelleyerek 10 yıllık sonuçları gör."
+      },
+      {
+        "icon": "📋",
+        "title": "Avukata gitmeden önce ne hazırlamalıyım?",
+        "desc": "Varlıklarını, borçlarını, gelirini ve senaryolarını toplantıdan önce profesyonel bir raporda düzenle."
+      }
     ]
   },
   "whatItDoesNot": {
     "title": "Ne yapar, ne yapmaz?",
     "doesTitle": "Yapar",
     "doesNot": "Yapmaz",
-    "does": ["Finansal senaryo modelleme", "Varlık, borç ve gelir karşılaştırması", "10 yıllık nakit akışı projeksiyonu", "Nafaka etkisi analizi", "Avukata hazır finansal özet"],
-    "not": ["Hukuki tavsiye", "Mahkeme sonucu tahmini", "Avukat yerine geçme", "Garantili anlaşma rakamları", "Karmaşık veya çekişmeli dava kararları"],
+    "does": [
+      "Finansal senaryo modelleme",
+      "Varlık, borç ve gelir karşılaştırması",
+      "10 yıllık nakit akışı projeksiyonu",
+      "Nafaka etkisi analizi",
+      "Avukata hazır finansal özet"
+    ],
+    "not": [
+      "Hukuki tavsiye",
+      "Mahkeme sonucu tahmini",
+      "Avukat yerine geçme",
+      "Garantili anlaşma rakamları",
+      "Karmaşık veya çekişmeli dava kararları"
+    ],
     "note": "Karmaşık veya yüksek riskli davalar profesyonel hukuki destek gerektirir.",
     "link": "Sınırlamalarımız hakkında daha fazla bilgi →"
   },
   "trust": {
     "title": "Hassas bir süreç için güven temelli tasarlandı",
     "cards": [
-      { "icon": "🔒", "title": "Verilerin satılmaz", "desc": "Finansal girişler reklam amaçlı kullanılmaz veya üçüncü taraflarla paylaşılmaz." },
-      { "icon": "🖥️", "title": "Hassas veriler loglanmaz", "desc": "Varlık değerleri, gelir ve senaryo detayları geliştirici loglarına yazılmaz." },
-      { "icon": "🗂️", "title": "Verilerini sen kontrol edersin", "desc": "Tüm finansal verilerini dışa aktar veya hesabını istediğin zaman kalıcı olarak sil." },
-      { "icon": "⚖️", "title": "Finansal modelleme, hukuki tavsiye değil", "desc": "SettleLens bir hazırlık aracıdır. Karmaşık davalar için nitelikli avukat gerekir." }
+      {
+        "icon": "🔒",
+        "title": "Verilerin satılmaz",
+        "desc": "Finansal girişler reklam amaçlı kullanılmaz veya üçüncü taraflarla paylaşılmaz."
+      },
+      {
+        "icon": "🖥️",
+        "title": "Hassas veriler loglanmaz",
+        "desc": "Varlık değerleri, gelir ve senaryo detayları geliştirici loglarına yazılmaz."
+      },
+      {
+        "icon": "🗂️",
+        "title": "Verilerini sen kontrol edersin",
+        "desc": "Tüm finansal verilerini dışa aktar veya hesabını istediğin zaman kalıcı olarak sil."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Finansal modelleme, hukuki tavsiye değil",
+        "desc": "SettleLens bir hazırlık aracıdır. Karmaşık davalar için nitelikli avukat gerekir."
+      }
     ],
     "link": "Verilerini nasıl koruyoruz →"
   },
@@ -148,12 +304,36 @@
     "note": "Yerel yargısal takdir, gizli varlıklar ve karmaşık anlaşmalar farklı sonuçlar doğurabilir. Her zaman nitelikli bir avukatla doğrulayın.",
     "link": "Ülkene göre metodoloji →",
     "countries": [
-      { "flag": "🇺🇸", "name": "ABD", "law": "Community & equitable distribution" },
-      { "flag": "🇬🇧", "name": "Birleşik Krallık", "law": "MCA 1973 Section 25" },
-      { "flag": "🇩🇪", "name": "Almanya", "law": "Zugewinngemeinschaft" },
-      { "flag": "🇫🇷", "name": "Fransa", "law": "Communauté réduite aux acquêts" },
-      { "flag": "🇪🇸", "name": "İspanya", "law": "Régimen de gananciales" },
-      { "flag": "🇹🇷", "name": "Türkiye", "law": "TMK Madde 179" }
+      {
+        "flag": "🇺🇸",
+        "name": "ABD",
+        "law": "Community & equitable distribution"
+      },
+      {
+        "flag": "🇬🇧",
+        "name": "Birleşik Krallık",
+        "law": "MCA 1973 Section 25"
+      },
+      {
+        "flag": "🇩🇪",
+        "name": "Almanya",
+        "law": "Zugewinngemeinschaft"
+      },
+      {
+        "flag": "🇫🇷",
+        "name": "Fransa",
+        "law": "Communauté réduite aux acquêts"
+      },
+      {
+        "flag": "🇪🇸",
+        "name": "İspanya",
+        "law": "Régimen de gananciales"
+      },
+      {
+        "flag": "🇹🇷",
+        "name": "Türkiye",
+        "law": "TMK Madde 179"
+      }
     ]
   },
   "attorneyPrep": {
@@ -421,5 +601,42 @@
       "weSellHouse": "Evi satıyoruz",
       "noHouse": "Ev yok / geçerli değil"
     }
+  },
+  "blog": {
+    "title": "Bosanma Finansal Planlama Rehberleri",
+    "subtitle": "Muzakere etmeden once finansal seceneklerinizi anlayin.",
+    "disclaimerNote": "Yalnizca bilgilendirme amaclidir. Hukuki veya finansal tavsiye degildir.",
+    "empty": "Yakin zamanda makaleler eklenecek.",
+    "backHome": "Ana sayfaya don",
+    "ctaTitle": "Anlasmayi modellemek ister misiniz?",
+    "ctaDesc": "Farkli senaryolari karsilastirin ve finansal durumunuzu anlayin.",
+    "ctaButton": "Ucretsiz Analize Basla",
+    "allArticles": "Tum makaleler",
+    "disclaimerLabel": "Feragatname:",
+    "disclaimerText": "Bu makale yalnizca bilgilendirme amaclidir. SettleLens finansal senaryo modellemesi sunar - hukuki veya finansal tavsiye degildir. Anlasma kararlari vermeden once nitelikli bir avukata danisin.",
+    "postCtaTitle": "Anlasma senaryolarinizi modelleyin",
+    "postCtaDesc": "Muzakere etmeden once farkli bosanma kararlarinin 10 yillik finansal etkisini gorun.",
+    "postCtaButton": "Ucretsiz Analize Basla",
+    "relatedArticles": "Ilgili Makaleler",
+    "sidebarTitle": "Rakamlarinizi gorun",
+    "sidebarDesc": "Ucretsiz finansal senaryo analizi - hukuki tavsiye degil.",
+    "sidebarButton": "Ucretsiz Basla"
+  },
+  "houseSimulator": {
+    "title": "Ev Karar Simulatoru",
+    "subtitle": "Ev genellikle bosanmada en buyuk finansal karard?r. Gercek rakamlari aninda gorun.",
+    "situationTitle": "Durumunuz",
+    "homeValue": "Ev degeri",
+    "mortgage": "Kalan ipotek",
+    "monthlyPayment": "Aylik ipotek odemesi",
+    "myIncome": "Benim yillik gelirim",
+    "spouseIncome": "Esimin yillik geliri",
+    "equity": "Oz varlik:",
+    "note": "Yillik %3 deger artisi, %5 yatirim getirisi, %6 satis maliyeti varsayilmaktadir.",
+    "fullPictureTitle": "Tam finansal tablonuzu gorun",
+    "fullPictureDesc": "Bu simulatour basitlestirilmis varsayimlar kullanir. Tam analiz icin eksiksiz finansal verileriniz gerekir.",
+    "fullPictureButton": "Kisisel analizimi olustur",
+    "fullPictureFree": "Ucretsiz baslayin. Kredi karti gerekmez.",
+    "disclaimer": "Bu yalnizca aciklayici amacli basitlestirilmis bir modeldir. Hukuki veya finansal tavsiye degildir."
   }
 }
