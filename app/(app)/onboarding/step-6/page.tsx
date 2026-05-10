@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
@@ -20,13 +21,6 @@ type Scenario = {
   child_support_direction: string;
 };
 
-const HOUSE_OPTIONS = [
-  { value: "i_keep", label: "I keep the house" },
-  { value: "spouse_keeps", label: "Spouse keeps the house" },
-  { value: "sell", label: "We sell the house" },
-  { value: "not_applicable", label: "No house / not applicable" },
-];
-
 function newScenario(name: string): Scenario {
   return {
     name,
@@ -40,54 +34,64 @@ function newScenario(name: string): Scenario {
   };
 }
 
-function ScenarioCard({ scenario, onChange }: { scenario: Scenario; onChange: (field: keyof Scenario, value: unknown) => void }) {
+function ScenarioCard({
+  scenario,
+  onChange,
+  houseOptions,
+  t,
+}: {
+  scenario: Scenario;
+  onChange: (field: keyof Scenario, value: unknown) => void;
+  houseOptions: { value: string; label: string }[];
+  t: (key: string) => string;
+}) {
   return (
     <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-3">
       <div>
-        <Label>Scenario name</Label>
-        <Input value={scenario.name} onChange={(e) => onChange("name", e.target.value)} className="mt-1" placeholder="e.g. Best case" />
+        <Label>{t("scenarioName")}</Label>
+        <Input value={scenario.name} onChange={(e) => onChange("name", e.target.value)} className="mt-1" placeholder={t("scenarioNamePlaceholder")} />
       </div>
 
       <div>
-        <Label>House outcome</Label>
+        <Label>{t("houseOutcome")}</Label>
         <select value={scenario.house_outcome} onChange={(e) => onChange("house_outcome", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          {HOUSE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
       </div>
 
       <div>
-        <Label>Retirement / investment split — my share (%)</Label>
+        <Label>{t("retirementSplit")}</Label>
         <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="mt-1" />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <Label>Alimony/spousal support ($/mo)</Label>
+          <Label>{t("alimonyMonthly")}</Label>
           <Input type="number" min={0} value={scenario.alimony_monthly || ""} onChange={(e) => onChange("alimony_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
         </div>
         <div>
-          <Label>Duration (years)</Label>
+          <Label>{t("alimonyYears")}</Label>
           <Input type="number" min={0} max={30} value={scenario.alimony_years || ""} onChange={(e) => onChange("alimony_years", parseInt(e.target.value) || 0)} className="mt-1" placeholder="0" />
         </div>
         <div className="col-span-2">
-          <Label>Direction</Label>
+          <Label>{t("alimonyDirection")}</Label>
           <select value={scenario.alimony_direction} onChange={(e) => onChange("alimony_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <option value="i_receive">I receive</option>
-            <option value="i_pay">I pay</option>
+            <option value="i_receive">{t("iReceive")}</option>
+            <option value="i_pay">{t("iPay")}</option>
           </select>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <Label>Child support ($/mo)</Label>
+          <Label>{t("childSupport")}</Label>
           <Input type="number" min={0} value={scenario.child_support_monthly || ""} onChange={(e) => onChange("child_support_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
         </div>
         <div>
-          <Label>Direction</Label>
+          <Label>{t("alimonyDirection")}</Label>
           <select value={scenario.child_support_direction} onChange={(e) => onChange("child_support_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <option value="i_receive">I receive</option>
-            <option value="i_pay">I pay</option>
+            <option value="i_receive">{t("iReceive")}</option>
+            <option value="i_pay">{t("iPay")}</option>
           </select>
         </div>
       </div>
@@ -96,15 +100,16 @@ function ScenarioCard({ scenario, onChange }: { scenario: Scenario; onChange: (f
 }
 
 export default function Step6Page() {
+  const t = useTranslations("onboarding_form.step6");
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
   const supabase = createClient();
 
   const [scenarios, setScenarios] = useState<Scenario[]>([
-    newScenario("Scenario A — My proposal"),
-    newScenario("Scenario B — Spouse's proposal"),
-    newScenario("Scenario C — Compromise"),
+    newScenario(t("scenarioA")),
+    newScenario(t("scenarioB")),
+    newScenario(t("scenarioC")),
   ]);
   const [saving, setSaving] = useState(false);
 
@@ -122,6 +127,13 @@ export default function Step6Page() {
   function updateScenario(i: number, field: keyof Scenario, value: unknown) {
     setScenarios((prev) => prev.map((s, idx) => idx === i ? { ...s, [field]: value } : s));
   }
+
+  const houseOptions = [
+    { value: "i_keep", label: t("iKeepHouse") },
+    { value: "spouse_keeps", label: t("spouseKeepsHouse") },
+    { value: "sell", label: t("weSellHouse") },
+    { value: "not_applicable", label: t("noHouse") },
+  ];
 
   async function handleStartAnalysis() {
     setSaving(true);
@@ -157,24 +169,29 @@ export default function Step6Page() {
       onBack={() => router.push(`/${lang}/onboarding/step-5`)}
       onNext={handleStartAnalysis}
       nextDisabled={nextDisabled}
-      nextLabel="Go to Dashboard →"
+      nextLabel={t("goToDashboard")}
     >
       <div className="space-y-4">
         <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3">
           <p className="font-ui text-xs text-[var(--brown)]">
-            <strong className="text-[var(--navy)]">Build up to 3 scenarios</strong> — compare different settlement assumptions side by side. Each scenario can have different house, alimony, and child support assumptions. You can edit these later from your dashboard.
+            <strong className="text-[var(--navy)]">{t("intro")}</strong>
           </p>
         </div>
 
         {scenarios.map((scenario, i) => (
           <div key={i}>
-            <p className="font-ui text-xs font-semibold text-[var(--navy)] mb-2 uppercase tracking-wide">Scenario {i + 1}</p>
-            <ScenarioCard scenario={scenario} onChange={(field, value) => updateScenario(i, field, value)} />
+            <p className="font-ui text-xs font-semibold text-[var(--navy)] mb-2 uppercase tracking-wide">{t("scenarioLabel", { n: i + 1 })}</p>
+            <ScenarioCard
+              scenario={scenario}
+              onChange={(field, value) => updateScenario(i, field, value)}
+              houseOptions={houseOptions}
+              t={t}
+            />
           </div>
         ))}
 
         <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]")}>
-          <strong>Disclaimer:</strong> These scenarios are financial models based on your inputs. They are not legal advice, court predictions, or guaranteed outcomes. Consult a qualified family law attorney before making any decisions.
+          <strong>Disclaimer:</strong> {t("disclaimer")}
         </div>
       </div>
     </WizardLayout>

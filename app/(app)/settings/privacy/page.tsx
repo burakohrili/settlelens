@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 type ConsentProfile = {
@@ -12,6 +13,7 @@ type ConsentProfile = {
 };
 
 export default function PrivacyPage() {
+  const t = useTranslations("settings");
   const router = useRouter();
   const supabase = createClient();
 
@@ -88,12 +90,10 @@ export default function PrivacyPage() {
         .from("profiles")
         .update({ marketing_consent: newValue })
         .eq("id", userId);
-      setMarketingMsg(
-        newValue ? "Marketing emails enabled." : "Marketing emails disabled."
-      );
+      setMarketingMsg(newValue ? t("marketingEnabled") : t("marketingDisabled"));
     } catch {
       setProfile({ ...profile, marketing_consent: !newValue });
-      setMarketingMsg("Failed to update preference.");
+      setMarketingMsg(t("marketingFail"));
     } finally {
       setMarketingSaving(false);
       setTimeout(() => setMarketingMsg(""), 3000);
@@ -113,9 +113,9 @@ export default function PrivacyPage() {
       a.download = "settlelens-data-export.json";
       a.click();
       URL.revokeObjectURL(url);
-      setExportMsg("Your data has been downloaded.");
+      setExportMsg(t("exportOk"));
     } catch {
-      setExportMsg("Export failed. Please try again or contact support.");
+      setExportMsg(t("exportFail"));
     } finally {
       setExporting(false);
     }
@@ -135,9 +135,7 @@ export default function PrivacyPage() {
       await supabase.auth.signOut();
       router.push("/en");
     } catch {
-      setDeleteError(
-        "Account deletion failed. Please contact support@settlelens.com."
-      );
+      setDeleteError(t("deleteFail"));
       setDeleting(false);
     }
   };
@@ -145,12 +143,10 @@ export default function PrivacyPage() {
   if (loading) {
     return (
       <div className="flex h-32 items-center justify-center text-[#8B7355]">
-        Loading...
+        {t("loading")}
       </div>
     );
   }
-
-  const isTR = profile.country === "TR";
 
   return (
     <div className="max-w-2xl space-y-8">
@@ -159,24 +155,18 @@ export default function PrivacyPage() {
           className="text-2xl font-bold text-[#1C2B3A]"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
-          Privacy & Data
+          {t("privacyTitle")}
         </h1>
-        <p className="mt-1 text-sm text-[#8B7355]">
-          Manage your data, consents, and account deletion.
-        </p>
+        <p className="mt-1 text-sm text-[#8B7355]">{t("privacyDesc")}</p>
       </div>
 
       {/* Download data */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-3">
-        <h2 className="font-semibold text-[#1C2B3A]">Download Your Data</h2>
-        <p className="text-sm text-[#8B7355]">
-          Export all your SettleLens data (profile, assets, debts, scenarios,
-          analyses) as a JSON file. This is your right under GDPR Article 20
-          (data portability).
-        </p>
+        <h2 className="font-semibold text-[#1C2B3A]">{t("downloadTitle")}</h2>
+        <p className="text-sm text-[#8B7355]">{t("downloadDesc")}</p>
         {exportMsg && (
           <p
-            className={`text-sm ${exportMsg.includes("failed") ? "text-[#E85252]" : "text-[#4FA86E]"}`}
+            className={`text-sm ${exportMsg === t("exportFail") ? "text-[#E85252]" : "text-[#4FA86E]"}`}
           >
             {exportMsg}
           </p>
@@ -186,13 +176,13 @@ export default function PrivacyPage() {
           disabled={exporting}
           className="rounded-lg bg-[#2E4D6B] px-5 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
-          {exporting ? "Preparing export..." : "Export as JSON"}
+          {exporting ? t("exporting") : t("exportJson")}
         </button>
       </div>
 
       {/* Consent management */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
-        <h2 className="font-semibold text-[#1C2B3A]">Consent Management</h2>
+        <h2 className="font-semibold text-[#1C2B3A]">{t("consentTitle")}</h2>
 
         <div className="space-y-3">
           {/* GDPR consent — read-only */}
@@ -202,12 +192,9 @@ export default function PrivacyPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-[#1C2B3A]">
-                Service Terms & Privacy Policy
+                {t("consentTerms")}
               </p>
-              <p className="text-xs text-[#8B7355]">
-                Required for service. Accepted at registration. Contact
-                support@settlelens.com to withdraw.
-              </p>
+              <p className="text-xs text-[#8B7355]">{t("consentTermsNote")}</p>
             </div>
           </div>
 
@@ -230,12 +217,9 @@ export default function PrivacyPage() {
             </button>
             <div>
               <p className="text-sm font-medium text-[#1C2B3A]">
-                Marketing Communications
+                {t("consentMarketing")}
               </p>
-              <p className="text-xs text-[#8B7355]">
-                Receive product updates and tips via email. You can change this
-                at any time.
-              </p>
+              <p className="text-xs text-[#8B7355]">{t("consentMarketingNote")}</p>
               {marketingMsg && (
                 <p className="mt-1 text-xs text-[#4FA86E]">{marketingMsg}</p>
               )}
@@ -243,7 +227,7 @@ export default function PrivacyPage() {
           </div>
 
           {/* KVKK — TR only */}
-          {isKVKKCountry(profile.country) && (
+          {profile.country === "TR" && (
             <div className="flex items-start gap-3">
               <div className="mt-0.5 flex h-5 w-5 items-center justify-center rounded border-2 border-[#4FA86E] bg-[#4FA86E]">
                 <span className="text-xs text-white">✓</span>
@@ -263,7 +247,7 @@ export default function PrivacyPage() {
       </div>
 
       {/* KVKK request form — TR only */}
-      {isKVKKCountry(profile.country) && (
+      {profile.country === "TR" && (
         <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
           <h2 className="font-semibold text-[#1C2B3A]">KVKK Başvuru Formu</h2>
           <p className="text-sm text-[#8B7355]">
@@ -310,21 +294,14 @@ export default function PrivacyPage() {
 
       {/* Danger zone — delete account */}
       <div className="rounded-xl border-2 border-[#E85252] bg-white p-6 space-y-3">
-        <h2 className="font-semibold text-[#E85252]">Danger Zone</h2>
-        <p className="text-sm text-[#8B7355]">
-          Deleting your account will deactivate it immediately. All your
-          financial data (assets, debts, scenarios, analyses) will be
-          permanently deleted within 30 days. This action cannot be undone.
-        </p>
-        <p className="text-sm text-[#8B7355]">
-          You can reactivate your account within 30 days by contacting
-          support@settlelens.com.
-        </p>
+        <h2 className="font-semibold text-[#E85252]">{t("dangerZone")}</h2>
+        <p className="text-sm text-[#8B7355]">{t("deleteDesc1")}</p>
+        <p className="text-sm text-[#8B7355]">{t("deleteDesc2")}</p>
         <button
           onClick={() => setDeleteModal(true)}
           className="rounded-lg border border-[#E85252] px-5 py-2 text-sm font-semibold text-[#E85252] hover:bg-red-50 transition-colors"
         >
-          Delete My Account
+          {t("deleteMyAccount")}
         </button>
       </div>
 
@@ -333,17 +310,14 @@ export default function PrivacyPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
             <h3 className="text-lg font-bold text-[#E85252] mb-2">
-              Delete Account
+              {t("deleteTitle")}
             </h3>
-            <p className="text-sm text-[#8B7355] mb-4">
-              This action is permanent. Type{" "}
-              <strong className="text-[#1C2B3A]">DELETE</strong> to confirm.
-            </p>
+            <p className="text-sm text-[#8B7355] mb-4">{t("deleteConfirmMsg")}</p>
             <input
               type="text"
               value={deleteInput}
               onChange={(e) => setDeleteInput(e.target.value)}
-              placeholder="Type DELETE"
+              placeholder={t("deletePlaceholder")}
               className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm mb-3 focus:border-[#E85252] focus:outline-none"
             />
             {deleteError && (
@@ -355,7 +329,7 @@ export default function PrivacyPage() {
                 disabled={deleteInput !== "DELETE" || deleting}
                 className="flex-1 rounded-lg bg-[#E85252] py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
               >
-                {deleting ? "Deleting..." : "Delete Account"}
+                {deleting ? t("deleting") : t("deleteBtn")}
               </button>
               <button
                 onClick={() => {
@@ -365,7 +339,7 @@ export default function PrivacyPage() {
                 }}
                 className="flex-1 rounded-lg border border-[#D4C5B0] py-2 text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE]"
               >
-                Cancel
+                {t("cancel")}
               </button>
             </div>
           </div>
@@ -373,8 +347,4 @@ export default function PrivacyPage() {
       )}
     </div>
   );
-}
-
-function isKVKKCountry(country: string): boolean {
-  return country === "TR";
 }

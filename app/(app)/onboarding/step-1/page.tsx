@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
@@ -29,6 +30,7 @@ const COUNTRY_CURRENCY: Record<string, string> = {
 };
 
 export default function Step1Page() {
+  const t = useTranslations("onboarding_form.step1");
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -58,6 +60,13 @@ export default function Step1Page() {
   const isCommunity = country === "US" && US_COMMUNITY_STATES.includes(stateProvince);
   const currentYear = new Date().getFullYear();
 
+  function getRegionLabel() {
+    if (country === "US") return t("state");
+    if (country === "DE") return t("bundesland");
+    if (country === "TR") return t("il");
+    return t("region");
+  }
+
   async function handleNext() {
     if (!country || !marriageYear) return;
     setSaving(true);
@@ -83,14 +92,14 @@ export default function Step1Page() {
     >
       <div className="space-y-5">
         <div>
-          <Label htmlFor="country">Country</Label>
+          <Label htmlFor="country">{t("country")}</Label>
           <select
             id="country"
             value={country}
             onChange={(e) => { setCountry(e.target.value); setStateProvince(""); }}
             className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <option value="">Select country…</option>
+            <option value="">{t("selectCountry")}</option>
             <option value="US">🇺🇸 United States</option>
             <option value="UK">🇬🇧 United Kingdom</option>
             <option value="DE">🇩🇪 Germany</option>
@@ -102,16 +111,14 @@ export default function Step1Page() {
 
         {regions.length > 0 && (
           <div>
-            <Label htmlFor="state">
-              {country === "US" ? "State" : country === "DE" ? "Bundesland" : country === "TR" ? "İl" : "Region"}
-            </Label>
+            <Label htmlFor="state">{getRegionLabel()}</Label>
             <select
               id="state"
               value={stateProvince}
               onChange={(e) => setStateProvince(e.target.value)}
               className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select…</option>
+              <option value="">{t("selectRegion")}</option>
               {regions.map((r) => (
                 <option key={r} value={r}>
                   {country === "US" && US_COMMUNITY_STATES.includes(r) ? `★ ${r} (Community Property)` : r}
@@ -120,14 +127,14 @@ export default function Step1Page() {
             </select>
             {isCommunity && (
               <p className="mt-1 font-ui text-xs text-[var(--gold)]">
-                Community property state — assets acquired during marriage split 50/50.
+                {t("communityProperty")}
               </p>
             )}
           </div>
         )}
 
         <div>
-          <Label htmlFor="marriage-year">Year of marriage</Label>
+          <Label htmlFor="marriage-year">{t("marriageYear")}</Label>
           <input
             id="marriage-year"
             type="number"
@@ -143,7 +150,7 @@ export default function Step1Page() {
         {country && (
           <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3">
             <p className="font-ui text-xs text-[var(--brown)]">
-              <strong>Currency:</strong> {COUNTRY_CURRENCY[country]} — applied automatically to all calculations.
+              <strong>{t("currencyNote", { currency: COUNTRY_CURRENCY[country] })}</strong>
             </p>
           </div>
         )}

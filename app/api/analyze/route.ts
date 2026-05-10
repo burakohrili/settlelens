@@ -7,22 +7,23 @@ import { NextRequest } from "next/server";
 
 const anthropic = new Anthropic();
 
-// In-memory rate limiter (use Upstash Redis in production)
-const rateLimitMap = new Map<string, { count: number; reset: number }>();
-
 export async function POST(req: NextRequest) {
   // 1. Auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  // 2. Rate limit: 10 requests/hour per user
-  const now = Date.now();
-  const rl = rateLimitMap.get(user.id) ?? { count: 0, reset: now + 3_600_000 };
-  if (now > rl.reset) { rl.count = 0; rl.reset = now + 3_600_000; }
-  if (rl.count >= 10) return Response.json({ error: "Rate limit exceeded. Please try again later." }, { status: 429 });
-  rl.count++;
-  rateLimitMap.set(user.id, rl);
+  // 2. Rate limit: 10 analyses/hour — DB-based (works across serverless invocations)
+  const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString();
+  const { count: recentCount } = await (supabase as never as {
+    from: (t: string) => { select: (s: string, opts?: { count: string; head: boolean }) => { eq: (c: string, v: string) => { eq: (c2: string, v2: string) => { gte: (c3: string, v3: string) => Promise<{ count: number | null }> } } } }
+  }).from("audit_log").select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("action", "analysis_completed")
+    .gte("created_at", oneHourAgo);
+  if ((recentCount ?? 0) >= 10) {
+    return Response.json({ error: "Rate limit exceeded. Please try again later." }, { status: 429 });
+  }
 
   // 3. Parse request
   let scenarioId: string;
@@ -129,7 +130,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   let aiResponse;
   try {
     aiResponse = await anthropic.messages.create({
-      model: "claude-sonnet-4-5",
+      model: "claude-sonnet-4-6",
       max_tokens: 1500,
       temperature: 0,
       system: systemPrompt,
@@ -177,6 +178,16 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
       negotiation_strategy: result.negotiation_strategy,
       raw_json: result,
       tokens_used: aiResponse.usage.input_tokens + aiResponse.usage.output_tokens,
+    });
+
+  // 10. Audit log
+  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
+    .from("audit_log").insert({
+      user_id: user.id,
+      action: "analysis_completed",
+      user_visible: true,
+      display_text: `Analysis run for scenario: ${scenario.name as string}`,
+      metadata: { scenario_id: scenarioId, risk_score: result.risk_score },
     });
 
   return Response.json({ success: true, data: result });

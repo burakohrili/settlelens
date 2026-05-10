@@ -104,10 +104,18 @@ export default async function DashboardPage() {
 
   // Summary stats
   const analyzedScenarios = scenariosWithAnalysis.filter((s) => s.analysis);
-  const bestYear10 = analyzedScenarios.reduce(
-    (best, s) => (s.analysis && s.analysis.net_worth_year10 > best ? s.analysis.net_worth_year10 : best),
-    -Infinity
+  const bestEntry = analyzedScenarios.reduce<{ value: number; name: string } | null>(
+    (best, s) => {
+      if (!s.analysis) return best;
+      if (!best || s.analysis.net_worth_year10 > best.value) {
+        return { value: s.analysis.net_worth_year10, name: s.scenario.name as string };
+      }
+      return best;
+    },
+    null
   );
+  const bestYear10 = bestEntry?.value ?? -Infinity;
+  const bestScenarioName = bestEntry?.name ?? null;
   const firstAnalysis = analyzedScenarios[0]?.analysis;
   const avgRisk =
     analyzedScenarios.length > 0
@@ -200,6 +208,9 @@ export default async function DashboardPage() {
             <p className={cn("font-mono text-xl font-bold mt-1 text-[var(--gold)]")}>
               {bestYear10 === -Infinity ? "—" : fmt(bestYear10, currency)}
             </p>
+            {bestScenarioName && (
+              <p className="font-ui text-xs text-[var(--brown)] mt-1 truncate">{bestScenarioName}</p>
+            )}
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("monthlyCashFlow")}</p>

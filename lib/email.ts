@@ -10,7 +10,8 @@ type EmailPayload =
   | { type: "report-ready"; to: string; reportUrl: string }
   | { type: "payment-failed"; to: string }
   | { type: "subscription-cancelled"; to: string; endDate?: string }
-  | { type: "waitlist-confirm"; to: string };
+  | { type: "waitlist-confirm"; to: string }
+  | { type: "contact"; from: string; name: string; subject: string; message: string };
 
 const DISCLAIMER =
   "<hr style='margin:24px 0;border:none;border-top:1px solid #D4C5B0'><p style='font-size:12px;color:#8B7355'>SettleLens provides financial scenario modeling for informational purposes only. Not legal or financial advice. &copy; SettleLens</p>";
@@ -100,6 +101,29 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
           ${button("Try House Simulator →", `${APP_URL}/en/house-simulator`)}
         `);
         break;
+
+      case "contact":
+        subject = `[SettleLens Contact] ${payload.subject}`;
+        html = baseTemplate(`
+          <h1 style="color:#1C2B3A;font-size:20px">New contact form message</h1>
+          <p><strong>From:</strong> ${payload.name} &lt;${payload.from}&gt;</p>
+          <p><strong>Subject:</strong> ${payload.subject}</p>
+          <hr style="margin:16px 0;border:none;border-top:1px solid #D4C5B0">
+          <p style="white-space:pre-wrap;color:#2E4D6B">${payload.message}</p>
+        `);
+        await resend.emails.send({ from: FROM, to: "support@settlelens.com", subject, html });
+        // Auto-reply to sender
+        await resend.emails.send({
+          from: FROM,
+          to: payload.from,
+          subject: "We received your message — SettleLens Support",
+          html: baseTemplate(`
+            <h1 style="color:#1C2B3A;font-size:24px">Message received</h1>
+            <p style="color:#2E4D6B">Hi ${payload.name}, we received your message and will respond within 1–2 business days.</p>
+            <p style="color:#8B7355;font-size:13px">For urgent matters, you can also reach us directly at support@settlelens.com.</p>
+          `),
+        });
+        return; // already sent above, skip default send
     }
 
     if (subject && html) {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
@@ -19,6 +20,11 @@ type Asset = {
   owned_by: "joint" | "me" | "spouse";
   is_marital: boolean;
   mortgage_balance: number;
+  crypto_token?: string;
+  crypto_quantity?: number;
+  crypto_exchange?: string;
+  crypto_wallet_address?: string;
+  crypto_price_at_entry?: number;
 };
 
 const CATEGORIES = [
@@ -31,6 +37,8 @@ const CATEGORIES = [
   { value: "other", label: "📦 Other" },
 ];
 
+const CRYPTO_STORAGE = ["exchange", "cold_wallet", "defi"] as const;
+
 function newAsset(): Asset {
   return { name: "", category: "real_estate", current_value: 0, purchase_price: 0, owned_by: "joint", is_marital: true, mortgage_balance: 0 };
 }
@@ -40,6 +48,7 @@ function fmt(n: number) {
 }
 
 export default function Step2Page() {
+  const t = useTranslations("onboarding_form.step2");
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -73,7 +82,6 @@ export default function Step2Page() {
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      // Delete existing and re-insert
       await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
         .from("assets").delete().eq("user_id", user.id);
       const rows = assets.filter((a) => a.name).map((a) => ({ ...a, user_id: user.id, id: undefined }));
@@ -98,16 +106,16 @@ export default function Step2Page() {
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 grid grid-cols-2 gap-3">
                 <div className="col-span-2">
-                  <Label>Asset name</Label>
+                  <Label>{t("assetName")}</Label>
                   <Input
                     value={asset.name}
                     onChange={(e) => updateAsset(i, "name", e.target.value)}
-                    placeholder="e.g. Family Home"
+                    placeholder={t("assetNamePlaceholder")}
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <Label>Category</Label>
+                  <Label>{t("category")}</Label>
                   <select
                     value={asset.category}
                     onChange={(e) => updateAsset(i, "category", e.target.value)}
@@ -117,19 +125,19 @@ export default function Step2Page() {
                   </select>
                 </div>
                 <div>
-                  <Label>Owned by</Label>
+                  <Label>{t("ownedBy")}</Label>
                   <select
                     value={asset.owned_by}
                     onChange={(e) => updateAsset(i, "owned_by", e.target.value)}
                     className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    <option value="joint">Joint</option>
-                    <option value="me">Me</option>
-                    <option value="spouse">Spouse</option>
+                    <option value="joint">{t("joint")}</option>
+                    <option value="me">{t("me")}</option>
+                    <option value="spouse">{t("spouse")}</option>
                   </select>
                 </div>
                 <div>
-                  <Label>Current value ($)</Label>
+                  <Label>{t("currentValue")}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -139,7 +147,7 @@ export default function Step2Page() {
                   />
                 </div>
                 <div>
-                  <Label>Purchase price ($)</Label>
+                  <Label>{t("purchasePrice")}</Label>
                   <Input
                     type="number"
                     min={0}
@@ -150,7 +158,7 @@ export default function Step2Page() {
                 </div>
                 {asset.category === "real_estate" && (
                   <div>
-                    <Label>Mortgage balance ($)</Label>
+                    <Label>{t("mortgageBalance")}</Label>
                     <Input
                       type="number"
                       min={0}
@@ -160,6 +168,61 @@ export default function Step2Page() {
                     />
                   </div>
                 )}
+
+                {asset.category === "crypto" && (
+                  <div className="col-span-2 space-y-3">
+                    <div className="rounded-md border border-amber-200 bg-amber-50 p-3">
+                      <p className="font-ui text-xs text-amber-800">{t("cryptoWarning")}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <Label>{t("cryptoToken")}</Label>
+                        <Input
+                          value={asset.crypto_token ?? ""}
+                          onChange={(e) => updateAsset(i, "crypto_token", e.target.value)}
+                          placeholder="BTC"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label>{t("cryptoQuantity")}</Label>
+                        <Input
+                          type="number"
+                          min={0}
+                          step="0.00000001"
+                          value={asset.crypto_quantity ?? ""}
+                          onChange={(e) => updateAsset(i, "crypto_quantity", parseFloat(e.target.value) || 0)}
+                          className="mt-1"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <Label>{t("cryptoWhere")}</Label>
+                        <select
+                          value={asset.crypto_exchange ?? "exchange"}
+                          onChange={(e) => updateAsset(i, "crypto_exchange", e.target.value)}
+                          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {CRYPTO_STORAGE.map((s) => (
+                            <option key={s} value={s}>
+                              {s === "exchange" ? t("cryptoExchange") : s === "cold_wallet" ? t("cryptoColdWallet") : t("cryptoDefi")}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-span-2">
+                        <Label>{t("cryptoPriceAtEntry")}</Label>
+                        <Input
+                          type="number"
+                          min={0}
+                          value={asset.crypto_price_at_entry ?? ""}
+                          onChange={(e) => updateAsset(i, "crypto_price_at_entry", parseFloat(e.target.value) || undefined)}
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-2 pt-1">
                   <input
                     type="checkbox"
@@ -168,7 +231,7 @@ export default function Step2Page() {
                     onChange={(e) => updateAsset(i, "is_marital", e.target.checked)}
                     className="h-4 w-4 accent-[var(--gold)]"
                   />
-                  <Label htmlFor={`marital-${i}`} className="cursor-pointer">Marital asset</Label>
+                  <Label htmlFor={`marital-${i}`} className="cursor-pointer">{t("maritalAsset")}</Label>
                 </div>
               </div>
               {assets.length > 1 && (
@@ -187,13 +250,13 @@ export default function Step2Page() {
           onClick={addAsset}
           className={cn(buttonVariants({ variant: "outline" }), "w-full border-dashed border-[var(--sand)] text-[var(--brown)]")}
         >
-          <Plus size={16} className="mr-1" /> Add asset
+          <Plus size={16} className="mr-1" /> {t("addAsset")}
         </button>
 
         <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm">
-          <div className="flex justify-between"><span className="text-[var(--brown)]">Total assets</span><span className="font-semibold">{fmt(totalValue)}</span></div>
-          <div className="flex justify-between"><span className="text-[var(--brown)]">Total mortgage</span><span className="font-semibold text-[var(--danger)]">-{fmt(totalMortgage)}</span></div>
-          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">Net assets</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{fmt(net)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalAssets")}</span><span className="font-semibold">{fmt(totalValue)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalMortgage")}</span><span className="font-semibold text-[var(--danger)]">-{fmt(totalMortgage)}</span></div>
+          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">{t("netAssets")}</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{fmt(net)}</span></div>
         </div>
       </div>
     </WizardLayout>

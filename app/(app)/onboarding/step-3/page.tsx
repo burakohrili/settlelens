@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
@@ -20,7 +21,7 @@ type Debt = {
   owned_by: "joint" | "me" | "spouse";
 };
 
-const CATEGORIES = [
+const DEBT_CATEGORIES = [
   { value: "mortgage", label: "🏠 Mortgage" },
   { value: "car_loan", label: "🚗 Car Loan" },
   { value: "credit_card", label: "💳 Credit Card" },
@@ -38,6 +39,7 @@ function fmt(n: number) {
 }
 
 export default function Step3Page() {
+  const t = useTranslations("onboarding_form.step3");
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -89,16 +91,16 @@ export default function Step3Page() {
       <div className="space-y-4">
         {hasDebts === null && (
           <div>
-            <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">Do you have any debts (other than mortgages already entered)?</p>
+            <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">{t("hasDebts")}</p>
             <div className="flex gap-3">
-              <button onClick={() => { setHasDebts(true); setDebts([newDebt()]); }} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>Yes</button>
-              <button onClick={() => setHasDebts(false)} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>No, skip</button>
+              <button onClick={() => { setHasDebts(true); setDebts([newDebt()]); }} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>{t("yes")}</button>
+              <button onClick={() => setHasDebts(false)} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>{t("noSkip")}</button>
             </div>
           </div>
         )}
 
         {hasDebts === false && (
-          <p className="font-ui text-sm text-[var(--brown)] italic">No debts entered. Click Continue to proceed.</p>
+          <p className="font-ui text-sm text-[var(--brown)] italic">{t("noDebts")}</p>
         )}
 
         {hasDebts === true && (
@@ -108,33 +110,33 @@ export default function Step3Page() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 grid grid-cols-2 gap-3">
                     <div className="col-span-2">
-                      <Label>Debt name</Label>
-                      <Input value={debt.name} onChange={(e) => updateDebt(i, "name", e.target.value)} placeholder="e.g. Visa Card" className="mt-1" />
+                      <Label>{t("debtName")}</Label>
+                      <Input value={debt.name} onChange={(e) => updateDebt(i, "name", e.target.value)} placeholder={t("debtNamePlaceholder")} className="mt-1" />
                     </div>
                     <div>
-                      <Label>Category</Label>
+                      <Label>{t("category")}</Label>
                       <select value={debt.category} onChange={(e) => updateDebt(i, "category", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                        {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                        {DEBT_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                       </select>
                     </div>
                     <div>
-                      <Label>Owned by</Label>
+                      <Label>{t("ownedBy")}</Label>
                       <select value={debt.owned_by} onChange={(e) => updateDebt(i, "owned_by", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                        <option value="joint">Joint</option>
-                        <option value="me">Me</option>
-                        <option value="spouse">Spouse</option>
+                        <option value="joint">{t("joint")}</option>
+                        <option value="me">{t("me")}</option>
+                        <option value="spouse">{t("spouse")}</option>
                       </select>
                     </div>
                     <div>
-                      <Label>Balance ($)</Label>
+                      <Label>{t("balance")}</Label>
                       <Input type="number" min={0} value={debt.balance || ""} onChange={(e) => updateDebt(i, "balance", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                     <div>
-                      <Label>Monthly payment ($)</Label>
+                      <Label>{t("monthlyPayment")}</Label>
                       <Input type="number" min={0} value={debt.monthly_payment || ""} onChange={(e) => updateDebt(i, "monthly_payment", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                     <div>
-                      <Label>Interest rate (%)</Label>
+                      <Label>{t("interestRate")}</Label>
                       <Input type="number" min={0} max={100} step={0.1} value={debt.interest_rate || ""} onChange={(e) => updateDebt(i, "interest_rate", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                   </div>
@@ -146,12 +148,12 @@ export default function Step3Page() {
             ))}
 
             <button onClick={() => setDebts((prev) => [...prev, newDebt()])} className={cn(buttonVariants({ variant: "outline" }), "w-full border-dashed border-[var(--sand)] text-[var(--brown)]")}>
-              <Plus size={16} className="mr-1" /> Add debt
+              <Plus size={16} className="mr-1" /> {t("addDebt")}
             </button>
 
             <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm">
-              <div className="flex justify-between"><span className="text-[var(--brown)]">Total balance</span><span className="font-semibold text-[var(--danger)]">{fmt(totalBalance)}</span></div>
-              <div className="flex justify-between"><span className="text-[var(--brown)]">Monthly payments</span><span className="font-semibold">{fmt(totalMonthly)}/mo</span></div>
+              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalBalance")}</span><span className="font-semibold text-[var(--danger)]">{fmt(totalBalance)}</span></div>
+              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("monthlyPayments")}</span><span className="font-semibold">{fmt(totalMonthly)}/mo</span></div>
             </div>
           </>
         )}

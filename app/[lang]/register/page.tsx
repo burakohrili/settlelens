@@ -118,6 +118,8 @@ export default function RegisterPage() {
         .from("audit_log").insert({
           user_id: userId,
           action: "user_registered",
+          user_visible: true,
+          display_text: "Account created",
           metadata: { lang },
         });
     }

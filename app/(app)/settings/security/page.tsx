@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 type AuditEntry = {
@@ -18,6 +19,7 @@ const ACTION_ICONS: Record<string, string> = {
 };
 
 export default async function SecurityPage() {
+  const t = await getTranslations("settings");
   const supabase = await createClient();
   const {
     data: { user },
@@ -63,51 +65,39 @@ export default async function SecurityPage() {
           className="text-2xl font-bold text-[#1C2B3A]"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
-          Security Log
+          {t("securityTitle")}
         </h1>
-        <p className="mt-1 text-sm text-[#8B7355]">
-          A record of key actions on your account.
-        </p>
+        <p className="mt-1 text-sm text-[#8B7355]">{t("securityDesc")}</p>
       </div>
 
       {/* Trust statement */}
       <div className="rounded-xl border border-[#4FA86E] bg-green-50 p-5">
         <p className="text-sm font-semibold text-[#1C2B3A] mb-1">
-          Your data is private.
+          {t("trustTitle")}
         </p>
-        <p className="text-sm text-[#2E4D6B]">
-          No Anthropic employee, SettleLens team member, or third party has
-          accessed your financial data. Only you can see your scenarios, assets,
-          and reports.
-        </p>
+        <p className="text-sm text-[#2E4D6B]">{t("trustDesc")}</p>
       </div>
 
       {/* Third-party access */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6">
         <h2 className="font-semibold text-[#1C2B3A] mb-3">
-          Third-Party Access
+          {t("thirdPartyTitle")}
         </h2>
         <div className="flex items-center gap-3">
           <span className="text-xl">🔒</span>
-          <p className="text-sm text-[#4FA86E] font-medium">None</p>
+          <p className="text-sm text-[#4FA86E] font-medium">{t("thirdPartyNone")}</p>
         </div>
-        <p className="mt-2 text-xs text-[#8B7355]">
-          SettleLens does not share your financial data with any third parties.
-          Payments are processed by Paddle (Paddle never sees your financial
-          scenario data).
-        </p>
+        <p className="mt-2 text-xs text-[#8B7355]">{t("thirdPartyNote")}</p>
       </div>
 
       {/* Activity log */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6">
         <h2 className="font-semibold text-[#1C2B3A] mb-4">
-          Your Data Activity Log
+          {t("activityTitle")}
         </h2>
 
         {!logs || logs.length === 0 ? (
-          <p className="text-sm text-[#8B7355]">
-            No account activity recorded yet.
-          </p>
+          <p className="text-sm text-[#8B7355]">{t("noActivity")}</p>
         ) : (
           <ul className="space-y-3">
             {logs.map((entry, i) => (
@@ -135,10 +125,7 @@ export default async function SecurityPage() {
         )}
       </div>
 
-      <p className="text-xs text-[#8B7355]">
-        This log shows key account events. Detailed server access logs are
-        retained for security purposes and are not displayed here.
-      </p>
+      <p className="text-xs text-[#8B7355]">{t("activityFooter")}</p>
     </div>
   );
 }

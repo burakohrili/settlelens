@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
@@ -16,18 +17,12 @@ type Child = {
   custody_arrangement: string;
 };
 
-const CUSTODY_OPTIONS = [
-  { value: "joint_50_50", label: "Joint 50/50" },
-  { value: "primary_me", label: "Primary — Me" },
-  { value: "primary_spouse", label: "Primary — Spouse" },
-  { value: "other", label: "Other / TBD" },
-];
-
 function newChild(): Child {
   return { age: 0, custody_arrangement: "joint_50_50" };
 }
 
 export default function Step5Page() {
+  const t = useTranslations("onboarding_form.step5");
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -67,6 +62,13 @@ export default function Step5Page() {
     router.push(`/${lang}/onboarding/step-6`);
   }
 
+  const custodyOptions = [
+    { value: "joint_50_50", label: t("joint5050") },
+    { value: "primary_me", label: t("primaryMe") },
+    { value: "primary_spouse", label: t("primarySpouse") },
+    { value: "other", label: t("otherTbd") },
+  ];
+
   const nextDisabled = saving || (hasChildren === true && children.some((c) => !c.age));
 
   return (
@@ -79,28 +81,28 @@ export default function Step5Page() {
       <div className="space-y-4">
         {hasChildren === null && (
           <div>
-            <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">Do you have any minor children (under 18)?</p>
+            <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">{t("hasChildren")}</p>
             <div className="flex gap-3">
-              <button onClick={() => { setHasChildren(true); setChildren([newChild()]); }} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>Yes</button>
-              <button onClick={() => setHasChildren(false)} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>No, skip</button>
+              <button onClick={() => { setHasChildren(true); setChildren([newChild()]); }} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>{t("yes")}</button>
+              <button onClick={() => setHasChildren(false)} className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}>{t("noSkip")}</button>
             </div>
           </div>
         )}
 
         {hasChildren === false && (
-          <p className="font-ui text-sm text-[var(--brown)] italic">No children entered. Click Continue to proceed.</p>
+          <p className="font-ui text-sm text-[var(--brown)] italic">{t("noChildren")}</p>
         )}
 
         {hasChildren === true && (
           <>
-            <p className="font-ui text-xs text-[var(--brown)]">Enter each child&apos;s age and expected custody arrangement. This helps model child support projections.</p>
+            <p className="font-ui text-xs text-[var(--brown)]">{t("childNote")}</p>
 
             {children.map((child, i) => (
               <div key={i} className="rounded-lg border border-[var(--sand)] bg-white p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 grid grid-cols-2 gap-3">
                     <div>
-                      <Label>Age</Label>
+                      <Label>{t("age")}</Label>
                       <Input
                         type="number"
                         min={0}
@@ -112,13 +114,13 @@ export default function Step5Page() {
                       />
                     </div>
                     <div>
-                      <Label>Custody arrangement</Label>
+                      <Label>{t("custody")}</Label>
                       <select
                         value={child.custody_arrangement}
                         onChange={(e) => updateChild(i, "custody_arrangement", e.target.value)}
                         className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       >
-                        {CUSTODY_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                        {custodyOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                       </select>
                     </div>
                   </div>
@@ -132,11 +134,11 @@ export default function Step5Page() {
             ))}
 
             <button onClick={() => setChildren((prev) => [...prev, newChild()])} className={cn(buttonVariants({ variant: "outline" }), "w-full border-dashed border-[var(--sand)] text-[var(--brown)]")}>
-              <Plus size={16} className="mr-1" /> Add child
+              <Plus size={16} className="mr-1" /> {t("addChild")}
             </button>
 
             <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
-              <strong>Note:</strong> Custody arrangements are assumptions for financial modeling only. Actual custody determinations are made by courts based on best interest of the child. Discuss custody with a qualified family law attorney.
+              <strong>Note:</strong> {t("custodyNote")}
             </div>
           </>
         )}

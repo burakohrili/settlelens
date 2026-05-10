@@ -1,4 +1,6 @@
 import { redirect } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
@@ -27,8 +29,10 @@ export default async function AppLayout({
 
   const planType = profile?.plan_type ?? "discovery";
   const userName = profile?.name ?? "";
+  const messages = await getMessages();
 
   return (
+    <NextIntlClientProvider messages={messages}>
     <div className="flex min-h-screen flex-col">
       <AppHeader
         userEmail={user.email ?? ""}
@@ -45,5 +49,6 @@ export default async function AppLayout({
         </main>
       </div>
     </div>
+    </NextIntlClientProvider>
   );
 }

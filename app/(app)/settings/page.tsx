@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 const LANGUAGES = [
@@ -42,6 +43,7 @@ type Profile = {
 };
 
 export default function SettingsPage() {
+  const t = useTranslations("settings");
   const router = useRouter();
   const supabase = createClient();
 
@@ -127,7 +129,7 @@ export default function SettingsPage() {
         })
         .eq("id", userId);
 
-      setSaveMsg("Changes saved.");
+      setSaveMsg(t("savedOk"));
       const parts = profile.name.trim().split(" ");
       const ini =
         parts.length >= 2
@@ -135,7 +137,7 @@ export default function SettingsPage() {
           : parts[0]?.[0] ?? "?";
       setInitials(ini.toUpperCase());
     } catch {
-      setSaveMsg("Failed to save. Please try again.");
+      setSaveMsg(t("savedFail"));
     } finally {
       setSaving(false);
     }
@@ -145,11 +147,11 @@ export default function SettingsPage() {
     setPwError("");
     setPwSuccess("");
     if (newPassword !== confirmPassword) {
-      setPwError("Passwords do not match.");
+      setPwError(t("pwNoMatch"));
       return;
     }
     if (newPassword.length < 8) {
-      setPwError("Password must be at least 8 characters.");
+      setPwError(t("pwTooShort"));
       return;
     }
     setPwSaving(true);
@@ -158,7 +160,7 @@ export default function SettingsPage() {
     if (error) {
       setPwError(error.message);
     } else {
-      setPwSuccess("Password updated successfully.");
+      setPwSuccess(t("pwUpdated"));
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -172,11 +174,9 @@ export default function SettingsPage() {
           className="text-2xl font-bold text-[#1C2B3A]"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
-          Account Settings
+          {t("accountTitle")}
         </h1>
-        <p className="mt-1 text-sm text-[#8B7355]">
-          Manage your profile and preferences.
-        </p>
+        <p className="mt-1 text-sm text-[#8B7355]">{t("accountDesc")}</p>
       </div>
 
       {/* Avatar */}
@@ -185,18 +185,18 @@ export default function SettingsPage() {
           {initials}
         </div>
         <div>
-          <p className="font-medium text-[#1C2B3A]">{profile.name || "Your Name"}</p>
+          <p className="font-medium text-[#1C2B3A]">{profile.name || t("yourName")}</p>
           <p className="text-sm text-[#8B7355]">{profile.email}</p>
         </div>
       </div>
 
       {/* Profile section */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
-        <h2 className="font-semibold text-[#1C2B3A]">Profile</h2>
+        <h2 className="font-semibold text-[#1C2B3A]">{t("profile")}</h2>
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            Full Name
+            {t("fullName")}
           </label>
           <input
             type="text"
@@ -208,7 +208,7 @@ export default function SettingsPage() {
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            Email
+            {t("email")}
           </label>
           <input
             type="email"
@@ -216,14 +216,12 @@ export default function SettingsPage() {
             disabled
             className="w-full rounded-lg border border-[#D4C5B0] bg-[#F7F3EE] px-3 py-2 text-sm text-[#8B7355]"
           />
-          <p className="mt-1 text-xs text-[#8B7355]">
-            To change your email, contact support@settlelens.com
-          </p>
+          <p className="mt-1 text-xs text-[#8B7355]">{t("emailHint")}</p>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            Preferred Language
+            {t("language")}
           </label>
           <select
             value={profile.preferred_language}
@@ -243,7 +241,7 @@ export default function SettingsPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-              Country
+              {t("country")}
             </label>
             <select
               value={profile.country}
@@ -263,7 +261,7 @@ export default function SettingsPage() {
           {profile.country === "US" && (
             <div>
               <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-                State
+                {t("state")}
               </label>
               <select
                 value={profile.state_province}
@@ -272,7 +270,7 @@ export default function SettingsPage() {
                 }
                 className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm focus:border-[#C8973A] focus:outline-none"
               >
-                <option value="">Select state</option>
+                <option value="">{t("selectState")}</option>
                 {US_STATES.map((s) => (
                   <option key={s} value={s}>
                     {s}
@@ -285,7 +283,7 @@ export default function SettingsPage() {
 
         {saveMsg && (
           <p
-            className={`text-sm ${saveMsg.includes("Failed") ? "text-[#E85252]" : "text-[#4FA86E]"}`}
+            className={`text-sm ${saveMsg === t("savedFail") ? "text-[#E85252]" : "text-[#4FA86E]"}`}
           >
             {saveMsg}
           </p>
@@ -296,17 +294,17 @@ export default function SettingsPage() {
           disabled={saving}
           className="rounded-lg bg-[#1C2B3A] px-6 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save Changes"}
+          {saving ? t("saving") : t("saveChanges")}
         </button>
       </div>
 
       {/* Password section */}
       <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
-        <h2 className="font-semibold text-[#1C2B3A]">Change Password</h2>
+        <h2 className="font-semibold text-[#1C2B3A]">{t("changePassword")}</h2>
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            Current Password
+            {t("currentPassword")}
           </label>
           <input
             type="password"
@@ -319,7 +317,7 @@ export default function SettingsPage() {
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            New Password
+            {t("newPassword")}
           </label>
           <input
             type="password"
@@ -332,7 +330,7 @@ export default function SettingsPage() {
 
         <div>
           <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-            Confirm New Password
+            {t("confirmPassword")}
           </label>
           <input
             type="password"
@@ -351,7 +349,7 @@ export default function SettingsPage() {
           disabled={pwSaving || !newPassword}
           className="rounded-lg bg-[#2E4D6B] px-6 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
-          {pwSaving ? "Updating..." : "Update Password"}
+          {pwSaving ? t("pwUpdating") : t("updatePassword")}
         </button>
       </div>
     </div>

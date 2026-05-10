@@ -1,12 +1,13 @@
-import { createServerClient, createBrowserClient } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
 
 // Service-role client — only for server-side admin operations (webhooks, GDPR delete)
 export function createAdminClient() {
-  return createBrowserClient<Database>(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { cookies: { getAll: () => [], setAll: () => {} } }
   );
 }
 

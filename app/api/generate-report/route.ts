@@ -119,5 +119,15 @@ export async function POST(req: NextRequest) {
       report_type: plan === "professional" ? "professional" : "standard",
     });
 
+  // 9. Audit log
+  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
+    .from("audit_log").insert({
+      user_id: user.id,
+      action: "report_generated",
+      user_visible: true,
+      display_text: "PDF report generated",
+      metadata: { report_type: plan === "professional" ? "professional" : "standard", scenario_count: scenarios.length },
+    });
+
   return Response.json({ success: true, url: signedUrl });
 }
