@@ -141,9 +141,29 @@ export async function POST(req: Request) {
       break;
     }
 
-    case "payment.failed":
-      // Future: send payment failed email
+    case "payment.failed": {
+      const customerId = data.customer_id as string | undefined;
+      if (customerId) {
+        const profileResult = await (supabase as never as {
+          from: (t: string) => {
+            select: (s: string) => {
+              eq: (c: string, v: string) => {
+                single: () => Promise<{ data: { email: string } | null }>;
+              };
+            };
+          };
+        })
+          .from("profiles")
+          .select("email")
+          .eq("paddle_customer_id", customerId)
+          .single();
+
+        if (profileResult.data?.email) {
+          await sendEmail({ type: "payment-failed", to: profileResult.data.email });
+        }
+      }
       break;
+    }
   }
 
   return Response.json({ received: true });

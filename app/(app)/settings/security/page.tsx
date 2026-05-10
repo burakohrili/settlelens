@@ -1,6 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
-import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { createClient } from "@/lib/supabase/client";
 
 type AuditEntry = {
   action: string;
@@ -18,45 +21,76 @@ const ACTION_ICONS: Record<string, string> = {
   account_deleted: "🗑️",
 };
 
-export default async function SecurityPage() {
-  const t = await getTranslations("settings");
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+const PAGE_SIZE = 20;
 
-  if (!user) redirect("/en/login");
+export default function SecurityPage() {
+  const t = useTranslations("settings");
+  const router = useRouter();
+  const supabase = createClient();
 
-  const { data: logs } = await (
-    supabase as unknown as {
-      from: (t: string) => {
-        select: (s: string) => {
-          eq: (
-            c: string,
-            v: string
-          ) => {
-            eq: (
-              c: string,
-              v: boolean
-            ) => {
-              order: (
-                c: string,
-                o: { ascending: boolean }
-              ) => {
-                limit: (n: number) => Promise<{ data: AuditEntry[] | null }>;
+  const [logs, setLogs] = useState<AuditEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/en/login");
+        return;
+      }
+      setUserId(user.id);
+      await fetchLogs(user.id, 0, []);
+      setLoading(false);
+    }
+    load();
+  }, [router, supabase]);
+
+  async function fetchLogs(uid: string, offset: number, existing: AuditEntry[]) {
+    const { data } = await (
+      supabase as unknown as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              eq: (c: string, v: boolean) => {
+                order: (c: string, o: { ascending: boolean }) => {
+                  range: (from: number, to: number) => Promise<{ data: AuditEntry[] | null }>;
+                };
               };
             };
           };
         };
-      };
-    }
-  )
-    .from("audit_log")
-    .select("action,display_text,created_at")
-    .eq("user_id", user.id)
-    .eq("user_visible", true)
-    .order("created_at", { ascending: false })
-    .limit(50);
+      }
+    )
+      .from("audit_log")
+      .select("action,display_text,created_at")
+      .eq("user_id", uid)
+      .eq("user_visible", true)
+      .order("created_at", { ascending: false })
+      .range(offset, offset + PAGE_SIZE - 1);
+
+    const fetched = data ?? [];
+    setLogs([...existing, ...fetched]);
+    setHasMore(fetched.length === PAGE_SIZE);
+  }
+
+  async function handleLoadMore() {
+    setLoadingMore(true);
+    await fetchLogs(userId, logs.length, logs);
+    setLoadingMore(false);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex h-32 items-center justify-center text-[#8B7355]">
+        {t("loading")}
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl space-y-8">
@@ -96,32 +130,44 @@ export default async function SecurityPage() {
           {t("activityTitle")}
         </h2>
 
-        {!logs || logs.length === 0 ? (
+        {logs.length === 0 ? (
           <p className="text-sm text-[#8B7355]">{t("noActivity")}</p>
         ) : (
-          <ul className="space-y-3">
-            {logs.map((entry, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="mt-0.5 text-base">
-                  {ACTION_ICONS[entry.action] ?? "📌"}
-                </span>
-                <div className="flex-1">
-                  <p className="text-sm text-[#1C2B3A]">
-                    {entry.display_text || entry.action}
-                  </p>
-                  <p className="text-xs text-[#8B7355]">
-                    {new Date(entry.created_at).toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="space-y-3">
+              {logs.map((entry, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="mt-0.5 text-base">
+                    {ACTION_ICONS[entry.action] ?? "📌"}
+                  </span>
+                  <div className="flex-1">
+                    <p className="text-sm text-[#1C2B3A]">
+                      {entry.display_text || entry.action}
+                    </p>
+                    <p className="text-xs text-[#8B7355]">
+                      {new Date(entry.created_at).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {hasMore && (
+              <button
+                onClick={handleLoadMore}
+                disabled={loadingMore}
+                className="mt-4 w-full rounded-lg border border-[#D4C5B0] py-2 text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE] disabled:opacity-50 transition-colors"
+              >
+                {loadingMore ? t("loading") : "Load more"}
+              </button>
+            )}
+          </>
         )}
       </div>
 

@@ -24,7 +24,7 @@ type ReportData = {
   jurisdiction: string;
   date: string;
   lang: string;
-  assets: Array<{ name: string; category: string; current_value: number; owned_by: string }>;
+  assets: Array<{ name: string; category: string; current_value: number; owned_by: string; crypto_token?: string; crypto_quantity?: number; crypto_exchange?: string }>;
   debts: Array<{ name: string; category: string; balance: number; monthly_payment: number }>;
   scenarios: Array<{
     name: string;
@@ -161,6 +161,18 @@ export function buildReportHTML(data: ReportData): string {
     <tr><th>Name</th><th>Category</th><th>Current Value</th><th>Owned By</th></tr>
     ${assets.map((a) => `<tr><td>${a.name}</td><td>${a.category}</td><td>${fmt(a.current_value, currency)}</td><td>${a.owned_by}</td></tr>`).join("")}
   </table>
+  ${assets.some((a) => a.category === "crypto") ? `
+  <div style="margin-top:10px;background:#FFF8E1;border:1px solid #F59E0B;border-radius:6px;padding:10px;font-size:11px;color:#92400E;">
+    <strong>⚠ Crypto Asset Notice:</strong> Cryptocurrency values are highly volatile and user-stated.
+    Professional appraisal is recommended for any legal proceedings.
+    ${assets.filter((a) => a.category === "crypto").map((a) => {
+      const extra = [];
+      if (a.crypto_token) extra.push(`Token: ${a.crypto_token}`);
+      if (a.crypto_quantity) extra.push(`Qty: ${Number(a.crypto_quantity).toFixed(8)}`);
+      if (a.crypto_exchange) extra.push(`Held at: ${a.crypto_exchange}`);
+      return `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #F59E0B;">${a.name}${extra.length ? " — " + extra.join(" | ") : ""}</div>`;
+    }).join("")}
+  </div>` : ""}
 </section>
 
 <section>

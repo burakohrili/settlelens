@@ -20,7 +20,7 @@
     "h1": "Know Exactly Where You Stand.\nBefore You Sign Anything.",
     "h2": "AI-powered financial modeling for divorce. See your 10-year financial future across every settlement scenario — in minutes, not months.",
     "cta": "Start Free Analysis",
-    "sub": "No lawyer needed. Takes 20 minutes. Download your report."
+    "sub": "Takes 20 minutes. Prepare before you meet your attorney."
   },
   "fearHook": {
     "stat": "$15,000+",
@@ -211,6 +211,11 @@
     "upgradeButton": "Upgrade"
   },
   "settings": {
+    "navAccount": "Account",
+    "navBilling": "Billing",
+    "navPrivacy": "Privacy",
+    "navSecurity": "Security",
+    "navNotifications": "Notifications",
     "accountTitle": "Account Settings",
     "accountDesc": "Manage your profile and preferences.",
     "yourName": "Your Name",
@@ -291,7 +296,17 @@
     "thirdPartyNote": "SettleLens does not share your financial data with any third parties. Payments are processed by Paddle (Paddle never sees your financial scenario data).",
     "activityTitle": "Your Data Activity Log",
     "noActivity": "No account activity recorded yet.",
-    "activityFooter": "This log shows key account events. Detailed server access logs are retained for security purposes and are not displayed here."
+    "activityFooter": "This log shows key account events. Detailed server access logs are retained for security purposes and are not displayed here.",
+    "notificationsTitle": "Notifications",
+    "notificationsDesc": "Manage how SettleLens communicates with you.",
+    "emailNotificationsTitle": "Email Notifications",
+    "notifMarketing": "Product updates & tips",
+    "notifMarketingDesc": "Receive tips, feature announcements, and divorce planning guides.",
+    "notifSecurity": "Security alerts",
+    "notifSecurityDesc": "Account login, password changes, and audit events. Always on.",
+    "notifMarketingEnabled": "Email updates enabled.",
+    "notifMarketingDisabled": "Email updates disabled.",
+    "notifMarketingFail": "Failed to update preference."
   },
   "onboarding_form": {
     "step1": {

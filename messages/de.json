@@ -20,7 +20,7 @@
     "h1": "Wissen Sie genau, wo Sie stehen.\nBevor Sie irgendetwas unterschreiben.",
     "h2": "KI-gestützte Finanzmodellierung für Scheidungen. Sehen Sie Ihre 10-jährige finanzielle Zukunft in jedem Einigungsszenario – in Minuten, nicht Monaten.",
     "cta": "Kostenlose Analyse starten",
-    "sub": "Kein Anwalt nötig. Dauert 20 Minuten. Bericht herunterladen."
+    "sub": "Dauert 20 Minuten. Bereiten Sie sich vor dem Anwaltsgespräch vor."
   },
   "fearHook": {
     "stat": "15.000€+",
@@ -153,6 +153,11 @@
     "upgradeButton": "Upgrade"
   },
   "settings": {
+    "navAccount": "Konto",
+    "navBilling": "Abrechnung",
+    "navPrivacy": "Datenschutz",
+    "navSecurity": "Sicherheit",
+    "navNotifications": "Benachrichtigungen",
     "accountTitle": "Kontoeinstellungen",
     "accountDesc": "Verwalten Sie Ihr Profil und Ihre Einstellungen.",
     "yourName": "Ihr Name",
@@ -233,7 +238,17 @@
     "thirdPartyNote": "SettleLens teilt Ihre Finanzdaten nicht mit Dritten. Zahlungen werden von Paddle verarbeitet.",
     "activityTitle": "Ihr Datenaktivitätsprotokoll",
     "noActivity": "Noch keine Kontoaktivität aufgezeichnet.",
-    "activityFooter": "Dieses Protokoll zeigt wichtige Kontoereignisse. Detaillierte Serverzugriffsprotokolle werden aus Sicherheitsgründen aufbewahrt."
+    "activityFooter": "Dieses Protokoll zeigt wichtige Kontoereignisse. Detaillierte Serverzugriffsprotokolle werden aus Sicherheitsgründen aufbewahrt.",
+    "notificationsTitle": "Benachrichtigungen",
+    "notificationsDesc": "Verwalten Sie, wie SettleLens mit Ihnen kommuniziert.",
+    "emailNotificationsTitle": "E-Mail-Benachrichtigungen",
+    "notifMarketing": "Produktupdates & Tipps",
+    "notifMarketingDesc": "Erhalten Sie Tipps, Feature-Ankündigungen und Scheidungsplanungs-Leitfäden.",
+    "notifSecurity": "Sicherheitswarnungen",
+    "notifSecurityDesc": "Konto-Anmeldungen, Passwortänderungen und Audit-Ereignisse. Immer aktiv.",
+    "notifMarketingEnabled": "E-Mail-Updates aktiviert.",
+    "notifMarketingDisabled": "E-Mail-Updates deaktiviert.",
+    "notifMarketingFail": "Einstellung konnte nicht aktualisiert werden."
   },
   "onboarding_form": {
     "step1": {

@@ -20,7 +20,7 @@
     "h1": "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
     "h2": "Modélisation financière par IA pour le divorce. Visualisez votre avenir financier sur 10 ans dans chaque scénario d'accord – en minutes, pas en mois.",
     "cta": "Démarrer l'analyse gratuite",
-    "sub": "Pas d'avocat nécessaire. Prend 20 minutes. Téléchargez votre rapport."
+    "sub": "20 minutes. Préparez-vous avant de consulter votre avocat."
   },
   "fearHook": {
     "stat": "15 000€+",
@@ -153,6 +153,11 @@
     "upgradeButton": "Améliorer"
   },
   "settings": {
+    "navAccount": "Compte",
+    "navBilling": "Facturation",
+    "navPrivacy": "Confidentialité",
+    "navSecurity": "Sécurité",
+    "navNotifications": "Notifications",
     "accountTitle": "Paramètres du compte",
     "accountDesc": "Gérez votre profil et vos préférences.",
     "yourName": "Votre nom",
@@ -233,7 +238,17 @@
     "thirdPartyNote": "SettleLens ne partage pas vos données financières avec des tiers. Les paiements sont traités par Paddle.",
     "activityTitle": "Votre journal d'activité des données",
     "noActivity": "Aucune activité de compte enregistrée pour l'instant.",
-    "activityFooter": "Ce journal affiche les événements importants. Les journaux d'accès détaillés sont conservés à des fins de sécurité."
+    "activityFooter": "Ce journal affiche les événements importants. Les journaux d'accès détaillés sont conservés à des fins de sécurité.",
+    "notificationsTitle": "Notifications",
+    "notificationsDesc": "Gérez comment SettleLens communique avec vous.",
+    "emailNotificationsTitle": "Notifications par e-mail",
+    "notifMarketing": "Mises à jour & conseils",
+    "notifMarketingDesc": "Recevez des conseils, annonces de fonctionnalités et guides de planification.",
+    "notifSecurity": "Alertes de sécurité",
+    "notifSecurityDesc": "Connexions, changements de mot de passe et événements d'audit. Toujours actif.",
+    "notifMarketingEnabled": "Mises à jour e-mail activées.",
+    "notifMarketingDisabled": "Mises à jour e-mail désactivées.",
+    "notifMarketingFail": "Impossible de mettre à jour la préférence."
   },
   "onboarding_form": {
     "step1": {

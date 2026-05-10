@@ -20,7 +20,7 @@
     "h1": "Avukata Para Ödemeden\nFinansal Geleceğini Gör.",
     "h2": "Yapay zeka destekli boşanma finansal modelleme. Her anlaşma senaryosunda 10 yıllık finansal tablonu dakikalar içinde gör.",
     "cta": "Ücretsiz Analiz Başlat",
-    "sub": "Avukat gerekmez. 20 dakika yeterli. Raporunu indir."
+    "sub": "20 dakika yeterli. Avukatınızla görüşmeden önce hazırlanın."
   },
   "fearHook": {
     "stat": "50.000 ₺+",
@@ -211,6 +211,11 @@
     "upgradeButton": "Yükselt"
   },
   "settings": {
+    "navAccount": "Hesap",
+    "navBilling": "Fatura",
+    "navPrivacy": "Gizlilik",
+    "navSecurity": "Güvenlik",
+    "navNotifications": "Bildirimler",
     "accountTitle": "Hesap Ayarları",
     "accountDesc": "Profilinizi ve tercihlerinizi yönetin.",
     "yourName": "Adınız",
@@ -291,7 +296,17 @@
     "thirdPartyNote": "SettleLens finansal verilerinizi üçüncü taraflarla paylaşmaz. Ödemeler Paddle tarafından işlenir (Paddle finansal senaryo verilerinizi görmez).",
     "activityTitle": "Veri Etkinlik Günlüğünüz",
     "noActivity": "Henüz hesap aktivitesi kaydedilmedi.",
-    "activityFooter": "Bu günlük önemli hesap olaylarını gösterir. Güvenlik amacıyla saklanan ayrıntılı sunucu erişim günlükleri burada görüntülenmez."
+    "activityFooter": "Bu günlük önemli hesap olaylarını gösterir. Güvenlik amacıyla saklanan ayrıntılı sunucu erişim günlükleri burada görüntülenmez.",
+    "notificationsTitle": "Bildirimler",
+    "notificationsDesc": "SettleLens'in sizinle nasıl iletişim kurduğunu yönetin.",
+    "emailNotificationsTitle": "E-posta Bildirimleri",
+    "notifMarketing": "Ürün güncellemeleri ve ipuçları",
+    "notifMarketingDesc": "İpuçları, özellik duyuruları ve boşanma planlama rehberleri alın.",
+    "notifSecurity": "Güvenlik uyarıları",
+    "notifSecurityDesc": "Hesap girişi, şifre değişiklikleri ve denetim olayları. Her zaman açık.",
+    "notifMarketingEnabled": "E-posta güncellemeleri etkinleştirildi.",
+    "notifMarketingDisabled": "E-posta güncellemeleri devre dışı bırakıldı.",
+    "notifMarketingFail": "Tercih güncellenemedi."
   },
   "onboarding_form": {
     "step1": {

@@ -20,7 +20,7 @@
     "h1": "Sabe exactamente dónde estás.\nAntes de firmar cualquier cosa.",
     "h2": "Modelización financiera con IA para divorcios. Ve tu futuro financiero a 10 años en cada escenario de acuerdo – en minutos, no en meses.",
     "cta": "Iniciar análisis gratuito",
-    "sub": "No se necesita abogado. Tarda 20 minutos. Descarga tu informe."
+    "sub": "20 minutos. Prepárese antes de reunirse con su abogado."
   },
   "fearHook": {
     "stat": "15.000€+",
@@ -153,6 +153,11 @@
     "upgradeButton": "Mejorar"
   },
   "settings": {
+    "navAccount": "Cuenta",
+    "navBilling": "Facturación",
+    "navPrivacy": "Privacidad",
+    "navSecurity": "Seguridad",
+    "navNotifications": "Notificaciones",
     "accountTitle": "Configuración de la cuenta",
     "accountDesc": "Gestione su perfil y preferencias.",
     "yourName": "Su nombre",
@@ -233,7 +238,17 @@
     "thirdPartyNote": "SettleLens no comparte sus datos financieros con terceros. Los pagos son procesados por Paddle.",
     "activityTitle": "Su registro de actividad de datos",
     "noActivity": "No se ha registrado ninguna actividad de cuenta todavía.",
-    "activityFooter": "Este registro muestra eventos importantes. Los registros detallados de acceso se conservan por motivos de seguridad."
+    "activityFooter": "Este registro muestra eventos importantes. Los registros detallados de acceso se conservan por motivos de seguridad.",
+    "notificationsTitle": "Notificaciones",
+    "notificationsDesc": "Gestione cómo SettleLens se comunica con usted.",
+    "emailNotificationsTitle": "Notificaciones por correo",
+    "notifMarketing": "Actualizaciones y consejos",
+    "notifMarketingDesc": "Reciba consejos, anuncios de funciones y guías de planificación.",
+    "notifSecurity": "Alertas de seguridad",
+    "notifSecurityDesc": "Inicios de sesión, cambios de contraseña y eventos de auditoría. Siempre activo.",
+    "notifMarketingEnabled": "Actualizaciones por correo activadas.",
+    "notifMarketingDisabled": "Actualizaciones por correo desactivadas.",
+    "notifMarketingFail": "No se pudo actualizar la preferencia."
   },
   "onboarding_form": {
     "step1": {
