@@ -91,6 +91,9 @@ export default function RegisterPage() {
     const { data: authData, error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://settlelens.com"}/onboarding/step-1`,
+      },
     });
 
     if (error) {
