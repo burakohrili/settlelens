@@ -92,7 +92,7 @@ export default function RegisterPage() {
       email: data.email,
       password: data.password,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://settlelens.com"}/onboarding/step-1`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://settlelens.com"}/${lang}/auth/callback?next=/onboarding/step-1`,
       },
     });
 
@@ -104,30 +104,23 @@ export default function RegisterPage() {
 
     const userId = authData.user?.id;
     if (userId) {
-      await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-        .from("profiles").insert({
-          id: userId,
+      // Use server-side API with service role so profile is created even when
+      // email confirmation is required (no active session = RLS would block client INSERT)
+      await fetch("/api/user/setup-account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
           email: data.email,
           name: data.name,
-          preferred_language: lang,
-          gdpr_consent: true,
-          gdpr_consent_at: new Date().toISOString(),
-          kvkk_consent: lang === "tr" ? consentState.kvkk : false,
-          kvkk_consent_at: lang === "tr" && consentState.kvkk ? new Date().toISOString() : null,
-          marketing_consent: consentState.marketing,
-        });
-
-      await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-        .from("audit_log").insert({
-          user_id: userId,
-          action: "user_registered",
-          user_visible: true,
-          display_text: "Account created",
-          metadata: { lang },
-        });
+          lang,
+          kvkkConsent: consentState.kvkk,
+          marketingConsent: consentState.marketing,
+        }),
+      }).catch(() => {});
     }
 
-    // Welcome email via API route (server-side Resend, fire and forget)
+    // Welcome email (fire and forget)
     fetch("/api/email/welcome", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -169,14 +162,14 @@ export default function RegisterPage() {
         </Link>
         <div>
           <p className="font-display text-4xl font-semibold italic leading-tight text-[var(--cream)]">
-            "Financial clarity before you negotiate."
+            "{t("registerQuote")}"
           </p>
-          <p className="mt-2 font-ui text-xs text-[var(--sand)]">Financial modeling, not legal advice.</p>
+          <p className="mt-2 font-ui text-xs text-[var(--sand)]">{t("registerQuoteSub")}</p>
           <ul className="mt-8 space-y-4">
             {[
-              "Takes 20 minutes to complete",
-              "Your data is private — only you can see it",
-              "Download a PDF report for your attorney",
+              t("registerBullet1"),
+              t("registerBullet2"),
+              t("registerBullet3"),
             ].map((b) => (
               <li key={b} className="flex items-start gap-3">
                 <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[var(--gold)]" />

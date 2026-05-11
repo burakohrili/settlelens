@@ -38,7 +38,7 @@ function fmt(n: number, currency: string): string {
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/en/login");
 
   // Fetch profile
   const { data: profile } = await (supabase as never as {
@@ -51,7 +51,9 @@ export default async function DashboardPage() {
     }
   }).from("profiles").select("*").eq("id", user.id).single();
 
-  if (!profile) redirect("/login");
+  // No profile = registration profile INSERT failed (email-confirm RLS race).
+  // Redirect to onboarding so the user can create their profile via upsert.
+  if (!profile) redirect("/onboarding/step-1");
 
   // If onboarding not complete, redirect to step 1
   if (!profile.onboarding_completed) {
