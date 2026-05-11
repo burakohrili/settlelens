@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,17 +20,10 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const BENEFITS = [
-  "See your 10-year financial future across every scenario",
-  "Know what keeping the house actually costs over a decade",
-  "Walk into negotiations with numbers, not guesses",
-];
-
 export default function LoginPage() {
   const t = useTranslations("auth");
   const params = useParams();
   const lang = params.lang as string;
-  const router = useRouter();
   const supabase = createClient();
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,7 +43,8 @@ export default function LoginPage() {
       setLoading(false);
       return;
     }
-    router.push(`/${lang}/dashboard`);
+    // Hard navigation: clears Next.js server cache so (app)/layout.tsx sees the new session cookie
+    window.location.href = "/dashboard";
   }
 
   async function signInWithGoogle() {
@@ -69,11 +63,11 @@ export default function LoginPage() {
         </Link>
         <div>
           <p className="font-display text-4xl font-semibold italic leading-tight text-[var(--cream)]">
-            "See Your Settlement Clearly."
+            "{t("loginQuote")}"
           </p>
-          <p className="mt-2 font-ui text-xs text-[var(--sand)]">Financial modeling, not legal advice.</p>
+          <p className="mt-2 font-ui text-xs text-[var(--sand)]">{t("loginQuoteSub")}</p>
           <ul className="mt-8 space-y-4">
-            {BENEFITS.map((b) => (
+            {[t("loginBullet1"), t("loginBullet2"), t("loginBullet3")].map((b) => (
               <li key={b} className="flex items-start gap-3">
                 <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[var(--gold)]" />
                 <span className="font-body text-sm text-[var(--cream)]/90">{b}</span>
@@ -82,7 +76,7 @@ export default function LoginPage() {
           </ul>
         </div>
         <p className="font-ui text-xs text-[var(--brown)]">
-          © 2026 SettleLens. Financial modeling, not legal advice.
+          © 2026 SettleLens. {t("loginQuoteSub")}
         </p>
       </div>
 
