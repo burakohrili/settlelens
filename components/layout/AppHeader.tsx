@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { LogOut, Settings, User, CreditCard, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,10 +21,10 @@ type Props = {
   userEmail?: string;
   userName?: string;
   planType?: string;
+  locale?: string;
 };
 
-export function AppHeader({ userEmail = "", userName = "", planType = "discovery" }: Props) {
-  const locale = useLocale();
+export function AppHeader({ userEmail = "", userName = "", planType = "discovery", locale = "en" }: Props) {
   const t = useTranslations("nav");
   const router = useRouter();
   const supabase = createClient();
@@ -52,7 +52,7 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
       <div className="flex items-center gap-2">
         {!isPaid && (
           <Link
-            href={`/${locale}/upgrade`}
+            href="/upgrade"
             className={cn(buttonVariants({ size: "sm" }), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
             {t("upgrade")}
@@ -78,13 +78,13 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
             <ChevronDown size={14} className="text-[var(--brown)]" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push("/settings")} className="flex items-center gap-2 cursor-pointer">
               <User size={14} /> {t("profile")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings/billing`)} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push("/settings/billing")} className="flex items-center gap-2 cursor-pointer">
               <CreditCard size={14} /> {t("billing")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push("/settings")} className="flex items-center gap-2 cursor-pointer">
               <Settings size={14} /> {t("settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />

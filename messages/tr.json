@@ -394,7 +394,11 @@
     "analyzeOffer": "Yeni Teklif Analiz Et",
     "downloadPDF": "PDF Raporu İndir",
     "editAssets": "Varlıkları Düzenle",
-    "upgradeToRun": "AI analizi için yükseltin →"
+    "upgradeToRun": "AI analizi için yükseltin →",
+    "scenarios": "Senaryolar",
+    "scenariosDesc": "Farklı anlaşma sonuçlarını karşılaştırın",
+    "noScenarios": "Henüz senaryo yok",
+    "noScenariosDesc": "Anlaşma sonuçlarını karşılaştırmak için ilk senaryonuzu oluşturun."
   },
   "sidebar": {
     "dashboard": "Panel",

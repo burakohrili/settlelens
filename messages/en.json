@@ -394,7 +394,11 @@
     "analyzeOffer": "Analyze New Offer",
     "downloadPDF": "Download PDF Report",
     "editAssets": "Edit Assets",
-    "upgradeToRun": "Upgrade to run AI analysis →"
+    "upgradeToRun": "Upgrade to run AI analysis →",
+    "scenarios": "Scenarios",
+    "scenariosDesc": "Compare different settlement outcomes",
+    "noScenarios": "No scenarios yet",
+    "noScenariosDesc": "Create your first scenario to compare settlement outcomes."
   },
   "sidebar": {
     "dashboard": "Dashboard",

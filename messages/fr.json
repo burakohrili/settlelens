@@ -394,7 +394,11 @@
     "analyzeOffer": "Analyser une nouvelle offre",
     "downloadPDF": "Télécharger le rapport PDF",
     "editAssets": "Modifier les actifs",
-    "upgradeToRun": "Améliorez pour l'analyse IA →"
+    "upgradeToRun": "Améliorez pour l'analyse IA →",
+    "scenarios": "Scénarios",
+    "scenariosDesc": "Comparez différents résultats de règlement",
+    "noScenarios": "Pas encore de scénarios",
+    "noScenariosDesc": "Créez votre premier scénario pour comparer les résultats."
   },
   "sidebar": {
     "dashboard": "Tableau de bord",

@@ -394,7 +394,11 @@
     "analyzeOffer": "Neues Angebot analysieren",
     "downloadPDF": "PDF-Bericht herunterladen",
     "editAssets": "Vermögen bearbeiten",
-    "upgradeToRun": "Upgrade für KI-Analyse →"
+    "upgradeToRun": "Upgrade für KI-Analyse →",
+    "scenarios": "Szenarien",
+    "scenariosDesc": "Verschiedene Vergleichsergebnisse vergleichen",
+    "noScenarios": "Noch keine Szenarien",
+    "noScenariosDesc": "Erstellen Sie Ihr erstes Szenario, um Vergleichsergebnisse zu vergleichen."
   },
   "sidebar": {
     "dashboard": "Dashboard",

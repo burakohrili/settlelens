@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -23,10 +23,9 @@ const NAV_ITEMS: NavItem[] = [
   { key: "settings", tKey: "settings", icon: Settings, href: "settings" },
 ];
 
-type Props = { planType?: string };
+type Props = { planType?: string; locale?: string };
 
-export function AppSidebar({ planType = "discovery" }: Props) {
-  const locale = useLocale();
+export function AppSidebar({ planType = "discovery", locale = "en" }: Props) {
   const t = useTranslations("sidebar");
   const pathname = usePathname();
   const isFree = planType === "discovery";
@@ -36,8 +35,8 @@ export function AppSidebar({ planType = "discovery" }: Props) {
       <aside className="hidden w-56 shrink-0 flex-col border-r border-[var(--sand)] bg-[var(--cream)] md:flex">
         <nav className="flex flex-1 flex-col gap-1 p-3 pt-4">
           {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
-            const fullHref = `/${locale}/${href}`;
-            const active = pathname.startsWith(fullHref);
+            const fullHref = `/${href}`;
+            const active = pathname === fullHref || pathname.startsWith(`${fullHref}/`);
             return (
               <Link
                 key={key}
@@ -65,7 +64,7 @@ export function AppSidebar({ planType = "discovery" }: Props) {
               {t("upgradeDesc")}
             </p>
             <Link
-              href={`/${locale}/upgrade`}
+              href="/upgrade"
               className={cn(buttonVariants({ size: "sm" }), "mt-2 w-full bg-[var(--gold)] text-[var(--navy)] hover:bg-[var(--gold)]/90 text-xs justify-center")}
             >
               <Zap size={12} className="mr-1" /> {t("upgradeButton")}
@@ -76,8 +75,8 @@ export function AppSidebar({ planType = "discovery" }: Props) {
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 flex h-14 items-center justify-around border-t border-[var(--sand)] bg-[var(--cream)] md:hidden">
         {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
-          const fullHref = `/${locale}/${href}`;
-          const active = pathname.startsWith(fullHref);
+          const fullHref = `/${href}`;
+          const active = pathname === fullHref || pathname.startsWith(`${fullHref}/`);
           return (
             <Link
               key={key}
