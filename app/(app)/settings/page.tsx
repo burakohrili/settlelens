@@ -136,6 +136,7 @@ export default function SettingsPage() {
           ? parts[0][0] + parts[parts.length - 1][0]
           : parts[0]?.[0] ?? "?";
       setInitials(ini.toUpperCase());
+      router.refresh(); // re-run server layout to pick up new preferred_language
     } catch {
       setSaveMsg(t("savedFail"));
     } finally {
