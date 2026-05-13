@@ -16,15 +16,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-const STEP_TITLES = [
-  "Where are you located?",
-  "Your Assets",
-  "Your Debts",
-  "Income",
-  "Children",
-  "Build Your Scenarios",
-];
-
 export function WizardLayout({
   currentStep,
   totalSteps = 6,
@@ -36,16 +27,15 @@ export function WizardLayout({
 }: Props) {
   const t = useTranslations("onboarding");
   const pct = Math.round((currentStep / totalSteps) * 100);
-  const title = STEP_TITLES[currentStep - 1] ?? "";
+  const steps = t.raw("steps") as Array<{ title: string }>;
+  const title = steps[currentStep - 1]?.title ?? "";
 
   return (
     <div className="flex min-h-0 flex-col gap-4">
       {/* Progress header */}
       <div>
         <div className="flex items-center justify-between font-ui text-xs text-[var(--brown)]">
-          <span>
-            Step {currentStep} of {totalSteps}
-          </span>
+          <span>{t("stepOf", { current: currentStep, total: totalSteps })}</span>
           <span className="font-semibold text-[var(--navy)]">{title}</span>
         </div>
         <Progress

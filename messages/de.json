@@ -239,7 +239,8 @@
     ],
     "next": "Weiter",
     "back": "Zurück",
-    "save": "Speichern & Weiter"
+    "save": "Speichern & Weiter",
+    "stepOf": "Schritt {current} von {total}"
   },
   "disclaimer": {
     "short": "Keine Rechtsberatung.",

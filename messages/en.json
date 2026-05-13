@@ -239,7 +239,8 @@
     ],
     "next": "Continue",
     "back": "Back",
-    "save": "Save & Continue"
+    "save": "Save & Continue",
+    "stepOf": "Step {current} of {total}"
   },
   "disclaimer": {
     "short": "Not legal advice.",

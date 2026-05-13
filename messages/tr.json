@@ -239,7 +239,8 @@
     ],
     "next": "Devam",
     "back": "Geri",
-    "save": "Kaydet ve Devam"
+    "save": "Kaydet ve Devam",
+    "stepOf": "{current}. adım / {total}"
   },
   "disclaimer": {
     "short": "Hukuki tavsiye değildir.",
