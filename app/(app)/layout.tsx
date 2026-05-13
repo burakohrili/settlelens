@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
@@ -30,6 +30,7 @@ export default async function AppLayout({
   const planType = profile?.plan_type ?? "discovery";
   const userName = profile?.name ?? "";
   const locale = (profile?.preferred_language ?? "en") as string;
+  setRequestLocale(locale);
   const messages = await getMessages({ locale });
 
   return (
