@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
@@ -29,13 +29,24 @@ export default async function AppLayout({
 
   const planType = profile?.plan_type ?? "discovery";
   const userName = profile?.name ?? "";
-  const locale = (profile?.preferred_language ?? "en") as string;
+  const rawLang = profile?.preferred_language;
+  const locale = (rawLang ?? "en") as string;
   setRequestLocale(locale);
-  const messages = await getMessages({ locale });
+  // Load messages directly — bypass getMessages() cache layer
+  let messages: Record<string, unknown>;
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default as Record<string, unknown>;
+  } catch {
+    messages = (await import(`../../messages/en.json`)).default as Record<string, unknown>;
+  }
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
     <div className="flex min-h-screen flex-col">
+      {/* DEBUG: remove after confirming locale works */}
+      <div style={{background:"#e11d48",color:"#fff",textAlign:"center",fontSize:"11px",padding:"2px"}}>
+        locale={locale} | rawLang={rawLang ?? "null"}
+      </div>
       <AppHeader
         userEmail={user.email ?? ""}
         userName={userName}
