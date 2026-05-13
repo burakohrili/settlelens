@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     .upsert(
       {
         id: user.id,
+        email: user.email ?? "",
         name: name ?? "",
         preferred_language: preferred_language ?? "en",
         country: country ?? null,
@@ -33,8 +34,8 @@ export async function POST(request: NextRequest) {
     );
 
   if (error) {
-    console.error("[update-profile] error:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[update-profile] upsert error:", error.code, error.message);
+    return NextResponse.json({ error: error.message, code: error.code }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
