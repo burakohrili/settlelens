@@ -110,38 +110,36 @@ export default function SettingsPage() {
   const handleSave = async () => {
     setSaving(true);
     setSaveMsg("");
-    try {
-      await (
-        supabase as unknown as {
-          from: (t: string) => {
-            update: (d: unknown) => {
-              eq: (c: string, v: string) => Promise<unknown>;
-            };
-          };
-        }
-      )
-        .from("profiles")
-        .update({
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any)
+      .from("profiles")
+      .upsert(
+        {
+          id: userId,
           name: profile.name,
           preferred_language: profile.preferred_language,
           country: profile.country,
           state_province: profile.state_province,
-        })
-        .eq("id", userId);
+        },
+        { onConflict: "id" }
+      );
 
-      setSaveMsg(t("savedOk"));
-      const parts = profile.name.trim().split(" ");
-      const ini =
-        parts.length >= 2
-          ? parts[0][0] + parts[parts.length - 1][0]
-          : parts[0]?.[0] ?? "?";
-      setInitials(ini.toUpperCase());
-      router.refresh(); // re-run server layout to pick up new preferred_language
-    } catch {
-      setSaveMsg(t("savedFail"));
-    } finally {
-      setSaving(false);
+    setSaving(false);
+
+    if (error) {
+      setSaveMsg(`${t("savedFail")}: ${error.message}`);
+      return;
     }
+
+    setSaveMsg(t("savedOk"));
+    const parts = profile.name.trim().split(" ");
+    const ini =
+      parts.length >= 2
+        ? parts[0][0] + parts[parts.length - 1][0]
+        : parts[0]?.[0] ?? "?";
+    setInitials(ini.toUpperCase());
+    router.refresh();
   };
 
   const handlePasswordChange = async () => {
