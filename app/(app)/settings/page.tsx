@@ -111,24 +111,22 @@ export default function SettingsPage() {
     setSaving(true);
     setSaveMsg("");
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
-      .from("profiles")
-      .upsert(
-        {
-          id: userId,
-          name: profile.name,
-          preferred_language: profile.preferred_language,
-          country: profile.country,
-          state_province: profile.state_province,
-        },
-        { onConflict: "id" }
-      );
+    const res = await fetch("/api/user/update-profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: profile.name,
+        preferred_language: profile.preferred_language,
+        country: profile.country,
+        state_province: profile.state_province,
+      }),
+    });
 
     setSaving(false);
 
-    if (error) {
-      setSaveMsg(`${t("savedFail")}: ${error.message}`);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      setSaveMsg(`${t("savedFail")}: ${body.error ?? res.statusText}`);
       return;
     }
 
