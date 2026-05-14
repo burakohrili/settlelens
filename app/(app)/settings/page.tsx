@@ -126,7 +126,7 @@ export default function SettingsPage() {
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
-      const detail = body.error ?? res.statusText ?? `HTTP ${res.status}`;
+      const detail = body.error || res.statusText || `HTTP ${res.status}`;
       setSaveMsg(`${t("savedFail")}: ${detail}`);
       return;
     }
