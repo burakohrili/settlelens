@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { updateProfile } from "./actions";
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -110,35 +111,27 @@ export default function SettingsPage() {
   const handleSave = async () => {
     setSaving(true);
     setSaveMsg("");
-
-    const res = await fetch("/api/user/update-profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      await updateProfile({
         name: profile.name,
         preferred_language: profile.preferred_language,
         country: profile.country,
         state_province: profile.state_province,
-      }),
-    });
-
-    setSaving(false);
-
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      const detail = body.error || res.statusText || `HTTP ${res.status}`;
-      setSaveMsg(`${t("savedFail")}: ${detail}`);
-      return;
+      });
+      setSaveMsg(t("savedOk"));
+      const parts = profile.name.trim().split(" ");
+      const ini =
+        parts.length >= 2
+          ? parts[0][0] + parts[parts.length - 1][0]
+          : parts[0]?.[0] ?? "?";
+      setInitials(ini.toUpperCase());
+      router.refresh();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setSaveMsg(`${t("savedFail")}: ${msg}`);
+    } finally {
+      setSaving(false);
     }
-
-    setSaveMsg(t("savedOk"));
-    const parts = profile.name.trim().split(" ");
-    const ini =
-      parts.length >= 2
-        ? parts[0][0] + parts[parts.length - 1][0]
-        : parts[0]?.[0] ?? "?";
-    setInitials(ini.toUpperCase());
-    router.refresh();
   };
 
   const handlePasswordChange = async () => {
