@@ -109,6 +109,7 @@ export default function SettingsPage() {
   }, [router, supabase]);
 
   const handleSave = async () => {
+    const prevLang = profile.preferred_language;
     setSaving(true);
     setSaveMsg("");
     try {
@@ -125,7 +126,12 @@ export default function SettingsPage() {
           ? parts[0][0] + parts[parts.length - 1][0]
           : parts[0]?.[0] ?? "?";
       setInitials(ini.toUpperCase());
-      router.refresh();
+      if (profile.preferred_language !== prevLang) {
+        // Language changed — full reload so NextIntlClientProvider picks up new messages
+        window.location.href = window.location.pathname;
+      } else {
+        router.refresh();
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Unknown error";
       setSaveMsg(`${t("savedFail")}: ${msg}`);
