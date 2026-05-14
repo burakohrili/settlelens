@@ -128,6 +128,21 @@ export async function POST(req: Request) {
 
     case "subscription.canceled": {
       const subId = data.id as string;
+      // Fetch email before downgrading
+      const canceledProfile = await (supabase as never as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              single: () => Promise<{ data: { email: string } | null }>;
+            };
+          };
+        };
+      })
+        .from("profiles")
+        .select("email")
+        .eq("paddle_subscription_id", subId)
+        .single();
+      // Downgrade plan
       await (supabase as never as {
         from: (t: string) => {
           update: (d: unknown) => {
@@ -138,6 +153,10 @@ export async function POST(req: Request) {
         .from("profiles")
         .update({ plan_type: "discovery", paddle_subscription_id: null })
         .eq("paddle_subscription_id", subId);
+      // Send cancellation email
+      if (canceledProfile.data?.email) {
+        await sendEmail({ type: "subscription-cancelled", to: canceledProfile.data.email });
+      }
       break;
     }
 
