@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
 import { ProjectionChart } from "@/components/app/ProjectionChart";
 import { ScenarioComparison } from "@/components/app/ScenarioComparison";
@@ -61,8 +61,8 @@ export default async function DashboardPage() {
     redirect(`/${lang}/onboarding/step-1`);
   }
 
-  const lang = (profile.preferred_language as string) ?? "en";
-  const t = await getTranslations({ locale: lang, namespace: "dashboard" });
+  const lang = await getLocale();
+  const t = await getTranslations("dashboard");
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);

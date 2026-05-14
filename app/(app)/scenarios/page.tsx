@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,9 +21,9 @@ export default async function ScenariosPage() {
     }
   }).from("profiles").select("preferred_language, plan_type").eq("id", user.id).single();
 
-  const lang = (profile?.preferred_language as string) ?? "en";
   const planType = (profile?.plan_type as string) ?? "discovery";
-  const t = await getTranslations({ locale: lang, namespace: "dashboard" });
+  const locale = await getLocale();
+  const t = await getTranslations("dashboard");
 
   const { data: scenarios } = await (supabase as never as {
     from: (t: string) => {
@@ -75,7 +75,7 @@ export default async function ScenariosPage() {
       ) : (
         <div className="space-y-2">
           {scenarioList.map((s) => {
-            const createdAt = new Date(s.created_at as string).toLocaleDateString(lang, {
+            const createdAt = new Date(s.created_at as string).toLocaleDateString(locale, {
               year: "numeric", month: "short", day: "numeric",
             });
             return (
