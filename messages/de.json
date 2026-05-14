@@ -683,5 +683,29 @@
     "appreciationHigh": "Hoch ({pct}%/J.)",
     "scenarioNote": "Hinweis: Dieses Tool dient nur zur Veranschaulichung. Ergebnisse sind Schätzungen.",
     "trustNote": "Registrieren Sie sich für die vollständige KI-Analyse mit Zugewinnausgleich-Formeln."
+  },
+  "report": {
+    "title": "Ihren Bericht herunterladen",
+    "subtitle": "Eine umfassende PDF-Finanzübersicht — für Ihren Anwalt oder zur persönlichen Einsicht.",
+    "includes": "Berichtsinhalte:",
+    "item1": "Nettovermögensübersicht — Aktiva, Schulden und Eigenkapital",
+    "item2": "Szenariovergleich — alle Ihre Vergleichsszenarien nebeneinander",
+    "item3": "10-Jahres-Finanzprojektion pro Szenario",
+    "item4": "Schätzungsbereiche für Unterhalt und Kindesunterhalt",
+    "item5": "Vom Analysetool identifizierte wesentliche Risikofaktoren",
+    "item6": "Finanzielle Positionierungshinweise zur Verhandlungsvorbereitung",
+    "item7": "Hinweis zur Rechtsgebietsmethodik",
+    "item8": "Vollständiger Rechtshinweis",
+    "formatLabel": "Format:",
+    "formatValue": "PDF · A4 · Wasserzeichen (Nur zur persönlichen Planung)",
+    "validLabel": "Gültig für:",
+    "validValue": "24 Stunden (jederzeit neu generierbar)",
+    "generate": "PDF generieren und herunterladen",
+    "generating": "Ihr Bericht wird erstellt…",
+    "downloadAgain": "Erneut herunterladen",
+    "successMsg": "Ihr Bericht wurde in einem neuen Tab geöffnet. Falls nicht, prüfen Sie bitte Ihren Pop-up-Blocker.",
+    "errorDefault": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "errorConnection": "Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+    "secureNote": "Ihr Bericht wird auf Anfrage erstellt und sicher gespeichert. Nur Sie haben Zugriff darauf. Der Link läuft nach 24 Stunden ab."
   }
 }

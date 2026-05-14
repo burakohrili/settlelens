@@ -683,5 +683,29 @@
     "appreciationHigh": "Élevé ({pct}%/an)",
     "scenarioNote": "Note : Cet outil fournit des comparaisons illustratives uniquement. Les résultats sont des estimations.",
     "trustNote": "Inscrivez-vous pour l'analyse IA complète avec les formules du Code civil."
+  },
+  "report": {
+    "title": "Télécharger votre rapport",
+    "subtitle": "Un aperçu financier PDF complet — organisé pour votre avocat ou votre usage personnel.",
+    "includes": "Contenu du rapport :",
+    "item1": "Résumé du patrimoine net — actifs, dettes et capitaux propres",
+    "item2": "Comparaison des scénarios — tous vos scénarios côte à côte",
+    "item3": "Projection financière sur 10 ans par scénario",
+    "item4": "Fourchettes estimatives de pension alimentaire et de pension pour enfants",
+    "item5": "Facteurs de risque clés identifiés par l'analyse",
+    "item6": "Notes de positionnement financier pour la préparation à la négociation",
+    "item7": "Note sur la méthodologie juridictionnelle",
+    "item8": "Avertissement juridique complet",
+    "formatLabel": "Format :",
+    "formatValue": "PDF · A4 · Filigrane « Réservé à la planification personnelle »",
+    "validLabel": "Valable :",
+    "validValue": "24 heures (régénérable à tout moment)",
+    "generate": "Générer et télécharger le PDF",
+    "generating": "Génération de votre rapport…",
+    "downloadAgain": "Télécharger à nouveau",
+    "successMsg": "Votre rapport s'est ouvert dans un nouvel onglet. S'il ne s'est pas ouvert, vérifiez votre bloqueur de fenêtres contextuelles.",
+    "errorDefault": "Une erreur s'est produite. Veuillez réessayer.",
+    "errorConnection": "Erreur de connexion. Vérifiez votre connexion internet et réessayez.",
+    "secureNote": "Votre rapport est généré à la demande et stocké en toute sécurité. Vous seul(e) pouvez y accéder. Le lien expire après 24 heures."
   }
 }

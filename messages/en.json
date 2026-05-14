@@ -683,5 +683,29 @@
     "appreciationHigh": "High ({pct}%/yr)",
     "scenarioNote": "Note: This tool provides illustrative comparisons only. Results are estimates and may differ significantly based on local market conditions, location, and legal agreements.",
     "trustNote": "Sign up for full AI analysis — includes jurisdiction-specific formulas and 10-year projections."
+  },
+  "report": {
+    "title": "Download Your Report",
+    "subtitle": "A comprehensive PDF financial overview — organized for your attorney or personal review.",
+    "includes": "Report includes:",
+    "item1": "Net worth summary — assets, debts, and equity",
+    "item2": "Scenario comparison — all your settlement scenarios side by side",
+    "item3": "10-year financial projection per scenario",
+    "item4": "Alimony and child support estimate ranges",
+    "item5": "Key risk factors identified by the analysis",
+    "item6": "Financial positioning notes for negotiation preparation",
+    "item7": "Jurisdiction methodology note",
+    "item8": "Full legal disclaimer",
+    "formatLabel": "Format:",
+    "formatValue": "PDF · A4 · Watermarked \"For personal planning use only\"",
+    "validLabel": "Valid for:",
+    "validValue": "24 hours (re-generate anytime)",
+    "generate": "Generate & Download PDF",
+    "generating": "Generating your report…",
+    "downloadAgain": "Download again",
+    "successMsg": "Your report has opened in a new tab. If it didn't open, check your pop-up blocker.",
+    "errorDefault": "Something went wrong. Please try again.",
+    "errorConnection": "Connection error. Please check your internet and try again.",
+    "secureNote": "Your report is generated on demand and stored securely. Only you can access it. The link expires after 24 hours."
   }
 }

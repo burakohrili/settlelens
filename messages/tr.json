@@ -683,5 +683,29 @@
     "appreciationHigh": "Yüksek (%{pct}/yıl)",
     "scenarioNote": "Not: Bu araç yalnızca karşılaştırmalı bir fikir vermek için tasarlanmıştır. Sonuçlar tahmini olup gerçek piyasa koşullarına, bölgeye ve hukuki düzenlemeye göre önemli ölçüde farklılık gösterebilir.",
     "trustNote": "Tam AI analizi için kayıt olun — TMK 179 formülleri ve 10 yıllık projeksiyon içerir."
+  },
+  "report": {
+    "title": "Raporunuzu İndirin",
+    "subtitle": "Avukatınız veya kişisel incelemeniz için düzenlenmiş kapsamlı PDF finansal özeti.",
+    "includes": "Rapor içeriği:",
+    "item1": "Net servet özeti — varlıklar, borçlar ve öz kaynak",
+    "item2": "Senaryo karşılaştırması — tüm uzlaşma senaryolarınız yan yana",
+    "item3": "Senaryo başına 10 yıllık finansal projeksiyon",
+    "item4": "Nafaka ve çocuk nafakası tahmin aralıkları",
+    "item5": "Analiz tarafından tespit edilen temel risk faktörleri",
+    "item6": "Müzakere hazırlığı için finansal konumlandırma notları",
+    "item7": "Yargı alanı metodoloji notu",
+    "item8": "Tam yasal uyarı metni",
+    "formatLabel": "Format:",
+    "formatValue": "PDF · A4 · \"Yalnızca kişisel planlama amaçlı\" filigranı",
+    "validLabel": "Geçerlilik:",
+    "validValue": "24 saat (istediğiniz zaman yeniden oluşturabilirsiniz)",
+    "generate": "PDF Oluştur ve İndir",
+    "generating": "Raporunuz hazırlanıyor…",
+    "downloadAgain": "Tekrar indir",
+    "successMsg": "Raporunuz yeni sekmede açıldı. Açılmadıysa açılır pencere engelleyicinizi kontrol edin.",
+    "errorDefault": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "errorConnection": "Bağlantı hatası. İnternet bağlantınızı kontrol edip tekrar deneyin.",
+    "secureNote": "Raporunuz talep üzerine oluşturulur ve güvenli şekilde saklanır. Yalnızca siz erişebilirsiniz. Bağlantı 24 saat sonra sona erer."
   }
 }

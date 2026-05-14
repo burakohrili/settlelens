@@ -683,5 +683,29 @@
     "appreciationHigh": "Alto ({pct}%/año)",
     "scenarioNote": "Nota: Esta herramienta es solo ilustrativa. Los resultados son estimaciones.",
     "trustNote": "Regístrese para el análisis completo con fórmulas de Gananciales."
+  },
+  "report": {
+    "title": "Descargar su informe",
+    "subtitle": "Una descripción financiera completa en PDF — organizada para su abogado o revisión personal.",
+    "includes": "El informe incluye:",
+    "item1": "Resumen del patrimonio neto — activos, deudas y capital",
+    "item2": "Comparación de escenarios — todos sus escenarios de liquidación lado a lado",
+    "item3": "Proyección financiera a 10 años por escenario",
+    "item4": "Rangos de estimación de pensión alimenticia y manutención de hijos",
+    "item5": "Factores de riesgo clave identificados por el análisis",
+    "item6": "Notas de posicionamiento financiero para la preparación de negociaciones",
+    "item7": "Nota sobre la metodología jurisdiccional",
+    "item8": "Aviso legal completo",
+    "formatLabel": "Formato:",
+    "formatValue": "PDF · A4 · Marca de agua «Solo para planificación personal»",
+    "validLabel": "Válido por:",
+    "validValue": "24 horas (regenerable en cualquier momento)",
+    "generate": "Generar y descargar PDF",
+    "generating": "Generando su informe…",
+    "downloadAgain": "Descargar de nuevo",
+    "successMsg": "Su informe se ha abierto en una nueva pestaña. Si no se abrió, revise su bloqueador de ventanas emergentes.",
+    "errorDefault": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "errorConnection": "Error de conexión. Compruebe su conexión a internet e inténtelo de nuevo.",
+    "secureNote": "Su informe se genera bajo demanda y se almacena de forma segura. Solo usted puede acceder a él. El enlace caduca a las 24 horas."
   }
 }
