@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 const LOCALE_CONFIG: Record<string, { currency: string; locale: string; min: number; max: number; default: number; step: number }> = {
   en: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
-  tr: { currency: "TRY", locale: "tr-TR", min: 3_000_000, max: 60_000_000, default: 25_000_000, step: 500_000 },
+  tr: { currency: "TRY", locale: "tr-TR", min: 100_000, max: 60_000_000, default: 5_000_000, step: 100_000 },
   de: { currency: "EUR", locale: "de-DE", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
   fr: { currency: "EUR", locale: "fr-FR", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
   es: { currency: "EUR", locale: "es-ES", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
