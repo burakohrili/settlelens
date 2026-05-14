@@ -6,8 +6,21 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+const LOCALE_CONFIG: Record<string, { currency: string; locale: string; min: number; max: number; default: number; step: number }> = {
+  en: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+  tr: { currency: "TRY", locale: "tr-TR", min: 3_000_000, max: 60_000_000, default: 25_000_000, step: 500_000 },
+  de: { currency: "EUR", locale: "de-DE", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+  fr: { currency: "EUR", locale: "fr-FR", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+  es: { currency: "EUR", locale: "es-ES", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+  ar: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+};
+
+function fmtCurrency(n: number, currencyCode: string, localeCode: string) {
+  return new Intl.NumberFormat(localeCode, {
+    style: "currency",
+    currency: currencyCode,
+    maximumFractionDigits: 0,
+  }).format(n);
 }
 
 function calcScenarios(homeValue: number, mortgage: number) {
@@ -23,7 +36,10 @@ export function ScenarioDemo() {
   const t = useTranslations("houseDemo");
   const lang = useLocale();
 
-  const [homeValue, setHomeValue] = useState(400_000);
+  const cfg = LOCALE_CONFIG[lang] ?? LOCALE_CONFIG["en"];
+  const fmt = (n: number) => fmtCurrency(n, cfg.currency, cfg.locale);
+
+  const [homeValue, setHomeValue] = useState(cfg.default);
   const mortgage = Math.round(homeValue * 0.45);
 
   const s = calcScenarios(homeValue, mortgage);
@@ -53,15 +69,15 @@ export function ScenarioDemo() {
               </div>
               <input
                 type="range"
-                min={100_000}
-                max={2_000_000}
-                step={10_000}
+                min={cfg.min}
+                max={cfg.max}
+                step={cfg.step}
                 value={homeValue}
                 onChange={(e) => setHomeValue(Number(e.target.value))}
                 className="w-full accent-[var(--gold)] cursor-pointer"
               />
               <div className="flex justify-between font-mono text-xs text-[#6b7f90]">
-                <span>$100K</span><span>$2M</span>
+                <span>{t("sliderMin")}</span><span>{t("sliderMax")}</span>
               </div>
             </div>
             <div className="rounded-md bg-[var(--navy)]/50 p-3 font-ui text-xs text-[#6b7f90]">
@@ -71,28 +87,28 @@ export function ScenarioDemo() {
 
           {/* Results */}
           <div className="space-y-3">
-            {scenarios.map((s) => (
+            {scenarios.map((sc) => (
               <div
-                key={s.key}
+                key={sc.key}
                 className={cn(
                   "rounded-xl border p-4 flex items-center justify-between transition-all",
-                  s.value === best
+                  sc.value === best
                     ? "border-[var(--gold)] bg-[var(--gold)]/10"
                     : "border-[var(--sand)]/20 bg-[var(--slate)]/20"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">{s.icon}</span>
+                  <span className="text-xl">{sc.icon}</span>
                   <div>
-                    <p className="font-ui text-sm font-semibold text-[var(--cream)]">{s.label}</p>
-                    <p className="font-ui text-xs text-[#8B9BB0]">{t("netPosition")} in 5 yrs</p>
+                    <p className="font-ui text-sm font-semibold text-[var(--cream)]">{sc.label}</p>
+                    <p className="font-ui text-xs text-[#8B9BB0]">{t("netPosition")} {t("inYears")}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className={cn("font-mono text-lg font-bold", s.value === best ? "text-[var(--gold)]" : "text-[var(--cream)]")}>
-                    {fmt(s.value)}
+                  <p className={cn("font-mono text-lg font-bold", sc.value === best ? "text-[var(--gold)]" : "text-[var(--cream)]")}>
+                    {fmt(sc.value)}
                   </p>
-                  {s.value === best && <p className="font-ui text-xs text-[var(--gold)]">Best</p>}
+                  {sc.value === best && <p className="font-ui text-xs text-[var(--gold)]">{t("best")}</p>}
                 </div>
               </div>
             ))}
@@ -105,13 +121,13 @@ export function ScenarioDemo() {
 
         <div className="mt-10 text-center">
           <p className="font-body text-sm text-[#6b7f90] mb-4">
-            This is a simplified preview. Full analysis uses AI and your jurisdiction&apos;s laws.
+            {t("previewNote")}
           </p>
           <Link
             href={`/${lang}/register`}
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
-            Get Your Full Analysis →
+            {t("ctaFull")}
           </Link>
         </div>
       </div>

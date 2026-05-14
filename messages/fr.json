@@ -1,711 +1,717 @@
 {
-  "meta": {
-    "siteName": "SettleLens",
-    "tagline": "Voyez votre accord clairement",
-    "description": "Modélisation financière alimentée par l'IA pour les accords de divorce. Visualisez votre avenir financier sur 10 ans dans chaque scénario."
-  },
-  "nav": {
-    "howItWorks": "Comment ça marche",
-    "pricing": "Tarifs",
-    "blog": "Blog",
-    "login": "Connexion",
-    "startFree": "Analyse gratuite",
-    "upgrade": "Améliorer",
-    "profile": "Profil",
-    "billing": "Facturation",
-    "settings": "Paramètres",
-    "signOut": "Se déconnecter"
-  },
-  "hero": {
-    "h1": "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
-    "h2": "Modélisation financière par IA pour le divorce. Visualisez votre avenir financier sur 10 ans dans chaque scénario d'accord – en minutes, pas en mois.",
-    "cta": "Démarrer l'analyse gratuite",
-    "sub": "20 minutes. Préparez-vous avant de consulter votre avocat.",
-    "badge": "Clarte Financiere pour le Divorce",
-    "subTagline": "Modelisation financiere, pas de conseil juridique."
-  },
-  "fearHook": {
-    "stat": "15 000€+",
-    "statLabel": "frais juridiques moyens pour un divorce",
-    "hook": "Combien de cela payez-vous à votre avocat pour expliquer des chiffres que vous pourriez calculer vous-même ?",
-    "cta": "Calculer gratuitement",
-    "stats": [
-      {
-        "num": "73%",
-        "label": "des couples divorces paient trop en frais juridiques"
-      },
-      {
-        "num": "20 min",
-        "label": "vs. des mois d'echanges avec les avocats"
-      },
-      {
-        "num": "50x",
-        "label": "ROI estime vs. cout moyen des honoraires juridiques"
-      }
-    ],
-    "prepNote": "Outil de preparation - pas un substitut au conseil juridique professionnel."
-  },
-  "howItWorks": {
-    "title": "Trois étapes vers la clarté financière",
-    "steps": [
-      {
-        "n": "01",
-        "title": "Entrez votre situation financière",
-        "desc": "Actifs, dettes, revenus, enfants. Sécurisé, privé, 20 minutes."
-      },
-      {
-        "n": "02",
-        "title": "Construisez vos scénarios",
-        "desc": "Garder la maison ? La vendre ? La laisser à l'autre ? Modélisez jusqu'à 3 résultats."
-      },
-      {
-        "n": "03",
-        "title": "Obtenez votre projection sur 10 ans",
-        "desc": "L'IA analyse les lois de votre juridiction et projette chaque scénario. Téléchargez le PDF."
-      }
-    ]
-  },
-  "features": {
-    "title": "Tout ce dont vous avez besoin pour négocier en position de force",
-    "items": [
-      {
-        "title": "Chaque scénario côte à côte",
-        "desc": "Voyez l'impact financier sur 10 ans de chaque choix avant de décider."
-      },
-      {
-        "title": "Votre juridiction. Vos règles.",
-        "desc": "Code civil Art. 1401 communauté d'acquêts ? SettleLens connaît les formules."
-      },
-      {
-        "title": "Un rapport que votre avocat respecte",
-        "desc": "PDF professionnel : bilan des actifs, graphiques de projection, stratégie de négociation."
-      }
-    ]
-  },
-  "social": {
-    "title": "De personnes qui sont passées par là",
-    "quotes": [
-      {
-        "text": "Je suis entré en médiation en sachant exactement quelle offre accepter. Cette clarté valait plus que n'importe quel avocat.",
-        "author": "Marie L., Paris"
-      },
-      {
-        "text": "Le rapport PDF a légitimé ma position. Mon avocat a dit que c'était le client le mieux préparé qu'elle ait jamais vu.",
-        "author": "Pierre D., Lyon"
-      },
-      {
-        "text": "Trois scénarios côte à côte. J'ai enfin compris ce que garder la maison signifiait pour la prochaine décennie.",
-        "author": "Sophie M., Bordeaux"
-      }
-    ]
-  },
-  "pricing": {
-    "title": "Tarification simple et transparente",
-    "plans": [
-      {
-        "id": "discovery",
-        "name": "Discovery",
-        "price": "Gratuit",
-        "period": "pour toujours",
-        "features": [
-          "Inventaire des actifs et dettes",
-          "Résumé de la valeur nette",
-          "Pas d'analyse IA",
-          "Mise à niveau à tout moment"
-        ],
-        "cta": "Démarrer gratuitement"
-      },
-      {
-        "id": "clarified",
-        "name": "Clarified",
-        "price": "27€",
-        "period": "unique · accès 14 jours",
-        "features": [
-          "1 analyse alimentée par IA",
-          "1 scénario d'accord",
-          "Rapport PDF professionnel",
-          "Accès 14 jours"
-        ],
-        "cta": "Obtenir la clarté"
-      },
-      {
-        "id": "strategist",
-        "name": "Strategist",
-        "price": "36€",
-        "period": "par mois",
-        "badge": "Plus populaire",
-        "features": [
-          "Analyses illimitées",
-          "Scénarios illimités",
-          "Rapports PDF premium",
-          "Projections sur 10 ans",
-          "Ajustements d'inflation"
-        ],
-        "cta": "Démarrer Strategist"
-      },
-      {
-        "id": "professional",
-        "name": "Professional",
-        "price": "92€",
-        "period": "par mois",
-        "features": [
-          "Tout dans Strategist",
-          "Export Excel + PDF prêt pour l'avocat",
-          "Organisateur de preuves",
-          "Support prioritaire"
-        ],
-        "cta": "Choisir Professional"
-      }
-    ],
-    "footerNote": "Tous les plans: Securise, prive. Modelisation financiere, pas de conseil juridique."
-  },
-  "finalCta": {
-    "title": "Voyez votre accord clairement",
-    "sub": "Rejoignez des milliers de personnes qui sont entrées dans les négociations préparées.",
-    "cta": "Démarrer l'analyse gratuite",
-    "note": "Aucune carte de crédit requise pour l'analyse de base."
-  },
-  "footer": {
-    "disclaimer": "SettleLens fournit une modélisation financière à des fins d'information uniquement. Pas de conseil juridique ou financier. Consultez toujours un avocat qualifié.",
-    "links": {
-      "howItWorks": "Comment ça marche",
-      "pricing": "Tarifs",
-      "blog": "Blog",
-      "privacy": "Politique de confidentialité",
-      "terms": "Conditions d'utilisation",
-      "cookies": "Politique des cookies",
-      "about": "À propos",
-      "contact": "Contact"
-    },
-    "copyright": "© 2026 SettleLens. Modélisation financière, pas de conseil juridique."
-  },
-  "auth": {
-    "loginTitle": "Content de vous revoir",
-    "registerTitle": "Démarrez votre analyse gratuite",
-    "email": "Adresse e-mail",
-    "password": "Mot de passe",
-    "name": "Nom complet",
-    "loginCta": "Se connecter",
-    "registerCta": "Créer un compte",
-    "switchToLogin": "Déjà un compte ? Se connecter",
-    "switchToRegister": "Pas de compte ? S'inscrire",
-    "googleCta": "Continuer avec Google",
-    "termsConsent": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
-    "dataConsent": "Je consens au traitement de mes données personnelles",
-    "marketingConsent": "Je souhaite recevoir des conseils et mises à jour produit (optionnel)",
-    "forgotPassword": "Mot de passe oublié ?",
-    "confirmPassword": "Confirmer le mot de passe",
-    "creatingAccount": "Création du compte...",
-    "checkEmail": "Vérifiez votre e-mail",
-    "checkEmailDesc": "Nous avons envoyé un lien de confirmation à votre e-mail. Veuillez vérifier avant de vous connecter.",
-    "backToLogin": "Retour à la connexion",
-    "registerQuote": "La clarté financière avant de négocier.",
-    "registerQuoteSub": "Modélisation financière, pas de conseil juridique.",
-    "registerBullet1": "20 minutes suffisent",
-    "registerBullet2": "Vos données sont privées — vous seul pouvez les voir",
-    "registerBullet3": "Téléchargez un rapport PDF pour votre avocat",
-    "loginQuote": "Voyez votre accord clairement.",
-    "loginQuoteSub": "Modélisation financière, pas de conseil juridique.",
-    "loginBullet1": "Visualisez votre avenir financier sur 10 ans dans chaque scénario",
-    "loginBullet2": "Découvrez ce que garder la maison coûte vraiment sur une décennie",
-    "loginBullet3": "Entrez dans les négociations avec des chiffres, pas des estimations"
-  },
-  "onboarding": {
-    "steps": [
-      {
-        "title": "Où êtes-vous situé ?",
-        "subtitle": "Nous appliquons les formules financières pour votre juridiction."
-      },
-      {
-        "title": "Vos actifs",
-        "subtitle": "Listez tout ce que vous et votre conjoint possédez."
-      },
-      {
-        "title": "Vos dettes",
-        "subtitle": "Hypothèques, prêts, cartes de crédit — le tableau complet."
-      },
-      {
-        "title": "Revenus",
-        "subtitle": "Les vôtres et ceux de votre conjoint, bruts et nets."
-      },
-      {
-        "title": "Enfants",
-        "subtitle": "Le cas échéant — âges et arrangement de garde."
-      },
-      {
-        "title": "Construisez vos scénarios",
-        "subtitle": "Quels sont les résultats possibles ? Modélisons-les."
-      }
-    ],
-    "next": "Continuer",
-    "back": "Retour",
-    "save": "Enregistrer et continuer",
-    "stepOf": "Étape {current} sur {total}"
-  },
-  "disclaimer": {
-    "short": "Pas de conseil juridique.",
-    "full": "SettleLens fournit une modélisation financière à des fins d'information uniquement. Les résultats sont des estimations basées sur des formules juridiques accessibles au public et ne constituent pas un conseil juridique, fiscal ou financier. Consultez toujours un avocat qualifié avant de prendre des décisions."
-  },
-  "userScenarios": {
-    "title": "Quelle décision essayez-vous de prendre ?",
-    "sub": "SettleLens transforme les décisions émotionnellement complexes en scénarios financiers comparables.",
-    "cards": [
-      {
-        "icon": "🏠",
-        "title": "Que se passe-t-il si je garde la maison ?",
-        "desc": "Comparez garder, vendre ou transférer le logement et voyez l'impact sur les flux de trésorerie."
-      },
-      {
-        "icon": "⚖️",
-        "title": "Cette offre est-elle avantageuse pour moi ?",
-        "desc": "Modélisez le partage proposé sur les actifs, dettes et pensions pour voir les résultats sur 10 ans."
-      },
-      {
-        "icon": "📋",
-        "title": "Comment me préparer pour mon avocat ?",
-        "desc": "Organisez vos actifs, dettes, revenus et scénarios dans un rapport professionnel avant la réunion."
-      }
-    ]
-  },
-  "whatItDoesNot": {
-    "title": "Ce que fait SettleLens — et ce qu'il ne fait pas",
-    "doesTitle": "Ce qu'il fait",
-    "doesNot": "Ce qu'il ne fait pas",
-    "does": [
-      "Modélisation de scénarios financiers",
-      "Comparaison actifs, dettes et revenus",
-      "Projection de flux de trésorerie sur 10 ans",
-      "Analyse de l'impact des pensions",
-      "Résumé financier pour l'avocat"
-    ],
-    "not": [
-      "Conseil juridique",
-      "Prédiction des décisions judiciaires",
-      "Remplacement d'un avocat",
-      "Chiffres de règlement garantis",
-      "Décisions pour cas complexes"
-    ],
-    "note": "Les cas complexes ou à haut risque nécessitent un soutien juridique professionnel.",
-    "link": "En savoir plus sur nos limites →"
-  },
-  "trust": {
-    "title": "Conçu pour un processus sensible",
-    "cards": [
-      {
-        "icon": "🔒",
-        "title": "Vos données ne sont pas vendues",
-        "desc": "Les données financières ne sont jamais utilisées pour la publicité ni partagées."
-      },
-      {
-        "icon": "🖥️",
-        "title": "Les données sensibles ne sont jamais enregistrées",
-        "desc": "Les valeurs d'actifs, revenus et scénarios ne sont pas écrits dans les journaux de développeur."
-      },
-      {
-        "icon": "🗂️",
-        "title": "Vous contrôlez vos données",
-        "desc": "Exportez vos données ou supprimez définitivement votre compte à tout moment."
-      },
-      {
-        "icon": "⚖️",
-        "title": "Modélisation financière, pas conseil juridique",
-        "desc": "SettleLens est un outil de préparation. Les cas complexes nécessitent un avocat qualifié."
-      }
-    ],
-    "link": "Comment nous protégeons vos données →"
-  },
-  "countryCoverage": {
-    "title": "Adapté à votre juridiction",
-    "sub": "SettleLens applique des hypothèses de régime matrimonial spécifiques à chaque pays.",
-    "note": "Le pouvoir discrétionnaire judiciaire, les actifs cachés et les accords complexes peuvent produire des résultats différents.",
-    "link": "Voir la méthodologie pour votre pays →",
-    "countries": [
-      {
-        "flag": "🇺🇸",
-        "name": "États-Unis",
-        "law": "Community & equitable distribution"
-      },
-      {
-        "flag": "🇬🇧",
-        "name": "Royaume-Uni",
-        "law": "MCA 1973 Section 25"
-      },
-      {
-        "flag": "🇩🇪",
-        "name": "Allemagne",
-        "law": "Zugewinngemeinschaft"
-      },
-      {
-        "flag": "🇫🇷",
-        "name": "France",
-        "law": "Communauté réduite aux acquêts"
-      },
-      {
-        "flag": "🇪🇸",
-        "name": "Espagne",
-        "law": "Régimen de gananciales"
-      },
-      {
-        "flag": "🇹🇷",
-        "name": "Turquie",
-        "law": "TMK Madde 179"
-      }
-    ]
-  },
-  "attorneyPrep": {
-    "title": "Préparez-vous pour votre rendez-vous avec l'avocat",
-    "sub": "Apportez un aperçu financier structuré — actifs, dettes, revenus et scénarios dans un rapport professionnel.",
-    "cta": "Créer mon aperçu financier",
-    "note": "Modélisation financière, pas conseil juridique."
-  },
-  "houseDemo": {
-    "title": "Le logement est souvent la décision la plus importante.",
-    "sub": "Voyez la différence financière entre garder, vendre ou transférer le bien.",
-    "sliderLabel": "Valeur du bien",
-    "iKeep": "Je le garde",
-    "theyKeep": "Mon conjoint le garde",
-    "weSell": "Nous vendons",
-    "netPosition": "Position nette",
-    "fullAnalysis": "Analyse complète →",
-    "note": "Modèle simplifié — 3% d'appréciation, 5% de rendement, 6% de frais de vente."
-  },
-  "waitlist": {
-    "placeholder": "Votre adresse e-mail",
-    "cta": "Rejoindre la liste d'attente",
-    "success": "Vous êtes sur la liste. Nous vous contacterons.",
-    "duplicate": "Vous êtes déjà sur la liste."
-  },
-  "dashboard": {
-    "greeting": {
-      "morning": "Bonjour",
-      "afternoon": "Bon après-midi",
-      "evening": "Bonsoir"
-    },
-    "netWorthNow": "Valeur nette actuelle",
-    "bestYear10": "Meilleur résultat sur 10 ans",
-    "monthlyCashFlow": "Flux de trésorerie mensuel",
-    "riskScore": "Score de risque",
-    "readyTitle": "Prêt à lancer votre analyse",
-    "readyDesc": "Vos données financières sont saisies. Sélectionnez un scénario pour la projection IA.",
-    "analyzePrefix": "Analyser : ",
-    "buildScenarios": "Créer des scénarios",
-    "projection": "Projection de la valeur nette sur 10 ans",
-    "scenarioComparison": "Comparaison de scénarios",
-    "keyRisks": "Facteurs de risque clés",
-    "analyzeOffer": "Analyser une nouvelle offre",
-    "downloadPDF": "Télécharger le rapport PDF",
-    "editAssets": "Modifier les actifs",
-    "upgradeToRun": "Améliorez pour l'analyse IA →",
-    "scenarios": "Scénarios",
-    "scenariosDesc": "Comparez différents résultats de règlement",
-    "noScenarios": "Pas encore de scénarios",
-    "noScenariosDesc": "Créez votre premier scénario pour comparer les résultats."
-  },
-  "sidebar": {
-    "dashboard": "Tableau de bord",
-    "scenarios": "Scénarios",
-    "report": "Rapport",
-    "settings": "Paramètres",
-    "upgradeTitle": "Passer à Clarified",
-    "upgradeDesc": "Obtenez votre première analyse IA",
-    "upgradeButton": "Améliorer"
-  },
-  "settings": {
-    "navAccount": "Compte",
-    "navBilling": "Facturation",
-    "navPrivacy": "Confidentialité",
-    "navSecurity": "Sécurité",
-    "navNotifications": "Notifications",
-    "accountTitle": "Paramètres du compte",
-    "accountDesc": "Gérez votre profil et vos préférences.",
-    "yourName": "Votre nom",
-    "profile": "Profil",
-    "fullName": "Nom complet",
-    "email": "E-mail",
-    "emailHint": "Pour changer votre e-mail, contactez support@settlelens.com",
-    "language": "Langue préférée",
-    "country": "Pays",
-    "state": "État",
-    "selectState": "Sélectionner un état",
-    "savedOk": "Modifications enregistrées.",
-    "savedFail": "Échec de l'enregistrement. Veuillez réessayer.",
-    "saving": "Enregistrement...",
-    "saveChanges": "Enregistrer les modifications",
-    "changePassword": "Changer le mot de passe",
-    "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe",
-    "confirmPassword": "Confirmer le nouveau mot de passe",
-    "pwNoMatch": "Les mots de passe ne correspondent pas.",
-    "pwTooShort": "Le mot de passe doit comporter au moins 8 caractères.",
-    "pwUpdating": "Mise à jour...",
-    "updatePassword": "Mettre à jour le mot de passe",
-    "pwUpdated": "Mot de passe mis à jour avec succès.",
-    "billingTitle": "Facturation",
-    "billingDesc": "Gérez votre abonnement et vos informations de facturation.",
-    "loading": "Chargement...",
-    "currentPlan": "Plan actuel",
-    "accessUntil": "Accès jusqu'au :",
-    "upgrade": "Améliorer",
-    "subscription": "Abonnement",
-    "subscriptionNote": "Votre abonnement se renouvelle mensuellement. Utilisez le portail client Paddle pour mettre à jour vos informations de paiement.",
-    "managePayment": "Gérer les informations de paiement",
-    "cancelSub": "Annuler l'abonnement",
-    "cancelConfirmMsg": "Êtes-vous sûr de vouloir annuler ? Vous perdrez l'accès à la fin de la période de facturation.",
-    "canceling": "Annulation...",
-    "yesCancelSub": "Oui, annuler l'abonnement",
-    "keepSub": "Conserver l'abonnement",
-    "cancelSuccess": "Annulation demandée. Vous conserverez l'accès jusqu'à la fin de la période de facturation.",
-    "cancelFail": "Échec de l'annulation. Veuillez contacter support@settlelens.com.",
-    "onPlanDiscovery": "Améliorez votre plan pour accéder aux analyses et projections financières.",
-    "onPlanClarified": "Votre accès unique est actif jusqu'à la date d'expiration indiquée.",
-    "viewPlans": "Voir les plans",
-    "paddleNote": "Les paiements sont traités par Paddle. SettleLens ne stocke jamais vos données de carte. Contactez support@settlelens.com pour toute question.",
-    "privacyTitle": "Confidentialité et données",
-    "privacyDesc": "Gérez vos données, consentements et suppression de compte.",
-    "downloadTitle": "Télécharger vos données",
-    "downloadDesc": "Exportez toutes vos données SettleLens en fichier JSON. C'est votre droit en vertu de l'article 20 du RGPD (portabilité des données).",
-    "exporting": "Préparation de l'export...",
-    "exportJson": "Exporter en JSON",
-    "exportOk": "Vos données ont été téléchargées.",
-    "exportFail": "Échec de l'export. Veuillez réessayer ou contacter le support.",
-    "consentTitle": "Gestion des consentements",
-    "consentTerms": "Conditions de service & Politique de confidentialité",
-    "consentTermsNote": "Requis pour le service. Accepté lors de l'inscription. Contactez support@settlelens.com pour retirer.",
-    "consentMarketing": "Communications marketing",
-    "consentMarketingNote": "Recevez des mises à jour produit par e-mail. Vous pouvez modifier cela à tout moment.",
-    "marketingEnabled": "E-mails marketing activés.",
-    "marketingDisabled": "E-mails marketing désactivés.",
-    "marketingFail": "Impossible de mettre à jour la préférence.",
-    "dangerZone": "Zone dangereuse",
-    "deleteDesc1": "La suppression de votre compte le désactivera immédiatement. Toutes vos données financières seront définitivement supprimées dans les 30 jours.",
-    "deleteDesc2": "Vous pouvez réactiver votre compte dans les 30 jours en contactant support@settlelens.com.",
-    "deleteMyAccount": "Supprimer mon compte",
-    "deleteTitle": "Supprimer le compte",
-    "deleteConfirmMsg": "Cette action est permanente. Tapez DELETE pour confirmer.",
-    "deletePlaceholder": "Tapez DELETE",
-    "deleting": "Suppression...",
-    "deleteBtn": "Supprimer le compte",
-    "cancel": "Annuler",
-    "deleteFail": "Échec de la suppression. Veuillez contacter support@settlelens.com.",
-    "securityTitle": "Journal de sécurité",
-    "securityDesc": "Un enregistrement des actions importantes sur votre compte.",
-    "trustTitle": "Vos données sont privées.",
-    "trustDesc": "Aucun employé d'Anthropic, membre de l'équipe SettleLens ou tiers n'a accédé à vos données financières. Seul vous pouvez les consulter.",
-    "thirdPartyTitle": "Accès tiers",
-    "thirdPartyNone": "Aucun",
-    "thirdPartyNote": "SettleLens ne partage pas vos données financières avec des tiers. Les paiements sont traités par Paddle.",
-    "activityTitle": "Votre journal d'activité des données",
-    "noActivity": "Aucune activité de compte enregistrée pour l'instant.",
-    "activityFooter": "Ce journal affiche les événements importants. Les journaux d'accès détaillés sont conservés à des fins de sécurité.",
-    "notificationsTitle": "Notifications",
-    "notificationsDesc": "Gérez comment SettleLens communique avec vous.",
-    "emailNotificationsTitle": "Notifications par e-mail",
-    "notifMarketing": "Mises à jour & conseils",
-    "notifMarketingDesc": "Recevez des conseils, annonces de fonctionnalités et guides de planification.",
-    "notifSecurity": "Alertes de sécurité",
-    "notifSecurityDesc": "Connexions, changements de mot de passe et événements d'audit. Toujours actif.",
-    "notifMarketingEnabled": "Mises à jour e-mail activées.",
-    "notifMarketingDisabled": "Mises à jour e-mail désactivées.",
-    "notifMarketingFail": "Impossible de mettre à jour la préférence."
-  },
-  "onboarding_form": {
-    "step1": {
-      "country": "Pays",
-      "selectCountry": "Sélectionner un pays…",
-      "state": "État",
-      "bundesland": "Land allemand",
-      "il": "Province",
-      "region": "Région",
-      "selectRegion": "Sélectionner…",
-      "communityProperty": "État de communauté de biens — les biens acquis pendant le mariage sont partagés 50/50.",
-      "marriageYear": "Année de mariage",
-      "currencyNote": "Devise : {currency} — appliquée automatiquement à tous les calculs."
-    },
-    "step2": {
-      "assetName": "Nom du bien",
-      "assetNamePlaceholder": "ex. Maison familiale",
-      "category": "Catégorie",
-      "ownedBy": "Propriétaire",
-      "joint": "Commun",
-      "me": "Moi",
-      "spouse": "Conjoint(e)",
-      "currentValue": "Valeur actuelle",
-      "purchasePrice": "Prix d'achat",
-      "mortgageBalance": "Solde hypothécaire",
-      "maritalAsset": "Bien matrimonial",
-      "addAsset": "Ajouter un bien",
-      "totalAssets": "Total des biens",
-      "totalMortgage": "Total des hypothèques",
-      "netAssets": "Actif net",
-      "cryptoWarning": "Les évaluations des cryptomonnaies sont très volatiles. Une expertise professionnelle est recommandée pour les procédures de divorce.",
-      "cryptoToken": "Symbole du token (ex. BTC, ETH)",
-      "cryptoQuantity": "Quantité",
-      "cryptoWhere": "Où est-il conservé ?",
-      "cryptoExchange": "Plateforme d'échange (Binance, Coinbase, etc.)",
-      "cryptoColdWallet": "Portefeuille froid",
-      "cryptoDefi": "Protocole DeFi",
-      "cryptoPriceAtEntry": "Prix à l'achat (optionnel)"
-    },
-    "step3": {
-      "hasDebts": "Avez-vous des dettes (autres que les hypothèques déjà saisies) ?",
-      "yes": "Oui",
-      "noSkip": "Non, passer",
-      "noDebts": "Aucune dette saisie. Cliquez sur Continuer pour avancer.",
-      "debtName": "Nom de la dette",
-      "debtNamePlaceholder": "ex. Carte Visa",
-      "category": "Catégorie",
-      "ownedBy": "Propriétaire",
-      "joint": "Commun",
-      "me": "Moi",
-      "spouse": "Conjoint(e)",
-      "balance": "Solde",
-      "monthlyPayment": "Paiement mensuel",
-      "interestRate": "Taux d'intérêt (%)",
-      "addDebt": "Ajouter une dette",
-      "totalBalance": "Solde total",
-      "monthlyPayments": "Paiements mensuels"
-    },
-    "step4": {
-      "myIncome": "Mes Revenus",
-      "spouseIncome": "Revenus du conjoint / partenaire",
-      "annualGross": "Revenu annuel brut",
-      "annualNet": "Revenu annuel net",
-      "employmentType": "Type d'emploi",
-      "otherIncome": "Autres revenus annuels",
-      "otherIncomeHint": "— loyer, pension alimentaire, dividendes, etc.",
-      "iDontKnow": "Je ne sais pas",
-      "spouseUnknownNote": "Le revenu du conjoint sera marqué comme inconnu. Vous pourrez le mettre à jour ultérieurement. Les projections montreront une fourchette estimée.",
-      "combinedNet": "Revenu net du foyer combiné",
-      "monthly": "Mensuel",
-      "employed": "Salarié",
-      "selfEmployed": "Indépendant / Freelance",
-      "partTime": "Temps partiel",
-      "retired": "Retraité",
-      "unemployed": "Sans emploi"
-    },
-    "step5": {
-      "hasChildren": "Avez-vous des enfants mineurs (moins de 18 ans) ?",
-      "yes": "Oui",
-      "noSkip": "Non, passer",
-      "noChildren": "Aucun enfant saisi. Cliquez sur Continuer pour avancer.",
-      "childNote": "Entrez l'âge de chaque enfant et la disposition de garde prévue. Cela aide à modéliser les projections de pension alimentaire pour enfants.",
-      "age": "Âge",
-      "custody": "Disposition de garde",
-      "addChild": "Ajouter un enfant",
-      "custodyNote": "Les dispositions de garde sont des hypothèses pour la modélisation financière uniquement. Les décisions réelles de garde sont prises par les tribunaux dans l'intérêt supérieur de l'enfant. Discutez de la garde avec un avocat qualifié en droit de la famille.",
-      "joint5050": "Garde partagée 50/50",
-      "primaryMe": "Garde principale — Moi",
-      "primarySpouse": "Garde principale — Conjoint(e)",
-      "otherTbd": "Autre / À déterminer"
-    },
-    "step6": {
-      "intro": "Créez jusqu'à 3 scénarios — comparez différentes hypothèses de règlement côte à côte. Chaque scénario peut avoir des hypothèses différentes pour la maison, la pension alimentaire et la pension pour enfants. Vous pouvez les modifier ultérieurement depuis votre tableau de bord.",
-      "scenarioLabel": "Scénario {n}",
-      "scenarioName": "Nom du scénario",
-      "scenarioNamePlaceholder": "ex. Meilleur cas",
-      "houseOutcome": "Sort de la maison",
-      "retirementSplit": "Partage retraite / investissements — ma part (%)",
-      "alimonyMonthly": "Pension alimentaire (mensuelle)",
-      "alimonyYears": "Durée (années)",
-      "alimonyDirection": "Direction",
-      "iReceive": "Je reçois",
-      "iPay": "Je paie",
-      "childSupport": "Pension pour enfant (mensuelle)",
-      "disclaimer": "Ces scénarios sont des modèles financiers basés sur vos données. Ils ne constituent pas des conseils juridiques, des prédictions judiciaires ou des résultats garantis. Consultez un avocat qualifié en droit de la famille avant de prendre toute décision.",
-      "scenarioA": "Scénario A — Ma proposition",
-      "scenarioB": "Scénario B — Proposition du conjoint",
-      "scenarioC": "Scénario C — Compromis",
-      "goToDashboard": "Aller au tableau de bord →",
-      "iKeepHouse": "Je garde la maison",
-      "spouseKeepsHouse": "Le conjoint garde la maison",
-      "weSellHouse": "Nous vendons la maison",
-      "noHouse": "Pas de maison / sans objet"
-    }
-  },
-  "blog": {
-    "title": "Guides de Planification Financiere pour le Divorce",
-    "subtitle": "Comprenez vos options financieres avant de negocier.",
-    "disclaimerNote": "A titre informatif uniquement. Pas de conseil juridique ou financier.",
-    "empty": "Des articles arrivent bientot.",
-    "backHome": "Retour a l'accueil",
-    "ctaTitle": "Pret a modeliser votre accord?",
-    "ctaDesc": "Comparez les scenarios et comprenez votre situation financiere.",
-    "ctaButton": "Demarrer l'analyse gratuite",
-    "allArticles": "Tous les articles",
-    "disclaimerLabel": "Avertissement:",
-    "disclaimerText": "Cet article est uniquement a titre informatif. SettleLens fournit une modelisation de scenarios financiers - pas de conseil juridique ou financier. Consultez toujours un avocat qualifie.",
-    "postCtaTitle": "Modelisez vos scenarios d'accord",
-    "postCtaDesc": "Voyez l'impact financier sur 10 ans des differentes decisions de divorce.",
-    "postCtaButton": "Demarrer l'analyse gratuite",
-    "relatedArticles": "Articles connexes",
-    "sidebarTitle": "Voir vos chiffres",
-    "sidebarDesc": "Analyse de scenarios financiers gratuite - pas de conseil juridique.",
-    "sidebarButton": "Commencer gratuitement"
-  },
-  "houseSimulator": {
-    "title": "Simulateur de Decision Immobiliere",
-    "subtitle": "La maison est la plus grande decision financiere dans un divorce. Voir les vrais chiffres instantanement.",
-    "situationTitle": "Votre situation",
-    "homeValue": "Valeur de la maison",
-    "mortgage": "Hypotheque restante",
-    "monthlyPayment": "Paiement mensuel d'hypotheque",
-    "myIncome": "Mon revenu annuel",
-    "spouseIncome": "Revenu annuel du conjoint",
-    "equity": "Capitaux propres:",
-    "note": "France : {appreciation}% valorisation annuelle, {investmentReturn}% rendement, {saleCosts}% frais (notaire+agence).",
-    "nominalWarning": "",
-    "fullPictureTitle": "Voir votre situation financiere complete",
-    "fullPictureDesc": "Ce simulateur utilise des hypotheses simplifiees. L'analyse complete necessite vos donnees financieres completes.",
-    "fullPictureButton": "Creer mon analyse personnelle",
-    "fullPictureFree": "Gratuit pour commencer. Aucune carte de credit requise.",
-    "disclaimer": "Modele simplifie a titre illustratif. Pas de conseil juridique ou financier.",
-    "iKeepLabel": "Je garde la maison",
-    "spouseKeepsLabel": "Le conjoint garde la maison",
-    "sellLabel": "Nous vendons la maison",
-    "bestLabel": "Meilleur",
-    "projectedNet": "Position nette projetée sur 5 ans",
-    "equityAfterBuyout": "Capital après rachat du conjoint :",
-    "spouseBuyout": "Coût de rachat du conjoint :",
-    "monthlyMortgage": "Hypothèque mensuelle :",
-    "projectedValue5": "Valeur projetée dans 5 ans :",
-    "equityPayout": "Paiement de capital pour vous :",
-    "estimatedRent": "Loyer estimé :",
-    "invested5": "Si investi sur 5 ans :",
-    "shareAfterCosts": "Votre part après frais :",
-    "affordabilityWarning": "⚠️ L'hypothèque mensuelle dépasse 43% de vos revenus",
-    "hasMortgage": "Y a-t-il un prêt immobilier ?",
-    "mortgageYes": "Oui, prêt en cours",
-    "mortgageNo": "Non, achat comptant",
-    "mortgageNote": "",
-    "appreciationTitle": "Scénario de valorisation",
-    "appreciationLow": "Faible ({pct}%/an)",
-    "appreciationMid": "Moyen ({pct}%/an)",
-    "appreciationHigh": "Élevé ({pct}%/an)",
-    "scenarioNote": "Note : Cet outil fournit des comparaisons illustratives uniquement. Les résultats sont des estimations.",
-    "trustNote": "Inscrivez-vous pour l'analyse IA complète avec les formules du Code civil."
-  },
-  "report": {
-    "title": "Télécharger votre rapport",
-    "subtitle": "Un aperçu financier PDF complet — organisé pour votre avocat ou votre usage personnel.",
-    "includes": "Contenu du rapport :",
-    "item1": "Résumé du patrimoine net — actifs, dettes et capitaux propres",
-    "item2": "Comparaison des scénarios — tous vos scénarios côte à côte",
-    "item3": "Projection financière sur 10 ans par scénario",
-    "item4": "Fourchettes estimatives de pension alimentaire et de pension pour enfants",
-    "item5": "Facteurs de risque clés identifiés par l'analyse",
-    "item6": "Notes de positionnement financier pour la préparation à la négociation",
-    "item7": "Note sur la méthodologie juridictionnelle",
-    "item8": "Avertissement juridique complet",
-    "formatLabel": "Format :",
-    "formatValue": "PDF · A4 · Filigrane « Réservé à la planification personnelle »",
-    "validLabel": "Valable :",
-    "validValue": "24 heures (régénérable à tout moment)",
-    "generate": "Générer et télécharger le PDF",
-    "generating": "Génération de votre rapport…",
-    "downloadAgain": "Télécharger à nouveau",
-    "successMsg": "Votre rapport s'est ouvert dans un nouvel onglet. S'il ne s'est pas ouvert, vérifiez votre bloqueur de fenêtres contextuelles.",
-    "errorDefault": "Une erreur s'est produite. Veuillez réessayer.",
-    "errorConnection": "Erreur de connexion. Vérifiez votre connexion internet et réessayez.",
-    "secureNote": "Votre rapport est généré à la demande et stocké en toute sécurité. Vous seul(e) pouvez y accéder. Le lien expire après 24 heures."
-  }
+    "meta":  {
+                 "siteName":  "SettleLens",
+                 "tagline":  "Voyez votre accord clairement",
+                 "description":  "Modélisation financière alimentée par l\u0027IA pour les accords de divorce. Visualisez votre avenir financier sur 10 ans dans chaque scénario."
+             },
+    "nav":  {
+                "howItWorks":  "Comment ça marche",
+                "pricing":  "Tarifs",
+                "blog":  "Blog",
+                "login":  "Connexion",
+                "startFree":  "Analyse gratuite",
+                "upgrade":  "Améliorer",
+                "profile":  "Profil",
+                "billing":  "Facturation",
+                "settings":  "Paramètres",
+                "signOut":  "Se déconnecter"
+            },
+    "hero":  {
+                 "h1":  "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
+                 "h2":  "Modélisation financière par IA pour le divorce. Visualisez votre avenir financier sur 10 ans dans chaque scénario d\u0027accord – en minutes, pas en mois.",
+                 "cta":  "Démarrer l\u0027analyse gratuite",
+                 "sub":  "20 minutes. Préparez-vous avant de consulter votre avocat.",
+                 "badge":  "Clarte Financiere pour le Divorce",
+                 "subTagline":  "Modelisation financiere, pas de conseil juridique."
+             },
+    "fearHook":  {
+                     "stat":  "15 000€+",
+                     "statLabel":  "frais juridiques moyens pour un divorce",
+                     "hook":  "Combien de cela payez-vous à votre avocat pour expliquer des chiffres que vous pourriez calculer vous-même ?",
+                     "cta":  "Calculer gratuitement",
+                     "stats":  [
+                                   {
+                                       "num":  "73%",
+                                       "label":  "des couples divorces paient trop en frais juridiques"
+                                   },
+                                   {
+                                       "num":  "20 min",
+                                       "label":  "vs. des mois d\u0027echanges avec les avocats"
+                                   },
+                                   {
+                                       "num":  "50x",
+                                       "label":  "ROI estime vs. cout moyen des honoraires juridiques"
+                                   }
+                               ],
+                     "prepNote":  "Outil de preparation - pas un substitut au conseil juridique professionnel."
+                 },
+    "howItWorks":  {
+                       "title":  "Trois étapes vers la clarté financière",
+                       "steps":  [
+                                     {
+                                         "n":  "01",
+                                         "title":  "Entrez votre situation financière",
+                                         "desc":  "Actifs, dettes, revenus, enfants. Sécurisé, privé, 20 minutes."
+                                     },
+                                     {
+                                         "n":  "02",
+                                         "title":  "Construisez vos scénarios",
+                                         "desc":  "Garder la maison ? La vendre ? La laisser à l\u0027autre ? Modélisez jusqu\u0027à 3 résultats."
+                                     },
+                                     {
+                                         "n":  "03",
+                                         "title":  "Obtenez votre projection sur 10 ans",
+                                         "desc":  "L\u0027IA analyse les lois de votre juridiction et projette chaque scénario. Téléchargez le PDF."
+                                     }
+                                 ]
+                   },
+    "features":  {
+                     "title":  "Tout ce dont vous avez besoin pour négocier en position de force",
+                     "items":  [
+                                   {
+                                       "title":  "Chaque scénario côte à côte",
+                                       "desc":  "Voyez l\u0027impact financier sur 10 ans de chaque choix avant de décider."
+                                   },
+                                   {
+                                       "title":  "Votre juridiction. Vos règles.",
+                                       "desc":  "Code civil Art. 1401 communauté d\u0027acquêts ? SettleLens connaît les formules."
+                                   },
+                                   {
+                                       "title":  "Un rapport que votre avocat respecte",
+                                       "desc":  "PDF professionnel : bilan des actifs, graphiques de projection, stratégie de négociation."
+                                   }
+                               ]
+                 },
+    "social":  {
+                   "title":  "De personnes qui sont passées par là",
+                   "quotes":  [
+                                  {
+                                      "text":  "Je suis entré en médiation en sachant exactement quelle offre accepter. Cette clarté valait plus que n\u0027importe quel avocat.",
+                                      "author":  "Marie L., Paris"
+                                  },
+                                  {
+                                      "text":  "Le rapport PDF a légitimé ma position. Mon avocat a dit que c\u0027était le client le mieux préparé qu\u0027elle ait jamais vu.",
+                                      "author":  "Pierre D., Lyon"
+                                  },
+                                  {
+                                      "text":  "Trois scénarios côte à côte. J\u0027ai enfin compris ce que garder la maison signifiait pour la prochaine décennie.",
+                                      "author":  "Sophie M., Bordeaux"
+                                  }
+                              ]
+               },
+    "pricing":  {
+                    "title":  "Tarification simple et transparente",
+                    "plans":  [
+                                  {
+                                      "id":  "discovery",
+                                      "name":  "Discovery",
+                                      "price":  "Gratuit",
+                                      "period":  "pour toujours",
+                                      "features":  [
+                                                       "Inventaire des actifs et dettes",
+                                                       "Résumé de la valeur nette",
+                                                       "Pas d\u0027analyse IA",
+                                                       "Mise à niveau à tout moment"
+                                                   ],
+                                      "cta":  "Démarrer gratuitement"
+                                  },
+                                  {
+                                      "id":  "clarified",
+                                      "name":  "Clarified",
+                                      "price":  "27€",
+                                      "period":  "unique · accès 14 jours",
+                                      "features":  [
+                                                       "1 analyse alimentée par IA",
+                                                       "1 scénario d\u0027accord",
+                                                       "Rapport PDF professionnel",
+                                                       "Accès 14 jours"
+                                                   ],
+                                      "cta":  "Obtenir la clarté"
+                                  },
+                                  {
+                                      "id":  "strategist",
+                                      "name":  "Strategist",
+                                      "price":  "36€",
+                                      "period":  "par mois",
+                                      "badge":  "Plus populaire",
+                                      "features":  [
+                                                       "Analyses illimitées",
+                                                       "Scénarios illimités",
+                                                       "Rapports PDF premium",
+                                                       "Projections sur 10 ans",
+                                                       "Ajustements d\u0027inflation"
+                                                   ],
+                                      "cta":  "Démarrer Strategist"
+                                  },
+                                  {
+                                      "id":  "professional",
+                                      "name":  "Professional",
+                                      "price":  "92€",
+                                      "period":  "par mois",
+                                      "features":  [
+                                                       "Tout dans Strategist",
+                                                       "Export Excel + PDF prêt pour l\u0027avocat",
+                                                       "Organisateur de preuves",
+                                                       "Support prioritaire"
+                                                   ],
+                                      "cta":  "Choisir Professional"
+                                  }
+                              ],
+                    "footerNote":  "Tous les plans: Securise, prive. Modelisation financiere, pas de conseil juridique."
+                },
+    "finalCta":  {
+                     "title":  "Voyez votre accord clairement",
+                     "sub":  "Rejoignez des milliers de personnes qui sont entrées dans les négociations préparées.",
+                     "cta":  "Démarrer l\u0027analyse gratuite",
+                     "note":  "Aucune carte de crédit requise pour l\u0027analyse de base."
+                 },
+    "footer":  {
+                   "disclaimer":  "SettleLens fournit une modélisation financière à des fins d\u0027information uniquement. Pas de conseil juridique ou financier. Consultez toujours un avocat qualifié.",
+                   "links":  {
+                                 "howItWorks":  "Comment ça marche",
+                                 "pricing":  "Tarifs",
+                                 "blog":  "Blog",
+                                 "privacy":  "Politique de confidentialité",
+                                 "terms":  "Conditions d\u0027utilisation",
+                                 "cookies":  "Politique des cookies",
+                                 "about":  "À propos",
+                                 "contact":  "Contact"
+                             },
+                   "copyright":  "© 2026 SettleLens. Modélisation financière, pas de conseil juridique."
+               },
+    "auth":  {
+                 "loginTitle":  "Content de vous revoir",
+                 "registerTitle":  "Démarrez votre analyse gratuite",
+                 "email":  "Adresse e-mail",
+                 "password":  "Mot de passe",
+                 "name":  "Nom complet",
+                 "loginCta":  "Se connecter",
+                 "registerCta":  "Créer un compte",
+                 "switchToLogin":  "Déjà un compte ? Se connecter",
+                 "switchToRegister":  "Pas de compte ? S\u0027inscrire",
+                 "googleCta":  "Continuer avec Google",
+                 "termsConsent":  "J\u0027accepte les Conditions d\u0027utilisation et la Politique de confidentialité",
+                 "dataConsent":  "Je consens au traitement de mes données personnelles",
+                 "marketingConsent":  "Je souhaite recevoir des conseils et mises à jour produit (optionnel)",
+                 "forgotPassword":  "Mot de passe oublié ?",
+                 "confirmPassword":  "Confirmer le mot de passe",
+                 "creatingAccount":  "Création du compte...",
+                 "checkEmail":  "Vérifiez votre e-mail",
+                 "checkEmailDesc":  "Nous avons envoyé un lien de confirmation à votre e-mail. Veuillez vérifier avant de vous connecter.",
+                 "backToLogin":  "Retour à la connexion",
+                 "registerQuote":  "La clarté financière avant de négocier.",
+                 "registerQuoteSub":  "Modélisation financière, pas de conseil juridique.",
+                 "registerBullet1":  "20 minutes suffisent",
+                 "registerBullet2":  "Vos données sont privées — vous seul pouvez les voir",
+                 "registerBullet3":  "Téléchargez un rapport PDF pour votre avocat",
+                 "loginQuote":  "Voyez votre accord clairement.",
+                 "loginQuoteSub":  "Modélisation financière, pas de conseil juridique.",
+                 "loginBullet1":  "Visualisez votre avenir financier sur 10 ans dans chaque scénario",
+                 "loginBullet2":  "Découvrez ce que garder la maison coûte vraiment sur une décennie",
+                 "loginBullet3":  "Entrez dans les négociations avec des chiffres, pas des estimations"
+             },
+    "onboarding":  {
+                       "steps":  [
+                                     {
+                                         "title":  "Où êtes-vous situé ?",
+                                         "subtitle":  "Nous appliquons les formules financières pour votre juridiction."
+                                     },
+                                     {
+                                         "title":  "Vos actifs",
+                                         "subtitle":  "Listez tout ce que vous et votre conjoint possédez."
+                                     },
+                                     {
+                                         "title":  "Vos dettes",
+                                         "subtitle":  "Hypothèques, prêts, cartes de crédit — le tableau complet."
+                                     },
+                                     {
+                                         "title":  "Revenus",
+                                         "subtitle":  "Les vôtres et ceux de votre conjoint, bruts et nets."
+                                     },
+                                     {
+                                         "title":  "Enfants",
+                                         "subtitle":  "Le cas échéant — âges et arrangement de garde."
+                                     },
+                                     {
+                                         "title":  "Construisez vos scénarios",
+                                         "subtitle":  "Quels sont les résultats possibles ? Modélisons-les."
+                                     }
+                                 ],
+                       "next":  "Continuer",
+                       "back":  "Retour",
+                       "save":  "Enregistrer et continuer",
+                       "stepOf":  "Étape {current} sur {total}"
+                   },
+    "disclaimer":  {
+                       "short":  "Pas de conseil juridique.",
+                       "full":  "SettleLens fournit une modélisation financière à des fins d\u0027information uniquement. Les résultats sont des estimations basées sur des formules juridiques accessibles au public et ne constituent pas un conseil juridique, fiscal ou financier. Consultez toujours un avocat qualifié avant de prendre des décisions."
+                   },
+    "userScenarios":  {
+                          "title":  "Quelle décision essayez-vous de prendre ?",
+                          "sub":  "SettleLens transforme les décisions émotionnellement complexes en scénarios financiers comparables.",
+                          "cards":  [
+                                        {
+                                            "icon":  "🏠",
+                                            "title":  "Que se passe-t-il si je garde la maison ?",
+                                            "desc":  "Comparez garder, vendre ou transférer le logement et voyez l\u0027impact sur les flux de trésorerie."
+                                        },
+                                        {
+                                            "icon":  "⚖️",
+                                            "title":  "Cette offre est-elle avantageuse pour moi ?",
+                                            "desc":  "Modélisez le partage proposé sur les actifs, dettes et pensions pour voir les résultats sur 10 ans."
+                                        },
+                                        {
+                                            "icon":  "📋",
+                                            "title":  "Comment me préparer pour mon avocat ?",
+                                            "desc":  "Organisez vos actifs, dettes, revenus et scénarios dans un rapport professionnel avant la réunion."
+                                        }
+                                    ]
+                      },
+    "whatItDoesNot":  {
+                          "title":  "Ce que fait SettleLens — et ce qu\u0027il ne fait pas",
+                          "doesTitle":  "Ce qu\u0027il fait",
+                          "doesNot":  "Ce qu\u0027il ne fait pas",
+                          "does":  [
+                                       "Modélisation de scénarios financiers",
+                                       "Comparaison actifs, dettes et revenus",
+                                       "Projection de flux de trésorerie sur 10 ans",
+                                       "Analyse de l\u0027impact des pensions",
+                                       "Résumé financier pour l\u0027avocat"
+                                   ],
+                          "not":  [
+                                      "Conseil juridique",
+                                      "Prédiction des décisions judiciaires",
+                                      "Remplacement d\u0027un avocat",
+                                      "Chiffres de règlement garantis",
+                                      "Décisions pour cas complexes"
+                                  ],
+                          "note":  "Les cas complexes ou à haut risque nécessitent un soutien juridique professionnel.",
+                          "link":  "En savoir plus sur nos limites →"
+                      },
+    "trust":  {
+                  "title":  "Conçu pour un processus sensible",
+                  "cards":  [
+                                {
+                                    "icon":  "🔒",
+                                    "title":  "Vos données ne sont pas vendues",
+                                    "desc":  "Les données financières ne sont jamais utilisées pour la publicité ni partagées."
+                                },
+                                {
+                                    "icon":  "🖥️",
+                                    "title":  "Les données sensibles ne sont jamais enregistrées",
+                                    "desc":  "Les valeurs d\u0027actifs, revenus et scénarios ne sont pas écrits dans les journaux de développeur."
+                                },
+                                {
+                                    "icon":  "🗂️",
+                                    "title":  "Vous contrôlez vos données",
+                                    "desc":  "Exportez vos données ou supprimez définitivement votre compte à tout moment."
+                                },
+                                {
+                                    "icon":  "⚖️",
+                                    "title":  "Modélisation financière, pas conseil juridique",
+                                    "desc":  "SettleLens est un outil de préparation. Les cas complexes nécessitent un avocat qualifié."
+                                }
+                            ],
+                  "link":  "Comment nous protégeons vos données →"
+              },
+    "countryCoverage":  {
+                            "title":  "Adapté à votre juridiction",
+                            "sub":  "SettleLens applique des hypothèses de régime matrimonial spécifiques à chaque pays.",
+                            "note":  "Le pouvoir discrétionnaire judiciaire, les actifs cachés et les accords complexes peuvent produire des résultats différents.",
+                            "link":  "Voir la méthodologie pour votre pays →",
+                            "countries":  [
+                                              {
+                                                  "flag":  "🇺🇸",
+                                                  "name":  "États-Unis",
+                                                  "law":  "Community \u0026 equitable distribution"
+                                              },
+                                              {
+                                                  "flag":  "🇬🇧",
+                                                  "name":  "Royaume-Uni",
+                                                  "law":  "MCA 1973 Section 25"
+                                              },
+                                              {
+                                                  "flag":  "🇩🇪",
+                                                  "name":  "Allemagne",
+                                                  "law":  "Zugewinngemeinschaft"
+                                              },
+                                              {
+                                                  "flag":  "🇫🇷",
+                                                  "name":  "France",
+                                                  "law":  "Communauté réduite aux acquêts"
+                                              },
+                                              {
+                                                  "flag":  "🇪🇸",
+                                                  "name":  "Espagne",
+                                                  "law":  "Régimen de gananciales"
+                                              },
+                                              {
+                                                  "flag":  "🇹🇷",
+                                                  "name":  "Turquie",
+                                                  "law":  "TMK Madde 179"
+                                              }
+                                          ]
+                        },
+    "attorneyPrep":  {
+                         "title":  "Préparez-vous pour votre rendez-vous avec l\u0027avocat",
+                         "sub":  "Apportez un aperçu financier structuré — actifs, dettes, revenus et scénarios dans un rapport professionnel.",
+                         "cta":  "Créer mon aperçu financier",
+                         "note":  "Modélisation financière, pas conseil juridique."
+                     },
+    "houseDemo":  {
+                      "title":  "Le logement est souvent la décision la plus importante.",
+                      "sub":  "Voyez la différence financière entre garder, vendre ou transférer le bien.",
+                      "sliderLabel":  "Valeur du bien",
+                      "iKeep":  "Je le garde",
+                      "theyKeep":  "Mon conjoint le garde",
+                      "weSell":  "Nous vendons",
+                      "netPosition":  "Position nette",
+                      "fullAnalysis":  "Analyse complète →",
+                      "note":  "Modèle simplifié — 3% d\u0027appréciation, 5% de rendement, 6% de frais de vente.",
+                      "ctaFull":  "Obtenir votre analyse complète →",
+                      "best":  "Meilleure",
+                      "inYears":  "dans 5 ans",
+                      "previewNote":  "Ceci est un aperçu simplifié. L\u0027analyse complète utilise l\u0027IA et les lois de votre juridiction.",
+                      "sliderMax":  "€2M",
+                      "sliderMin":  "€100K"
+                  },
+    "waitlist":  {
+                     "placeholder":  "Votre adresse e-mail",
+                     "cta":  "Rejoindre la liste d\u0027attente",
+                     "success":  "Vous êtes sur la liste. Nous vous contacterons.",
+                     "duplicate":  "Vous êtes déjà sur la liste."
+                 },
+    "dashboard":  {
+                      "greeting":  {
+                                       "morning":  "Bonjour",
+                                       "afternoon":  "Bon après-midi",
+                                       "evening":  "Bonsoir"
+                                   },
+                      "netWorthNow":  "Valeur nette actuelle",
+                      "bestYear10":  "Meilleur résultat sur 10 ans",
+                      "monthlyCashFlow":  "Flux de trésorerie mensuel",
+                      "riskScore":  "Score de risque",
+                      "readyTitle":  "Prêt à lancer votre analyse",
+                      "readyDesc":  "Vos données financières sont saisies. Sélectionnez un scénario pour la projection IA.",
+                      "analyzePrefix":  "Analyser : ",
+                      "buildScenarios":  "Créer des scénarios",
+                      "projection":  "Projection de la valeur nette sur 10 ans",
+                      "scenarioComparison":  "Comparaison de scénarios",
+                      "keyRisks":  "Facteurs de risque clés",
+                      "analyzeOffer":  "Analyser une nouvelle offre",
+                      "downloadPDF":  "Télécharger le rapport PDF",
+                      "editAssets":  "Modifier les actifs",
+                      "upgradeToRun":  "Améliorez pour l\u0027analyse IA →",
+                      "scenarios":  "Scénarios",
+                      "scenariosDesc":  "Comparez différents résultats de règlement",
+                      "noScenarios":  "Pas encore de scénarios",
+                      "noScenariosDesc":  "Créez votre premier scénario pour comparer les résultats."
+                  },
+    "sidebar":  {
+                    "dashboard":  "Tableau de bord",
+                    "scenarios":  "Scénarios",
+                    "report":  "Rapport",
+                    "settings":  "Paramètres",
+                    "upgradeTitle":  "Passer à Clarified",
+                    "upgradeDesc":  "Obtenez votre première analyse IA",
+                    "upgradeButton":  "Améliorer"
+                },
+    "settings":  {
+                     "navAccount":  "Compte",
+                     "navBilling":  "Facturation",
+                     "navPrivacy":  "Confidentialité",
+                     "navSecurity":  "Sécurité",
+                     "navNotifications":  "Notifications",
+                     "accountTitle":  "Paramètres du compte",
+                     "accountDesc":  "Gérez votre profil et vos préférences.",
+                     "yourName":  "Votre nom",
+                     "profile":  "Profil",
+                     "fullName":  "Nom complet",
+                     "email":  "E-mail",
+                     "emailHint":  "Pour changer votre e-mail, contactez support@settlelens.com",
+                     "language":  "Langue préférée",
+                     "country":  "Pays",
+                     "state":  "État",
+                     "selectState":  "Sélectionner un état",
+                     "savedOk":  "Modifications enregistrées.",
+                     "savedFail":  "Échec de l\u0027enregistrement. Veuillez réessayer.",
+                     "saving":  "Enregistrement...",
+                     "saveChanges":  "Enregistrer les modifications",
+                     "changePassword":  "Changer le mot de passe",
+                     "currentPassword":  "Mot de passe actuel",
+                     "newPassword":  "Nouveau mot de passe",
+                     "confirmPassword":  "Confirmer le nouveau mot de passe",
+                     "pwNoMatch":  "Les mots de passe ne correspondent pas.",
+                     "pwTooShort":  "Le mot de passe doit comporter au moins 8 caractères.",
+                     "pwUpdating":  "Mise à jour...",
+                     "updatePassword":  "Mettre à jour le mot de passe",
+                     "pwUpdated":  "Mot de passe mis à jour avec succès.",
+                     "billingTitle":  "Facturation",
+                     "billingDesc":  "Gérez votre abonnement et vos informations de facturation.",
+                     "loading":  "Chargement...",
+                     "currentPlan":  "Plan actuel",
+                     "accessUntil":  "Accès jusqu\u0027au :",
+                     "upgrade":  "Améliorer",
+                     "subscription":  "Abonnement",
+                     "subscriptionNote":  "Votre abonnement se renouvelle mensuellement. Utilisez le portail client Paddle pour mettre à jour vos informations de paiement.",
+                     "managePayment":  "Gérer les informations de paiement",
+                     "cancelSub":  "Annuler l\u0027abonnement",
+                     "cancelConfirmMsg":  "Êtes-vous sûr de vouloir annuler ? Vous perdrez l\u0027accès à la fin de la période de facturation.",
+                     "canceling":  "Annulation...",
+                     "yesCancelSub":  "Oui, annuler l\u0027abonnement",
+                     "keepSub":  "Conserver l\u0027abonnement",
+                     "cancelSuccess":  "Annulation demandée. Vous conserverez l\u0027accès jusqu\u0027à la fin de la période de facturation.",
+                     "cancelFail":  "Échec de l\u0027annulation. Veuillez contacter support@settlelens.com.",
+                     "onPlanDiscovery":  "Améliorez votre plan pour accéder aux analyses et projections financières.",
+                     "onPlanClarified":  "Votre accès unique est actif jusqu\u0027à la date d\u0027expiration indiquée.",
+                     "viewPlans":  "Voir les plans",
+                     "paddleNote":  "Les paiements sont traités par Paddle. SettleLens ne stocke jamais vos données de carte. Contactez support@settlelens.com pour toute question.",
+                     "privacyTitle":  "Confidentialité et données",
+                     "privacyDesc":  "Gérez vos données, consentements et suppression de compte.",
+                     "downloadTitle":  "Télécharger vos données",
+                     "downloadDesc":  "Exportez toutes vos données SettleLens en fichier JSON. C\u0027est votre droit en vertu de l\u0027article 20 du RGPD (portabilité des données).",
+                     "exporting":  "Préparation de l\u0027export...",
+                     "exportJson":  "Exporter en JSON",
+                     "exportOk":  "Vos données ont été téléchargées.",
+                     "exportFail":  "Échec de l\u0027export. Veuillez réessayer ou contacter le support.",
+                     "consentTitle":  "Gestion des consentements",
+                     "consentTerms":  "Conditions de service \u0026 Politique de confidentialité",
+                     "consentTermsNote":  "Requis pour le service. Accepté lors de l\u0027inscription. Contactez support@settlelens.com pour retirer.",
+                     "consentMarketing":  "Communications marketing",
+                     "consentMarketingNote":  "Recevez des mises à jour produit par e-mail. Vous pouvez modifier cela à tout moment.",
+                     "marketingEnabled":  "E-mails marketing activés.",
+                     "marketingDisabled":  "E-mails marketing désactivés.",
+                     "marketingFail":  "Impossible de mettre à jour la préférence.",
+                     "dangerZone":  "Zone dangereuse",
+                     "deleteDesc1":  "La suppression de votre compte le désactivera immédiatement. Toutes vos données financières seront définitivement supprimées dans les 30 jours.",
+                     "deleteDesc2":  "Vous pouvez réactiver votre compte dans les 30 jours en contactant support@settlelens.com.",
+                     "deleteMyAccount":  "Supprimer mon compte",
+                     "deleteTitle":  "Supprimer le compte",
+                     "deleteConfirmMsg":  "Cette action est permanente. Tapez DELETE pour confirmer.",
+                     "deletePlaceholder":  "Tapez DELETE",
+                     "deleting":  "Suppression...",
+                     "deleteBtn":  "Supprimer le compte",
+                     "cancel":  "Annuler",
+                     "deleteFail":  "Échec de la suppression. Veuillez contacter support@settlelens.com.",
+                     "securityTitle":  "Journal de sécurité",
+                     "securityDesc":  "Un enregistrement des actions importantes sur votre compte.",
+                     "trustTitle":  "Vos données sont privées.",
+                     "trustDesc":  "Aucun employé d\u0027Anthropic, membre de l\u0027équipe SettleLens ou tiers n\u0027a accédé à vos données financières. Seul vous pouvez les consulter.",
+                     "thirdPartyTitle":  "Accès tiers",
+                     "thirdPartyNone":  "Aucun",
+                     "thirdPartyNote":  "SettleLens ne partage pas vos données financières avec des tiers. Les paiements sont traités par Paddle.",
+                     "activityTitle":  "Votre journal d\u0027activité des données",
+                     "noActivity":  "Aucune activité de compte enregistrée pour l\u0027instant.",
+                     "activityFooter":  "Ce journal affiche les événements importants. Les journaux d\u0027accès détaillés sont conservés à des fins de sécurité.",
+                     "notificationsTitle":  "Notifications",
+                     "notificationsDesc":  "Gérez comment SettleLens communique avec vous.",
+                     "emailNotificationsTitle":  "Notifications par e-mail",
+                     "notifMarketing":  "Mises à jour \u0026 conseils",
+                     "notifMarketingDesc":  "Recevez des conseils, annonces de fonctionnalités et guides de planification.",
+                     "notifSecurity":  "Alertes de sécurité",
+                     "notifSecurityDesc":  "Connexions, changements de mot de passe et événements d\u0027audit. Toujours actif.",
+                     "notifMarketingEnabled":  "Mises à jour e-mail activées.",
+                     "notifMarketingDisabled":  "Mises à jour e-mail désactivées.",
+                     "notifMarketingFail":  "Impossible de mettre à jour la préférence."
+                 },
+    "onboarding_form":  {
+                            "step1":  {
+                                          "country":  "Pays",
+                                          "selectCountry":  "Sélectionner un pays…",
+                                          "state":  "État",
+                                          "bundesland":  "Land allemand",
+                                          "il":  "Province",
+                                          "region":  "Région",
+                                          "selectRegion":  "Sélectionner…",
+                                          "communityProperty":  "État de communauté de biens — les biens acquis pendant le mariage sont partagés 50/50.",
+                                          "marriageYear":  "Année de mariage",
+                                          "currencyNote":  "Devise : {currency} — appliquée automatiquement à tous les calculs."
+                                      },
+                            "step2":  {
+                                          "assetName":  "Nom du bien",
+                                          "assetNamePlaceholder":  "ex. Maison familiale",
+                                          "category":  "Catégorie",
+                                          "ownedBy":  "Propriétaire",
+                                          "joint":  "Commun",
+                                          "me":  "Moi",
+                                          "spouse":  "Conjoint(e)",
+                                          "currentValue":  "Valeur actuelle",
+                                          "purchasePrice":  "Prix d\u0027achat",
+                                          "mortgageBalance":  "Solde hypothécaire",
+                                          "maritalAsset":  "Bien matrimonial",
+                                          "addAsset":  "Ajouter un bien",
+                                          "totalAssets":  "Total des biens",
+                                          "totalMortgage":  "Total des hypothèques",
+                                          "netAssets":  "Actif net",
+                                          "cryptoWarning":  "Les évaluations des cryptomonnaies sont très volatiles. Une expertise professionnelle est recommandée pour les procédures de divorce.",
+                                          "cryptoToken":  "Symbole du token (ex. BTC, ETH)",
+                                          "cryptoQuantity":  "Quantité",
+                                          "cryptoWhere":  "Où est-il conservé ?",
+                                          "cryptoExchange":  "Plateforme d\u0027échange (Binance, Coinbase, etc.)",
+                                          "cryptoColdWallet":  "Portefeuille froid",
+                                          "cryptoDefi":  "Protocole DeFi",
+                                          "cryptoPriceAtEntry":  "Prix à l\u0027achat (optionnel)"
+                                      },
+                            "step3":  {
+                                          "hasDebts":  "Avez-vous des dettes (autres que les hypothèques déjà saisies) ?",
+                                          "yes":  "Oui",
+                                          "noSkip":  "Non, passer",
+                                          "noDebts":  "Aucune dette saisie. Cliquez sur Continuer pour avancer.",
+                                          "debtName":  "Nom de la dette",
+                                          "debtNamePlaceholder":  "ex. Carte Visa",
+                                          "category":  "Catégorie",
+                                          "ownedBy":  "Propriétaire",
+                                          "joint":  "Commun",
+                                          "me":  "Moi",
+                                          "spouse":  "Conjoint(e)",
+                                          "balance":  "Solde",
+                                          "monthlyPayment":  "Paiement mensuel",
+                                          "interestRate":  "Taux d\u0027intérêt (%)",
+                                          "addDebt":  "Ajouter une dette",
+                                          "totalBalance":  "Solde total",
+                                          "monthlyPayments":  "Paiements mensuels"
+                                      },
+                            "step4":  {
+                                          "myIncome":  "Mes Revenus",
+                                          "spouseIncome":  "Revenus du conjoint / partenaire",
+                                          "annualGross":  "Revenu annuel brut",
+                                          "annualNet":  "Revenu annuel net",
+                                          "employmentType":  "Type d\u0027emploi",
+                                          "otherIncome":  "Autres revenus annuels",
+                                          "otherIncomeHint":  "— loyer, pension alimentaire, dividendes, etc.",
+                                          "iDontKnow":  "Je ne sais pas",
+                                          "spouseUnknownNote":  "Le revenu du conjoint sera marqué comme inconnu. Vous pourrez le mettre à jour ultérieurement. Les projections montreront une fourchette estimée.",
+                                          "combinedNet":  "Revenu net du foyer combiné",
+                                          "monthly":  "Mensuel",
+                                          "employed":  "Salarié",
+                                          "selfEmployed":  "Indépendant / Freelance",
+                                          "partTime":  "Temps partiel",
+                                          "retired":  "Retraité",
+                                          "unemployed":  "Sans emploi"
+                                      },
+                            "step5":  {
+                                          "hasChildren":  "Avez-vous des enfants mineurs (moins de 18 ans) ?",
+                                          "yes":  "Oui",
+                                          "noSkip":  "Non, passer",
+                                          "noChildren":  "Aucun enfant saisi. Cliquez sur Continuer pour avancer.",
+                                          "childNote":  "Entrez l\u0027âge de chaque enfant et la disposition de garde prévue. Cela aide à modéliser les projections de pension alimentaire pour enfants.",
+                                          "age":  "Âge",
+                                          "custody":  "Disposition de garde",
+                                          "addChild":  "Ajouter un enfant",
+                                          "custodyNote":  "Les dispositions de garde sont des hypothèses pour la modélisation financière uniquement. Les décisions réelles de garde sont prises par les tribunaux dans l\u0027intérêt supérieur de l\u0027enfant. Discutez de la garde avec un avocat qualifié en droit de la famille.",
+                                          "joint5050":  "Garde partagée 50/50",
+                                          "primaryMe":  "Garde principale — Moi",
+                                          "primarySpouse":  "Garde principale — Conjoint(e)",
+                                          "otherTbd":  "Autre / À déterminer"
+                                      },
+                            "step6":  {
+                                          "intro":  "Créez jusqu\u0027à 3 scénarios — comparez différentes hypothèses de règlement côte à côte. Chaque scénario peut avoir des hypothèses différentes pour la maison, la pension alimentaire et la pension pour enfants. Vous pouvez les modifier ultérieurement depuis votre tableau de bord.",
+                                          "scenarioLabel":  "Scénario {n}",
+                                          "scenarioName":  "Nom du scénario",
+                                          "scenarioNamePlaceholder":  "ex. Meilleur cas",
+                                          "houseOutcome":  "Sort de la maison",
+                                          "retirementSplit":  "Partage retraite / investissements — ma part (%)",
+                                          "alimonyMonthly":  "Pension alimentaire (mensuelle)",
+                                          "alimonyYears":  "Durée (années)",
+                                          "alimonyDirection":  "Direction",
+                                          "iReceive":  "Je reçois",
+                                          "iPay":  "Je paie",
+                                          "childSupport":  "Pension pour enfant (mensuelle)",
+                                          "disclaimer":  "Ces scénarios sont des modèles financiers basés sur vos données. Ils ne constituent pas des conseils juridiques, des prédictions judiciaires ou des résultats garantis. Consultez un avocat qualifié en droit de la famille avant de prendre toute décision.",
+                                          "scenarioA":  "Scénario A — Ma proposition",
+                                          "scenarioB":  "Scénario B — Proposition du conjoint",
+                                          "scenarioC":  "Scénario C — Compromis",
+                                          "goToDashboard":  "Aller au tableau de bord →",
+                                          "iKeepHouse":  "Je garde la maison",
+                                          "spouseKeepsHouse":  "Le conjoint garde la maison",
+                                          "weSellHouse":  "Nous vendons la maison",
+                                          "noHouse":  "Pas de maison / sans objet"
+                                      }
+                        },
+    "blog":  {
+                 "title":  "Guides de Planification Financiere pour le Divorce",
+                 "subtitle":  "Comprenez vos options financieres avant de negocier.",
+                 "disclaimerNote":  "A titre informatif uniquement. Pas de conseil juridique ou financier.",
+                 "empty":  "Des articles arrivent bientot.",
+                 "backHome":  "Retour a l\u0027accueil",
+                 "ctaTitle":  "Pret a modeliser votre accord?",
+                 "ctaDesc":  "Comparez les scenarios et comprenez votre situation financiere.",
+                 "ctaButton":  "Demarrer l\u0027analyse gratuite",
+                 "allArticles":  "Tous les articles",
+                 "disclaimerLabel":  "Avertissement:",
+                 "disclaimerText":  "Cet article est uniquement a titre informatif. SettleLens fournit une modelisation de scenarios financiers - pas de conseil juridique ou financier. Consultez toujours un avocat qualifie.",
+                 "postCtaTitle":  "Modelisez vos scenarios d\u0027accord",
+                 "postCtaDesc":  "Voyez l\u0027impact financier sur 10 ans des differentes decisions de divorce.",
+                 "postCtaButton":  "Demarrer l\u0027analyse gratuite",
+                 "relatedArticles":  "Articles connexes",
+                 "sidebarTitle":  "Voir vos chiffres",
+                 "sidebarDesc":  "Analyse de scenarios financiers gratuite - pas de conseil juridique.",
+                 "sidebarButton":  "Commencer gratuitement"
+             },
+    "houseSimulator":  {
+                           "title":  "Simulateur de Decision Immobiliere",
+                           "subtitle":  "La maison est la plus grande decision financiere dans un divorce. Voir les vrais chiffres instantanement.",
+                           "situationTitle":  "Votre situation",
+                           "homeValue":  "Valeur de la maison",
+                           "mortgage":  "Hypotheque restante",
+                           "monthlyPayment":  "Paiement mensuel d\u0027hypotheque",
+                           "myIncome":  "Mon revenu annuel",
+                           "spouseIncome":  "Revenu annuel du conjoint",
+                           "equity":  "Capitaux propres:",
+                           "note":  "France : {appreciation}% valorisation annuelle, {investmentReturn}% rendement, {saleCosts}% frais (notaire+agence).",
+                           "nominalWarning":  "",
+                           "fullPictureTitle":  "Voir votre situation financiere complete",
+                           "fullPictureDesc":  "Ce simulateur utilise des hypotheses simplifiees. L\u0027analyse complete necessite vos donnees financieres completes.",
+                           "fullPictureButton":  "Creer mon analyse personnelle",
+                           "fullPictureFree":  "Gratuit pour commencer. Aucune carte de credit requise.",
+                           "disclaimer":  "Modele simplifie a titre illustratif. Pas de conseil juridique ou financier.",
+                           "iKeepLabel":  "Je garde la maison",
+                           "spouseKeepsLabel":  "Le conjoint garde la maison",
+                           "sellLabel":  "Nous vendons la maison",
+                           "bestLabel":  "Meilleur",
+                           "projectedNet":  "Position nette projetée sur 5 ans",
+                           "equityAfterBuyout":  "Capital après rachat du conjoint :",
+                           "spouseBuyout":  "Coût de rachat du conjoint :",
+                           "monthlyMortgage":  "Hypothèque mensuelle :",
+                           "projectedValue5":  "Valeur projetée dans 5 ans :",
+                           "equityPayout":  "Paiement de capital pour vous :",
+                           "estimatedRent":  "Loyer estimé :",
+                           "invested5":  "Si investi sur 5 ans :",
+                           "shareAfterCosts":  "Votre part après frais :",
+                           "affordabilityWarning":  "⚠️ L\u0027hypothèque mensuelle dépasse 43% de vos revenus",
+                           "hasMortgage":  "Y a-t-il un prêt immobilier ?",
+                           "mortgageYes":  "Oui, prêt en cours",
+                           "mortgageNo":  "Non, achat comptant",
+                           "mortgageNote":  "",
+                           "appreciationTitle":  "Scénario de valorisation",
+                           "appreciationLow":  "Faible ({pct}%/an)",
+                           "appreciationMid":  "Moyen ({pct}%/an)",
+                           "appreciationHigh":  "Élevé ({pct}%/an)",
+                           "scenarioNote":  "Note : Cet outil fournit des comparaisons illustratives uniquement. Les résultats sont des estimations.",
+                           "trustNote":  "Inscrivez-vous pour l\u0027analyse IA complète avec les formules du Code civil."
+                       },
+    "report":  {
+                   "title":  "Télécharger votre rapport",
+                   "subtitle":  "Un aperçu financier PDF complet — organisé pour votre avocat ou votre usage personnel.",
+                   "includes":  "Contenu du rapport :",
+                   "item1":  "Résumé du patrimoine net — actifs, dettes et capitaux propres",
+                   "item2":  "Comparaison des scénarios — tous vos scénarios côte à côte",
+                   "item3":  "Projection financière sur 10 ans par scénario",
+                   "item4":  "Fourchettes estimatives de pension alimentaire et de pension pour enfants",
+                   "item5":  "Facteurs de risque clés identifiés par l\u0027analyse",
+                   "item6":  "Notes de positionnement financier pour la préparation à la négociation",
+                   "item7":  "Note sur la méthodologie juridictionnelle",
+                   "item8":  "Avertissement juridique complet",
+                   "formatLabel":  "Format :",
+                   "formatValue":  "PDF · A4 · Filigrane « Réservé à la planification personnelle »",
+                   "validLabel":  "Valable :",
+                   "validValue":  "24 heures (régénérable à tout moment)",
+                   "generate":  "Générer et télécharger le PDF",
+                   "generating":  "Génération de votre rapport…",
+                   "downloadAgain":  "Télécharger à nouveau",
+                   "successMsg":  "Votre rapport s\u0027est ouvert dans un nouvel onglet. S\u0027il ne s\u0027est pas ouvert, vérifiez votre bloqueur de fenêtres contextuelles.",
+                   "errorDefault":  "Une erreur s\u0027est produite. Veuillez réessayer.",
+                   "errorConnection":  "Erreur de connexion. Vérifiez votre connexion internet et réessayez.",
+                   "secureNote":  "Votre rapport est généré à la demande et stocké en toute sécurité. Vous seul(e) pouvez y accéder. Le lien expire après 24 heures."
+               }
 }
