@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
@@ -30,7 +31,29 @@ export default async function AppLayout({
   const planType = profile?.plan_type ?? "discovery";
   const userName = profile?.name ?? "";
   const rawLang = profile?.preferred_language;
-  const locale = (rawLang ?? "en") as string;
+
+  // Fall back to the NEXT_LOCALE cookie set by next-intl middleware when the user
+  // visited a localized page (e.g. /tr/login). This covers existing users whose
+  // preferred_language is still null, and new OAuth users before their first save.
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("NEXT_LOCALE")?.value;
+  const validLocales = ["en", "tr", "de", "fr", "es", "ar"];
+  const locale = (
+    (rawLang && validLocales.includes(rawLang) ? rawLang : null) ??
+    (cookieLang && validLocales.includes(cookieLang) ? cookieLang : null) ??
+    "en"
+  ) as string;
+
+  // Persist detected locale to DB so future loads don't need the cookie fallback.
+  if (!rawLang && cookieLang && validLocales.includes(cookieLang)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase as any)
+      .from("profiles")
+      .update({ preferred_language: cookieLang })
+      .eq("id", user.id)
+      .is("preferred_language", null);
+  }
+
   setRequestLocale(locale);
   // Load messages directly — bypass getMessages() cache layer
   let messages: Record<string, unknown>;
@@ -43,10 +66,6 @@ export default async function AppLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
     <div className="flex min-h-screen flex-col">
-      {/* DEBUG: remove after confirming locale works */}
-      <div style={{background:"#e11d48",color:"#fff",textAlign:"center",fontSize:"11px",padding:"2px"}}>
-        locale={locale} | rawLang={rawLang ?? "null"}
-      </div>
       <AppHeader
         userEmail={user.email ?? ""}
         userName={userName}

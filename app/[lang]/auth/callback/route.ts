@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { createAdminClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -35,6 +36,16 @@ export async function GET(
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Save preferred_language for OAuth users whose profile has none yet.
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (createAdminClient() as any)
+          .from("profiles")
+          .update({ preferred_language: lang })
+          .eq("id", user.id)
+          .is("preferred_language", null);
+      }
       return redirectResponse;
     }
   }
