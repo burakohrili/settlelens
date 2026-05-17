@@ -551,6 +551,7 @@
     "errorUpgrade": "Für die Analyse ist ein aktiver Plan erforderlich. Bitte upgraden.",
     "errorLimitReached": "Sie haben Ihr Analysekontingent aufgebraucht. Upgraden Sie auf Strategist für unbegrenzte Analysen.",
     "errorBusy": "Der Server ist ausgelastet. Bitte versuchen Sie es gleich erneut.",
+    "errorTimeout": "Die Analyse hat zu lange gedauert. Bitte erneut versuchen.",
     "errorNetwork": "Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
   },
   "sidebar": {

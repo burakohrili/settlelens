@@ -1,9 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { generatePDF, buildReportHTML } from "@/lib/pdf-generator";
+import { buildReportHTML } from "@/lib/pdf-generator";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
 import { NextRequest } from "next/server";
-
-export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   // 1. Auth
@@ -102,49 +100,25 @@ export async function POST(req: NextRequest) {
     currency,
   });
 
-  let pdfBuffer: Buffer;
-  try {
-    pdfBuffer = await generatePDF(html);
-  } catch {
-    return Response.json({ error: "PDF generation failed. Please try again." }, { status: 500 });
-  }
-
-  // 6. Upload to Supabase Storage
-  const fileName = `reports/${user.id}/${Date.now()}.pdf`;
-  const { error: uploadError } = await supabase.storage
-    .from("reports")
-    .upload(fileName, pdfBuffer, { contentType: "application/pdf" });
-
-  if (uploadError) {
-    return Response.json({ error: "Could not save report. Please try again." }, { status: 500 });
-  }
-
-  // 7. Get signed URL (24 hours)
-  const { data: signedUrlData } = await supabase.storage
-    .from("reports")
-    .createSignedUrl(fileName, 86_400);
-
-  const signedUrl = signedUrlData?.signedUrl;
-
-  // 8. Save to reports table
-  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-    .from("reports").insert({
-      user_id: user.id,
-      pdf_url: signedUrl,
-      language: profile.preferred_language ?? "en",
-      scenarios_compared: scenarios.map((s) => s.id),
-      report_type: plan === "professional" ? "professional" : "standard",
-    });
-
-  // 9. Audit log
+  // 6. Audit log
   await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
     .from("audit_log").insert({
       user_id: user.id,
       action: "report_generated",
       user_visible: true,
-      display_text: "PDF report generated",
+      display_text: "Report generated",
       metadata: { report_type: plan === "professional" ? "professional" : "standard", scenario_count: scenarios.length },
     });
 
-  return Response.json({ success: true, url: signedUrl });
+  // 7. Return HTML directly — browser handles print-to-PDF (avoids Puppeteer timeout)
+  const htmlWithPrint = html.replace(
+    "</body>",
+    `<script>window.addEventListener('load',function(){window.print();});</script></body>`
+  );
+  return new Response(htmlWithPrint, {
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
+  });
 }

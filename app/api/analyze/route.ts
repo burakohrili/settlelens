@@ -144,18 +144,33 @@ Additionally include in your JSON:
 NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   }
 
-  // 6. Call Claude API
+  // 6. Call Claude API (9s client-side abort so Vercel doesn't kill us mid-flight)
   let aiResponse;
   try {
-    aiResponse = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1500,
-      temperature: 0,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userPrompt }],
-    });
-  } catch {
-    return Response.json({ error: "AI service unavailable. Please try again." }, { status: 503 });
+    const abortCtrl = new AbortController();
+    const abortTimer = setTimeout(() => abortCtrl.abort(), 9_000);
+    try {
+      aiResponse = await anthropic.messages.create(
+        {
+          model: "claude-3-5-sonnet-20241022",
+          max_tokens: 1024,
+          temperature: 0,
+          system: systemPrompt,
+          messages: [{ role: "user", content: userPrompt }],
+        },
+        { signal: abortCtrl.signal }
+      );
+    } finally {
+      clearTimeout(abortTimer);
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const isTimeout = err instanceof Error && (err.name === "AbortError" || msg.includes("abort"));
+    console.error("[analyze] Anthropic error:", isTimeout ? "client timeout" : msg);
+    return Response.json(
+      { error: isTimeout ? "analysis_timeout" : "AI service unavailable. Please try again." },
+      { status: 503 }
+    );
   }
 
   // 7. Parse and sanitize

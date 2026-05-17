@@ -552,6 +552,7 @@
     "errorUpgrade": "An active plan is required to run analysis. Please upgrade.",
     "errorLimitReached": "You have used your analysis quota. Upgrade to Strategist for unlimited analyses.",
     "errorBusy": "The server is busy. Please try again in a moment.",
+    "errorTimeout": "Analysis is taking too long. Please try again.",
     "errorNetwork": "Please check your internet connection and try again."
   },
   "sidebar": {

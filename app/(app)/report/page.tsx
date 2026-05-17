@@ -23,14 +23,14 @@ export default function ReportPage() {
     setLoading(true);
     setError(null);
     setStep(1);
-    const t1 = setTimeout(() => setStep(2), 3000);
-    const t2 = setTimeout(() => setStep(3), 7000);
+    const t1 = setTimeout(() => setStep(2), 2000);
+    const t2 = setTimeout(() => setStep(3), 4000);
 
     try {
       const res = await fetch("/api/generate-report", { method: "POST" });
-      const body = await res.json();
 
       if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
         if (body.error === "upgrade_required") {
           router.push(`/${lang}/upgrade`);
           return;
@@ -39,10 +39,17 @@ export default function ReportPage() {
         return;
       }
 
-      if (body.url) {
-        setDone(true);
-        window.open(body.url, "_blank");
+      // API returns HTML — open in new tab, browser print dialog appears automatically
+      const html = await res.text();
+      const blob = new Blob([html], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const win = window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      if (!win) {
+        setError(t("errorPopupBlocked") ?? "Please allow popups for this site and try again.");
+        return;
       }
+      setDone(true);
     } catch {
       setError(t("errorConnection"));
     } finally {

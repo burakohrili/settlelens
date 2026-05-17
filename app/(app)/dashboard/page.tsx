@@ -209,8 +209,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       {/* No analysis yet — onboarding complete but no scenarios analyzed */}
       {!hasAnalyses && (
         <>
-          {/* Discovery net worth summary card */}
-          {plan === "discovery" && grossAssets > 0 && (
+          {/* Net worth summary card — shown for all plans when no analyses exist */}
+          {grossAssets > 0 && (
             <div className="rounded-xl border border-[var(--sand)] bg-white p-5">
               <h2 className="font-ui text-xs font-semibold text-[var(--brown)] uppercase tracking-wide mb-4">{t("discoveryNetWorthTitle")}</h2>
               <div className="grid grid-cols-3 gap-3 mb-4">
@@ -229,15 +229,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                   </p>
                 </div>
               </div>
-              <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 flex items-center justify-between gap-3">
-                <p className="font-ui text-xs text-[var(--brown)]">{t("discoveryUpgradeNote")}</p>
-                <Link
-                  href={`/${lang}/upgrade`}
-                  className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--gold)] text-xs whitespace-nowrap shrink-0")}
-                >
-                  {t("discoveryUpgradeCTA")}
-                </Link>
-              </div>
+              {plan === "discovery" && (
+                <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 flex items-center justify-between gap-3">
+                  <p className="font-ui text-xs text-[var(--brown)]">{t("discoveryUpgradeNote")}</p>
+                  <Link
+                    href={`/${lang}/upgrade`}
+                    className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--gold)] text-xs whitespace-nowrap shrink-0")}
+                  >
+                    {t("discoveryUpgradeCTA")}
+                  </Link>
+                </div>
+              )}
             </div>
           )}
 

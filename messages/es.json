@@ -551,6 +551,7 @@
     "errorUpgrade": "Se requiere un plan activo para ejecutar el análisis. Por favor, actualice su plan.",
     "errorLimitReached": "Ha agotado su cuota de análisis. Actualice a Strategist para análisis ilimitados.",
     "errorBusy": "El servidor está ocupado. Por favor, inténtelo de nuevo en un momento.",
+    "errorTimeout": "El análisis tardó demasiado. Por favor, inténtelo de nuevo.",
     "errorNetwork": "Por favor, verifique su conexión a internet e inténtelo de nuevo."
   },
   "sidebar": {

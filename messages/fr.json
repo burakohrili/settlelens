@@ -551,6 +551,7 @@
     "errorUpgrade": "Un plan actif est requis pour lancer une analyse. Veuillez mettre à niveau.",
     "errorLimitReached": "Vous avez utilisé votre quota d'analyses. Passez à Strategist pour des analyses illimitées.",
     "errorBusy": "Le serveur est occupé. Veuillez réessayer dans un instant.",
+    "errorTimeout": "L'analyse a pris trop de temps. Veuillez réessayer.",
     "errorNetwork": "Veuillez vérifier votre connexion internet et réessayer."
   },
   "sidebar": {

@@ -109,6 +109,7 @@ export default function ScenarioDetailPage() {
     if (code === "upgrade_required") return t("errorUpgrade");
     if (code === "analysis_limit_reached") return t("errorLimitReached");
     if (code === "Rate limit exceeded. Please try again later.") return t("errorBusy");
+    if (code === "analysis_timeout") return t("errorTimeout");
     return t("errorBusy");
   }
 

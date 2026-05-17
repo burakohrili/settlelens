@@ -551,6 +551,7 @@
     "errorUpgrade": "Analiz çalıştırmak için aktif bir plan gereklidir. Lütfen yükseltin.",
     "errorLimitReached": "Analiz kotanızı kullandınız. Sınırsız analiz için Strategist'e yükseltin.",
     "errorBusy": "Sunucu meşgul. Lütfen bir an sonra tekrar deneyin.",
+    "errorTimeout": "Analiz zaman aşımına uğradı. Lütfen tekrar deneyin.",
     "errorNetwork": "İnternet bağlantınızı kontrol edip tekrar deneyin."
   },
   "sidebar": {
