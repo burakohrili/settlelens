@@ -148,11 +148,11 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   let aiResponse;
   try {
     const abortCtrl = new AbortController();
-    const abortTimer = setTimeout(() => abortCtrl.abort(), 9_000);
+    const abortTimer = setTimeout(() => abortCtrl.abort(), 8_000);
     try {
       aiResponse = await anthropic.messages.create(
         {
-          model: "claude-sonnet-4-6",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 1024,
           temperature: 0,
           system: systemPrompt,
