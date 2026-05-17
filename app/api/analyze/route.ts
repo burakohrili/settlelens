@@ -3,9 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getJurisdiction, getInflationRate, getCurrency } from "@/lib/jurisdiction";
 import { sanitizeAIOutput } from "@/lib/safety/ai-output-guard";
 import { getConfidenceLabel, CONFIDENCE_LABEL_COPY } from "@/lib/jurisdiction/confidence-labels";
-import { NextRequest } from "next/server";
-
-export const runtime = "edge";
+import { NextRequest, after } from "next/server";
 
 const anthropic = new Anthropic();
 
@@ -150,11 +148,11 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   let aiResponse;
   try {
     const abortCtrl = new AbortController();
-    const abortTimer = setTimeout(() => abortCtrl.abort(), 25_000);
+    const abortTimer = setTimeout(() => abortCtrl.abort(), 7_000);
     try {
       aiResponse = await anthropic.messages.create(
         {
-          model: "claude-sonnet-4-6",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 1024,
           temperature: 0,
           system: systemPrompt,
@@ -192,38 +190,41 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   result.confidence_label_text =
     CONFIDENCE_LABEL_COPY[confidenceLabel][lang] ?? CONFIDENCE_LABEL_COPY[confidenceLabel]["en"];
 
-  // 9. Save to analyses table
-  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-    .from("analyses").insert({
-      user_id: user.id,
-      scenario_id: scenarioId,
-      jurisdiction: j,
-      net_worth_now: result.net_worth_now,
-      net_worth_year1: result.year1,
-      net_worth_year3: result.year3,
-      net_worth_year5: result.year5,
-      net_worth_year10: result.year10,
-      monthly_cash_flow: result.monthly_cashflow,
-      alimony_range_low: result.alimony_range_low,
-      alimony_range_high: result.alimony_range_high,
-      child_support_estimate: result.child_support_estimate,
-      risk_score: result.risk_score,
-      confidence_label: confidenceLabel,
-      key_risks: result.key_risks,
-      negotiation_strategy: result.negotiation_strategy,
-      raw_json: result,
-      tokens_used: aiResponse.usage.input_tokens + aiResponse.usage.output_tokens,
-    });
-
-  // 10. Audit log
-  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-    .from("audit_log").insert({
-      user_id: user.id,
-      action: "analysis_completed",
-      user_visible: true,
-      display_text: `Analysis run for scenario: ${scenario.name as string}`,
-      metadata: { scenario_id: scenarioId, risk_score: result.risk_score },
-    });
+  // 9 & 10. Save to DB after response is sent (keeps response within 10s Vercel Hobby limit)
+  const tokensUsed = aiResponse.usage.input_tokens + aiResponse.usage.output_tokens;
+  const scenarioName = scenario.name as string;
+  after(async () => {
+    const sb = await createClient();
+    await (sb as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
+      .from("analyses").insert({
+        user_id: user.id,
+        scenario_id: scenarioId,
+        jurisdiction: j,
+        net_worth_now: result.net_worth_now,
+        net_worth_year1: result.year1,
+        net_worth_year3: result.year3,
+        net_worth_year5: result.year5,
+        net_worth_year10: result.year10,
+        monthly_cash_flow: result.monthly_cashflow,
+        alimony_range_low: result.alimony_range_low,
+        alimony_range_high: result.alimony_range_high,
+        child_support_estimate: result.child_support_estimate,
+        risk_score: result.risk_score,
+        confidence_label: confidenceLabel,
+        key_risks: result.key_risks,
+        negotiation_strategy: result.negotiation_strategy,
+        raw_json: result,
+        tokens_used: tokensUsed,
+      });
+    await (sb as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
+      .from("audit_log").insert({
+        user_id: user.id,
+        action: "analysis_completed",
+        user_visible: true,
+        display_text: `Analysis run for scenario: ${scenarioName}`,
+        metadata: { scenario_id: scenarioId, risk_score: result.risk_score },
+      });
+  });
 
   return Response.json({ success: true, data: result });
 }
