@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { Label } from "@/components/ui/label";
 export default function ResetPasswordPage() {
   const params = useParams();
   const lang = params.lang as string;
+  const t = useTranslations("reset_password");
   const router = useRouter();
   const supabase = createClient();
   const [password, setPassword] = useState("");
@@ -22,11 +24,11 @@ export default function ResetPasswordPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (password !== confirm) {
-      setError("Passwords do not match.");
+      setError(t("errMismatch"));
       return;
     }
     if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(t("errTooShort"));
       return;
     }
     setLoading(true);
@@ -46,11 +48,11 @@ export default function ResetPasswordPage() {
           SettleLens
         </Link>
         <h1 className="mt-8 font-display text-2xl font-semibold text-[var(--navy)]">
-          Set new password
+          {t("title")}
         </h1>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
-            <Label htmlFor="password">New password</Label>
+            <Label htmlFor="password">{t("newPasswordLabel")}</Label>
             <Input
               id="password"
               type="password"
@@ -61,7 +63,7 @@ export default function ResetPasswordPage() {
             />
           </div>
           <div>
-            <Label htmlFor="confirm">Confirm new password</Label>
+            <Label htmlFor="confirm">{t("confirmLabel")}</Label>
             <Input
               id="confirm"
               type="password"
@@ -71,13 +73,13 @@ export default function ResetPasswordPage() {
               className="mt-1"
             />
           </div>
-          {error && <p className="font-ui text-sm text-[var(--danger)]">{error}</p>}
+          {error && <p role="alert" className="font-ui text-sm text-[var(--danger)]">{error}</p>}
           <button
             type="submit"
             disabled={loading}
             className={cn(buttonVariants(), "w-full bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
-            {loading ? "Saving…" : "Set new password"}
+            {loading ? t("saving") : t("submit")}
           </button>
         </form>
       </div>

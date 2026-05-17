@@ -22,7 +22,7 @@ export function getJurisdictionName(jurisdiction: string): string {
     "de": "Germany — Zugewinngemeinschaft (BGB §1363)",
     "fr": "France — Communauté réduite aux acquêts (Art.1401)",
     "es": "Spain — Sociedad de Gananciales (CC Art.1344)",
-    "tr": "Turkey — Edinilmiş Mallara Katılma (TMK 179)",
+    "tr": "Turkey — Edinilmiş Mallara Katılma (TMK 218-241)",
   };
   return names[jurisdiction] ?? jurisdiction;
 }

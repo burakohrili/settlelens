@@ -112,6 +112,7 @@ export default function Step6Page() {
     newScenario(t("scenarioC")),
   ]);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -142,23 +143,30 @@ export default function Step6Page() {
       await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
         .from("scenarios").delete().eq("user_id", user.id);
 
-      const rows = scenarios.filter((s) => s.name).map((s) => ({
-        ...s,
-        user_id: user.id,
-        id: undefined,
-        scenario_type: "custom",
-        is_active: true,
-      }));
+      const rows = scenarios.filter((s) => s.name).map((s) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id: _id, ...rest } = s;
+        return { ...rest, user_id: user.id, scenario_type: "custom", is_active: true };
+      });
 
       if (rows.length > 0) {
-        await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+        const { error } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
           .from("scenarios").insert(rows);
+        if (error) {
+          setSaving(false);
+          return;
+        }
       }
 
-      await (supabase as never as { from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<unknown> } } })
+      const { error: profileError } = await (supabase as never as { from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<{ error: { message: string } | null }> } } })
         .from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+      if (profileError) {
+        setSaveError(profileError.message);
+        setSaving(false);
+        return;
+      }
     }
-    router.push(`/${lang}/dashboard`);
+    router.push("/dashboard");
   }
 
   const nextDisabled = saving || scenarios.some((s) => !s.name);
@@ -190,6 +198,9 @@ export default function Step6Page() {
           </div>
         ))}
 
+        {saveError && (
+          <p className="font-ui text-sm text-[var(--red)]">{saveError}</p>
+        )}
         <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]")}>
           <strong>Disclaimer:</strong> {t("disclaimer")}
         </div>

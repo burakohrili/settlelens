@@ -6,11 +6,11 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
-const PLAN_LABELS: Record<string, { name: string; color: string; price: string }> = {
-  discovery: { name: "Discovery", color: "text-[#8B7355] bg-[#F7F3EE]", price: "Free" },
-  clarified: { name: "Clarified", color: "text-[#2E4D6B] bg-blue-50", price: "$29 one-time" },
-  strategist: { name: "Strategist", color: "text-[#C8973A] bg-amber-50", price: "$39/month" },
-  professional: { name: "Professional", color: "text-[#4FA86E] bg-green-50", price: "$99/month" },
+const PLAN_COLORS: Record<string, string> = {
+  discovery: "text-[#8B7355] bg-[#F7F3EE]",
+  clarified: "text-[#2E4D6B] bg-blue-50",
+  strategist: "text-[#C8973A] bg-amber-50",
+  professional: "text-[#4FA86E] bg-green-50",
 };
 
 type BillingProfile = {
@@ -79,6 +79,7 @@ export default function BillingPage() {
       if (res.ok) {
         setCancelMsg(t("cancelSuccess"));
         setCancelConfirm(false);
+        setTimeout(() => router.refresh(), 1500);
       } else {
         setCancelMsg(t("cancelFail"));
       }
@@ -97,10 +98,23 @@ export default function BillingPage() {
     );
   }
 
-  const planInfo = PLAN_LABELS[profile?.plan_type ?? "discovery"];
+  const planType = profile?.plan_type ?? "discovery";
+  const planColor = PLAN_COLORS[planType] ?? PLAN_COLORS.discovery;
+  const planName = t(`plans.${planType}`);
+  const planPrice = t(`plans.price_${planType}`);
   const hasSubscription =
     profile?.plan_type === "strategist" ||
     profile?.plan_type === "professional";
+
+  const daysRemaining =
+    profile?.plan_expires_at
+      ? Math.max(
+          0,
+          Math.ceil(
+            (new Date(profile.plan_expires_at).getTime() - Date.now()) / 86_400_000
+          )
+        )
+      : null;
 
   return (
     <div className="max-w-2xl space-y-8">
@@ -121,19 +135,24 @@ export default function BillingPage() {
         <div className="flex items-center justify-between">
           <div>
             <span
-              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${planInfo.color}`}
+              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${planColor}`}
             >
-              {planInfo.name}
+              {planName}
             </span>
-            <p className="mt-2 text-sm text-[#8B7355]">{planInfo.price}</p>
+            <p className="mt-2 text-sm text-[#8B7355]">{planPrice}</p>
             {profile?.plan_expires_at && (
               <p className="mt-1 text-sm text-[#8B7355]">
                 {t("accessUntil")}{" "}
-                {new Date(profile.plan_expires_at).toLocaleDateString("en-US", {
+                {new Date(profile.plan_expires_at).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })}
+              </p>
+            )}
+            {daysRemaining !== null && (
+              <p className="mt-1 text-sm font-semibold text-[#2E4D6B]">
+                {t("daysRemaining", { days: daysRemaining })}
               </p>
             )}
           </div>

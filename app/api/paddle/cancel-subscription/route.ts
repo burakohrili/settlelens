@@ -36,8 +36,7 @@ export async function POST(req: NextRequest) {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     const detail = (body as { error?: { detail?: string } })?.error?.detail ?? "Paddle cancellation failed";
-    console.error("[cancel-subscription] Paddle error:", detail);
-    return NextResponse.json({ error: detail }, { status: 500 });
+    return NextResponse.json({ error: "Paddle cancellation failed" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });

@@ -164,7 +164,7 @@ export default function SecurityPage() {
                 disabled={loadingMore}
                 className="mt-4 w-full rounded-lg border border-[#D4C5B0] py-2 text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE] disabled:opacity-50 transition-colors"
               >
-                {loadingMore ? t("loading") : "Load more"}
+                {loadingMore ? t("loading") : t("loadMore")}
               </button>
             )}
           </>

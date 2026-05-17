@@ -41,6 +41,11 @@ export function WizardLayout({
         <Progress
           value={pct}
           className="mt-2 h-1.5 bg-[var(--sand)] [&>div]:bg-[var(--gold)] [&>div]:transition-all"
+          role="progressbar"
+          aria-valuenow={currentStep}
+          aria-valuemin={1}
+          aria-valuemax={totalSteps}
+          aria-label={t("stepOf", { current: currentStep, total: totalSteps })}
         />
       </div>
 

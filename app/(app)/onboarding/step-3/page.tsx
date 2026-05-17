@@ -21,14 +21,11 @@ type Debt = {
   owned_by: "joint" | "me" | "spouse";
 };
 
-const DEBT_CATEGORIES = [
-  { value: "mortgage", label: "🏠 Mortgage" },
-  { value: "car_loan", label: "🚗 Car Loan" },
-  { value: "credit_card", label: "💳 Credit Card" },
-  { value: "student_loan", label: "🎓 Student Loan" },
-  { value: "personal_loan", label: "📄 Personal Loan" },
-  { value: "other", label: "📦 Other" },
-];
+const DEBT_CATEGORY_VALUES = ["mortgage", "car_loan", "credit_card", "student_loan", "personal_loan", "other"] as const;
+const DEBT_ICONS: Record<string, string> = {
+  mortgage: "🏠", car_loan: "🚗", credit_card: "💳",
+  student_loan: "🎓", personal_loan: "📄", other: "📦",
+};
 
 function newDebt(): Debt {
   return { name: "", category: "credit_card", balance: 0, monthly_payment: 0, interest_rate: 0, owned_by: "joint" };
@@ -110,34 +107,34 @@ export default function Step3Page() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 grid grid-cols-2 gap-3">
                     <div className="col-span-2">
-                      <Label>{t("debtName")}</Label>
-                      <Input value={debt.name} onChange={(e) => updateDebt(i, "name", e.target.value)} placeholder={t("debtNamePlaceholder")} className="mt-1" />
+                      <Label htmlFor={`debt-name-${i}`}>{t("debtName")}</Label>
+                      <Input id={`debt-name-${i}`} value={debt.name} onChange={(e) => updateDebt(i, "name", e.target.value)} placeholder={t("debtNamePlaceholder")} className="mt-1" />
                     </div>
                     <div>
-                      <Label>{t("category")}</Label>
-                      <select value={debt.category} onChange={(e) => updateDebt(i, "category", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                        {DEBT_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                      <Label htmlFor={`debt-category-${i}`}>{t("category")}</Label>
+                      <select id={`debt-category-${i}`} value={debt.category} onChange={(e) => updateDebt(i, "category", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                        {DEBT_CATEGORY_VALUES.map((v) => <option key={v} value={v}>{DEBT_ICONS[v]} {t(`cat_${v}`)}</option>)}
                       </select>
                     </div>
                     <div>
-                      <Label>{t("ownedBy")}</Label>
-                      <select value={debt.owned_by} onChange={(e) => updateDebt(i, "owned_by", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      <Label htmlFor={`debt-owner-${i}`}>{t("ownedBy")}</Label>
+                      <select id={`debt-owner-${i}`} value={debt.owned_by} onChange={(e) => updateDebt(i, "owned_by", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                         <option value="joint">{t("joint")}</option>
                         <option value="me">{t("me")}</option>
                         <option value="spouse">{t("spouse")}</option>
                       </select>
                     </div>
                     <div>
-                      <Label>{t("balance")}</Label>
-                      <Input type="number" min={0} value={debt.balance || ""} onChange={(e) => updateDebt(i, "balance", parseFloat(e.target.value) || 0)} className="mt-1" />
+                      <Label htmlFor={`debt-balance-${i}`}>{t("balance")}</Label>
+                      <Input id={`debt-balance-${i}`} type="number" min={0} value={debt.balance || ""} onChange={(e) => updateDebt(i, "balance", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                     <div>
-                      <Label>{t("monthlyPayment")}</Label>
-                      <Input type="number" min={0} value={debt.monthly_payment || ""} onChange={(e) => updateDebt(i, "monthly_payment", parseFloat(e.target.value) || 0)} className="mt-1" />
+                      <Label htmlFor={`debt-payment-${i}`}>{t("monthlyPayment")}</Label>
+                      <Input id={`debt-payment-${i}`} type="number" min={0} value={debt.monthly_payment || ""} onChange={(e) => updateDebt(i, "monthly_payment", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                     <div>
-                      <Label>{t("interestRate")}</Label>
-                      <Input type="number" min={0} max={100} step={0.1} value={debt.interest_rate || ""} onChange={(e) => updateDebt(i, "interest_rate", parseFloat(e.target.value) || 0)} className="mt-1" />
+                      <Label htmlFor={`debt-rate-${i}`}>{t("interestRate")}</Label>
+                      <Input id={`debt-rate-${i}`} type="number" min={0} max={100} step={0.1} value={debt.interest_rate || ""} onChange={(e) => updateDebt(i, "interest_rate", parseFloat(e.target.value) || 0)} className="mt-1" />
                     </div>
                   </div>
                   {debts.length > 1 && (

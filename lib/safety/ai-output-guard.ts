@@ -7,6 +7,8 @@ export function guardAIOutput(text: string): { safe: boolean; flaggedPhrases: st
 }
 
 export function sanitizeAIOutput(raw: string): string {
+  // Strip markdown code fences Claude sometimes wraps around JSON despite instructions
+  raw = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
   const { safe } = guardAIOutput(raw);
   if (!safe) {
     try {

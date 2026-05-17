@@ -1,5 +1,5 @@
 export const turkeyRules = {
-  regime: "Edinilmiş mallara katılma (TMK 179)",
+  regime: "Edinilmiş mallara katılma (TMK 218-241)",
   maritalAssets: ["earned_income", "sgk", "business_gains"],
   separateAssets: ["inheritance", "gifts", "pre_marriage", "personal_damages"],
   splitFormula: "net_surplus_50_50",

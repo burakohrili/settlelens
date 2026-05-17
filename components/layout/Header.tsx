@@ -24,9 +24,11 @@ export function Header() {
   }, []);
 
   const navLinks = [
-    { label: t("howItWorks"), href: `/${locale}/#how-it-works`, anchor: "how-it-works" },
-    { label: t("pricing"), href: `/${locale}/#pricing`, anchor: "pricing" },
-    { label: t("blog"), href: `/${locale}/blog`, anchor: null },
+    { label: t("howItWorks"),  href: `/${locale}/#how-it-works`,    anchor: "how-it-works" },
+    { label: t("pricing"),     href: `/${locale}/#pricing`,         anchor: "pricing" },
+    { label: t("faq"),         href: `/${locale}/#faq`,             anchor: "faq" },
+    { label: t("forLawyers"),  href: `/${locale}/avukatlar-icin`,   anchor: null },
+    { label: t("blog"),        href: `/${locale}/blog`,             anchor: null },
   ];
 
   function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, anchor: string | null) {
@@ -39,9 +41,18 @@ export function Header() {
   }
 
   return (
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-[var(--gold)] focus:px-4 focus:py-2 focus:font-ui focus:text-sm focus:font-semibold focus:text-[var(--navy)]"
+      >
+        Skip to main content
+      </a>
     <header
-      className={`sticky top-0 z-50 w-full bg-[var(--navy)] transition-shadow duration-200 ${
-        scrolled ? "shadow-lg shadow-black/20" : ""
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-[var(--navy)] shadow-lg shadow-black/20 backdrop-blur-md"
+          : "bg-[var(--navy)]/95 backdrop-blur-sm"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
@@ -136,5 +147,6 @@ export function Header() {
         )}
       </AnimatePresence>
     </header>
+    </>
   );
 }

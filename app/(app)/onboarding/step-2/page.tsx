@@ -27,15 +27,11 @@ type Asset = {
   crypto_price_at_entry?: number;
 };
 
-const CATEGORIES = [
-  { value: "real_estate", label: "🏠 Real Estate" },
-  { value: "vehicle", label: "🚗 Vehicle" },
-  { value: "bank", label: "🏦 Bank Account" },
-  { value: "retirement", label: "📈 Retirement/Investment" },
-  { value: "business", label: "🏢 Business" },
-  { value: "crypto", label: "₿ Crypto" },
-  { value: "other", label: "📦 Other" },
-];
+const CATEGORY_VALUES = ["real_estate", "vehicle", "bank", "retirement", "business", "crypto", "other"] as const;
+const CATEGORY_ICONS: Record<string, string> = {
+  real_estate: "🏠", vehicle: "🚗", bank: "🏦",
+  retirement: "📈", business: "🏢", crypto: "₿", other: "📦",
+};
 
 const CRYPTO_STORAGE = ["exchange", "cold_wallet", "defi"] as const;
 
@@ -43,8 +39,12 @@ function newAsset(): Asset {
   return { name: "", category: "real_estate", current_value: 0, purchase_price: 0, owned_by: "joint", is_marital: true, mortgage_balance: 0 };
 }
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+const COUNTRY_CURRENCY: Record<string, string> = {
+  US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY",
+};
+
+function fmt(n: number, currency = "USD") {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(n);
 }
 
 export default function Step2Page() {
@@ -55,11 +55,17 @@ export default function Step2Page() {
   const supabase = createClient();
   const [assets, setAssets] = useState<Asset[]>([newAsset()]);
   const [saving, setSaving] = useState(false);
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } })
+        .from("profiles").select("country").eq("id", user.id).single();
+      if (profile?.country) {
+        setCurrency(COUNTRY_CURRENCY[profile.country as string] ?? "USD");
+      }
       const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => Promise<{ data: Asset[] | null }> } } })
         .from("assets").select("*").eq("user_id", user.id);
       if (data && data.length > 0) setAssets(data);
@@ -90,6 +96,7 @@ export default function Step2Page() {
           .from("assets").insert(rows);
       }
     }
+    router.refresh();
     router.push(`/${lang}/onboarding/step-3`);
   }
 
@@ -106,8 +113,9 @@ export default function Step2Page() {
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 grid grid-cols-2 gap-3">
                 <div className="col-span-2">
-                  <Label>{t("assetName")}</Label>
+                  <Label htmlFor={`asset-name-${i}`}>{t("assetName")}</Label>
                   <Input
+                    id={`asset-name-${i}`}
                     value={asset.name}
                     onChange={(e) => updateAsset(i, "name", e.target.value)}
                     placeholder={t("assetNamePlaceholder")}
@@ -115,18 +123,20 @@ export default function Step2Page() {
                   />
                 </div>
                 <div>
-                  <Label>{t("category")}</Label>
+                  <Label htmlFor={`asset-category-${i}`}>{t("category")}</Label>
                   <select
+                    id={`asset-category-${i}`}
                     value={asset.category}
                     onChange={(e) => updateAsset(i, "category", e.target.value)}
                     className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                    {CATEGORY_VALUES.map((v) => <option key={v} value={v}>{CATEGORY_ICONS[v]} {t(`cat_${v}`)}</option>)}
                   </select>
                 </div>
                 <div>
-                  <Label>{t("ownedBy")}</Label>
+                  <Label htmlFor={`asset-owner-${i}`}>{t("ownedBy")}</Label>
                   <select
+                    id={`asset-owner-${i}`}
                     value={asset.owned_by}
                     onChange={(e) => updateAsset(i, "owned_by", e.target.value)}
                     className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -137,8 +147,9 @@ export default function Step2Page() {
                   </select>
                 </div>
                 <div>
-                  <Label>{t("currentValue")}</Label>
+                  <Label htmlFor={`asset-value-${i}`}>{t("currentValue")}</Label>
                   <Input
+                    id={`asset-value-${i}`}
                     type="number"
                     min={0}
                     value={asset.current_value || ""}
@@ -147,8 +158,9 @@ export default function Step2Page() {
                   />
                 </div>
                 <div>
-                  <Label>{t("purchasePrice")}</Label>
+                  <Label htmlFor={`asset-purchase-${i}`}>{t("purchasePrice")}</Label>
                   <Input
+                    id={`asset-purchase-${i}`}
                     type="number"
                     min={0}
                     value={asset.purchase_price || ""}
@@ -158,8 +170,9 @@ export default function Step2Page() {
                 </div>
                 {asset.category === "real_estate" && (
                   <div>
-                    <Label>{t("mortgageBalance")}</Label>
+                    <Label htmlFor={`asset-mortgage-${i}`}>{t("mortgageBalance")}</Label>
                     <Input
+                      id={`asset-mortgage-${i}`}
                       type="number"
                       min={0}
                       value={asset.mortgage_balance || ""}
@@ -254,9 +267,9 @@ export default function Step2Page() {
         </button>
 
         <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm">
-          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalAssets")}</span><span className="font-semibold">{fmt(totalValue)}</span></div>
-          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalMortgage")}</span><span className="font-semibold text-[var(--danger)]">-{fmt(totalMortgage)}</span></div>
-          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">{t("netAssets")}</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{fmt(net)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalAssets")}</span><span className="font-semibold">{fmt(totalValue, currency)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalMortgage")}</span><span className="font-semibold text-[var(--danger)]">-{fmt(totalMortgage, currency)}</span></div>
+          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">{t("netAssets")}</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{fmt(net, currency)}</span></div>
         </div>
       </div>
     </WizardLayout>

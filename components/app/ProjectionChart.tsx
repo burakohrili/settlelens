@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useTranslations } from "next-intl";
 
 type ScenarioLine = {
   name: string;
@@ -35,6 +36,7 @@ function fmtShort(n: number, currency: string): string {
 }
 
 export function ProjectionChart({ scenarios, currency }: Props) {
+  const t = useTranslations("projectionChart");
   // Merge all scenario data into recharts format: [{ year, Scenario A, Scenario B, ... }]
   const years = [0, 1, 3, 5, 10];
   const chartData = years.map((yr) => {
@@ -46,13 +48,16 @@ export function ProjectionChart({ scenarios, currency }: Props) {
     return point;
   });
 
+  const ariaLabel = scenarios.map((s) => s.name).join(", ");
+
   return (
+    <div role="img" aria-label={t("ariaLabel", { scenarios: ariaLabel })}>
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={chartData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#D4C5B0" />
         <XAxis
           dataKey="year"
-          tickFormatter={(v) => `Yr ${v}`}
+          tickFormatter={(v) => t("yrLabel", { v })}
           tick={{ fontSize: 11, fontFamily: "Inter, sans-serif", fill: "#8B7355" }}
         />
         <YAxis
@@ -65,7 +70,7 @@ export function ProjectionChart({ scenarios, currency }: Props) {
             new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(Number(value)),
             name as string,
           ]}
-          labelFormatter={(label) => `Year ${label}`}
+          labelFormatter={(label) => t("yearLabel", { label })}
           contentStyle={{ fontFamily: "Inter, sans-serif", fontSize: 12, borderColor: "#D4C5B0" }}
         />
         <Legend wrapperStyle={{ fontFamily: "Inter, sans-serif", fontSize: 11 }} />
@@ -82,5 +87,6 @@ export function ProjectionChart({ scenarios, currency }: Props) {
         ))}
       </LineChart>
     </ResponsiveContainer>
+    </div>
   );
 }

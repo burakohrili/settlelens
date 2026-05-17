@@ -6,6 +6,7 @@ import { locales, type Locale } from "@/i18n";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostHogProvider } from "@/components/layout/PostHogProvider";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { QuickExit } from "@/components/layout/QuickExit";
 
 type Props = {
   children: React.ReactNode;
@@ -40,6 +41,7 @@ export default async function LangLayout({ children, params }: Props) {
           <PostHogProvider>
             <TooltipProvider>{children}</TooltipProvider>
             <CookieBanner />
+            <QuickExit />
           </PostHogProvider>
         </NextIntlClientProvider>
       </body>

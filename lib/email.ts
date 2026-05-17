@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY!);
+  return _resend;
+}
 const FROM = process.env.RESEND_FROM_EMAIL ?? "hello@settlelens.com";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://settlelens.com";
 
@@ -39,10 +43,10 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
         subject = "Welcome to SettleLens — See Your Settlement Clearly";
         html = baseTemplate(`
           <h1 style="color:#1C2B3A;font-size:24px">Welcome${payload.name ? `, ${payload.name}` : ""}!</h1>
-          <p style="color:#2E4D6B">You've taken the first step toward financial clarity in your divorce process.</p>
-          <p style="color:#2E4D6B">Complete your profile to start modeling scenarios and understanding your financial position.</p>
+          <p style="color:#2E4D6B">You've taken the first step toward financial clarity.</p>
+          <p style="color:#2E4D6B">Complete your financial profile to start modeling scenarios and understanding your long-term position across different outcomes.</p>
           ${button("Complete Your Profile →", `${APP_URL}/onboarding/step-1`)}
-          <p style="font-size:13px;color:#8B7355;margin-top:24px">SettleLens helps you organize and compare financial scenarios — not legal advice. We recommend working with a qualified family law attorney.</p>
+          <p style="font-size:13px;color:#8B7355;margin-top:24px">SettleLens helps you organize and compare financial scenarios — not legal advice. We recommend working with a qualified legal professional for decisions that affect your rights.</p>
         `);
         break;
 
@@ -54,7 +58,7 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
           ${button("Go to Dashboard →", `${APP_URL}/dashboard`)}
         `);
         // Also notify support
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM,
           to: "support@settlelens.com",
           subject: `[Internal] Plan upgrade: user ${payload.userId} → ${payload.plan}`,
@@ -63,11 +67,11 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
         break;
 
       case "report-ready":
-        subject = "Your SettleLens Financial Report is Ready";
+        subject = "Your financial overview is ready — SettleLens";
         html = baseTemplate(`
-          <h1 style="color:#1C2B3A;font-size:24px">Your report is ready</h1>
-          <p style="color:#2E4D6B">Your financial scenario report has been generated. Download it to review your analysis.</p>
-          ${button("Download PDF Report →", payload.reportUrl)}
+          <h1 style="color:#1C2B3A;font-size:24px">Your financial overview is ready</h1>
+          <p style="color:#2E4D6B">Your scenario report has been generated. Download it to review your analysis and projected outcomes.</p>
+          ${button("Download Your Report →", payload.reportUrl)}
           <p style="font-size:13px;color:#8B7355;margin-top:16px">This download link expires in 24 hours.</p>
         `);
         break;
@@ -111,9 +115,9 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
           <hr style="margin:16px 0;border:none;border-top:1px solid #D4C5B0">
           <p style="white-space:pre-wrap;color:#2E4D6B">${payload.message}</p>
         `);
-        await resend.emails.send({ from: FROM, to: "support@settlelens.com", subject, html });
+        await getResend().emails.send({ from: FROM, to: "support@settlelens.com", subject, html });
         // Auto-reply to sender
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM,
           to: payload.from,
           subject: "We received your message — SettleLens Support",
@@ -127,7 +131,7 @@ export async function sendEmail(payload: EmailPayload): Promise<void> {
     }
 
     if (subject && html) {
-      await resend.emails.send({ from: FROM, to: payload.to, subject, html });
+      await getResend().emails.send({ from: FROM, to: payload.to, subject, html });
     }
   } catch {
     // Email errors must never break the main flow

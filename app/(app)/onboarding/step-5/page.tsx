@@ -138,7 +138,7 @@ export default function Step5Page() {
             </button>
 
             <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
-              <strong>Note:</strong> {t("custodyNote")}
+              <strong>{t("noteLabel")}:</strong> {t("custodyNote")}
             </div>
           </>
         )}

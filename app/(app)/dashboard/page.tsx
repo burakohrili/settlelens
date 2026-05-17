@@ -1,7 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getTranslations, getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { getAppLocale } from "@/lib/get-app-locale";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
+
+export const dynamic = "force-dynamic";
 import { ProjectionChart } from "@/components/app/ProjectionChart";
 import { ScenarioComparison } from "@/components/app/ScenarioComparison";
 import { Disclaimer } from "@/components/layout/Disclaimer";
@@ -9,6 +13,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Plus, Download, Pencil, AlertTriangle, TrendingUp } from "lucide-react";
+import { DiscoveryPreview } from "@/components/app/DiscoveryPreview";
 
 type Analysis = {
   net_worth_now: number;
@@ -35,7 +40,9 @@ function fmt(n: number, currency: string): string {
   }).format(n || 0);
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ upgraded?: string }> }) {
+  const appLocale = await getAppLocale();
+  setRequestLocale(appLocale);
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/en/login");
@@ -67,7 +74,29 @@ export default async function DashboardPage() {
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
   const marriageYears = new Date().getFullYear() - ((profile.marriage_year as number) ?? 2010);
-  const name = (profile.name as string) ?? "there";
+  const name = (profile.name as string) ?? t("greeting_fallback");
+
+  // Fetch assets & debts for net worth calculation (shown on discovery plan)
+  const { data: rawAssets } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => Promise<{ data: Array<{ current_value: number; mortgage_balance: number }> | null }>
+      }
+    }
+  }).from("assets").select("current_value,mortgage_balance").eq("user_id", user.id);
+
+  const { data: rawDebts } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => Promise<{ data: Array<{ balance: number }> | null }>
+      }
+    }
+  }).from("debts").select("balance").eq("user_id", user.id);
+
+  const grossAssets = (rawAssets ?? []).reduce((s, a) => s + (a.current_value ?? 0), 0);
+  const totalMortgages = (rawAssets ?? []).reduce((s, a) => s + (a.mortgage_balance ?? 0), 0);
+  const totalDebts = (rawDebts ?? []).reduce((s, d) => s + (d.balance ?? 0), 0) + totalMortgages;
+  const calcNetWorth = grossAssets - totalDebts;
 
   // Fetch scenarios
   const { data: scenarios } = await (supabase as never as {
@@ -151,49 +180,91 @@ export default async function DashboardPage() {
 
   const hasAnalyses = analyzedScenarios.length > 0;
   const plan = profile.plan_type as string;
+  const resolvedParams = await searchParams;
+  const justUpgraded = resolvedParams.upgraded === "1";
 
   return (
     <div className="space-y-6">
+      {/* Upgrade success banner */}
+      {justUpgraded && (
+        <div className="rounded-xl border border-[var(--gain)] bg-green-50 p-4 flex items-center gap-3">
+          <TrendingUp size={20} className="text-[var(--gain)] shrink-0" />
+          <div>
+            <p className="font-ui font-semibold text-sm text-[var(--gain)]">{t("upgradedTitle")}</p>
+            <p className="font-ui text-xs text-[var(--brown)] mt-0.5">{t("upgradedDesc")}</p>
+          </div>
+        </div>
+      )}
+
       {/* Welcome header */}
       <div>
         <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
           {(() => { const h = new Date().getHours(); return h < 12 ? t("greeting.morning") : h < 17 ? t("greeting.afternoon") : t("greeting.evening"); })()}, {name.split(" ")[0]}.
         </h1>
         <p className="font-ui text-sm text-[var(--brown)] mt-1">
-          {getJurisdictionName(j)} · {marriageYears} year{marriageYears !== 1 ? "s" : ""} of marriage ·{" "}
-          <span className="capitalize">{plan}</span> plan
+          {getJurisdictionName(j)} · {t("yearsOfMarriage", { count: marriageYears })} · {t("planLabel", { plan: plan.charAt(0).toUpperCase() + plan.slice(1) })}
         </p>
       </div>
 
       {/* No analysis yet — onboarding complete but no scenarios analyzed */}
       {!hasAnalyses && (
-        <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
-          <TrendingUp className="mx-auto text-[var(--gold)] mb-3" size={32} />
-          <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-2">{t("readyTitle")}</h2>
-          <p className="font-ui text-sm text-[var(--brown)] mb-4 max-w-sm mx-auto">
-            {t("readyDesc")}
-          </p>
-          {scenarioList.length > 0 ? (
-            <div className="flex flex-col gap-2 max-w-xs mx-auto">
-              {scenarioList.map((s) => (
+        <>
+          {/* Discovery net worth summary card */}
+          {plan === "discovery" && grossAssets > 0 && (
+            <div className="rounded-xl border border-[var(--sand)] bg-white p-5">
+              <h2 className="font-ui text-xs font-semibold text-[var(--brown)] uppercase tracking-wide mb-4">{t("discoveryNetWorthTitle")}</h2>
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="text-center">
+                  <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("totalAssets")}</p>
+                  <p className="font-mono text-base font-bold text-[var(--navy)]">{fmt(grossAssets, currency)}</p>
+                </div>
+                <div className="text-center">
+                  <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("totalDebts")}</p>
+                  <p className="font-mono text-base font-bold text-[var(--danger)]">{fmt(totalDebts, currency)}</p>
+                </div>
+                <div className="text-center">
+                  <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("netWorthCalc")}</p>
+                  <p className={cn("font-mono text-base font-bold", calcNetWorth >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>
+                    {fmt(calcNetWorth, currency)}
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 flex items-center justify-between gap-3">
+                <p className="font-ui text-xs text-[var(--brown)]">{t("discoveryUpgradeNote")}</p>
                 <Link
-                  key={s.id as string}
-                  href={`/${lang}/scenarios/${s.id}`}
-                  className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+                  href={`/${lang}/upgrade`}
+                  className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--gold)] text-xs whitespace-nowrap shrink-0")}
                 >
-                  {t("analyzePrefix")}{s.name as string}
+                  {t("discoveryUpgradeCTA")}
                 </Link>
-              ))}
+              </div>
             </div>
-          ) : (
-            <Link
-              href={`/${lang}/onboarding/step-6`}
-              className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
-            >
-              <Plus size={16} className="mr-1" /> {t("buildScenarios")}
-            </Link>
           )}
-        </div>
+
+          {scenarioList.length > 0 && plan === "discovery" ? (
+            <DiscoveryPreview
+              scenarios={scenarioList.map((s) => ({
+                id: s.id as string,
+                name: s.name as string,
+                scenario_type: s.scenario_type as string,
+              }))}
+            />
+          ) : (
+            <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
+              <TrendingUp className="mx-auto text-[var(--gold)] mb-3" size={32} />
+              <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-2">{t("readyTitle")}</h2>
+              <p className="font-ui text-sm text-[var(--brown)] mb-4 max-w-sm mx-auto">
+                {t("readyDesc")}
+              </p>
+              <Link
+                href={`/${lang}/onboarding/step-6`}
+                className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+              >
+                <Plus size={16} className="mr-1" /> {t("buildScenarios")}
+              </Link>
+            </div>
+          )}
+        </>
       )}
 
       {/* Summary cards */}
@@ -259,6 +330,25 @@ export default async function DashboardPage() {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {/* Professional: Evidence Organizer banner */}
+      {plan === "professional" && (
+        <div className="rounded-xl border border-[var(--navy)] bg-[var(--navy)]/5 p-5 flex items-start gap-4">
+          <div className="h-10 w-10 rounded-full bg-[var(--navy)] flex items-center justify-center shrink-0">
+            <Download size={18} className="text-white" />
+          </div>
+          <div className="flex-1">
+            <p className="font-ui font-semibold text-sm text-[var(--navy)]">{t("evidenceOrganizerTitle")}</p>
+            <p className="font-ui text-xs text-[var(--brown)] mt-1">{t("evidenceOrganizerDesc")}</p>
+          </div>
+          <Link
+            href={`/${lang}/report`}
+            className={cn(buttonVariants({ size: "sm" }), "bg-[var(--navy)] text-white hover:bg-[var(--navy)]/90 shrink-0 text-xs")}
+          >
+            {t("evidenceOrganizerCTA")}
+          </Link>
         </div>
       )}
 

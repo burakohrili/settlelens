@@ -6,7 +6,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
-import { AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronUp, ShieldCheck } from "lucide-react";
+import { HIGH_RISK_SIGNALS } from "@/lib/safety/high-risk-detector";
 
 const US_COMMUNITY_STATES = ["AZ", "CA", "ID", "LA", "NV", "NM", "TX", "WA", "WI"];
 
@@ -30,17 +31,6 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY",
 };
 
-const HIGH_RISK_SIGNALS = [
-  { key: "domestic_violence", en: "Domestic violence or coercive control", tr: "Aile içi şiddet veya zorlayıcı kontrol" },
-  { key: "hidden_assets", en: "Concern about hidden or undisclosed assets", tr: "Gizlenmiş veya beyan edilmemiş varlık endişesi" },
-  { key: "offshore_accounts", en: "Offshore accounts or complex international assets", tr: "Offshore hesaplar veya karmaşık uluslararası varlıklar" },
-  { key: "business_dispute", en: "Business ownership dispute", tr: "İşletme sahipliği anlaşmazlığı" },
-  { key: "complex_trust", en: "Complex trust, inheritance, or pre-marital agreement", tr: "Karmaşık tröst, miras veya evlilik öncesi anlaşma" },
-  { key: "custody_conflict", en: "High-conflict child custody situation", tr: "Yüksek çatışmalı çocuk velayeti durumu" },
-  { key: "immigration", en: "Immigration status dependency on marriage", tr: "Evliliğe bağlı göçmenlik durumu" },
-  { key: "bankruptcy", en: "Bankruptcy, significant tax debt, or financial fraud", tr: "İflas, önemli vergi borcu veya mali dolandırıcılık" },
-  { key: "disclosure_refusal", en: "Spouse refuses to disclose financial information", tr: "Eş finansal bilgileri açıklamayı reddediyor" },
-];
 
 export default function Step1Page() {
   const t = useTranslations("onboarding_form.step1");
@@ -59,8 +49,6 @@ export default function Step1Page() {
   const [selectedRisks, setSelectedRisks] = useState<Set<string>>(new Set());
   const hasHighRisk = selectedRisks.size > 0;
 
-  const isTR = lang === "tr";
-
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
@@ -78,6 +66,7 @@ export default function Step1Page() {
 
   const regions = country ? (COUNTRY_REGIONS[country] ?? []) : [];
   const isCommunity = country === "US" && US_COMMUNITY_STATES.includes(stateProvince);
+  const isCatalonia = country === "ES" && ["Cataluña", "País Vasco", "Aragón"].includes(stateProvince);
   const currentYear = new Date().getFullYear();
 
   function getRegionLabel() {
@@ -121,6 +110,11 @@ export default function Step1Page() {
       nextDisabled={!country || !marriageYear || saving}
     >
       <div className="space-y-5">
+        <div className="flex items-start gap-2 rounded-md bg-[var(--cream)] border border-[var(--sand)] px-3 py-2">
+          <ShieldCheck size={15} className="mt-0.5 shrink-0 text-[var(--brown)]" />
+          <p className="font-ui text-xs text-[var(--brown)]">{t("incognitoTip")}</p>
+        </div>
+
         <div>
           <Label htmlFor="country">{t("country")}</Label>
           <select
@@ -160,6 +154,11 @@ export default function Step1Page() {
                 {t("communityProperty")}
               </p>
             )}
+            {isCatalonia && (
+              <div className="mt-2 rounded-md border border-amber-300 bg-amber-50 px-3 py-2">
+                <p className="font-ui text-xs text-amber-800">{t("cataloniaNotice")}</p>
+              </div>
+            )}
           </div>
         )}
 
@@ -193,9 +192,7 @@ export default function Step1Page() {
             className="w-full flex items-center justify-between px-4 py-3 text-left font-ui text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE] transition-colors"
           >
             <span>
-              {isTR
-                ? "Durumunuza uyan bir durum var mı?"
-                : "Do any of these apply to your situation?"}
+              {t("riskQuestion")}
               {hasHighRisk && (
                 <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#E85252] text-[10px] font-bold text-white">
                   {selectedRisks.size}
@@ -208,20 +205,18 @@ export default function Step1Page() {
           {riskOpen && (
             <div className="px-4 pb-4 space-y-2 border-t border-[#D4C5B0]">
               <p className="font-ui text-xs text-[#8B7355] pt-3 pb-1">
-                {isTR
-                  ? "Bu bilgi modelimizin güven seviyesini ayarlar. Devam etmenizi engellemez."
-                  : "This helps us adjust our confidence level. It does not prevent you from continuing."}
+                {t("riskNote")}
               </p>
-              {HIGH_RISK_SIGNALS.map(({ key, en, tr: trLabel }) => (
-                <label key={key} className="flex items-start gap-3 cursor-pointer group">
+              {HIGH_RISK_SIGNALS.map((signal) => (
+                <label key={signal.key} className="flex items-start gap-3 cursor-pointer group">
                   <input
                     type="checkbox"
-                    checked={selectedRisks.has(key)}
-                    onChange={() => toggleRisk(key)}
+                    checked={selectedRisks.has(signal.key)}
+                    onChange={() => toggleRisk(signal.key)}
                     className="mt-0.5 h-4 w-4 rounded border-[#D4C5B0] text-[#E85252] focus:ring-[#E85252]"
                   />
                   <span className="font-ui text-sm text-[#1C2B3A] group-hover:text-[#2E4D6B]">
-                    {isTR ? trLabel : en}
+                    {signal.label[locale as keyof typeof signal.label] ?? signal.label.en}
                   </span>
                 </label>
               ))}
@@ -235,12 +230,10 @@ export default function Step1Page() {
             <AlertTriangle className="shrink-0 text-[#E85252] mt-0.5" size={18} />
             <div>
               <p className="font-ui text-sm font-semibold text-[#E85252] mb-1">
-                {isTR ? "Profesyonel Destek Gerekebilir" : "Professional Support May Be Required"}
+                {t("riskTitle")}
               </p>
               <p className="font-ui text-sm text-[#1C2B3A]">
-                {isTR
-                  ? "Bu durum profesyonel hukuki destek gerektirebilir. SettleLens finansal senaryolarınızı düzenlemenize yardımcı olabilir, ancak herhangi bir karar vermeden önce nitelikli bir avukat veya arabulucuyla görüşmenizi öneririz."
-                  : "This situation may require professional legal advice. SettleLens can help you organize financial scenarios, but please speak with a qualified lawyer or mediator before making any decisions."}
+                {t("riskNotice")}
               </p>
             </div>
           </div>

@@ -14,7 +14,13 @@ import {
   SocialProof,
   Pricing,
   AttorneyPrepCTA,
+  ReportPreview,
   FinalCTA,
+  MobileStickyCTA,
+  FAQ,
+  ComparisonTable,
+  PricingWizard,
+  FounderNote,
 } from "@/components/landing";
 
 type Props = {
@@ -52,7 +58,7 @@ export default function LandingPage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content">
         {/*
         POSITIONING NOTE:
         SettleLens is a financial scenario modeling tool — NOT a lawyer, court predictor, or settlement guarantor.
@@ -88,11 +94,17 @@ export default function LandingPage() {
 
         <ScenarioDemo />
         <SocialProof />
+        <FounderNote />
+        <ComparisonTable />
+        <PricingWizard />
         <Pricing />
+        <FAQ />
         <AttorneyPrepCTA />
+        <ReportPreview />
         <FinalCTA />
       </main>
       <Footer />
+      <MobileStickyCTA />
     </>
   );
 }

@@ -8,9 +8,19 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 
+const TRUST_BADGES: Record<string, string[]> = {
+  tr: ["🛡️ KVKK Uyumlu", "🔒 Veri satılmaz", "🔐 AES-256"],
+  en: ["🛡️ GDPR-class privacy", "🔒 Data never sold", "🔐 AES-256"],
+  de: ["🛡️ DSGVO-konform", "🔒 Daten nicht verkauft", "🔐 AES-256"],
+  fr: ["🛡️ Conforme RGPD", "🔒 Données non vendues", "🔐 AES-256"],
+  es: ["🛡️ Conforme RGPD", "🔒 Datos nunca vendidos", "🔐 AES-256"],
+  ar: ["🛡️ متوافق GDPR", "🔒 البيانات لا تُباع", "🔐 AES-256"],
+};
+
 export function Hero() {
   const t = useTranslations("hero");
   const lang = useLocale();
+  const badges = TRUST_BADGES[lang] ?? TRUST_BADGES.en;
 
   const variants: Variants = {
     hidden: { opacity: 0, y: 24 },
@@ -70,6 +80,16 @@ export function Hero() {
           className="font-body text-sm text-[#8B7355]">
           {t("sub")}
         </motion.p>
+
+        {/* Trust badge strip */}
+        <motion.div custom={5} initial="hidden" animate="visible" variants={variants}
+          className="flex flex-wrap justify-center gap-3 pt-2">
+          {badges.map((badge) => (
+            <span key={badge} className="font-ui text-xs text-[var(--sand)]/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+              {badge}
+            </span>
+          ))}
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}

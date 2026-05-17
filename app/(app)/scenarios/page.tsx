@@ -1,15 +1,26 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getTranslations, getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { getAppLocale } from "@/lib/get-app-locale";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Plus, GitBranch, ChevronRight } from "lucide-react";
 
 export default async function ScenariosPage() {
+  const appLocale = await getAppLocale();
+  setRequestLocale(appLocale);
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/en/login");
+  if (!user) {
+    const { cookies: getCookies } = await import("next/headers");
+    const cs = await getCookies();
+    const lang = cs.get("NEXT_LOCALE")?.value;
+    const validLocales = ["en", "tr", "de", "fr", "es", "ar"];
+    const loginLocale = lang && validLocales.includes(lang) ? lang : "en";
+    redirect(`/${loginLocale}/login`);
+  }
 
   const { data: profile } = await (supabase as never as {
     from: (t: string) => {
@@ -48,12 +59,21 @@ export default async function ScenariosPage() {
             {t("scenariosDesc") ?? "Compare different settlement outcomes"}
           </p>
         </div>
-        <Link
-          href="/scenarios/offer"
-          className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
-        >
-          <Plus size={16} className="mr-1" /> {t("analyzeOffer")}
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href="/scenarios/new"
+            className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/10")}
+          >
+            <Plus size={16} className="mr-1" />
+            {locale === "tr" ? "Yeni Senaryo" : locale === "de" ? "Neu" : locale === "fr" ? "Nouveau" : locale === "es" ? "Nuevo" : "New Scenario"}
+          </Link>
+          <Link
+            href="/scenarios/offer"
+            className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+          >
+            <Plus size={16} className="mr-1" /> {t("analyzeOffer")}
+          </Link>
+        </div>
       </div>
 
       {scenarioList.length === 0 ? (
@@ -66,7 +86,7 @@ export default async function ScenariosPage() {
             {t("noScenariosDesc") ?? "Create your first scenario to compare settlement outcomes."}
           </p>
           <Link
-            href="/onboarding/step-6"
+            href="/scenarios/new"
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
             <Plus size={16} className="mr-1" /> {t("buildScenarios")}

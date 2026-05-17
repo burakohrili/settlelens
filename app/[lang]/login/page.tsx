@@ -39,7 +39,7 @@ export default function LoginPage() {
     setServerError("");
     const { error } = await supabase.auth.signInWithPassword(data);
     if (error) {
-      setServerError("Invalid email or password. Please try again.");
+      setServerError(t("invalidCredentials"));
       setLoading(false);
       return;
     }
@@ -127,7 +127,7 @@ export default function LoginPage() {
             </div>
 
             {serverError && (
-              <p className="font-ui text-sm text-[var(--danger)]">{serverError}</p>
+              <p role="alert" aria-live="polite" className="font-ui text-sm text-[var(--danger)]">{serverError}</p>
             )}
 
             <button
@@ -135,7 +135,7 @@ export default function LoginPage() {
               disabled={loading}
               className={cn(buttonVariants(), "w-full bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
             >
-              {loading ? "Signing in…" : t("loginCta")}
+              {loading ? t("signingIn") : t("loginCta")}
             </button>
           </form>
 
@@ -144,7 +144,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-[var(--sand)]" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[var(--cream)] px-2 font-ui text-xs text-[var(--brown)]">or</span>
+              <span className="bg-[var(--cream)] px-2 font-ui text-xs text-[var(--brown)]">{t("or")}</span>
             </div>
           </div>
 

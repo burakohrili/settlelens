@@ -55,6 +55,24 @@ export async function POST(req: NextRequest) {
 
   const profile = profileRes.data;
   const scenario = scenarioRes.data;
+
+  // 4.5 Plan check — block discovery, enforce clarified 1-analysis limit
+  const planType = (profile.plan_type as string) ?? "discovery";
+  if (planType === "discovery") {
+    return Response.json({ error: "upgrade_required" }, { status: 403 });
+  }
+  if (planType === "clarified") {
+    const { count: analysisCount } = await (supabase as never as {
+      from: (t: string) => {
+        select: (s: string, opts?: { count: string; head: boolean }) => {
+          eq: (c: string, v: string) => Promise<{ count: number | null }>
+        }
+      }
+    }).from("analyses").select("id", { count: "exact", head: true }).eq("user_id", user.id);
+    if ((analysisCount ?? 0) >= 3) {
+      return Response.json({ error: "analysis_limit_reached" }, { status: 403 });
+    }
+  }
   const assets = assetsRes.data ?? [];
   const debts = debtsRes.data ?? [];
   const income = incomeRes.data ?? [];

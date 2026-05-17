@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
@@ -11,8 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Disclaimer } from "@/components/layout/Disclaimer";
 
 export default function ContactPage() {
-  const locale = useLocale();
-  const isTR = locale === "tr";
+  const t = useTranslations("contact");
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -40,31 +39,31 @@ export default function ContactPage() {
       <Header />
       <main className="mx-auto max-w-xl px-4 py-12 sm:px-6">
         <h1 className="font-display text-3xl font-semibold text-[var(--navy)]">
-          {isTR ? "İletişim" : "Contact"}
+          {t("title")}
         </h1>
         <Disclaimer className="mt-4" />
 
         <div className="mt-6 rounded-lg border border-[var(--sand)] bg-white p-6">
           {sent ? (
             <p className="font-ui text-[var(--gain)] font-semibold">
-              {isTR ? "Mesajınız alındı. En kısa sürede yanıt vereceğiz." : "Your message has been received. We'll get back to you shortly."}
+              {t("success")}
             </p>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="name">{isTR ? "Ad Soyad" : "Name"}</Label>
+                <Label htmlFor="name">{t("name")}</Label>
                 <Input id="name" name="name" required className="mt-1" />
               </div>
               <div>
-                <Label htmlFor="email">{isTR ? "E-posta" : "Email"}</Label>
+                <Label htmlFor="email">{t("email")}</Label>
                 <Input id="email" name="email" type="email" required className="mt-1" />
               </div>
               <div>
-                <Label htmlFor="subject">{isTR ? "Konu" : "Subject"}</Label>
+                <Label htmlFor="subject">{t("subject")}</Label>
                 <Input id="subject" name="subject" required className="mt-1" />
               </div>
               <div>
-                <Label htmlFor="message">{isTR ? "Mesaj" : "Message"}</Label>
+                <Label htmlFor="message">{t("message")}</Label>
                 <textarea
                   id="message"
                   name="message"
@@ -78,7 +77,7 @@ export default function ContactPage() {
                 disabled={loading}
                 className={cn(buttonVariants(), "w-full bg-[var(--gold)] text-[var(--navy)] hover:bg-[var(--gold)]/90 font-semibold")}
               >
-                {loading ? (isTR ? "Gönderiliyor..." : "Sending...") : (isTR ? "Gönder" : "Send Message")}
+                {loading ? t("sending") : t("send")}
               </button>
             </form>
           )}

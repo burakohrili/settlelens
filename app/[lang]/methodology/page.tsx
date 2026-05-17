@@ -8,7 +8,7 @@ const COUNTRIES = [
   { slug: "de", flag: "🇩🇪", name: "Germany", law: "BGB §1363 Zugewinngemeinschaft", confidence: "formula-based-estimate" },
   { slug: "fr", flag: "🇫🇷", name: "France", law: "Code civil Art. 1401 — Communauté d'acquêts", confidence: "formula-based-estimate" },
   { slug: "es", flag: "🇪🇸", name: "Spain", law: "CC Art. 1344 — Régimen de Gananciales", confidence: "formula-based-estimate" },
-  { slug: "tr", flag: "🇹🇷", name: "Turkey", law: "TMK 179 — Edinilmiş Mallara Katılma", confidence: "formula-based-estimate" },
+  { slug: "tr", flag: "🇹🇷", name: "Turkey", law: "TMK 218-241 — Edinilmiş Mallara Katılma", confidence: "formula-based-estimate" },
 ];
 
 export default async function MethodologyPage() {

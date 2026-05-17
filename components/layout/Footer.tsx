@@ -48,6 +48,14 @@ export function Footer() {
             <p className="mt-3 font-ui text-xs leading-relaxed text-[var(--brown)]">
               {t("disclaimer")}
             </p>
+            {/* Trust badges */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["AES-256", "GDPR", "KVKK"].map((b) => (
+                <span key={b} className="inline-block font-ui text-[9px] font-semibold tracking-wide text-[var(--brown)]/70 border border-[var(--slate)]/40 rounded px-1.5 py-0.5">
+                  {b}
+                </span>
+              ))}
+            </div>
             <div className="mt-4 flex gap-3">
               <a
                 href="https://twitter.com/settlelens"
@@ -128,9 +136,44 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Locale-specific compliance notes */}
+        {locale === "fr" && (
+          <div className="mt-6 rounded-md border border-[var(--slate)] px-4 py-2 font-ui text-xs text-[var(--brown)]">
+            🇫🇷 Conforme au RGPD · Données traitées sur le territoire de l&apos;UE · Délégué à la protection des données : <a href="mailto:privacy@settlelens.com" className="hover:text-[var(--cream)] underline">privacy@settlelens.com</a> · <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--cream)] underline">CNIL</a>
+          </div>
+        )}
+        {locale === "es" && (
+          <div className="mt-6 rounded-md border border-[var(--slate)] px-4 py-2 font-ui text-xs text-[var(--brown)]">
+            🇪🇸 Conforme al RGPD · Datos tratados en la UE · Delegado de protección de datos: <a href="mailto:privacy@settlelens.com" className="hover:text-[var(--cream)] underline">privacy@settlelens.com</a> · <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--cream)] underline">AEPD</a> · Los precios incluyen IVA aplicable
+          </div>
+        )}
+        {locale === "de" && (
+          <div className="mt-6 rounded-md border border-[var(--slate)] px-4 py-2 font-ui text-xs text-[var(--brown)]">
+            🇩🇪 DSGVO-konform · Daten in der EU verarbeitet · Datenschutzbeauftragter: <a href="mailto:privacy@settlelens.com" className="hover:text-[var(--cream)] underline">privacy@settlelens.com</a> · Alle Preise inkl. MwSt.
+          </div>
+        )}
+
         {/* Bottom bar */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-[var(--slate)] pt-6 sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-[var(--slate)] pt-6 sm:flex-row">
           <p className="font-ui text-xs text-[var(--brown)]">{t("copyright")}</p>
+          {/* Payment method badges */}
+          <div className="flex items-center gap-2" aria-label="Payment methods">
+            {/* Paddle */}
+            <span className="inline-flex items-center border border-[var(--slate)]/50 rounded px-2 py-0.5 font-ui text-[9px] font-bold text-[var(--brown)]/60 tracking-wide">
+              PADDLE
+            </span>
+            {/* Visa */}
+            <span className="inline-flex items-center border border-[var(--slate)]/50 rounded px-2 py-0.5 font-ui text-[9px] font-bold text-[var(--brown)]/60 tracking-wide italic">
+              VISA
+            </span>
+            {/* Mastercard — two overlapping circles */}
+            <span className="inline-flex items-center gap-0 border border-[var(--slate)]/50 rounded px-2 py-0.5">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-label="Mastercard">
+                <circle cx="6" cy="6" r="5" fill="#EB001B" opacity="0.6" />
+                <circle cx="12" cy="6" r="5" fill="#F79E1B" opacity="0.6" />
+              </svg>
+            </span>
+          </div>
           <LanguageSwitcher variant="dark" />
         </div>
       </div>

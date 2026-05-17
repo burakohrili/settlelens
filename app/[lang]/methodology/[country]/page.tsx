@@ -132,7 +132,7 @@ const COUNTRY_DATA: Record<string, CountryData> = {
   tr: {
     name: "Turkey (Türkiye)",
     flag: "🇹🇷",
-    framework: "TMK Madde 179 — Edinilmiş Mallara Katılma Rejimi. Evlilik süresinde edinilen mallar ortak kabul edilir. Her eşin net artık değeri hesaplanır, fark ikiye bölünür.",
+    framework: "TMK Madde 218-241 — Edinilmiş Mallara Katılma Rejimi. Evlilik süresinde edinilen mallar ortak kabul edilir. Her eşin net artık değeri hesaplanır, fark ikiye bölünür.",
     confidence: "formula-based-estimate",
     whatWeModel: [
       "Katılma alacağı hesabı (net artık değer farkı ÷ 2)",
@@ -162,6 +162,8 @@ const VALID_COUNTRIES = Object.keys(COUNTRY_DATA);
 type Props = {
   params: Promise<{ lang: string; country: string }>;
 };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return VALID_COUNTRIES.map((country) => ({ country }));

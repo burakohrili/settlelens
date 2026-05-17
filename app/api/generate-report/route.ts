@@ -3,6 +3,8 @@ import { generatePDF, buildReportHTML } from "@/lib/pdf-generator";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
 import { NextRequest } from "next/server";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   // 1. Auth
   const supabase = await createClient();
@@ -19,6 +21,21 @@ export async function POST(req: NextRequest) {
   const plan = profile.plan_type as string;
   if (plan === "discovery") {
     return Response.json({ error: "upgrade_required", plan: "discovery" }, { status: 403 });
+  }
+
+  // 2.5 Rate limit: 5 PDFs per hour per user
+  const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString();
+  const { count: recentReports } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string, opts: { count: string; head: boolean }) => {
+        eq: (c: string, v: string) => {
+          gte: (c2: string, v2: string) => Promise<{ count: number | null }>
+        }
+      }
+    }
+  }).from("reports").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("created_at", oneHourAgo);
+  if ((recentReports ?? 0) >= 5) {
+    return Response.json({ error: "rate_limited", message: "Maximum 5 reports per hour. Please try again later." }, { status: 429 });
   }
 
   // 3. Fetch all data in parallel

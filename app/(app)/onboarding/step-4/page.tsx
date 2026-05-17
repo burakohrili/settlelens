@@ -168,7 +168,7 @@ export default function Step4Page() {
           <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm")}>
             <div className="flex justify-between">
               <span className="text-[var(--brown)]">{t("combinedNet")}</span>
-              <span className="font-semibold text-[var(--navy)]">{fmt(totalHousehold)}/yr</span>
+              <span className="font-semibold text-[var(--navy)]">{fmt(totalHousehold)}{t("perYear")}</span>
             </div>
             <div className="flex justify-between mt-1">
               <span className="text-[var(--brown)]">{t("monthly")}</span>

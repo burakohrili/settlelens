@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 type ScenarioData = {
@@ -29,24 +30,31 @@ function fmt(n: number, currency: string): string {
   }).format(n || 0);
 }
 
-const ROWS: Array<{ label: string; key: keyof ScenarioData; format: "currency" | "number" | "cashflow" }> = [
-  { label: "Net Worth Now", key: "net_worth_now", format: "currency" },
-  { label: "Year 1", key: "year1", format: "currency" },
-  { label: "Year 3", key: "year3", format: "currency" },
-  { label: "Year 5", key: "year5", format: "currency" },
-  { label: "Year 10", key: "year10", format: "currency" },
-  { label: "Monthly Cash Flow", key: "monthly_cashflow", format: "cashflow" },
-  { label: "Risk Score", key: "risk_score", format: "number" },
-];
-
 function riskBg(score: number): string {
   if (score >= 7) return "text-[var(--danger)]";
   if (score >= 4) return "text-[var(--gold)]";
   return "text-[var(--gain)]";
 }
 
+function riskIcon(score: number): string {
+  if (score >= 7) return "▲";
+  if (score >= 4) return "◆";
+  return "●";
+}
+
 export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }: Props) {
+  const t = useTranslations("scenarioComparison");
   const [activeTab, setActiveTab] = useState(0);
+
+  const ROWS: Array<{ label: string; key: keyof ScenarioData; format: "currency" | "number" | "cashflow" }> = [
+    { label: t("netWorthNow"), key: "net_worth_now", format: "currency" },
+    { label: t("year1"), key: "year1", format: "currency" },
+    { label: t("year3"), key: "year3", format: "currency" },
+    { label: t("year5"), key: "year5", format: "currency" },
+    { label: t("year10"), key: "year10", format: "currency" },
+    { label: t("monthlyCashFlow"), key: "monthly_cashflow", format: "cashflow" },
+    { label: t("riskScore"), key: "risk_score", format: "number" },
+  ];
 
   if (scenarios.length === 0) return null;
 
@@ -84,7 +92,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
         <table className="w-full font-ui text-sm border-collapse">
           <thead>
             <tr>
-              <th className="text-left py-2 pr-4 text-[var(--brown)] font-semibold text-xs w-36">Metric</th>
+              <th className="text-left py-2 pr-4 text-[var(--brown)] font-semibold text-xs w-36">{t("metric")}</th>
               {scenarios.map((s, i) => (
                 <th
                   key={i}
@@ -96,7 +104,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
                   )}
                 >
                   {i === recommendedIndex && (
-                    <span className="block text-[9px] text-[var(--gold)] uppercase tracking-wider mb-0.5">Recommended</span>
+                    <span className="block text-[9px] text-[var(--gold)] uppercase tracking-wider mb-0.5">{t("recommended")}</span>
                   )}
                   {s.name}
                 </th>
@@ -125,13 +133,15 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
                         )}
                       >
                         {row.format === "currency" || row.format === "cashflow"
-                          ? `${fmt(val, currency)}${row.format === "cashflow" ? "/mo" : ""}`
-                          : `${val}/10`}
+                          ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
+                          : row.key === "risk_score"
+                            ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
+                            : `${val}/10`}
                         {isBest && row.key !== "risk_score" && (
-                          <span className="ml-1 text-[9px] text-[var(--gold)] font-sans">Best</span>
+                          <span className="ml-1 text-[9px] text-[var(--gold)] font-sans">{t("best")}</span>
                         )}
                         {isBest && row.key === "risk_score" && (
-                          <span className="ml-1 text-[9px] text-[var(--gain)] font-sans">Lowest</span>
+                          <span className="ml-1 text-[9px] text-[var(--gain)] font-sans">{t("lowest")}</span>
                         )}
                       </td>
                     );
@@ -160,8 +170,10 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
                     row.key !== "risk_score" && row.key !== "monthly_cashflow" && "text-[var(--navy)]"
                   )}>
                     {row.format === "currency" || row.format === "cashflow"
-                      ? `${fmt(val, currency)}${row.format === "cashflow" ? "/mo" : ""}`
-                      : `${val}/10`}
+                      ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
+                      : row.key === "risk_score"
+                        ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
+                        : `${val}/10`}
                   </span>
                 </div>
               );

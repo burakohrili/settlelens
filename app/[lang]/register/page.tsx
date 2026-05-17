@@ -28,7 +28,7 @@ const schema = z
   });
 type FormData = z.infer<typeof schema>;
 
-function PasswordStrength({ password }: { password: string }) {
+function PasswordStrength({ password, labels }: { password: string; labels: string[] }) {
   const checks = [
     password.length >= 8,
     /[A-Z]/.test(password),
@@ -37,7 +37,6 @@ function PasswordStrength({ password }: { password: string }) {
   ];
   const score = checks.filter(Boolean).length;
   const colors = ["bg-[var(--danger)]", "bg-orange-400", "bg-yellow-400", "bg-[var(--gain)]"];
-  const labels = ["Weak", "Fair", "Good", "Strong"];
 
   if (!password) return null;
   return (
@@ -74,6 +73,12 @@ export default function RegisterPage() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const password = watch("password", "");
+  const strengthLabels = [
+    t("password_strength.weak"),
+    t("password_strength.fair"),
+    t("password_strength.good"),
+    t("password_strength.strong"),
+  ];
 
   const handleConsent = useCallback(
     (valid: boolean, state: typeof consentState) => {
@@ -195,6 +200,7 @@ export default function RegisterPage() {
             <div>
               <Label htmlFor="name">{t("name")}</Label>
               <Input id="name" autoComplete="name" className="mt-1" {...register("name")} />
+              <p className="mt-1 font-ui text-xs text-[var(--brown)]">{t("nameHint")}</p>
               {errors.name && <p className="mt-1 font-ui text-xs text-[var(--danger)]">{errors.name.message}</p>}
             </div>
             <div>
@@ -205,7 +211,7 @@ export default function RegisterPage() {
             <div>
               <Label htmlFor="password">{t("password")}</Label>
               <Input id="password" type="password" autoComplete="new-password" className="mt-1" {...register("password")} />
-              <PasswordStrength password={password} />
+              <PasswordStrength password={password} labels={strengthLabels} />
               {errors.password && <p className="mt-1 font-ui text-xs text-[var(--danger)]">{errors.password.message}</p>}
             </div>
             <div>
@@ -218,7 +224,7 @@ export default function RegisterPage() {
               <ConsentCheckboxes onValid={handleConsent} />
             </div>
 
-            {serverError && <p className="font-ui text-sm text-[var(--danger)]">{serverError}</p>}
+            {serverError && <p role="alert" aria-live="polite" className="font-ui text-sm text-[var(--danger)]">{serverError}</p>}
 
             <button
               type="submit"

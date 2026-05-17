@@ -17,10 +17,14 @@ export default function ReportPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [step, setStep] = useState(0);
 
   async function handleGenerate() {
     setLoading(true);
     setError(null);
+    setStep(1);
+    const t1 = setTimeout(() => setStep(2), 3000);
+    const t2 = setTimeout(() => setStep(3), 7000);
 
     try {
       const res = await fetch("/api/generate-report", { method: "POST" });
@@ -42,7 +46,10 @@ export default function ReportPage() {
     } catch {
       setError(t("errorConnection"));
     } finally {
+      clearTimeout(t1);
+      clearTimeout(t2);
       setLoading(false);
+      setStep(0);
     }
   }
 
@@ -93,21 +100,46 @@ export default function ReportPage() {
             </button>
           </div>
         ) : (
-          <button
-            onClick={handleGenerate}
-            disabled={loading}
-            className={cn(
-              buttonVariants(),
-              "w-full bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90",
-              loading && "opacity-70 cursor-not-allowed"
+          <>
+            {loading && step > 0 && (
+              <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 space-y-2">
+                {[t("step1"), t("step2"), t("step3")].map((label, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className={cn(
+                      "w-4 h-4 rounded-full border-2 flex items-center justify-center text-[9px] font-bold shrink-0",
+                      step > i + 1 ? "border-[var(--gain)] bg-[var(--gain)] text-white"
+                      : step === i + 1 ? "border-[var(--gold)] bg-[var(--gold)] text-white"
+                      : "border-[var(--sand)] text-[var(--brown)]"
+                    )}>
+                      {step > i + 1 ? "✓" : i + 1}
+                    </span>
+                    <p className={cn(
+                      "font-ui text-xs",
+                      step === i + 1 ? "text-[var(--navy)] font-semibold" : "text-[var(--brown)]"
+                    )}>
+                      {step === i + 1 && <Loader2 size={11} className="inline mr-1 animate-spin" />}
+                      {label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             )}
-          >
-            {loading ? (
-              <><Loader2 size={16} className="mr-2 animate-spin" /> {t("generating")}</>
-            ) : (
-              <><Download size={16} className="mr-2" /> {t("generate")}</>
-            )}
-          </button>
+            <button
+              onClick={handleGenerate}
+              disabled={loading}
+              className={cn(
+                buttonVariants(),
+                "w-full bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90",
+                loading && "opacity-70 cursor-not-allowed"
+              )}
+            >
+              {loading ? (
+                <><Loader2 size={16} className="mr-2 animate-spin" /> {t("generating")}</>
+              ) : (
+                <><Download size={16} className="mr-2" /> {t("generate")}</>
+              )}
+            </button>
+          </>
         )}
       </div>
 

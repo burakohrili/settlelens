@@ -6,13 +6,13 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-const LOCALE_CONFIG: Record<string, { currency: string; locale: string; min: number; max: number; default: number; step: number }> = {
-  en: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
-  tr: { currency: "TRY", locale: "tr-TR", min: 100_000, max: 60_000_000, default: 5_000_000, step: 100_000 },
-  de: { currency: "EUR", locale: "de-DE", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
-  fr: { currency: "EUR", locale: "fr-FR", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
-  es: { currency: "EUR", locale: "es-ES", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
-  ar: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000 },
+const LOCALE_CONFIG: Record<string, { currency: string; locale: string; min: number; max: number; default: number; step: number; appreciation: number; investmentReturn: number; saleCosts: number }> = {
+  en: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000, appreciation: 3, investmentReturn: 5, saleCosts: 6 },
+  tr: { currency: "TRY", locale: "tr-TR", min: 100_000, max: 60_000_000, default: 5_000_000, step: 100_000, appreciation: 20, investmentReturn: 30, saleCosts: 6 },
+  de: { currency: "EUR", locale: "de-DE", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000, appreciation: 3, investmentReturn: 5, saleCosts: 10 },
+  fr: { currency: "EUR", locale: "fr-FR", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000, appreciation: 3, investmentReturn: 5, saleCosts: 8 },
+  es: { currency: "EUR", locale: "es-ES", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000, appreciation: 3, investmentReturn: 5, saleCosts: 10 },
+  ar: { currency: "USD", locale: "en-US", min: 100_000, max: 2_000_000, default: 800_000, step: 10_000, appreciation: 3, investmentReturn: 5, saleCosts: 6 },
 };
 
 function fmtCurrency(n: number, currencyCode: string, localeCode: string) {
@@ -81,7 +81,7 @@ export function ScenarioDemo() {
               </div>
             </div>
             <div className="rounded-md bg-[var(--navy)]/50 p-3 font-ui text-xs text-[#6b7f90]">
-              {t("note")}
+              {t("note", { appreciation: cfg.appreciation, investmentReturn: cfg.investmentReturn, saleCosts: cfg.saleCosts })}
             </div>
           </div>
 

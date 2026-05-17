@@ -126,12 +126,8 @@ export default function SettingsPage() {
           ? parts[0][0] + parts[parts.length - 1][0]
           : parts[0]?.[0] ?? "?";
       setInitials(ini.toUpperCase());
-      if (profile.preferred_language !== prevLang) {
-        // Language changed — full reload so NextIntlClientProvider picks up new messages
-        window.location.href = window.location.pathname;
-      } else {
-        router.refresh();
-      }
+      // Always do a full reload so layout re-reads preferred_language from DB
+      window.location.href = window.location.pathname;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Unknown error";
       setSaveMsg(`${t("savedFail")}: ${msg}`);
@@ -151,7 +147,20 @@ export default function SettingsPage() {
       setPwError(t("pwTooShort"));
       return;
     }
+    if (!currentPassword) {
+      setPwError(t("pwCurrentRequired"));
+      return;
+    }
     setPwSaving(true);
+    const { error: verifyError } = await supabase.auth.signInWithPassword({
+      email: profile.email,
+      password: currentPassword,
+    });
+    if (verifyError) {
+      setPwSaving(false);
+      setPwError(t("pwCurrentWrong"));
+      return;
+    }
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     setPwSaving(false);
     if (error) {

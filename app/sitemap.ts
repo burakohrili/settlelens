@@ -48,28 +48,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   const usStatePages: MetadataRoute.Sitemap = US_STATES.map((s) => ({
-    url: `${BASE}/en/divorce-calculator-${s.slug}`,
+    url: `${BASE}/en/divorce-calculator/${s.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
   const trCityPages: MetadataRoute.Sitemap = TR_CITIES.map((c) => ({
-    url: `${BASE}/tr/bosanma-hesaplama-${c.slug}`,
+    url: `${BASE}/tr/bosanma-hesaplama/${c.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
   const deStatePages: MetadataRoute.Sitemap = DE_STATES.map((s) => ({
-    url: `${BASE}/de/scheidung-rechner-${s.slug}`,
+    url: `${BASE}/de/scheidung-rechner/${s.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
   const checklistPages: MetadataRoute.Sitemap = CHECKLIST_TOPICS.map((t) => ({
-    url: `${BASE}/en/divorce-checklist-${t}`,
+    url: `${BASE}/en/divorce-checklist/${t}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,

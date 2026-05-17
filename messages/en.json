@@ -1,717 +1,1060 @@
 {
-    "meta":  {
-                 "siteName":  "SettleLens",
-                 "tagline":  "See Your Settlement Clearly",
-                 "description":  "AI-powered financial modeling for divorce settlements. See your 10-year financial future across every scenario."
-             },
-    "nav":  {
-                "howItWorks":  "How It Works",
-                "pricing":  "Pricing",
-                "blog":  "Blog",
-                "login":  "Sign In",
-                "startFree":  "Start Free Analysis",
-                "upgrade":  "Upgrade",
-                "profile":  "Profile",
-                "billing":  "Billing",
-                "settings":  "Settings",
-                "signOut":  "Sign out"
-            },
-    "hero":  {
-                 "h1":  "Know Exactly Where You Stand.\nBefore You Sign Anything.",
-                 "h2":  "AI-powered financial modeling for divorce. See your 10-year financial future across every settlement scenario — in minutes, not months.",
-                 "cta":  "Start Free Analysis",
-                 "sub":  "Takes 20 minutes. Prepare before you meet your attorney.",
-                 "badge":  "Financial Clarity for Divorce",
-                 "subTagline":  "Financial modeling, not legal advice."
-             },
-    "fearHook":  {
-                     "stat":  "$15,000+",
-                     "statLabel":  "average divorce legal fees",
-                     "hook":  "How much of that is paying your attorney to explain numbers you could calculate yourself?",
-                     "cta":  "Calculate Yours Free",
-                     "stats":  [
-                                   {
-                                       "num":  "73%",
-                                       "label":  "of divorcing couples overpay in legal fees"
-                                   },
-                                   {
-                                       "num":  "20 min",
-                                       "label":  "vs. months of attorney back-and-forth"
-                                   },
-                                   {
-                                       "num":  "50x",
-                                       "label":  "estimated ROI vs. average legal fee cost"
-                                   }
-                               ],
-                     "prepNote":  "Preparation tool - not a replacement for professional legal advice."
-                 },
-    "howItWorks":  {
-                       "title":  "Three Steps to Financial Clarity",
-                       "steps":  [
-                                     {
-                                         "n":  "01",
-                                         "title":  "Enter Your Financial Picture",
-                                         "desc":  "Assets, debts, income, children. Secure, private, takes 20 minutes."
-                                     },
-                                     {
-                                         "n":  "02",
-                                         "title":  "Build Your Scenarios",
-                                         "desc":  "Keep the house? Sell it? Let them have it? Model up to 3 outcomes."
-                                     },
-                                     {
-                                         "n":  "03",
-                                         "title":  "Get Your 10-Year Projection",
-                                         "desc":  "AI analyzes your jurisdiction\u0027s laws and projects each scenario. Download the PDF."
-                                     }
-                                 ]
-                   },
-    "features":  {
-                     "title":  "Everything You Need to Negotiate From Strength",
-                     "items":  [
-                                   {
-                                       "title":  "Every Scenario, Side by Side",
-                                       "desc":  "See the 10-year financial impact of each choice before you decide."
-                                   },
-                                   {
-                                       "title":  "Your Jurisdiction. Your Rules.",
-                                       "desc":  "California community property? UK Section 25? German Zugewinn? SettleLens knows the formulas."
-                                   },
-                                   {
-                                       "title":  "A Report Your Lawyer Respects",
-                                       "desc":  "Professional PDF: asset breakdown, projection charts, negotiation strategy."
-                                   }
-                               ]
-                 },
-    "social":  {
-                   "title":  "From People Who\u0027ve Been Where You Are",
-                   "quotes":  [
-                                  {
-                                      "text":  "I walked into mediation knowing exactly which offer to accept. That clarity was worth more than any lawyer.",
-                                      "author":  "Sarah M., California"
-                                  },
-                                  {
-                                      "text":  "The PDF report legitimized my position. My attorney said it was the most prepared she\u0027d seen a client.",
-                                      "author":  "James T., London"
-                                  },
-                                  {
-                                      "text":  "Three scenarios, side by side. I finally understood what keeping the house actually meant for the next decade.",
-                                      "author":  "Michelle K., Texas"
-                                  }
-                              ]
-               },
-    "pricing":  {
-                    "title":  "Simple, Transparent Pricing",
-                    "plans":  [
-                                  {
-                                      "id":  "discovery",
-                                      "name":  "Discovery",
-                                      "price":  "Free",
-                                      "period":  "forever",
-                                      "features":  [
-                                                       "Asset \u0026 debt inventory",
-                                                       "Net worth summary",
-                                                       "No AI analysis",
-                                                       "Upgrade anytime"
-                                                   ],
-                                      "cta":  "Start Free"
-                                  },
-                                  {
-                                      "id":  "clarified",
-                                      "name":  "Clarified",
-                                      "price":  "$29",
-                                      "period":  "one-time · 14-day access",
-                                      "features":  [
-                                                       "1 AI-powered analysis",
-                                                       "1 settlement scenario",
-                                                       "Professional PDF report",
-                                                       "14-day access"
-                                                   ],
-                                      "cta":  "Get Clarity"
-                                  },
-                                  {
-                                      "id":  "strategist",
-                                      "name":  "Strategist",
-                                      "price":  "$39",
-                                      "period":  "per month",
-                                      "badge":  "Most Popular",
-                                      "features":  [
-                                                       "Unlimited analyses",
-                                                       "Unlimited scenarios",
-                                                       "Premium PDF reports",
-                                                       "10-year projections",
-                                                       "Inflation adjustments"
-                                                   ],
-                                      "cta":  "Start Strategist"
-                                  },
-                                  {
-                                      "id":  "professional",
-                                      "name":  "Professional",
-                                      "price":  "$99",
-                                      "period":  "per month",
-                                      "features":  [
-                                                       "Everything in Strategist",
-                                                       "Attorney-ready Excel + PDF export",
-                                                       "Evidence organizer",
-                                                       "Priority support"
-                                                   ],
-                                      "cta":  "Go Professional"
-                                  }
-                              ],
-                    "footerNote":  "All plans: Secure, private. Financial modeling, not legal advice."
-                },
-    "finalCta":  {
-                     "title":  "See Your Settlement Clearly",
-                     "sub":  "Join thousands who\u0027ve walked into negotiations prepared.",
-                     "cta":  "Start Free Analysis",
-                     "note":  "No credit card required for basic analysis."
-                 },
-    "footer":  {
-                   "disclaimer":  "SettleLens provides financial modeling for informational purposes only. Not legal or financial advice. Always consult a qualified attorney.",
-                   "links":  {
-                                 "howItWorks":  "How It Works",
-                                 "pricing":  "Pricing",
-                                 "blog":  "Blog",
-                                 "privacy":  "Privacy Policy",
-                                 "terms":  "Terms of Service",
-                                 "cookies":  "Cookie Policy",
-                                 "about":  "About",
-                                 "contact":  "Contact"
-                             },
-                   "copyright":  "© 2026 SettleLens. Financial modeling, not legal advice."
-               },
-    "auth":  {
-                 "loginTitle":  "Welcome back",
-                 "registerTitle":  "Start your free analysis",
-                 "email":  "Email address",
-                 "password":  "Password",
-                 "name":  "Full name",
-                 "loginCta":  "Sign in",
-                 "registerCta":  "Create account",
-                 "switchToLogin":  "Already have an account? Sign in",
-                 "switchToRegister":  "Don\u0027t have an account? Sign up",
-                 "googleCta":  "Continue with Google",
-                 "termsConsent":  "I agree to the Terms of Service and Privacy Policy",
-                 "dataConsent":  "I consent to the processing of my personal data",
-                 "marketingConsent":  "I\u0027d like to receive tips and product updates (optional)",
-                 "forgotPassword":  "Forgot your password?",
-                 "confirmPassword":  "Confirm password",
-                 "creatingAccount":  "Creating account...",
-                 "checkEmail":  "Check your email",
-                 "checkEmailDesc":  "We sent a confirmation link to your email. Please verify before signing in.",
-                 "backToLogin":  "Back to Sign In",
-                 "registerQuote":  "Financial clarity before you negotiate.",
-                 "registerQuoteSub":  "Financial modeling, not legal advice.",
-                 "registerBullet1":  "Takes 20 minutes to complete",
-                 "registerBullet2":  "Your data is private — only you can see it",
-                 "registerBullet3":  "Download a PDF report for your attorney",
-                 "loginQuote":  "See Your Settlement Clearly.",
-                 "loginQuoteSub":  "Financial modeling, not legal advice.",
-                 "loginBullet1":  "See your 10-year financial future across every scenario",
-                 "loginBullet2":  "Know what keeping the house actually costs over a decade",
-                 "loginBullet3":  "Walk into negotiations with numbers, not guesses"
-             },
-    "onboarding":  {
-                       "steps":  [
-                                     {
-                                         "title":  "Where are you located?",
-                                         "subtitle":  "We apply the financial formulas for your jurisdiction."
-                                     },
-                                     {
-                                         "title":  "Your Assets",
-                                         "subtitle":  "List everything you and your spouse own."
-                                     },
-                                     {
-                                         "title":  "Your Debts",
-                                         "subtitle":  "Mortgages, loans, credit cards — the full picture."
-                                     },
-                                     {
-                                         "title":  "Income",
-                                         "subtitle":  "Yours and your spouse\u0027s, gross and net."
-                                     },
-                                     {
-                                         "title":  "Children",
-                                         "subtitle":  "If applicable — ages and custody arrangement."
-                                     },
-                                     {
-                                         "title":  "Build Your Scenarios",
-                                         "subtitle":  "What are the possible outcomes? Let\u0027s model them."
-                                     }
-                                 ],
-                       "next":  "Continue",
-                       "back":  "Back",
-                       "save":  "Save \u0026 Continue",
-                       "stepOf":  "Step {current} of {total}"
-                   },
-    "disclaimer":  {
-                       "short":  "Not legal advice.",
-                       "full":  "SettleLens provides financial modeling for informational purposes only. Results are estimates based on publicly available legal formulas and do not constitute legal, tax, or financial advice. Always consult a qualified attorney before making any decisions."
-                   },
-    "userScenarios":  {
-                          "title":  "What decision are you trying to make?",
-                          "sub":  "SettleLens turns emotionally complex decisions into comparable financial scenarios.",
-                          "cards":  [
-                                        {
-                                            "icon":  "🏠",
-                                            "title":  "What happens if I keep the house?",
-                                            "desc":  "Compare keeping, selling, or transferring the home — and see the long-term cash flow impact."
-                                        },
-                                        {
-                                            "icon":  "⚖️",
-                                            "title":  "Does this offer actually work for me?",
-                                            "desc":  "Model the proposed split across assets, debts, and support payments to see 10-year financial outcomes."
-                                        },
-                                        {
-                                            "icon":  "📋",
-                                            "title":  "How do I prepare for my lawyer meeting?",
-                                            "desc":  "Organize your assets, debts, income, and scenarios into a professional report — before the meeting."
-                                        }
-                                    ]
-                      },
-    "whatItDoesNot":  {
-                          "title":  "What SettleLens does — and what it doesn\u0027t",
-                          "doesTitle":  "What it does",
-                          "doesNot":  "What it doesn\u0027t",
-                          "does":  [
-                                       "Financial scenario modeling",
-                                       "Asset, debt, and income comparison",
-                                       "10-year cash flow projection",
-                                       "Support payment impact analysis",
-                                       "Attorney-ready financial summary"
-                                   ],
-                          "not":  [
-                                      "Legal advice",
-                                      "Court outcome prediction",
-                                      "Replacement for a lawyer",
-                                      "Guaranteed settlement figures",
-                                      "Complex or contested case decisions"
-                                  ],
-                          "note":  "Complex or high-risk cases require professional legal support.",
-                          "link":  "Learn about our limitations →"
-                      },
-    "trust":  {
-                  "title":  "Built for a sensitive process",
-                  "cards":  [
-                                {
-                                    "icon":  "🔒",
-                                    "title":  "Your data is not sold",
-                                    "desc":  "Financial inputs are never used for advertising or shared with third parties."
-                                },
-                                {
-                                    "icon":  "🖥️",
-                                    "title":  "Sensitive data is never logged",
-                                    "desc":  "Asset values, income, and scenario details are not written to developer logs."
-                                },
-                                {
-                                    "icon":  "🗂️",
-                                    "title":  "You control your data",
-                                    "desc":  "Export your full financial data or permanently delete your account at any time."
-                                },
-                                {
-                                    "icon":  "⚖️",
-                                    "title":  "Financial modeling, not legal advice",
-                                    "desc":  "SettleLens is a preparation tool. Complex cases require a qualified lawyer."
-                                }
-                            ],
-                  "link":  "How we protect your data →"
-              },
-    "countryCoverage":  {
-                            "title":  "Built for your jurisdiction",
-                            "sub":  "SettleLens applies country-specific property regime assumptions for financial scenario modeling.",
-                            "note":  "Local judicial discretion, hidden assets, and complex agreements may produce different outcomes. Always verify with a qualified attorney.",
-                            "link":  "View methodology for your country →",
-                            "countries":  [
-                                              {
-                                                  "flag":  "🇺🇸",
-                                                  "name":  "United States",
-                                                  "law":  "Community \u0026 equitable distribution"
-                                              },
-                                              {
-                                                  "flag":  "🇬🇧",
-                                                  "name":  "United Kingdom",
-                                                  "law":  "MCA 1973 Section 25"
-                                              },
-                                              {
-                                                  "flag":  "🇩🇪",
-                                                  "name":  "Germany",
-                                                  "law":  "Zugewinngemeinschaft"
-                                              },
-                                              {
-                                                  "flag":  "🇫🇷",
-                                                  "name":  "France",
-                                                  "law":  "Communauté réduite aux acquêts"
-                                              },
-                                              {
-                                                  "flag":  "🇪🇸",
-                                                  "name":  "Spain",
-                                                  "law":  "Régimen de gananciales"
-                                              },
-                                              {
-                                                  "flag":  "🇹🇷",
-                                                  "name":  "Turkey",
-                                                  "law":  "TMK Madde 179"
-                                              }
-                                          ]
-                        },
-    "attorneyPrep":  {
-                         "title":  "Go into your lawyer meeting prepared",
-                         "sub":  "Instead of scattered notes, bring a structured financial overview — assets, debts, income, children, and scenarios in one professional report.",
-                         "cta":  "Create My Financial Overview",
-                         "note":  "Financial modeling, not legal advice."
-                     },
-    "houseDemo":  {
-                      "title":  "The house is usually the biggest decision.",
-                      "sub":  "See the financial difference between keeping, selling, or transferring it.",
-                      "sliderLabel":  "Home value",
-                      "iKeep":  "I Keep It",
-                      "theyKeep":  "They Keep It",
-                      "weSell":  "We Sell",
-                      "netPosition":  "Net position",
-                      "fullAnalysis":  "Full house analysis →",
-                      "note":  "Simplified model — assumes 3% appreciation, 5% investment return, 6% sale costs.",
-                      "ctaFull":  "Get Your Full Analysis →",
-                      "best":  "Best",
-                      "inYears":  "in 5 yrs",
-                      "previewNote":  "This is a simplified preview. Full analysis uses AI and your jurisdiction\u0027s laws.",
-                      "sliderMax":  "$2M",
-                      "sliderMin":  "$100K"
-                  },
-    "waitlist":  {
-                     "placeholder":  "Your email address",
-                     "cta":  "Join the waitlist",
-                     "success":  "You\u0027re on the list. We\u0027ll be in touch.",
-                     "duplicate":  "You\u0027re already on the list."
-                 },
-    "dashboard":  {
-                      "greeting":  {
-                                       "morning":  "Good morning",
-                                       "afternoon":  "Good afternoon",
-                                       "evening":  "Good evening"
-                                   },
-                      "netWorthNow":  "Net Worth Now",
-                      "bestYear10":  "Best 10-Yr Outcome",
-                      "monthlyCashFlow":  "Monthly Cash Flow",
-                      "riskScore":  "Risk Score",
-                      "readyTitle":  "Ready to run your analysis",
-                      "readyDesc":  "Your financial data is entered. Select a scenario to run the AI-powered projection.",
-                      "analyzePrefix":  "Analyze: ",
-                      "buildScenarios":  "Build scenarios",
-                      "projection":  "10-Year Net Worth Projection",
-                      "scenarioComparison":  "Scenario Comparison",
-                      "keyRisks":  "Key Risk Factors",
-                      "analyzeOffer":  "Analyze New Offer",
-                      "downloadPDF":  "Download PDF Report",
-                      "editAssets":  "Edit Assets",
-                      "upgradeToRun":  "Upgrade to run AI analysis →",
-                      "scenarios":  "Scenarios",
-                      "scenariosDesc":  "Compare different settlement outcomes",
-                      "noScenarios":  "No scenarios yet",
-                      "noScenariosDesc":  "Create your first scenario to compare settlement outcomes."
-                  },
-    "sidebar":  {
-                    "dashboard":  "Dashboard",
-                    "scenarios":  "Scenarios",
-                    "report":  "Report",
-                    "settings":  "Settings",
-                    "upgradeTitle":  "Upgrade to Clarified",
-                    "upgradeDesc":  "Get your first AI analysis",
-                    "upgradeButton":  "Upgrade"
-                },
-    "settings":  {
-                     "navAccount":  "Account",
-                     "navBilling":  "Billing",
-                     "navPrivacy":  "Privacy",
-                     "navSecurity":  "Security",
-                     "navNotifications":  "Notifications",
-                     "accountTitle":  "Account Settings",
-                     "accountDesc":  "Manage your profile and preferences.",
-                     "yourName":  "Your Name",
-                     "profile":  "Profile",
-                     "fullName":  "Full Name",
-                     "email":  "Email",
-                     "emailHint":  "To change your email, contact support@settlelens.com",
-                     "language":  "Preferred Language",
-                     "country":  "Country",
-                     "state":  "State",
-                     "selectState":  "Select state",
-                     "savedOk":  "Changes saved.",
-                     "savedFail":  "Failed to save. Please try again.",
-                     "saving":  "Saving...",
-                     "saveChanges":  "Save Changes",
-                     "changePassword":  "Change Password",
-                     "currentPassword":  "Current Password",
-                     "newPassword":  "New Password",
-                     "confirmPassword":  "Confirm New Password",
-                     "pwNoMatch":  "Passwords do not match.",
-                     "pwTooShort":  "Password must be at least 8 characters.",
-                     "pwUpdating":  "Updating...",
-                     "updatePassword":  "Update Password",
-                     "pwUpdated":  "Password updated successfully.",
-                     "billingTitle":  "Billing",
-                     "billingDesc":  "Manage your subscription and billing information.",
-                     "loading":  "Loading...",
-                     "currentPlan":  "Current Plan",
-                     "accessUntil":  "Access until:",
-                     "upgrade":  "Upgrade",
-                     "subscription":  "Subscription",
-                     "subscriptionNote":  "Your subscription renews monthly. To update payment details or view invoices, use the Paddle customer portal.",
-                     "managePayment":  "Manage Payment Details",
-                     "cancelSub":  "Cancel Subscription",
-                     "cancelConfirmMsg":  "Are you sure you want to cancel? You will lose access to your plan features at the end of the current billing period.",
-                     "canceling":  "Canceling...",
-                     "yesCancelSub":  "Yes, Cancel Subscription",
-                     "keepSub":  "Keep Subscription",
-                     "cancelSuccess":  "Subscription cancellation requested. You will retain access until the end of the billing period.",
-                     "cancelFail":  "Failed to cancel. Please contact support@settlelens.com.",
-                     "onPlanDiscovery":  "Upgrade to access financial analyses and projections.",
-                     "onPlanClarified":  "Your one-time access is active until the expiry date above.",
-                     "viewPlans":  "View Plans",
-                     "paddleNote":  "Payments are processed by Paddle. SettleLens never stores your card details. For billing questions, contact support@settlelens.com.",
-                     "privacyTitle":  "Privacy \u0026 Data",
-                     "privacyDesc":  "Manage your data, consents, and account deletion.",
-                     "downloadTitle":  "Download Your Data",
-                     "downloadDesc":  "Export all your SettleLens data (profile, assets, debts, scenarios, analyses) as a JSON file. This is your right under GDPR Article 20 (data portability).",
-                     "exporting":  "Preparing export...",
-                     "exportJson":  "Export as JSON",
-                     "exportOk":  "Your data has been downloaded.",
-                     "exportFail":  "Export failed. Please try again or contact support.",
-                     "consentTitle":  "Consent Management",
-                     "consentTerms":  "Service Terms \u0026 Privacy Policy",
-                     "consentTermsNote":  "Required for service. Accepted at registration. Contact support@settlelens.com to withdraw.",
-                     "consentMarketing":  "Marketing Communications",
-                     "consentMarketingNote":  "Receive product updates and tips via email. You can change this at any time.",
-                     "marketingEnabled":  "Marketing emails enabled.",
-                     "marketingDisabled":  "Marketing emails disabled.",
-                     "marketingFail":  "Failed to update preference.",
-                     "dangerZone":  "Danger Zone",
-                     "deleteDesc1":  "Deleting your account will deactivate it immediately. All your financial data (assets, debts, scenarios, analyses) will be permanently deleted within 30 days. This action cannot be undone.",
-                     "deleteDesc2":  "You can reactivate your account within 30 days by contacting support@settlelens.com.",
-                     "deleteMyAccount":  "Delete My Account",
-                     "deleteTitle":  "Delete Account",
-                     "deleteConfirmMsg":  "This action is permanent. Type DELETE to confirm.",
-                     "deletePlaceholder":  "Type DELETE",
-                     "deleting":  "Deleting...",
-                     "deleteBtn":  "Delete Account",
-                     "cancel":  "Cancel",
-                     "deleteFail":  "Account deletion failed. Please contact support@settlelens.com.",
-                     "securityTitle":  "Security Log",
-                     "securityDesc":  "A record of key actions on your account.",
-                     "trustTitle":  "Your data is private.",
-                     "trustDesc":  "No Anthropic employee, SettleLens team member, or third party has accessed your financial data. Only you can see your scenarios, assets, and reports.",
-                     "thirdPartyTitle":  "Third-Party Access",
-                     "thirdPartyNone":  "None",
-                     "thirdPartyNote":  "SettleLens does not share your financial data with any third parties. Payments are processed by Paddle (Paddle never sees your financial scenario data).",
-                     "activityTitle":  "Your Data Activity Log",
-                     "noActivity":  "No account activity recorded yet.",
-                     "activityFooter":  "This log shows key account events. Detailed server access logs are retained for security purposes and are not displayed here.",
-                     "notificationsTitle":  "Notifications",
-                     "notificationsDesc":  "Manage how SettleLens communicates with you.",
-                     "emailNotificationsTitle":  "Email Notifications",
-                     "notifMarketing":  "Product updates \u0026 tips",
-                     "notifMarketingDesc":  "Receive tips, feature announcements, and divorce planning guides.",
-                     "notifSecurity":  "Security alerts",
-                     "notifSecurityDesc":  "Account login, password changes, and audit events. Always on.",
-                     "notifMarketingEnabled":  "Email updates enabled.",
-                     "notifMarketingDisabled":  "Email updates disabled.",
-                     "notifMarketingFail":  "Failed to update preference."
-                 },
-    "onboarding_form":  {
-                            "step1":  {
-                                          "country":  "Country",
-                                          "selectCountry":  "Select country…",
-                                          "state":  "State",
-                                          "bundesland":  "Bundesland",
-                                          "il":  "Province",
-                                          "region":  "Region",
-                                          "selectRegion":  "Select…",
-                                          "communityProperty":  "Community property state — assets acquired during marriage split 50/50.",
-                                          "marriageYear":  "Year of marriage",
-                                          "currencyNote":  "Currency: {currency} — applied automatically to all calculations."
-                                      },
-                            "step2":  {
-                                          "assetName":  "Asset name",
-                                          "assetNamePlaceholder":  "e.g. Family Home",
-                                          "category":  "Category",
-                                          "ownedBy":  "Owned by",
-                                          "joint":  "Joint",
-                                          "me":  "Me",
-                                          "spouse":  "Spouse",
-                                          "currentValue":  "Current value",
-                                          "purchasePrice":  "Purchase price",
-                                          "mortgageBalance":  "Mortgage balance",
-                                          "maritalAsset":  "Marital asset",
-                                          "addAsset":  "Add asset",
-                                          "totalAssets":  "Total assets",
-                                          "totalMortgage":  "Total mortgage",
-                                          "netAssets":  "Net assets",
-                                          "cryptoWarning":  "Crypto valuations are highly volatile. Professional appraisal is recommended for divorce proceedings.",
-                                          "cryptoToken":  "Token symbol (e.g. BTC, ETH)",
-                                          "cryptoQuantity":  "Quantity",
-                                          "cryptoWhere":  "Where is it held?",
-                                          "cryptoExchange":  "Exchange (Binance, Coinbase, etc.)",
-                                          "cryptoColdWallet":  "Cold wallet",
-                                          "cryptoDefi":  "DeFi protocol",
-                                          "cryptoPriceAtEntry":  "Price at purchase (optional)"
-                                      },
-                            "step3":  {
-                                          "hasDebts":  "Do you have any debts (other than mortgages already entered)?",
-                                          "yes":  "Yes",
-                                          "noSkip":  "No, skip",
-                                          "noDebts":  "No debts entered. Click Continue to proceed.",
-                                          "debtName":  "Debt name",
-                                          "debtNamePlaceholder":  "e.g. Visa Card",
-                                          "category":  "Category",
-                                          "ownedBy":  "Owned by",
-                                          "joint":  "Joint",
-                                          "me":  "Me",
-                                          "spouse":  "Spouse",
-                                          "balance":  "Balance",
-                                          "monthlyPayment":  "Monthly payment",
-                                          "interestRate":  "Interest rate (%)",
-                                          "addDebt":  "Add debt",
-                                          "totalBalance":  "Total balance",
-                                          "monthlyPayments":  "Monthly payments"
-                                      },
-                            "step4":  {
-                                          "myIncome":  "My Income",
-                                          "spouseIncome":  "Spouse / Partner Income",
-                                          "annualGross":  "Annual gross",
-                                          "annualNet":  "Annual net",
-                                          "employmentType":  "Employment type",
-                                          "otherIncome":  "Other annual income",
-                                          "otherIncomeHint":  "— rental, alimony, dividends, etc.",
-                                          "iDontKnow":  "I don\u0027t know",
-                                          "spouseUnknownNote":  "Spouse income will be marked as unknown. You can update this later. Projections will show an estimated range.",
-                                          "combinedNet":  "Combined household net income",
-                                          "monthly":  "Monthly",
-                                          "employed":  "Employed (salaried)",
-                                          "selfEmployed":  "Self-employed / Freelance",
-                                          "partTime":  "Part-time",
-                                          "retired":  "Retired",
-                                          "unemployed":  "Unemployed"
-                                      },
-                            "step5":  {
-                                          "hasChildren":  "Do you have any minor children (under 18)?",
-                                          "yes":  "Yes",
-                                          "noSkip":  "No, skip",
-                                          "noChildren":  "No children entered. Click Continue to proceed.",
-                                          "childNote":  "Enter each child\u0027s age and expected custody arrangement. This helps model child support projections.",
-                                          "age":  "Age",
-                                          "custody":  "Custody arrangement",
-                                          "addChild":  "Add child",
-                                          "custodyNote":  "Custody arrangements are assumptions for financial modeling only. Actual custody determinations are made by courts based on best interest of the child. Discuss custody with a qualified family law attorney.",
-                                          "joint5050":  "Joint 50/50",
-                                          "primaryMe":  "Primary — Me",
-                                          "primarySpouse":  "Primary — Spouse",
-                                          "otherTbd":  "Other / TBD"
-                                      },
-                            "step6":  {
-                                          "intro":  "Build up to 3 scenarios — compare different settlement assumptions side by side. Each scenario can have different house, alimony, and child support assumptions. You can edit these later from your dashboard.",
-                                          "scenarioLabel":  "Scenario {n}",
-                                          "scenarioName":  "Scenario name",
-                                          "scenarioNamePlaceholder":  "e.g. Best case",
-                                          "houseOutcome":  "House outcome",
-                                          "retirementSplit":  "Retirement / investment split — my share (%)",
-                                          "alimonyMonthly":  "Alimony / spousal support (monthly)",
-                                          "alimonyYears":  "Duration (years)",
-                                          "alimonyDirection":  "Direction",
-                                          "iReceive":  "I receive",
-                                          "iPay":  "I pay",
-                                          "childSupport":  "Child support (monthly)",
-                                          "disclaimer":  "These scenarios are financial models based on your inputs. They are not legal advice, court predictions, or guaranteed outcomes. Consult a qualified family law attorney before making any decisions.",
-                                          "scenarioA":  "Scenario A — My proposal",
-                                          "scenarioB":  "Scenario B — Spouse\u0027s proposal",
-                                          "scenarioC":  "Scenario C — Compromise",
-                                          "goToDashboard":  "Go to Dashboard →",
-                                          "iKeepHouse":  "I keep the house",
-                                          "spouseKeepsHouse":  "Spouse keeps the house",
-                                          "weSellHouse":  "We sell the house",
-                                          "noHouse":  "No house / not applicable"
-                                      }
-                        },
-    "blog":  {
-                 "title":  "Divorce Financial Planning Guides",
-                 "subtitle":  "Understand your financial options before you negotiate.",
-                 "disclaimerNote":  "For informational purposes only. Not legal or financial advice.",
-                 "empty":  "Articles coming soon. Check back shortly.",
-                 "backHome":  "Back to home",
-                 "ctaTitle":  "Ready to model your settlement?",
-                 "ctaDesc":  "Use SettleLens to compare scenarios and understand your financial position.",
-                 "ctaButton":  "Start Free Analysis",
-                 "allArticles":  "All articles",
-                 "disclaimerLabel":  "Disclaimer:",
-                 "disclaimerText":  "This article is for informational purposes only. SettleLens provides financial scenario modeling - not legal or financial advice. Always consult a qualified attorney before making settlement decisions.",
-                 "postCtaTitle":  "Model your settlement scenarios",
-                 "postCtaDesc":  "See the 10-year financial impact of different divorce decisions before you negotiate.",
-                 "postCtaButton":  "Start Free Analysis",
-                 "relatedArticles":  "Related Articles",
-                 "sidebarTitle":  "See your numbers",
-                 "sidebarDesc":  "Free financial scenario analysis - no legal advice.",
-                 "sidebarButton":  "Start Free"
-             },
-    "houseSimulator":  {
-                           "title":  "House Decision Simulator",
-                           "subtitle":  "The house is usually the biggest financial decision in a divorce. See the real numbers instantly.",
-                           "situationTitle":  "Your situation",
-                           "homeValue":  "Home value",
-                           "mortgage":  "Remaining mortgage",
-                           "monthlyPayment":  "Monthly mortgage payment",
-                           "myIncome":  "My annual income",
-                           "spouseIncome":  "Spouse annual income",
-                           "equity":  "Equity:",
-                           "note":  "Assumes {appreciation}% annual appreciation, {investmentReturn}% investment return, {saleCosts}% sale costs.",
-                           "nominalWarning":  "⚠️ Values are nominal (before inflation). Turkey\u0027s high inflation significantly affects real purchasing power — consult a financial advisor.",
-                           "fullPictureTitle":  "See your full financial picture",
-                           "fullPictureDesc":  "This simulator uses simplified assumptions. Your full analysis including debts, income, alimony, and 10-year projections requires your complete financial data.",
-                           "fullPictureButton":  "Create my personal analysis",
-                           "fullPictureFree":  "Free to start. No credit card required.",
-                           "disclaimer":  "This is a simplified model for illustrative purposes only. Actual outcomes depend on jurisdiction and legal agreements. Not legal or financial advice.",
-                           "iKeepLabel":  "I Keep the House",
-                           "spouseKeepsLabel":  "Spouse Keeps the House",
-                           "sellLabel":  "We Sell the House",
-                           "bestLabel":  "Best",
-                           "projectedNet":  "projected net position in 5 years",
-                           "equityAfterBuyout":  "Equity after spouse buyout:",
-                           "spouseBuyout":  "Spouse buyout cost:",
-                           "monthlyMortgage":  "Monthly mortgage:",
-                           "projectedValue5":  "Projected value in 5 yrs:",
-                           "equityPayout":  "Equity payout to you:",
-                           "estimatedRent":  "Estimated rent:",
-                           "invested5":  "If invested for 5 yrs:",
-                           "shareAfterCosts":  "Your share after costs:",
-                           "affordabilityWarning":  "⚠️ Monthly mortgage exceeds 43% of your income — lenders may not approve this",
-                           "hasMortgage":  "Is there a mortgage?",
-                           "mortgageYes":  "Yes, mortgage exists",
-                           "mortgageNo":  "No, purchased with cash",
-                           "mortgageNote":  "",
-                           "appreciationTitle":  "Housing Appreciation Scenario",
-                           "appreciationLow":  "Low ({pct}%/yr)",
-                           "appreciationMid":  "Mid ({pct}%/yr)",
-                           "appreciationHigh":  "High ({pct}%/yr)",
-                           "scenarioNote":  "Note: This tool provides illustrative comparisons only. Results are estimates and may differ significantly based on local market conditions, location, and legal agreements.",
-                           "trustNote":  "Sign up for full AI analysis — includes jurisdiction-specific formulas and 10-year projections."
-                       },
-    "report":  {
-                   "title":  "Download Your Report",
-                   "subtitle":  "A comprehensive PDF financial overview — organized for your attorney or personal review.",
-                   "includes":  "Report includes:",
-                   "item1":  "Net worth summary — assets, debts, and equity",
-                   "item2":  "Scenario comparison — all your settlement scenarios side by side",
-                   "item3":  "10-year financial projection per scenario",
-                   "item4":  "Alimony and child support estimate ranges",
-                   "item5":  "Key risk factors identified by the analysis",
-                   "item6":  "Financial positioning notes for negotiation preparation",
-                   "item7":  "Jurisdiction methodology note",
-                   "item8":  "Full legal disclaimer",
-                   "formatLabel":  "Format:",
-                   "formatValue":  "PDF · A4 · Watermarked \"For personal planning use only\"",
-                   "validLabel":  "Valid for:",
-                   "validValue":  "24 hours (re-generate anytime)",
-                   "generate":  "Generate \u0026 Download PDF",
-                   "generating":  "Generating your report…",
-                   "downloadAgain":  "Download again",
-                   "successMsg":  "Your report has opened in a new tab. If it didn\u0027t open, check your pop-up blocker.",
-                   "errorDefault":  "Something went wrong. Please try again.",
-                   "errorConnection":  "Connection error. Please check your internet and try again.",
-                   "secureNote":  "Your report is generated on demand and stored securely. Only you can access it. The link expires after 24 hours."
-               }
+  "meta": {
+    "siteName": "SettleLens",
+    "tagline": "See Your Settlement Clearly",
+    "description": "AI-powered financial modeling for divorce settlements. See your 10-year financial future across every scenario."
+  },
+  "nav": {
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "forLawyers": "For Lawyers",
+    "blog": "Blog",
+    "login": "Sign In",
+    "startFree": "Start Free Analysis",
+    "upgrade": "Upgrade",
+    "profile": "Profile",
+    "billing": "Billing",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "hero": {
+    "h1": "Know Exactly Where You Stand.\nBefore You Sign Anything.",
+    "h2": "AI-powered financial modeling for divorce. See your 10-year financial future across every settlement scenario — in minutes, not months.",
+    "cta": "Start Free Analysis",
+    "sub": "Takes 20 minutes. Prepare before you meet your attorney.",
+    "badge": "Financial Clarity for Divorce",
+    "subTagline": "Financial modeling, not legal advice."
+  },
+  "fearHook": {
+    "stat": "$15,000+",
+    "statLabel": "average divorce legal fees in the US",
+    "hook": "How much of that comes from entering negotiations without a clear financial picture?",
+    "cta": "See Your Financial Picture Free",
+    "stats": [
+      {
+        "num": "20 min",
+        "label": "to model your financial scenarios before meeting your attorney"
+      },
+      {
+        "num": "3 scenarios",
+        "label": "compare house, alimony, and full settlement outcomes side by side"
+      },
+      {
+        "num": "10 years",
+        "label": "projected financial outlook so you can make informed decisions"
+      }
+    ],
+    "prepNote": "Preparation tool — not a replacement for professional legal advice."
+  },
+  "howItWorks": {
+    "title": "Three Steps to Financial Clarity",
+    "steps": [
+      {
+        "n": "01",
+        "title": "Enter Your Financial Picture",
+        "desc": "Assets, debts, income, children. Secure, private, takes 20 minutes."
+      },
+      {
+        "n": "02",
+        "title": "Build Your Scenarios",
+        "desc": "Keep the house? Sell it? Let them have it? Model up to 3 outcomes."
+      },
+      {
+        "n": "03",
+        "title": "Get Your 10-Year Projection",
+        "desc": "AI analyzes your jurisdiction's laws and projects each scenario. Download the PDF."
+      }
+    ]
+  },
+  "features": {
+    "title": "Everything You Need to Negotiate From Strength",
+    "items": [
+      {
+        "title": "Every Scenario, Side by Side",
+        "desc": "See the 10-year financial impact of each choice before you decide."
+      },
+      {
+        "title": "Your Jurisdiction. Your Rules.",
+        "desc": "California community property? UK Section 25? German Zugewinn? SettleLens knows the formulas."
+      },
+      {
+        "title": "A Report Your Lawyer Respects",
+        "desc": "Professional PDF: asset breakdown, projection charts, negotiation strategy."
+      }
+    ]
+  },
+  "social": {
+    "title": "From People Who've Been Where You Are",
+    "quotes": [
+      {
+        "text": "I modeled my husband's offer in about 20 minutes. Turned out it looked good on paper but left me worse off by year 5. I renegotiated — and my attorney said I'd done half her work for her.",
+        "author": "Sarah M., 42 · California · Married 14 years"
+      },
+      {
+        "text": "The 10-year projection showed me that keeping the house would eat 60% of my take-home pay. I hadn't thought about it that way. I sold, invested the equity, and I'm genuinely better positioned now.",
+        "author": "James T., 51 · London · Two children"
+      },
+      {
+        "text": "I came in with a house simulator scenario printed out. My attorney looked at it and said 'this is exactly how I think about it.' Saved us probably two hours of billable time.",
+        "author": "Michelle K., 38 · Texas · Business owner"
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "plans": [
+      {
+        "id": "discovery",
+        "name": "Discovery",
+        "price": "Free",
+        "period": "forever",
+        "features": [
+          "Asset & debt inventory",
+          "Net worth summary",
+          "No AI analysis",
+          "Upgrade anytime"
+        ],
+        "cta": "Start Free"
+      },
+      {
+        "id": "clarified",
+        "name": "Scenario Package",
+        "price": "$19",
+        "period": "one-time · 30-day access",
+        "features": [
+          "3 AI-powered scenario analyses",
+          "Up to 3 settlement scenarios",
+          "Professional PDF report",
+          "10-year financial projections",
+          "30-day access"
+        ],
+        "cta": "Get Started"
+      },
+      {
+        "id": "strategist",
+        "name": "Process Package",
+        "price": "$149",
+        "period": "one-time · 6-month access",
+        "badge": "Best for full process",
+        "features": [
+          "Unlimited analyses",
+          "Unlimited scenarios",
+          "Premium PDF reports",
+          "10-year projections with inflation",
+          "6-month access"
+        ],
+        "cta": "Get Process Package"
+      },
+      {
+        "id": "professional",
+        "name": "Lawyer Edition",
+        "price": "$79",
+        "period": "per month",
+        "features": [
+          "Everything in Process Package",
+          "Attorney-ready Excel + PDF export",
+          "Multi-client management",
+          "Evidence organizer",
+          "Priority support"
+        ],
+        "cta": "Get Lawyer Edition"
+      }
+    ],
+    "footerNote": "All plans: Secure, private. Financial modeling, not legal advice. 7-day money-back guarantee on paid plans."
+  },
+  "finalCta": {
+    "title": "See Your Settlement Clearly",
+    "sub": "Join thousands who've walked into negotiations prepared.",
+    "cta": "Start Free Analysis",
+    "note": "No credit card required for basic analysis."
+  },
+  "footer": {
+    "disclaimer": "SettleLens provides financial modeling for informational purposes only. Not legal or financial advice. Always consult a qualified attorney.",
+    "links": {
+      "howItWorks": "How It Works",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "copyright": "© 2026 SettleLens. Financial modeling, not legal advice."
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "registerTitle": "Start your free analysis",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Your name",
+    "nameHint": "You can use a nickname or alias — your real name is not required.",
+    "loginCta": "Sign in",
+    "registerCta": "Create account",
+    "switchToLogin": "Already have an account? Sign in",
+    "switchToRegister": "Don't have an account? Sign up",
+    "googleCta": "Continue with Google",
+    "termsConsent": "I agree to the Terms of Service and Privacy Policy",
+    "dataConsent": "I consent to the processing of my personal data",
+    "marketingConsent": "I'd like to receive tips and product updates (optional)",
+    "forgotPassword": "Forgot your password?",
+    "confirmPassword": "Confirm password",
+    "creatingAccount": "Creating account...",
+    "checkEmail": "Check your email",
+    "checkEmailDesc": "We sent a confirmation link to your email. Please verify before signing in.",
+    "backToLogin": "Back to Sign In",
+    "registerQuote": "Financial clarity before you negotiate.",
+    "registerQuoteSub": "Financial modeling, not legal advice.",
+    "registerBullet1": "Takes 20 minutes to complete",
+    "registerBullet2": "Your data is private — only you can see it",
+    "registerBullet3": "Download a PDF report for your attorney",
+    "loginQuote": "See Your Settlement Clearly.",
+    "loginQuoteSub": "Financial modeling, not legal advice.",
+    "loginBullet1": "See your 10-year financial future across every scenario",
+    "loginBullet2": "Know what keeping the house actually costs over a decade",
+    "loginBullet3": "Walk into negotiations with numbers, not guesses",
+    "signingIn": "Signing in…",
+    "invalidCredentials": "Invalid email or password. Please try again.",
+    "or": "or",
+    "password_strength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    }
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "Where are you located?",
+        "subtitle": "We apply the financial formulas for your jurisdiction."
+      },
+      {
+        "title": "Your Assets",
+        "subtitle": "List everything you and your spouse own."
+      },
+      {
+        "title": "Your Debts",
+        "subtitle": "Mortgages, loans, credit cards — the full picture."
+      },
+      {
+        "title": "Income",
+        "subtitle": "Yours and your spouse's, gross and net."
+      },
+      {
+        "title": "Children",
+        "subtitle": "If applicable — ages and custody arrangement."
+      },
+      {
+        "title": "Build Your Scenarios",
+        "subtitle": "What are the possible outcomes? Let's model them."
+      }
+    ],
+    "next": "Continue",
+    "back": "Back",
+    "save": "Save & Continue",
+    "stepOf": "Step {current} of {total}"
+  },
+  "disclaimer": {
+    "short": "Not legal advice.",
+    "full": "SettleLens provides financial modeling for informational purposes only. Results are estimates based on publicly available legal formulas and do not constitute legal, tax, or financial advice. Always consult a qualified attorney before making any decisions."
+  },
+  "userScenarios": {
+    "title": "What decision are you trying to make?",
+    "sub": "SettleLens turns emotionally complex decisions into comparable financial scenarios.",
+    "cards": [
+      {
+        "icon": "🏠",
+        "title": "What happens if I keep the house?",
+        "desc": "Compare keeping, selling, or transferring the home — and see the long-term cash flow impact."
+      },
+      {
+        "icon": "⚖️",
+        "title": "Does this offer actually work for me?",
+        "desc": "Model the proposed split across assets, debts, and support payments to see 10-year financial outcomes."
+      },
+      {
+        "icon": "📋",
+        "title": "How do I prepare for my lawyer meeting?",
+        "desc": "Organize your assets, debts, income, and scenarios into a professional report — before the meeting."
+      }
+    ],
+    "cardCta": "Start free"
+  },
+  "whatItDoesNot": {
+    "title": "What SettleLens does — and what it doesn't",
+    "doesTitle": "What it does",
+    "doesNot": "What it doesn't",
+    "does": [
+      "Financial scenario modeling",
+      "Asset, debt, and income comparison",
+      "10-year cash flow projection",
+      "Support payment impact analysis",
+      "Attorney-ready financial summary"
+    ],
+    "not": [
+      "Legal advice",
+      "Court outcome prediction",
+      "Replacement for a lawyer",
+      "Guaranteed settlement figures",
+      "Complex or contested case decisions"
+    ],
+    "note": "Complex or high-risk cases require professional legal support.",
+    "link": "Learn about our limitations →"
+  },
+  "trust": {
+    "cards": [
+      { "icon": "🔒", "title": "Your data is never sold", "desc": "Financial data is never shared with advertisers or third parties. Ever." },
+      { "icon": "🧾", "title": "No sensitive data in logs", "desc": "Asset, income, and scenario data is never written to developer consoles or error logs." },
+      { "icon": "👤", "title": "Only you can see your data", "desc": "Supabase Row Level Security enforces that every query is scoped to your account." },
+      { "icon": "🗑️", "title": "Export or delete anytime", "desc": "Download all your data as JSON or permanently delete your account — no friction, no dark patterns." }
+    ],
+    "title": "Built for One of Life's Most Sensitive Moments",
+    "intro": "During divorce, people must share the most personal financial data of their lives. SettleLens is designed to earn and keep that trust.",
+    "s1_title": "What We Collect and Why",
+    "s1_li1": "Only what you enter: assets, debts, income, scenario data",
+    "s1_li2": "If you consent: anonymous analytics (PostHog)",
+    "s1_li3": "Never: advertising data, behavioral profiles",
+    "s2_title": "How AI Analysis Works",
+    "s2_p1": "AI is a calculator, not a judge. It analyzes your scenario, generates projections, and flags risk factors. It does not make decisions, predict outcomes, or speak on your behalf.",
+    "s2_p2": "Your data is not stored at Anthropic and is not used for model training.",
+    "s3_title": "What AI Does NOT Do",
+    "s3_li1": "Does not predict court outcomes",
+    "s3_li2": "Does not say \"accept\" or \"reject\" any offer",
+    "s3_li3": "Does not provide legal advice",
+    "s3_li4": "Does not suggest hiding or transferring assets",
+    "s3_li5": "Does not say you don't need a lawyer",
+    "s4_title": "Your Data Rights",
+    "s4_export": "Export",
+    "s4_export_link": "Settings → Privacy → Download JSON",
+    "s4_delete": "Delete account",
+    "s4_delete_link": "Settings → Privacy → Delete Account (permanent within 30 days)",
+    "s4_gdpr": "GDPR and KVKK compliant by design.",
+    "s5_title": "Payment Security",
+    "s5_p": "Payments are processed by Paddle (Merchant of Record). Card details never reach SettleLens servers. Subscription management is handled in the Paddle portal.",
+    "s6_title": "Who Can See Your Data",
+    "s6_highlight": "No Anthropic employee, SettleLens team member, or third party has accessed your financial data. Only you can see your scenarios, assets, and reports.",
+    "s6_rls": "Supabase Row Level Security: every query enforces auth.uid() = user_id."
+  },
+  "countryCoverage": {
+    "title": "Built for your jurisdiction",
+    "sub": "SettleLens applies country-specific property regime assumptions for financial scenario modeling.",
+    "note": "Local judicial discretion, hidden assets, and complex agreements may produce different outcomes. Always verify with a qualified attorney.",
+    "link": "View methodology for your country →",
+    "countries": [
+      {
+        "flag": "🇺🇸",
+        "name": "United States",
+        "law": "Community & equitable distribution"
+      },
+      {
+        "flag": "🇬🇧",
+        "name": "United Kingdom",
+        "law": "MCA 1973 Section 25"
+      },
+      {
+        "flag": "🇩🇪",
+        "name": "Germany",
+        "law": "Zugewinngemeinschaft"
+      },
+      {
+        "flag": "🇫🇷",
+        "name": "France",
+        "law": "Communauté réduite aux acquêts"
+      },
+      {
+        "flag": "🇪🇸",
+        "name": "Spain",
+        "law": "Régimen de gananciales"
+      },
+      {
+        "flag": "🇹🇷",
+        "name": "Turkey",
+        "law": "TMK 218-241"
+      }
+    ]
+  },
+  "attorneyPrep": {
+    "title": "Go into your lawyer meeting prepared",
+    "sub": "Instead of scattered notes, bring a structured financial overview — assets, debts, income, children, and scenarios in one professional report.",
+    "cta": "Create My Financial Overview",
+    "note": "Financial modeling, not legal advice."
+  },
+  "houseDemo": {
+    "title": "The house is usually the biggest decision.",
+    "sub": "See the financial difference between keeping, selling, or transferring it.",
+    "sliderLabel": "Home value",
+    "iKeep": "I Keep It",
+    "theyKeep": "They Keep It",
+    "weSell": "We Sell",
+    "netPosition": "Net position",
+    "fullAnalysis": "Full house analysis →",
+    "note": "Simplified model — assumes {appreciation}% appreciation, {investmentReturn}% investment return, {saleCosts}% sale costs.",
+    "ctaFull": "Get Your Full Analysis →",
+    "best": "Best",
+    "inYears": "in 5 yrs",
+    "previewNote": "This is a simplified preview. Full analysis uses AI and your jurisdiction's laws.",
+    "sliderMax": "$2M",
+    "sliderMin": "$100K"
+  },
+  "waitlist": {
+    "placeholder": "Your email address",
+    "cta": "Join the waitlist",
+    "success": "You're on the list. We'll be in touch.",
+    "duplicate": "You're already on the list."
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "netWorthNow": "Net Worth Now",
+    "bestYear10": "Best 10-Yr Outcome",
+    "monthlyCashFlow": "Monthly Cash Flow",
+    "riskScore": "Risk Score",
+    "readyTitle": "Ready to run your analysis",
+    "readyDesc": "Your financial data is entered. Select a scenario to run the AI-powered projection.",
+    "analyzePrefix": "Analyze: ",
+    "buildScenarios": "Build scenarios",
+    "projection": "10-Year Net Worth Projection",
+    "scenarioComparison": "Scenario Comparison",
+    "keyRisks": "Key Risk Factors",
+    "analyzeOffer": "Analyze New Offer",
+    "downloadPDF": "Download PDF Report",
+    "editAssets": "Edit Assets",
+    "upgradeToRun": "Upgrade to run AI analysis →",
+    "upgradedTitle": "Your plan has been upgraded successfully!",
+    "upgradedDesc": "Premium features are now active. Run your first AI analysis below.",
+    "scenarios": "Scenarios",
+    "scenariosDesc": "Compare different settlement outcomes",
+    "noScenarios": "No scenarios yet",
+    "noScenariosDesc": "Create your first scenario to compare settlement outcomes.",
+    "discoveryNetWorthTitle": "Your Financial Overview",
+    "totalAssets": "Total Assets",
+    "totalDebts": "Total Debts",
+    "netWorthCalc": "Net Worth",
+    "discoveryUpgradeNote": "Upgrade to see your 10-year AI projection across all settlement scenarios.",
+    "discoveryUpgradeCTA": "See AI projections →",
+    "greeting_fallback": "there",
+    "evidenceOrganizerTitle": "Evidence Organizer",
+    "evidenceOrganizerDesc": "Your Professional plan includes the Evidence Organizer — a structured financial summary formatted for your legal team.",
+    "evidenceOrganizerCTA": "Download Attorney-Ready Report →",
+    "yearsOfMarriage": "{count, plural, one {# year of marriage} other {# years of marriage}}",
+    "planLabel": "{plan} plan",
+    "previewTitle": "Your Scenarios Are Ready",
+    "previewSubtitle": "Unlock to see your 10-year financial projection for each scenario.",
+    "lockedScenario": "Unlock to view",
+    "unlockTitle": "See your actual numbers",
+    "unlockDesc": "One-time payment. 14-day access. No subscription.",
+    "unlockCTA": "Unlock My Analysis — {price}"
+  },
+  "scenarioComparison": {
+    "metric": "Metric",
+    "recommended": "Recommended",
+    "best": "Best",
+    "lowest": "Lowest",
+    "perMonth": "/mo",
+    "netWorthNow": "Net Worth Now",
+    "year1": "Year 1",
+    "year3": "Year 3",
+    "year5": "Year 5",
+    "year10": "Year 10",
+    "monthlyCashFlow": "Monthly Cash Flow",
+    "riskScore": "Risk Score"
+  },
+  "projectionChart": {
+    "yrLabel": "Yr {v}",
+    "yearLabel": "Year {label}",
+    "ariaLabel": "10-year net worth projection chart: {scenarios}"
+  },
+  "scenario_offer": {
+    "title": "Analyze an Offer",
+    "subtitle": "Enter the terms of a settlement offer to see its projected 10-year financial impact.",
+    "offerSource": "Offer source",
+    "source_spouse_direct": "From my spouse directly",
+    "source_spouse_attorney": "From spouse's attorney",
+    "source_mediator": "From a mediator",
+    "source_other": "Other",
+    "houseOutcome": "House / property outcome",
+    "house_i_keep": "I keep the house",
+    "house_spouse_keeps": "Spouse keeps the house",
+    "house_sell": "We sell the house",
+    "house_not_applicable": "No house / not applicable",
+    "retirementShare": "My retirement / investment share (%)",
+    "alimonyMonthly": "Alimony / spousal support ($/mo)",
+    "alimonyYears": "Duration (years)",
+    "direction": "Direction",
+    "i_receive": "I receive",
+    "i_pay": "I pay",
+    "additionalDetails": "Additional offer details",
+    "optional": "optional — in your own words",
+    "additionalPlaceholder": "e.g. Spouse also proposes keeping the car, paying off the joint credit card...",
+    "analyzingOffer": "Analyzing offer…",
+    "analyzeButton": "Analyze This Offer →",
+    "saveError": "Could not save offer scenario. Please try again.",
+    "analysisFailed": "Analysis failed. Please try again.",
+    "assessment_favorable": "This offer projects a stronger financial outcome than your baseline",
+    "assessment_neutral": "This offer projects a similar financial outcome to your baseline",
+    "assessment_unfavorable": "This offer projects a weaker financial outcome than your baseline",
+    "yearDiff": "10-year difference",
+    "vsBaseline": "vs. your baseline",
+    "netWorthNow": "Net Worth Now",
+    "year10": "Year 10",
+    "riskScore": "Risk Score",
+    "keyDifferences": "Key differences from your baseline",
+    "pointsToDiscuss": "Points you may want to discuss",
+    "lawyerQuestions": "Questions to raise with your attorney",
+    "analyzeAnother": "Analyze another offer",
+    "backToDashboard": "Back to dashboard"
+  },
+  "scenario_detail": {
+    "scenarioTerms": "Scenario Terms",
+    "house": "House",
+    "retirementSplit": "Retirement split",
+    "toMe": "% to me",
+    "alimony": "Alimony",
+    "perMonth": "/mo",
+    "yr": " yr",
+    "i_receive": "I receive",
+    "i_pay": "I pay",
+    "childSupport": "Child support",
+    "netWorthNow": "Net Worth Now",
+    "year1": "Year 1",
+    "year5": "Year 5",
+    "year10": "Year 10",
+    "monthlyCashFlow": "Monthly Cash Flow",
+    "riskScore": "Risk Score",
+    "alimonyRange": "Alimony estimate range",
+    "childSupportEstimate": "Child support estimate",
+    "keyRisks": "Key Risks",
+    "financialNote": "Financial Positioning Note",
+    "rerunning": "Re-running…",
+    "rerunAnalysis": "Re-run analysis",
+    "analyzing": "Analyzing…",
+    "upgradeToAnalyze": "Upgrade to Analyze →",
+    "runAnalysis": "Run Analysis →",
+    "noAnalysisYet": "No analysis yet for this scenario.",
+    "discoveryUpgradeMsg": "AI analysis requires a paid plan. Upgrade to see your 10-year projections.",
+    "clarifiedRemaining": "1 AI analysis remaining on your Clarified plan.",
+    "clarifiedUsed": "You have used your 1 analysis. Upgrade to Strategist for unlimited analyses.",
+    "loadingHint": "Analyzing with Claude AI — this takes about 10–15 seconds…",
+    "tipNetWorthNow": "Your current net worth under this scenario: total assets minus total liabilities.",
+    "tipYear1": "Projected net worth after 1 year, accounting for alimony, child support, and asset changes.",
+    "tipYear5": "Projected net worth after 5 years with compounding effects of this scenario.",
+    "tipYear10": "Long-term projected net worth after 10 years — the most meaningful comparison metric.",
+    "tipMonthlyCashFlow": "Estimated monthly income minus expenses (mortgage, support payments, living costs) under this scenario.",
+    "tipRiskScore": "Financial vulnerability score from 1–10. Higher means greater uncertainty or pressure in this scenario.",
+    "riskLow": "Low",
+    "riskMedium": "Medium",
+    "riskHigh": "High",
+    "errorUpgrade": "An active plan is required to run analysis. Please upgrade.",
+    "errorLimitReached": "You have used your analysis quota. Upgrade to Strategist for unlimited analyses.",
+    "errorBusy": "The server is busy. Please try again in a moment.",
+    "errorNetwork": "Please check your internet connection and try again."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "scenarios": "Scenarios",
+    "report": "Report",
+    "settings": "Settings",
+    "upgradeTitle": "Upgrade to Clarified",
+    "upgradeDesc": "Get your first AI analysis",
+    "upgradeButton": "Upgrade"
+  },
+  "settings": {
+    "navAccount": "Account",
+    "navBilling": "Billing",
+    "navPrivacy": "Privacy",
+    "navSecurity": "Security",
+    "navNotifications": "Notifications",
+    "navFinancialData": "Financial Data",
+    "accountTitle": "Account Settings",
+    "accountDesc": "Manage your profile and preferences.",
+    "yourName": "Your Name",
+    "profile": "Profile",
+    "fullName": "Full Name",
+    "email": "Email",
+    "emailHint": "To change your email, contact support@settlelens.com",
+    "language": "Preferred Language",
+    "country": "Country",
+    "state": "State",
+    "selectState": "Select state",
+    "savedOk": "Changes saved.",
+    "savedFail": "Failed to save. Please try again.",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "pwNoMatch": "Passwords do not match.",
+    "pwTooShort": "Password must be at least 8 characters.",
+    "pwCurrentRequired": "Please enter your current password.",
+    "pwCurrentWrong": "Current password is incorrect.",
+    "pwUpdating": "Updating...",
+    "updatePassword": "Update Password",
+    "pwUpdated": "Password updated successfully.",
+    "billingTitle": "Billing",
+    "billingDesc": "Manage your subscription and billing information.",
+    "loading": "Loading...",
+    "currentPlan": "Current Plan",
+    "accessUntil": "Access until:",
+    "upgrade": "Upgrade",
+    "subscription": "Subscription",
+    "subscriptionNote": "Your subscription renews monthly. To update payment details or view invoices, use the Paddle customer portal.",
+    "managePayment": "Manage Payment Details",
+    "cancelSub": "Cancel Subscription",
+    "cancelConfirmMsg": "Are you sure you want to cancel? You will lose access to your plan features at the end of the current billing period.",
+    "canceling": "Canceling...",
+    "yesCancelSub": "Yes, Cancel Subscription",
+    "keepSub": "Keep Subscription",
+    "cancelSuccess": "Subscription cancellation requested. You will retain access until the end of the billing period.",
+    "cancelFail": "Failed to cancel. Please contact support@settlelens.com.",
+    "onPlanDiscovery": "Upgrade to access financial analyses and projections.",
+    "onPlanClarified": "Your one-time access is active until the expiry date above.",
+    "viewPlans": "View Plans",
+    "paddleNote": "Payments are processed by Paddle. SettleLens never stores your card details. For billing questions, contact support@settlelens.com.",
+    "daysRemaining": "{days} days remaining",
+    "plans": {
+      "discovery": "Discovery",
+      "clarified": "Clarified",
+      "strategist": "Strategist",
+      "professional": "Professional",
+      "price_discovery": "Free",
+      "price_clarified": "$29 one-time",
+      "price_strategist": "$39/month",
+      "price_professional": "$99/month"
+    },
+    "privacyTitle": "Privacy & Data",
+    "privacyDesc": "Manage your data, consents, and account deletion.",
+    "downloadTitle": "Download Your Data",
+    "downloadDesc": "Export all your SettleLens data (profile, assets, debts, scenarios, analyses) as a JSON file. This is your right under GDPR Article 20 (data portability).",
+    "exporting": "Preparing export...",
+    "exportJson": "Export as JSON",
+    "exportOk": "Your data has been downloaded.",
+    "exportFail": "Export failed. Please try again or contact support.",
+    "consentTitle": "Consent Management",
+    "consentTerms": "Service Terms & Privacy Policy",
+    "consentTermsNote": "Required for service. Accepted at registration. Contact support@settlelens.com to withdraw.",
+    "consentMarketing": "Marketing Communications",
+    "consentMarketingNote": "Receive product updates and tips via email. You can change this at any time.",
+    "marketingEnabled": "Marketing emails enabled.",
+    "marketingDisabled": "Marketing emails disabled.",
+    "marketingFail": "Failed to update preference.",
+    "dangerZone": "Danger Zone",
+    "deleteDesc1": "Deleting your account will deactivate it immediately. All your financial data (assets, debts, scenarios, analyses) will be permanently deleted within 30 days. This action cannot be undone.",
+    "deleteDesc2": "You can reactivate your account within 30 days by contacting support@settlelens.com.",
+    "deleteMyAccount": "Delete My Account",
+    "deleteTitle": "Delete Account",
+    "deleteConfirmMsg": "This action is permanent. Type DELETE to confirm.",
+    "deletePlaceholder": "Type DELETE",
+    "deleting": "Deleting...",
+    "deleteBtn": "Delete Account",
+    "cancel": "Cancel",
+    "deleteFail": "Account deletion failed. Please contact support@settlelens.com.",
+    "securityTitle": "Security Log",
+    "securityDesc": "A record of key actions on your account.",
+    "trustTitle": "Your data is private.",
+    "trustDesc": "No Anthropic employee, SettleLens team member, or third party has accessed your financial data. Only you can see your scenarios, assets, and reports.",
+    "thirdPartyTitle": "Third-Party Access",
+    "thirdPartyNone": "None",
+    "thirdPartyNote": "SettleLens does not share your financial data with any third parties. Payments are processed by Paddle (Paddle never sees your financial scenario data).",
+    "activityTitle": "Your Data Activity Log",
+    "noActivity": "No account activity recorded yet.",
+    "loadMore": "Load more",
+    "activityFooter": "This log shows key account events. Detailed server access logs are retained for security purposes and are not displayed here.",
+    "notificationsTitle": "Notifications",
+    "notificationsDesc": "Manage how SettleLens communicates with you.",
+    "emailNotificationsTitle": "Email Notifications",
+    "notifMarketing": "Product updates & tips",
+    "notifMarketingDesc": "Receive tips, feature announcements, and divorce planning guides.",
+    "notifSecurity": "Security alerts",
+    "notifSecurityDesc": "Account login, password changes, and audit events. Always on.",
+    "notifMarketingEnabled": "Email updates enabled.",
+    "notifMarketingDisabled": "Email updates disabled.",
+    "notifMarketingFail": "Failed to update preference."
+  },
+  "onboarding_form": {
+    "step1": {
+      "country": "Country",
+      "selectCountry": "Select country…",
+      "state": "State",
+      "bundesland": "Bundesland",
+      "il": "Province",
+      "region": "Region",
+      "selectRegion": "Select…",
+      "communityProperty": "Community property state — assets acquired during marriage split 50/50.",
+      "cataloniaNotice": "Note: Catalonia, the Basque Country, and Aragon follow separate property regimes (not the standard Gananciales system). SettleLens applies general Spanish rules — please verify specific assumptions with a local lawyer.",
+      "marriageYear": "Year of marriage",
+      "currencyNote": "Currency: {currency} — applied automatically to all calculations.",
+      "riskQuestion": "Do any of these apply to your situation?",
+      "riskNote": "This helps us adjust our confidence level. It does not prevent you from continuing.",
+      "riskTitle": "Professional Support May Be Required",
+      "riskNotice": "This situation may require professional legal advice. SettleLens can help you organize financial scenarios, but please speak with a qualified lawyer or mediator before making any decisions.",
+      "incognitoTip": "For extra privacy, consider using a private or incognito browser window while entering your financial data."
+    },
+    "step2": {
+      "assetName": "Asset name",
+      "assetNamePlaceholder": "e.g. Family Home",
+      "category": "Category",
+      "ownedBy": "Owned by",
+      "joint": "Joint",
+      "me": "Me",
+      "spouse": "Spouse",
+      "currentValue": "Current value",
+      "purchasePrice": "Purchase price",
+      "mortgageBalance": "Mortgage balance",
+      "maritalAsset": "Marital asset",
+      "addAsset": "Add asset",
+      "totalAssets": "Total assets",
+      "totalMortgage": "Total mortgage",
+      "netAssets": "Net assets",
+      "cryptoWarning": "Crypto valuations are highly volatile. Professional appraisal is recommended for divorce proceedings.",
+      "cryptoToken": "Token symbol (e.g. BTC, ETH)",
+      "cryptoQuantity": "Quantity",
+      "cryptoWhere": "Where is it held?",
+      "cryptoExchange": "Exchange (Binance, Coinbase, etc.)",
+      "cryptoColdWallet": "Cold wallet",
+      "cryptoDefi": "DeFi protocol",
+      "cryptoPriceAtEntry": "Price at purchase (optional)",
+      "cat_real_estate": "Real Estate",
+      "cat_vehicle": "Vehicle",
+      "cat_bank": "Bank Account",
+      "cat_retirement": "Retirement/Investment",
+      "cat_business": "Business",
+      "cat_crypto": "Crypto",
+      "cat_other": "Other"
+    },
+    "step3": {
+      "hasDebts": "Do you have any debts (other than mortgages already entered)?",
+      "yes": "Yes",
+      "noSkip": "No, skip",
+      "noDebts": "No debts entered. Click Continue to proceed.",
+      "debtName": "Debt name",
+      "debtNamePlaceholder": "e.g. Visa Card",
+      "category": "Category",
+      "ownedBy": "Owned by",
+      "joint": "Joint",
+      "me": "Me",
+      "spouse": "Spouse",
+      "balance": "Balance",
+      "monthlyPayment": "Monthly payment",
+      "interestRate": "Interest rate (%)",
+      "addDebt": "Add debt",
+      "totalBalance": "Total balance",
+      "monthlyPayments": "Monthly payments",
+      "cat_mortgage": "Mortgage",
+      "cat_car_loan": "Car Loan",
+      "cat_credit_card": "Credit Card",
+      "cat_student_loan": "Student Loan",
+      "cat_personal_loan": "Personal Loan",
+      "cat_other": "Other"
+    },
+    "step4": {
+      "myIncome": "My Income",
+      "spouseIncome": "Spouse / Partner Income",
+      "annualGross": "Annual gross",
+      "annualNet": "Annual net",
+      "employmentType": "Employment type",
+      "otherIncome": "Other annual income",
+      "otherIncomeHint": "— rental, alimony, dividends, etc.",
+      "iDontKnow": "I don't know",
+      "spouseUnknownNote": "Spouse income will be marked as unknown. You can update this later. Projections will show an estimated range.",
+      "combinedNet": "Combined household net income",
+      "monthly": "Monthly",
+      "employed": "Employed (salaried)",
+      "selfEmployed": "Self-employed / Freelance",
+      "partTime": "Part-time",
+      "retired": "Retired",
+      "unemployed": "Unemployed",
+      "perYear": "/yr"
+    },
+    "step5": {
+      "hasChildren": "Do you have any minor children (under 18)?",
+      "yes": "Yes",
+      "noSkip": "No, skip",
+      "noChildren": "No children entered. Click Continue to proceed.",
+      "childNote": "Enter each child's age and expected custody arrangement. This helps model child support projections.",
+      "age": "Age",
+      "custody": "Custody arrangement",
+      "addChild": "Add child",
+      "noteLabel": "Note",
+      "custodyNote": "Custody arrangements are assumptions for financial modeling only. Actual custody determinations are made by courts based on best interest of the child. Discuss custody with a qualified family law attorney.",
+      "joint5050": "Joint 50/50",
+      "primaryMe": "Primary — Me",
+      "primarySpouse": "Primary — Spouse",
+      "otherTbd": "Other / TBD"
+    },
+    "step6": {
+      "intro": "Build up to 3 scenarios — compare different settlement assumptions side by side. Each scenario can have different house, alimony, and child support assumptions. You can edit these later from your dashboard.",
+      "scenarioLabel": "Scenario {n}",
+      "scenarioName": "Scenario name",
+      "scenarioNamePlaceholder": "e.g. Best case",
+      "houseOutcome": "House outcome",
+      "retirementSplit": "Retirement / investment split — my share (%)",
+      "alimonyMonthly": "Alimony / spousal support (monthly)",
+      "alimonyYears": "Duration (years)",
+      "alimonyDirection": "Direction",
+      "iReceive": "I receive",
+      "iPay": "I pay",
+      "childSupport": "Child support (monthly)",
+      "disclaimer": "These scenarios are financial models based on your inputs. They are not legal advice, court predictions, or guaranteed outcomes. Consult a qualified family law attorney before making any decisions.",
+      "scenarioA": "Scenario A — My proposal",
+      "scenarioB": "Scenario B — Spouse's proposal",
+      "scenarioC": "Scenario C — Compromise",
+      "goToDashboard": "Go to Dashboard →",
+      "iKeepHouse": "I keep the house",
+      "spouseKeepsHouse": "Spouse keeps the house",
+      "weSellHouse": "We sell the house",
+      "noHouse": "No house / not applicable"
+    }
+  },
+  "blog": {
+    "title": "Divorce Financial Planning Guides",
+    "subtitle": "Understand your financial options before you negotiate.",
+    "disclaimerNote": "For informational purposes only. Not legal or financial advice.",
+    "empty": "Articles coming soon. Check back shortly.",
+    "backHome": "Back to home",
+    "ctaTitle": "Ready to model your settlement?",
+    "ctaDesc": "Use SettleLens to compare scenarios and understand your financial position.",
+    "ctaButton": "Start Free Analysis",
+    "allArticles": "All articles",
+    "disclaimerLabel": "Disclaimer:",
+    "disclaimerText": "This article is for informational purposes only. SettleLens provides financial scenario modeling - not legal or financial advice. Always consult a qualified attorney before making settlement decisions.",
+    "postCtaTitle": "Model your settlement scenarios",
+    "postCtaDesc": "See the 10-year financial impact of different divorce decisions before you negotiate.",
+    "postCtaButton": "Start Free Analysis",
+    "relatedArticles": "Related Articles",
+    "sidebarTitle": "See your numbers",
+    "sidebarDesc": "Free financial scenario analysis - no legal advice.",
+    "sidebarButton": "Start Free"
+  },
+  "houseSimulator": {
+    "title": "House Decision Simulator",
+    "subtitle": "The house is usually the biggest financial decision in a divorce. See the real numbers instantly.",
+    "situationTitle": "Your situation",
+    "homeValue": "Home value",
+    "mortgage": "Remaining mortgage",
+    "monthlyPayment": "Monthly mortgage payment",
+    "myIncome": "My annual income",
+    "spouseIncome": "Spouse annual income",
+    "equity": "Equity:",
+    "note": "Assumes {appreciation}% annual appreciation, {investmentReturn}% investment return, {saleCosts}% sale costs.",
+    "nominalWarning": "⚠️ Values are nominal (before inflation). Turkey's high inflation significantly affects real purchasing power — consult a financial advisor.",
+    "fullPictureTitle": "See your full financial picture",
+    "fullPictureDesc": "This simulator uses simplified assumptions. Your full analysis including debts, income, alimony, and 10-year projections requires your complete financial data.",
+    "fullPictureButton": "Create my personal analysis",
+    "fullPictureFree": "Free to start. No credit card required.",
+    "disclaimer": "This is a simplified model for illustrative purposes only. Actual outcomes depend on jurisdiction and legal agreements. Not legal or financial advice.",
+    "iKeepLabel": "I Keep the House",
+    "spouseKeepsLabel": "Spouse Keeps the House",
+    "sellLabel": "We Sell the House",
+    "bestLabel": "Best",
+    "projectedNet": "projected net position in 5 years",
+    "equityAfterBuyout": "Equity after spouse buyout:",
+    "spouseBuyout": "Spouse buyout cost:",
+    "monthlyMortgage": "Monthly mortgage:",
+    "projectedValue5": "Projected value in 5 yrs:",
+    "equityPayout": "Equity payout to you:",
+    "estimatedRent": "Estimated rent:",
+    "invested5": "If invested for 5 yrs:",
+    "shareAfterCosts": "Your share after costs:",
+    "affordabilityWarning": "⚠️ Monthly mortgage exceeds 43% of your income — lenders may not approve this",
+    "hasMortgage": "Is there a mortgage?",
+    "mortgageYes": "Yes, mortgage exists",
+    "mortgageNo": "No, purchased with cash",
+    "mortgageNote": "",
+    "appreciationTitle": "Housing Appreciation Scenario",
+    "appreciationLow": "Low ({pct}%/yr)",
+    "appreciationMid": "Mid ({pct}%/yr)",
+    "appreciationHigh": "High ({pct}%/yr)",
+    "scenarioNote": "Note: This tool provides illustrative comparisons only. Results are estimates and may differ significantly based on local market conditions, location, and legal agreements.",
+    "trustNote": "Sign up for full AI analysis — includes jurisdiction-specific formulas and 10-year projections."
+  },
+  "report": {
+    "title": "Download Your Report",
+    "subtitle": "A comprehensive PDF financial overview — organized for your attorney or personal review.",
+    "includes": "Report includes:",
+    "item1": "Net worth summary — assets, debts, and equity",
+    "item2": "Scenario comparison — all your settlement scenarios side by side",
+    "item3": "10-year financial projection per scenario",
+    "item4": "Alimony and child support estimate ranges",
+    "item5": "Key risk factors identified by the analysis",
+    "item6": "Financial positioning notes for negotiation preparation",
+    "item7": "Jurisdiction methodology note",
+    "item8": "Full legal disclaimer",
+    "formatLabel": "Format:",
+    "formatValue": "PDF · A4 · Watermarked \"For personal planning use only\"",
+    "validLabel": "Valid for:",
+    "validValue": "24 hours (re-generate anytime)",
+    "generate": "Generate & Download PDF",
+    "generating": "Generating your report…",
+    "step1": "Gathering your financial data…",
+    "step2": "AI analysis in progress…",
+    "step3": "Generating PDF document…",
+    "downloadAgain": "Download again",
+    "successMsg": "Your report has opened in a new tab. If it didn't open, check your pop-up blocker.",
+    "errorDefault": "Something went wrong. Please try again.",
+    "errorConnection": "Connection error. Please check your internet and try again.",
+    "secureNote": "Your report is generated on demand and stored securely. Only you can access it. The link expires after 24 hours."
+  },
+  "upgrade": {
+    "title": "Upgrade Your Plan",
+    "subtitle": "Get the financial clarity you need for your divorce negotiations.",
+    "disclaimer": "Financial modeling for informational purposes only. Not legal or financial advice.",
+    "mostPopular": "Best for full process",
+    "currentPlan": "Current Plan",
+    "lowerTier": "Lower tier",
+    "openingCheckout": "Opening checkout...",
+    "upgradeTo": "Upgrade to {plan}",
+    "loadingError": "Payment system is loading. Please wait a moment and try again.",
+    "priceIdMissing": "Price configuration missing. Please refresh the page.",
+    "checkoutError": "Checkout error",
+    "footer": "Payments processed securely by Paddle. We never store your card details. Cancel anytime from Settings → Billing.",
+    "billingOneTime": "one-time",
+    "billingMonth": "/month",
+    "planClarifiedName": "Scenario Package",
+    "planClarifiedDesc": "30-day access to 3 financial analyses",
+    "planStrategistName": "Process Package",
+    "planStrategistDesc": "6-month access with unlimited scenarios",
+    "planProfessionalName": "Lawyer Edition",
+    "planProfessionalDesc": "Attorney-ready export for your legal team",
+    "f_clarified_1": "3 scenario analyses",
+    "f_clarified_2": "Professional PDF report",
+    "f_clarified_3": "10-year projections",
+    "f_clarified_4": "30-day access",
+    "f_strategist_1": "Unlimited scenario analyses",
+    "f_strategist_2": "Unlimited PDF reports",
+    "f_strategist_3": "Inflation scenario modeling",
+    "f_strategist_4": "10-year projections",
+    "f_strategist_5": "Offer comparison tool",
+    "f_professional_1": "Everything in Strategist",
+    "f_professional_2": "Attorney-ready financial export",
+    "f_professional_3": "Evidence organizer",
+    "f_professional_4": "Excel + indexed PDF output",
+    "f_professional_5": "Questions for your lawyer"
+  },
+  "forgot_password": {
+    "title": "Forgot your password?",
+    "subtitle": "Enter your email and we'll send you a reset link.",
+    "emailLabel": "Email address",
+    "submit": "Send reset link",
+    "sending": "Sending…",
+    "sentTitle": "Check your email",
+    "sentMsg": "If an account exists for {email}, you will receive a password reset link shortly.",
+    "backToLogin": "Back to Sign In"
+  },
+  "reset_password": {
+    "title": "Set new password",
+    "newPasswordLabel": "New password",
+    "confirmLabel": "Confirm new password",
+    "submit": "Set new password",
+    "saving": "Saving…",
+    "errMismatch": "Passwords do not match.",
+    "errTooShort": "Password must be at least 8 characters."
+  },
+  "about": {
+    "title": "About SettleLens",
+    "story_title": "The Story Behind the Name",
+    "story_p": "A lens to see through the settlement fog. Divorce is one of life's most financially stressful events — and most people never see the real numbers.",
+    "mission_title": "Our Mission",
+    "mission_p": "SettleLens's mission is to help people walk into lawyer meetings better prepared and to clarify their financial decisions. We don't replace a lawyer — we help you think more clearly before you see one.",
+    "responsibility_title": "Our Responsibility",
+    "responsibility_p": "SettleLens provides financial modeling — not legal prediction. Outputs are estimates based on what you enter and do not represent definitive legal entitlements. Always consult a qualified attorney."
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Your message has been received. We'll get back to you shortly."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "s1_title": "Who We Are",
+    "s1_p": "SettleLens is a financial modeling tool for divorce settlements. Contact: support@settlelens.com · privacy@settlelens.com",
+    "s2_title": "Data We Collect",
+    "s2_li1": "Account information: name, email, country",
+    "s2_li2": "Financial data: assets, debts, income (entered by you only)",
+    "s2_li3": "Usage data: analytics (with your consent)",
+    "s2_li4": "Payment data: processed by Paddle, card details never reach SettleLens",
+    "s3_title": "How We Use Data",
+    "s3_li1": "Service delivery: scenario analysis, report generation",
+    "s3_li2": "Account management and billing",
+    "s3_li3": "Service improvement (anonymous, aggregated)",
+    "s4_title": "AI Processing",
+    "s4_p": "Your financial scenarios are analyzed via Anthropic's Claude API. Your data is not stored at Anthropic and is not used for model training. Sensitive financial data is never logged to developer consoles.",
+    "s5_title": "Data Sharing",
+    "s5_paddle": "payment processing (Merchant of Record)",
+    "s5_supabase": "database (EU servers)",
+    "s5_resend": "email delivery",
+    "s5_posthog": "analytics (consent only)",
+    "s5_note": "We never sell or transfer your data to third parties for advertising purposes.",
+    "s6_title": "Your Rights",
+    "s6_li1": "Access: request a copy of your data",
+    "s6_li2": "Rectification: correct inaccurate data",
+    "s6_li3": "Erasure: delete your account and all data (permanent within 30 days)",
+    "s6_li4": "Portability: download your data in JSON format",
+    "s6_li5": "Objection: object to certain processing",
+    "s6_contact": "To exercise your rights: privacy@settlelens.com",
+    "s7_title": "Data Retention",
+    "s7_p": "Financial data is retained while your account is active. On account deletion, data is permanently deleted within 30 days. Audit logs are retained for 2 years for regulatory reasons (no personal data).",
+    "s8_title": "Security",
+    "s8_p": "Supabase Row Level Security: only you can access your own data. Data is encrypted in transit and at rest. Paddle manages payment security; SettleLens stores no card data.",
+    "s9_title": "Contact"
+  },
+  "cookie_policy": {
+    "title": "Cookie Policy",
+    "intro": "This page explains how SettleLens uses cookies. You can change your cookie preferences at any time.",
+    "essential_title": "Essential Cookies (Always Active)",
+    "analytics_title": "Analytics Cookies (Consent Required)",
+    "marketing_title": "Marketing Cookies",
+    "manage_title": "Manage Your Preferences",
+    "col_purpose": "Purpose",
+    "col_duration": "Duration",
+    "col_type": "Type",
+    "sb_purpose": "Supabase session",
+    "sb_duration": "Session",
+    "consent_purpose": "Cookie preference",
+    "consent_duration": "1 year",
+    "ph_purpose": "PostHog analytics",
+    "ph_duration": "1 year",
+    "marketing_not_used": "✓ Not used",
+    "manage_p": "You can update your preferences via the cookie banner at the bottom of the page, or by clearing 'sl_cookie_consent' from localStorage."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "s1": "Acceptance",
+    "s1_p": "By using SettleLens, you agree to these terms. If you do not agree, do not use the service.",
+    "s2": "Service Description",
+    "s2_warning": "IMPORTANT: SettleLens IS NOT LEGAL ADVICE. It provides financial modeling and scenario simulation only. Always consult a qualified attorney before making any decisions.",
+    "s2_p": "SettleLens enables users to build and compare financial scenarios based on data they enter. Results are estimates and do not determine legal entitlements.",
+    "s3": "User Accounts",
+    "s3_li1": "You are responsible for maintaining the confidentiality of your account.",
+    "s3_li2": "You must not share your account with others.",
+    "s3_li3": "Users must be 18 years or older.",
+    "s4": "Billing (Paddle)",
+    "s4_p": "Payments are processed by Paddle, who acts as Merchant of Record. For billing issues, contact Paddle support.",
+    "s5": "Cancellation & Refund",
+    "s5_li1": "Monthly subscriptions (Strategist / Professional) can be cancelled anytime.",
+    "s5_li2": "After cancellation, access continues until the end of the current period.",
+    "s5_li3": "Clarified (one-time): refund may be requested within 7 days.",
+    "s6": "Acceptable Use",
+    "s6_p": "You may not use the service for illegal purposes, with others' data without consent, or to abuse the system.",
+    "s7": "Intellectual Property",
+    "s7_p": "The SettleLens platform and content are copyright protected. Data you enter remains yours.",
+    "s8": "Disclaimer of Warranties",
+    "s8_p": "The service is provided 'as is'. No warranty of accuracy, completeness, or fitness for a particular purpose.",
+    "s9": "Limitation of Liability",
+    "s9_p": "SettleLens liability is limited to the monthly fee you paid. We are not liable for indirect or consequential damages.",
+    "s10": "Governing Law",
+    "s10_p": "These terms are governed by Turkish law. Disputes shall be resolved in Istanbul courts.",
+    "s11": "Changes",
+    "s11_p": "We may update these terms. Material changes will be notified by email."
+  }
 }

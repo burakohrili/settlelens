@@ -21,7 +21,35 @@ export async function POST(req: Request) {
 
   const supabase = createAdminClient();
   const eventType = event.event_type as string;
+  const eventId = event.event_id as string | undefined;
   const data = event.data as Record<string, unknown>;
+
+  // Idempotency: skip already-processed events using a sentinel action key
+  if (eventId) {
+    const sentinelAction = `paddle_evt_${eventId}`;
+    const { data: existing } = await (supabase as never as {
+      from: (t: string) => {
+        select: (s: string) => {
+          eq: (c: string, v: string) => {
+            limit: (n: number) => Promise<{ data: unknown[] | null }>;
+          };
+        };
+      };
+    })
+      .from("audit_log")
+      .select("id")
+      .eq("action", sentinelAction)
+      .limit(1);
+    if (existing && existing.length > 0) {
+      return Response.json({ received: true, skipped: "duplicate" });
+    }
+    // Record this event immediately so concurrent duplicates are rejected
+    await (supabase as never as {
+      from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
+    })
+      .from("audit_log")
+      .insert({ action: sentinelAction, metadata: { event_type: eventType }, user_visible: false });
+  }
 
   switch (eventType) {
     case "transaction.completed": {
@@ -36,10 +64,15 @@ export async function POST(req: Request) {
           paddle_customer_id: data.customer_id,
         };
 
-        // Clarified plan: 14-day expiry
+        // One-time plans: set expiry
         if (plan === "clarified") {
           const expiresAt = new Date();
-          expiresAt.setDate(expiresAt.getDate() + 14);
+          expiresAt.setDate(expiresAt.getDate() + 30);
+          updateData.plan_expires_at = expiresAt.toISOString();
+        }
+        if (plan === "strategist") {
+          const expiresAt = new Date();
+          expiresAt.setDate(expiresAt.getDate() + 180);
           updateData.plan_expires_at = expiresAt.toISOString();
         }
 
@@ -179,6 +212,125 @@ export async function POST(req: Request) {
 
         if (profileResult.data?.email) {
           await sendEmail({ type: "payment-failed", to: profileResult.data.email });
+        }
+      }
+      break;
+    }
+
+    case "subscription.past_due": {
+      // Subscription payment overdue — flag in audit log, send payment-failed email
+      const subId = data.id as string;
+      const pastDueProfile = await (supabase as never as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              single: () => Promise<{ data: { email: string; id: string } | null }>;
+            };
+          };
+        };
+      })
+        .from("profiles")
+        .select("email,id")
+        .eq("paddle_subscription_id", subId)
+        .single();
+
+      if (pastDueProfile.data) {
+        await (supabase as never as {
+          from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
+        })
+          .from("audit_log")
+          .insert({
+            user_id: pastDueProfile.data.id,
+            action: "subscription_past_due",
+            metadata: { subscription_id: subId },
+            user_visible: false,
+          });
+        await sendEmail({ type: "payment-failed", to: pastDueProfile.data.email });
+      }
+      break;
+    }
+
+    case "subscription.paused": {
+      // Subscription paused — downgrade to discovery and notify
+      const subId = data.id as string;
+      const pausedProfile = await (supabase as never as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              single: () => Promise<{ data: { email: string; id: string } | null }>;
+            };
+          };
+        };
+      })
+        .from("profiles")
+        .select("email,id")
+        .eq("paddle_subscription_id", subId)
+        .single();
+
+      if (pausedProfile.data) {
+        await (supabase as never as {
+          from: (t: string) => {
+            update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
+          };
+        })
+          .from("profiles")
+          .update({ plan_type: "discovery" })
+          .eq("paddle_subscription_id", subId);
+
+        await (supabase as never as {
+          from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
+        })
+          .from("audit_log")
+          .insert({
+            user_id: pausedProfile.data.id,
+            action: "subscription_paused",
+            metadata: { subscription_id: subId },
+            user_visible: false,
+          });
+
+        await sendEmail({ type: "subscription-cancelled", to: pausedProfile.data.email });
+      }
+      break;
+    }
+
+    case "refund.created": {
+      // Refund issued — downgrade to discovery
+      const customerId = (data.customer as Record<string, string> | null)?.id ?? (data.customer_id as string | undefined);
+      if (customerId) {
+        const refundProfile = await (supabase as never as {
+          from: (t: string) => {
+            select: (s: string) => {
+              eq: (c: string, v: string) => {
+                single: () => Promise<{ data: { id: string } | null }>;
+              };
+            };
+          };
+        })
+          .from("profiles")
+          .select("id")
+          .eq("paddle_customer_id", customerId)
+          .single();
+
+        if (refundProfile.data?.id) {
+          await (supabase as never as {
+            from: (t: string) => {
+              update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
+            };
+          })
+            .from("profiles")
+            .update({ plan_type: "discovery", paddle_subscription_id: null, plan_expires_at: null })
+            .eq("id", refundProfile.data.id);
+
+          await (supabase as never as {
+            from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
+          })
+            .from("audit_log")
+            .insert({
+              user_id: refundProfile.data.id,
+              action: "refund_processed",
+              metadata: { customer_id: customerId },
+              user_visible: false,
+            });
         }
       }
       break;

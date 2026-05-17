@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { locales, type Locale } from "@/i18n";
+import { locales, type Locale } from "@/routing";
 import { cn } from "@/lib/utils";
 
 const LANG_LABELS: Record<Locale, string> = {

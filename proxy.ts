@@ -70,8 +70,38 @@ export async function proxy(request: NextRequest) {
       // The auth guard itself lives in (app)/layout.tsx — this is only for cookie hygiene.
       await supabase.auth.getUser();
 
+      // Propagate locale cookie so i18n.ts always has a reliable source across
+      // client navigations (intlMiddleware is skipped for (app) routes).
+      const existingLocale =
+        request.cookies.get("SETTLELENS_LOCALE")?.value ??
+        request.cookies.get("NEXT_LOCALE")?.value;
+      if (existingLocale && (locales as readonly string[]).includes(existingLocale)) {
+        supabaseResponse.cookies.set("SETTLELENS_LOCALE", existingLocale, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 365,
+          sameSite: "lax",
+          httpOnly: false,
+        });
+      }
+
+      // Expose resolved locale to server-component pages via response header.
+      supabaseResponse.headers.set(
+        "x-locale",
+        existingLocale && (locales as readonly string[]).includes(existingLocale)
+          ? existingLocale
+          : defaultLocale
+      );
+
+      // Expose pathname to server-component layouts (used for onboarding redirect guard).
+      supabaseResponse.headers.set("x-pathname", pathname);
+
       return supabaseResponse;
     }
+  }
+
+  // API routes must not go through intlMiddleware (it would redirect /api/* to /en/api/*)
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next();
   }
 
   // Apply next-intl locale routing for all other (public) pages

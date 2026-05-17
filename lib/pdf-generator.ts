@@ -7,9 +7,10 @@ export async function generatePDF(html: string): Promise<Buffer> {
     executablePath:
       process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath()),
     headless: true,
+    timeout: 30_000,
   });
   const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "networkidle0" });
+  await page.setContent(html, { waitUntil: "networkidle0", timeout: 20_000 });
   const pdf = await page.pdf({
     format: "A4",
     margin: { top: "20mm", right: "20mm", bottom: "20mm", left: "20mm" },

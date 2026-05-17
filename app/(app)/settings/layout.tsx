@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { User, CreditCard, Shield, Lock, Bell } from "lucide-react";
+import { User, CreditCard, Shield, Lock, Bell, Database } from "lucide-react";
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
   const t = useTranslations("settings");
@@ -17,6 +17,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
     { href: `/${locale}/settings/privacy`, label: t("navPrivacy"), icon: Shield, exact: false },
     { href: `/${locale}/settings/security`, label: t("navSecurity"), icon: Lock, exact: false },
     { href: `/${locale}/settings/notifications`, label: t("navNotifications"), icon: Bell, exact: false },
+    { href: `/${locale}/settings/financial-data`, label: t("navFinancialData"), icon: Database, exact: false },
   ];
 
   return (

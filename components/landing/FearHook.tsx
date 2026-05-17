@@ -2,27 +2,10 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-
-function useCountUp(target: number, inView: boolean, duration = 2000) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const start = Date.now();
-    const timer = setInterval(() => {
-      const elapsed = Date.now() - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (progress >= 1) clearInterval(timer);
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
-  return count;
-}
 
 export function FearHook() {
   const t = useTranslations("fearHook");
@@ -30,7 +13,6 @@ export function FearHook() {
   const lang = useLocale();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const count = useCountUp(15000, inView);
 
   return (
     <section ref={ref} className="bg-[var(--cream)] py-24 px-4">
@@ -43,7 +25,7 @@ export function FearHook() {
           className="space-y-2"
         >
           <p className="font-mono text-7xl sm:text-8xl font-bold text-[var(--navy)]">
-            ${count.toLocaleString()}+
+            {t("stat")}
           </p>
           <p className="font-body text-lg text-[var(--brown)]">{t("statLabel")}</p>
         </motion.div>

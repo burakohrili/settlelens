@@ -29,7 +29,7 @@ export async function openCheckout(
     settings: {
       theme: "light",
       displayMode: "overlay",
-      successUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/dashboard?upgraded=1`,
+      successUrl: `${typeof window !== "undefined" ? window.location.origin : "https://settlelens.com"}/dashboard?upgraded=1`,
     },
   });
   if (onComplete) {

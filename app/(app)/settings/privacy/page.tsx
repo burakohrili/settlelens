@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
@@ -35,6 +35,8 @@ export default function PrivacyPage() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState("");
+  const modalRef = useRef<HTMLDivElement>(null);
+  const deleteTriggerRef = useRef<HTMLButtonElement>(null);
 
   // KVKK form
   const [kvkkSubject, setKvkkSubject] = useState("");
@@ -72,6 +74,30 @@ export default function PrivacyPage() {
     }
     load();
   }, [router, supabase]);
+
+  // Focus trap for delete modal
+  useEffect(() => {
+    if (!deleteModal) return;
+    const modal = modalRef.current;
+    if (!modal) return;
+    const FOCUSABLE = 'button:not([disabled]), input, [tabindex]:not([tabindex="-1"])';
+    const els = () => Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE));
+    els()[0]?.focus();
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setDeleteModal(false); setDeleteInput(""); setDeleteError("");
+        deleteTriggerRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = els();
+      const first = focusable[0]; const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [deleteModal]);
 
   const handleMarketingToggle = async () => {
     const newValue = !profile.marketing_consent;
@@ -298,6 +324,7 @@ export default function PrivacyPage() {
         <p className="text-sm text-[#8B7355]">{t("deleteDesc1")}</p>
         <p className="text-sm text-[#8B7355]">{t("deleteDesc2")}</p>
         <button
+          ref={deleteTriggerRef}
           onClick={() => setDeleteModal(true)}
           className="rounded-lg border border-[#E85252] px-5 py-2 text-sm font-semibold text-[#E85252] hover:bg-red-50 transition-colors"
         >
@@ -307,9 +334,15 @@ export default function PrivacyPage() {
 
       {/* Delete confirmation modal */}
       {deleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-[#E85252] mb-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" aria-hidden="false">
+          <div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-modal-title"
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+          >
+            <h3 id="delete-modal-title" className="text-lg font-bold text-[#E85252] mb-2">
               {t("deleteTitle")}
             </h3>
             <p className="text-sm text-[#8B7355] mb-4">{t("deleteConfirmMsg")}</p>
@@ -321,7 +354,7 @@ export default function PrivacyPage() {
               className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm mb-3 focus:border-[#E85252] focus:outline-none"
             />
             {deleteError && (
-              <p className="text-sm text-[#E85252] mb-3">{deleteError}</p>
+              <p role="alert" aria-live="polite" className="text-sm text-[#E85252] mb-3">{deleteError}</p>
             )}
             <div className="flex gap-3">
               <button
@@ -336,6 +369,7 @@ export default function PrivacyPage() {
                   setDeleteModal(false);
                   setDeleteInput("");
                   setDeleteError("");
+                  deleteTriggerRef.current?.focus();
                 }}
                 className="flex-1 rounded-lg border border-[#D4C5B0] py-2 text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE]"
               >
