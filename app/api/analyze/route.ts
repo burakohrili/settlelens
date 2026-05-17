@@ -97,8 +97,16 @@ export async function POST(req: NextRequest) {
   const hasHighRisk = Boolean(profile.has_high_risk_signals);
 
   // 5. Build prompt (sensitive data — never log to console)
+  const langInstruction = lang === "tr" ? "Tüm metin alanlarını (key_risks, negotiation_strategy, notes) TÜRKÇE yaz."
+    : lang === "de" ? "Alle Textfelder auf DEUTSCH schreiben."
+    : lang === "fr" ? "Écrire tous les champs texte en FRANÇAIS."
+    : lang === "es" ? "Escribir todos los campos de texto en ESPAÑOL."
+    : lang === "ar" ? "اكتب جميع حقول النص بالعربية."
+    : "Write all text fields in ENGLISH.";
+
   const systemPrompt = `You are SettleLens's financial modeling engine.
 RULES: Return ONLY valid JSON. No markdown. No preamble. No trailing text.
+${langInstruction}
 Include "Not legal or financial advice — for informational modeling only" in the notes field.
 Use jurisdiction-specific formulas only. Be conservative in projections.`;
 
