@@ -5,6 +5,8 @@ import { sanitizeAIOutput } from "@/lib/safety/ai-output-guard";
 import { getConfidenceLabel, CONFIDENCE_LABEL_COPY } from "@/lib/jurisdiction/confidence-labels";
 import { NextRequest } from "next/server";
 
+export const runtime = "edge";
+
 const anthropic = new Anthropic();
 
 export async function POST(req: NextRequest) {
@@ -148,11 +150,11 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   let aiResponse;
   try {
     const abortCtrl = new AbortController();
-    const abortTimer = setTimeout(() => abortCtrl.abort(), 8_000);
+    const abortTimer = setTimeout(() => abortCtrl.abort(), 25_000);
     try {
       aiResponse = await anthropic.messages.create(
         {
-          model: "claude-haiku-4-5-20251001",
+          model: "claude-sonnet-4-6",
           max_tokens: 1024,
           temperature: 0,
           system: systemPrompt,
