@@ -334,6 +334,7 @@
     "s5_p": "تتم معالجة المدفوعات بواسطة Paddle (Merchant of Record). لا تصل تفاصيل البطاقة أبدًا إلى خوادم SettleLens.",
     "s6_title": "من يمكنه رؤية بياناتك",
     "s6_highlight": "لم يصل أي موظف في Anthropic أو عضو في فريق SettleLens أو طرف ثالث إلى بياناتك المالية. أنت وحدك من يمكنه رؤية سيناريوهاتك وأصولك وتقاريرك.",
+    "link": "عرض صفحة الخصوصية والثقة الكاملة →",
     "s6_rls": "Supabase Row Level Security: كل استعلام يفرض auth.uid() = user_id."
   },
   "countryCoverage": {

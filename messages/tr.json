@@ -334,6 +334,7 @@
     "s5_p": "Ödemeler Paddle tarafından işlenir (Merchant of Record). Kart bilgileri hiçbir zaman SettleLens sunucularına ulaşmaz. Abonelik yönetimi Paddle portalında yapılır.",
     "s6_title": "Verilerinizi Kim Görebilir",
     "s6_highlight": "Hiçbir Anthropic çalışanı, SettleLens ekip üyesi veya üçüncü taraf finansal verilerinize erişmemiştir. Senaryolarınızı, varlıklarınızı ve raporlarınızı yalnızca siz görebilirsiniz.",
+    "link": "Tam gizlilik ve güven sayfamızı görüntüleyin →",
     "s6_rls": "Supabase Row Level Security: her sorgu auth.uid() = user_id koşulunu zorunlu kılar."
   },
   "countryCoverage": {

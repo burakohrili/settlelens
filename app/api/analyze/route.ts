@@ -152,7 +152,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
     try {
       aiResponse = await anthropic.messages.create(
         {
-          model: "claude-3-5-sonnet-20241022",
+          model: "claude-sonnet-4-6",
           max_tokens: 1024,
           temperature: 0,
           system: systemPrompt,

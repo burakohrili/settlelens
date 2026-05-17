@@ -334,6 +334,7 @@
     "s5_p": "Zahlungen werden von Paddle verarbeitet (Merchant of Record). Kartendaten erreichen niemals SettleLens-Server.",
     "s6_title": "Wer kann Ihre Daten sehen",
     "s6_highlight": "Kein Anthropic-Mitarbeiter, kein SettleLens-Teammitglied und keine dritte Partei hat auf Ihre Finanzdaten zugegriffen. Nur Sie können Ihre Szenarien, Vermögenswerte und Berichte sehen.",
+    "link": "Unsere vollständige Datenschutz- & Vertrauensseite anzeigen →",
     "s6_rls": "Supabase Row Level Security: Jede Abfrage erzwingt auth.uid() = user_id."
   },
   "countryCoverage": {

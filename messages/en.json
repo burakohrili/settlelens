@@ -335,6 +335,7 @@
     "s5_p": "Payments are processed by Paddle (Merchant of Record). Card details never reach SettleLens servers. Subscription management is handled in the Paddle portal.",
     "s6_title": "Who Can See Your Data",
     "s6_highlight": "No Anthropic employee, SettleLens team member, or third party has accessed your financial data. Only you can see your scenarios, assets, and reports.",
+    "link": "View our full privacy & trust page →",
     "s6_rls": "Supabase Row Level Security: every query enforces auth.uid() = user_id."
   },
   "countryCoverage": {
