@@ -191,7 +191,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   try {
     result = JSON.parse(safeText);
   } catch {
-    return Response.json({ error: "AI response could not be parsed. Please try again." }, { status: 500 });
+    return Response.json({ error: "parse_failed", raw: rawText.slice(0, 300), safe: safeText.slice(0, 300) }, { status: 500 });
   }
 
   // 8. Add confidence label
