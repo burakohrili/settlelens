@@ -92,7 +92,10 @@ export async function POST(req: NextRequest) {
   const html = buildReportHTML({
     userName: (profile.name as string) ?? "User",
     jurisdiction: getJurisdictionName(j),
-    date: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
+    date: new Date().toLocaleDateString(
+      { en: "en-US", tr: "tr-TR", de: "de-DE", fr: "fr-FR", es: "es-ES", ar: "ar-SA" }[(profile.preferred_language as string) ?? "en"] ?? "en-US",
+      { year: "numeric", month: "long", day: "numeric" }
+    ),
     lang: (profile.preferred_language as string) ?? "en",
     assets: assets as never,
     debts: debts as never,

@@ -85,7 +85,7 @@ export default function OfferPage() {
       }
     }).from("scenarios").insert({
       user_id: user.id,
-      name: `Offer from ${offerSource} — ${new Date().toLocaleDateString()}`,
+      name: `${t(`source_${offerSource}`)} — ${new Date().toLocaleDateString()}`,
       scenario_type: "offer_comparison",
       house_outcome: houseOutcome,
       retirement_split_me: parseFloat(retirementSplit) || 50,

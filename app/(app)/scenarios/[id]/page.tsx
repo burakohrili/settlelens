@@ -403,7 +403,7 @@ export default function ScenarioDetailPage() {
           </div>
         ) : (
         <div className="grid grid-cols-2 gap-2 font-ui text-sm">
-          <div><span className="text-[var(--brown)]">{t("house")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.house_outcome?.replace(/_/g, " ")}</span></div>
+          <div><span className="text-[var(--brown)]">{t("house")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`house_${scenario.house_outcome}` as "house_i_keep" | "house_spouse_keeps" | "house_sell" | "house_not_applicable")}</span></div>
           <div><span className="text-[var(--brown)]">{t("retirementSplit")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
           <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
           <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency)}{t("perMonth")}</span></div>
@@ -484,12 +484,12 @@ export default function ScenarioDetailPage() {
           <div className="rounded-lg border border-[var(--sand)] bg-white p-4">
             <p className="font-ui text-xs text-[var(--brown)] mb-2">{t("alimonyRange")}</p>
             <p className="font-mono text-sm font-bold text-[var(--navy)]">
-              {fmt(analysis.alimony_range_low, currency)} – {fmt(analysis.alimony_range_high, currency)}/mo
+              {fmt(analysis.alimony_range_low, currency)} – {fmt(analysis.alimony_range_high, currency)}{t("perMonth")}
             </p>
             {analysis.child_support_estimate > 0 && (
               <>
                 <p className="font-ui text-xs text-[var(--brown)] mt-3 mb-1">{t("childSupportEstimate")}</p>
-                <p className="font-mono text-sm font-bold text-[var(--navy)]">{fmt(analysis.child_support_estimate, currency)}/mo</p>
+                <p className="font-mono text-sm font-bold text-[var(--navy)]">{fmt(analysis.child_support_estimate, currency)}{t("perMonth")}</p>
               </>
             )}
           </div>
