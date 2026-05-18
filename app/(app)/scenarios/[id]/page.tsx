@@ -110,7 +110,8 @@ export default function ScenarioDetailPage() {
     if (code === "analysis_limit_reached") return t("errorLimitReached");
     if (code === "Rate limit exceeded. Please try again later.") return t("errorBusy");
     if (code === "analysis_timeout") return t("errorTimeout");
-    if (code === "ai_unavailable" && body?.detail) return `${t("errorBusy")} (${body.detail})`;
+    if (code === "ai_unavailable") return `AI hatası: ${body?.detail ?? "bilinmiyor"}`;
+    if (code) return `Hata: ${code}`;
     return t("errorBusy");
   }
 
