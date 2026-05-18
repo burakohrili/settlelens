@@ -110,8 +110,6 @@ export default function ScenarioDetailPage() {
     if (code === "analysis_limit_reached") return t("errorLimitReached");
     if (code === "Rate limit exceeded. Please try again later.") return t("errorBusy");
     if (code === "analysis_timeout") return t("errorTimeout");
-    if (code === "ai_unavailable") return `AI hatası: ${body?.detail ?? "bilinmiyor"}`;
-    if (code) return `Hata: ${code}`;
     return t("errorBusy");
   }
 
@@ -141,11 +139,7 @@ export default function ScenarioDetailPage() {
       }
       const body = await res.json();
       if (!res.ok) {
-        if (body.raw || body.safe) {
-          setError(`parse_failed | raw: ${body.raw ?? ""} | safe: ${body.safe ?? ""}`);
-        } else {
-          setError(mapAnalysisError(body.error, body));
-        }
+        setError(mapAnalysisError(body.error, body));
       } else {
         setAnalysis({
           ...body.data,
