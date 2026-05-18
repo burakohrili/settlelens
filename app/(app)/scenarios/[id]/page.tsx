@@ -105,11 +105,12 @@ export default function ScenarioDetailPage() {
     load();
   }, [supabase, scenarioId, router, locale]);
 
-  function mapAnalysisError(code: string | undefined): string {
+  function mapAnalysisError(code: string | undefined, body?: { detail?: string }): string {
     if (code === "upgrade_required") return t("errorUpgrade");
     if (code === "analysis_limit_reached") return t("errorLimitReached");
     if (code === "Rate limit exceeded. Please try again later.") return t("errorBusy");
     if (code === "analysis_timeout") return t("errorTimeout");
+    if (code === "ai_unavailable" && body?.detail) return `${t("errorBusy")} (${body.detail})`;
     return t("errorBusy");
   }
 
@@ -139,7 +140,7 @@ export default function ScenarioDetailPage() {
       }
       const body = await res.json();
       if (!res.ok) {
-        setError(mapAnalysisError(body.error));
+        setError(mapAnalysisError(body.error, body));
       } else {
         setAnalysis({
           ...body.data,

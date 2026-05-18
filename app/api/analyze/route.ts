@@ -162,7 +162,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
     try {
       aiResponse = await anthropic.messages.create(
         {
-          model: "claude-sonnet-4-6",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 1024,
           temperature: 0,
           system: systemPrompt,
@@ -178,7 +178,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
     const isTimeout = err instanceof Error && (err.name === "AbortError" || msg.includes("abort"));
     console.error("[analyze] Anthropic error:", isTimeout ? "client timeout" : msg);
     return Response.json(
-      { error: isTimeout ? "analysis_timeout" : "AI service unavailable. Please try again." },
+      { error: isTimeout ? "analysis_timeout" : "ai_unavailable", detail: isTimeout ? "" : msg.slice(0, 120) },
       { status: 503 }
     );
   }
