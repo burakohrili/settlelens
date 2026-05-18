@@ -163,7 +163,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
       aiResponse = await anthropic.messages.create(
         {
           model: "claude-haiku-4-5-20251001",
-          max_tokens: 1024,
+          max_tokens: 2048,
           temperature: 0,
           system: systemPrompt,
           messages: [{ role: "user", content: userPrompt }],
@@ -190,8 +190,9 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
   let result: Record<string, unknown>;
   try {
     result = JSON.parse(safeText);
-  } catch {
-    return Response.json({ error: "parse_failed", raw: rawText.slice(0, 300), safe: safeText.slice(0, 300) }, { status: 500 });
+  } catch (parseErr) {
+    const parseMsg = parseErr instanceof Error ? parseErr.message : String(parseErr);
+    return Response.json({ error: "parse_failed", raw: rawText.slice(0, 400), safe: safeText.slice(0, 400), parseErr: parseMsg }, { status: 500 });
   }
 
   // 8. Add confidence label
