@@ -448,7 +448,14 @@
     "lockedScenario": "Desbloquear para ver",
     "unlockTitle": "Ve tus cifras reales",
     "unlockDesc": "Pago único. Acceso 14 días. Sin suscripción.",
-    "unlockCTA": "Desbloquear mi análisis — {price}"
+    "unlockCTA": "Desbloquear mi análisis — {price}",
+    "emptyGuideTitle": "¿Cómo funciona SettleLens?",
+    "emptyStep1": "Ingresa tus activos y deudas",
+    "emptyStep2": "Crea un escenario de divorcio",
+    "emptyStep3": "Ejecuta el análisis de IA (~15–20 segundos)",
+    "emptyStep4": "Compara los resultados financieros a 10 años",
+    "emptyCTA": "Crear mi primer escenario",
+    "awaitingAnalysis": "Análisis pendiente"
   },
   "scenarioComparison": {
     "metric": "Métrica",
@@ -553,7 +560,18 @@
     "errorLimitReached": "Ha agotado su cuota de análisis. Actualice a Strategist para análisis ilimitados.",
     "errorBusy": "El servidor está ocupado. Por favor, inténtelo de nuevo en un momento.",
     "errorTimeout": "El análisis tardó demasiado. Por favor, inténtelo de nuevo.",
-    "errorNetwork": "Por favor, verifique su conexión a internet e inténtelo de nuevo."
+    "errorNetwork": "Por favor, verifique su conexión a internet e inténtelo de nuevo.",
+    "step1": "Preparando tus datos financieros…",
+    "step2": "Iniciando análisis de IA…",
+    "step3": "Calculando proyecciones…",
+    "step4": "Compilando resultados…",
+    "editScenario": "Editar escenario",
+    "deleteScenario": "Eliminar escenario",
+    "deleteConfirm": "¿Estás seguro de que deseas eliminar este escenario y todos sus análisis?",
+    "deleteConfirmBtn": "Sí, eliminar",
+    "cancelBtn": "Cancelar",
+    "saveChanges": "Guardar cambios",
+    "deletedSuccess": "Escenario eliminado."
   },
   "sidebar": {
     "dashboard": "Panel",

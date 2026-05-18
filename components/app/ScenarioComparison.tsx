@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 type ScenarioData = {
   name: string;
+  href?: string;
   net_worth_now: number;
   year1: number;
   year3: number;
@@ -14,12 +15,14 @@ type ScenarioData = {
   monthly_cashflow: number;
   risk_score: number;
   confidence_label_text?: string;
+  awaitingAnalysis?: boolean;
 };
 
 type Props = {
   scenarios: ScenarioData[];
   currency: string;
   recommendedIndex?: number;
+  awaitingLabel?: string;
 };
 
 function fmt(n: number, currency: string): string {
@@ -42,7 +45,7 @@ function riskIcon(score: number): string {
   return "●";
 }
 
-export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }: Props) {
+export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, awaitingLabel = "Awaiting Analysis" }: Props) {
   const t = useTranslations("scenarioComparison");
   const [activeTab, setActiveTab] = useState(0);
 
@@ -58,12 +61,16 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
 
   if (scenarios.length === 0) return null;
 
-  // Find best value for each row (highlight)
+  const analyzedScenarios = scenarios.filter((s) => !s.awaitingAnalysis);
+
+  // Find best value for each row (highlight) — only among analyzed
   function bestIdx(key: keyof ScenarioData): number {
+    if (analyzedScenarios.length === 0) return -1;
+    const indices = scenarios.reduce<number[]>((acc, s, i) => (!s.awaitingAnalysis ? [...acc, i] : acc), []);
     if (key === "risk_score") {
-      return scenarios.reduce((best, s, i) => ((s[key] as number) < (scenarios[best][key] as number) ? i : best), 0);
+      return indices.reduce((best, i) => ((scenarios[i][key] as number) < (scenarios[best][key] as number) ? i : best), indices[0]);
     }
-    return scenarios.reduce((best, s, i) => ((s[key] as number) > (scenarios[best][key] as number) ? i : best), 0);
+    return indices.reduce((best, i) => ((scenarios[i][key] as number) > (scenarios[best][key] as number) ? i : best), indices[0]);
   }
 
   // Mobile: tabs
@@ -83,6 +90,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
             )}
           >
             {i + 1}. {s.name.split(" ")[0]}
+            {s.awaitingAnalysis && " ·"}
           </button>
         ))}
       </div>
@@ -98,15 +106,20 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
                   key={i}
                   className={cn(
                     "py-2 px-3 text-center font-semibold text-xs rounded-t-md",
-                    i === recommendedIndex
+                    i === recommendedIndex && !s.awaitingAnalysis
                       ? "bg-[var(--gold)]/15 text-[var(--navy)] border-x border-t border-[var(--gold)]"
                       : "text-[var(--navy)]"
                   )}
                 >
-                  {i === recommendedIndex && (
+                  {i === recommendedIndex && !s.awaitingAnalysis && (
                     <span className="block text-[9px] text-[var(--gold)] uppercase tracking-wider mb-0.5">{t("recommended")}</span>
                   )}
                   {s.name}
+                  {s.awaitingAnalysis && (
+                    <a href={s.href} className="block mt-1 font-ui text-[9px] font-normal text-[var(--brown)] bg-[var(--cream)] border border-[var(--sand)] rounded px-1.5 py-0.5 hover:border-[var(--gold)] transition-colors">
+                      {awaitingLabel}
+                    </a>
+                  )}
                 </th>
               ))}
             </tr>
@@ -118,6 +131,11 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
                 <tr key={row.key} className="border-t border-[var(--sand)]">
                   <td className="py-2 pr-4 text-[var(--brown)] text-xs">{row.label}</td>
                   {scenarios.map((s, i) => {
+                    if (s.awaitingAnalysis) {
+                      return (
+                        <td key={i} className="py-2 px-3 text-center font-mono text-xs text-[var(--sand)]">—</td>
+                      );
+                    }
                     const val = s[row.key] as number;
                     const isBest = i === best;
                     return (
@@ -156,29 +174,40 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0 }
       {/* Mobile: single scenario card */}
       <div className="md:hidden">
         {scenarios[activeTab] && (
-          <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-2">
-            {ROWS.map((row) => {
-              const val = scenarios[activeTab][row.key] as number;
-              return (
-                <div key={row.key} className="flex justify-between items-center border-b border-[var(--sand)] pb-2 last:border-0">
-                  <span className="font-ui text-xs text-[var(--brown)]">{row.label}</span>
-                  <span className={cn(
-                    "font-mono text-xs font-semibold",
-                    row.key === "risk_score" && riskBg(val),
-                    row.key === "monthly_cashflow" && val < 0 && "text-[var(--danger)]",
-                    row.key === "monthly_cashflow" && val >= 0 && "text-[var(--gain)]",
-                    row.key !== "risk_score" && row.key !== "monthly_cashflow" && "text-[var(--navy)]"
-                  )}>
-                    {row.format === "currency" || row.format === "cashflow"
-                      ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
-                      : row.key === "risk_score"
-                        ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
-                        : `${val}/10`}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+          scenarios[activeTab].awaitingAnalysis ? (
+            <div className="rounded-lg border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
+              <p className="font-ui text-sm text-[var(--brown)]">{awaitingLabel}</p>
+              {scenarios[activeTab].href && (
+                <a href={scenarios[activeTab].href} className="font-ui text-xs text-[var(--gold)] underline mt-2 block">
+                  {scenarios[activeTab].name} →
+                </a>
+              )}
+            </div>
+          ) : (
+            <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-2">
+              {ROWS.map((row) => {
+                const val = scenarios[activeTab][row.key] as number;
+                return (
+                  <div key={row.key} className="flex justify-between items-center border-b border-[var(--sand)] pb-2 last:border-0">
+                    <span className="font-ui text-xs text-[var(--brown)]">{row.label}</span>
+                    <span className={cn(
+                      "font-mono text-xs font-semibold",
+                      row.key === "risk_score" && riskBg(val),
+                      row.key === "monthly_cashflow" && val < 0 && "text-[var(--danger)]",
+                      row.key === "monthly_cashflow" && val >= 0 && "text-[var(--gain)]",
+                      row.key !== "risk_score" && row.key !== "monthly_cashflow" && "text-[var(--navy)]"
+                    )}>
+                      {row.format === "currency" || row.format === "cashflow"
+                        ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
+                        : row.key === "risk_score"
+                          ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
+                          : `${val}/10`}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )
         )}
       </div>
     </div>

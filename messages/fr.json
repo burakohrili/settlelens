@@ -448,7 +448,14 @@
     "lockedScenario": "Déverrouiller pour voir",
     "unlockTitle": "Consultez vos chiffres réels",
     "unlockDesc": "Paiement unique. Accès 14 jours. Pas d'abonnement.",
-    "unlockCTA": "Débloquer mon analyse — {price}"
+    "unlockCTA": "Débloquer mon analyse — {price}",
+    "emptyGuideTitle": "Comment fonctionne SettleLens ?",
+    "emptyStep1": "Entrez vos actifs et dettes",
+    "emptyStep2": "Créez un scénario de divorce",
+    "emptyStep3": "Lancez l'analyse IA (~15–20 secondes)",
+    "emptyStep4": "Comparez les résultats financiers sur 10 ans",
+    "emptyCTA": "Créer mon premier scénario",
+    "awaitingAnalysis": "En attente d'analyse"
   },
   "scenarioComparison": {
     "metric": "Indicateur",
@@ -553,7 +560,18 @@
     "errorLimitReached": "Vous avez utilisé votre quota d'analyses. Passez à Strategist pour des analyses illimitées.",
     "errorBusy": "Le serveur est occupé. Veuillez réessayer dans un instant.",
     "errorTimeout": "L'analyse a pris trop de temps. Veuillez réessayer.",
-    "errorNetwork": "Veuillez vérifier votre connexion internet et réessayer."
+    "errorNetwork": "Veuillez vérifier votre connexion internet et réessayer.",
+    "step1": "Préparation de vos données financières…",
+    "step2": "Démarrage de l'analyse IA…",
+    "step3": "Calcul des projections…",
+    "step4": "Compilation des résultats…",
+    "editScenario": "Modifier le scénario",
+    "deleteScenario": "Supprimer le scénario",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce scénario et toutes ses analyses ?",
+    "deleteConfirmBtn": "Oui, supprimer",
+    "cancelBtn": "Annuler",
+    "saveChanges": "Enregistrer les modifications",
+    "deletedSuccess": "Scénario supprimé."
   },
   "sidebar": {
     "dashboard": "Tableau de bord",

@@ -165,17 +165,19 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     ],
   }));
 
-  // Comparison table data
-  const comparisonScenarios = analyzedScenarios.map(({ scenario, analysis }) => ({
+  // Comparison table data — all scenarios (analyzed + unanalyzed)
+  const allScenariosComparison = scenariosWithAnalysis.map(({ scenario, analysis }) => ({
     name: scenario.name as string,
-    net_worth_now: analysis!.net_worth_now,
-    year1: analysis!.net_worth_year1,
-    year3: analysis!.net_worth_year3,
-    year5: analysis!.net_worth_year5,
-    year10: analysis!.net_worth_year10,
-    monthly_cashflow: analysis!.monthly_cash_flow,
-    risk_score: analysis!.risk_score,
-    confidence_label_text: (analysis!.raw_json?.confidence_label_text as string) ?? "",
+    href: `/${lang}/scenarios/${scenario.id as string}`,
+    net_worth_now: analysis?.net_worth_now ?? 0,
+    year1: analysis?.net_worth_year1 ?? 0,
+    year3: analysis?.net_worth_year3 ?? 0,
+    year5: analysis?.net_worth_year5 ?? 0,
+    year10: analysis?.net_worth_year10 ?? 0,
+    monthly_cashflow: analysis?.monthly_cash_flow ?? 0,
+    risk_score: analysis?.risk_score ?? 0,
+    confidence_label_text: (analysis?.raw_json?.confidence_label_text as string) ?? "",
+    awaitingAnalysis: !analysis,
   }));
 
   const hasAnalyses = analyzedScenarios.length > 0;
@@ -243,7 +245,42 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             </div>
           )}
 
-          {scenarioList.length > 0 && plan === "discovery" ? (
+          {scenarioList.length === 0 ? (
+            <div className="rounded-xl border border-[var(--sand)] bg-white p-6">
+              <h2 className="font-display text-lg font-bold text-[var(--navy)] mb-5">{t("emptyGuideTitle")}</h2>
+              <div className="space-y-3 mb-5">
+                {[
+                  { label: t("emptyStep1"), done: true },
+                  { label: t("emptyStep2"), done: false },
+                  { label: t("emptyStep3"), done: false },
+                  { label: t("emptyStep4"), done: false },
+                ].map((step, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className={cn(
+                      "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
+                      step.done
+                        ? "bg-[var(--gain)] text-white"
+                        : "border-2 border-[var(--sand)] text-[var(--brown)]"
+                    )}>
+                      {step.done ? "✓" : i + 1}
+                    </span>
+                    <span className={cn(
+                      "font-ui text-sm",
+                      step.done ? "text-[var(--brown)] opacity-60 line-through" : "text-[var(--navy)]"
+                    )}>
+                      {step.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <Link
+                href={`/${lang}/onboarding/step-6`}
+                className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
+              >
+                <Plus size={16} className="mr-1" /> {t("emptyCTA")}
+              </Link>
+            </div>
+          ) : scenarioList.length > 0 && plan === "discovery" ? (
             <DiscoveryPreview
               scenarios={scenarioList.map((s) => ({
                 id: s.id as string,
@@ -310,11 +347,15 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         </div>
       )}
 
-      {/* Scenario comparison */}
-      {hasAnalyses && comparisonScenarios.length > 1 && (
+      {/* Scenario comparison — show when 2+ scenarios exist */}
+      {scenarioList.length > 1 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("scenarioComparison")}</h2>
-          <ScenarioComparison scenarios={comparisonScenarios} currency={currency} />
+          <ScenarioComparison
+            scenarios={allScenariosComparison}
+            currency={currency}
+            awaitingLabel={t("awaitingAnalysis")}
+          />
         </div>
       )}
 
