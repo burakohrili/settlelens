@@ -141,7 +141,11 @@ export default function ScenarioDetailPage() {
       }
       const body = await res.json();
       if (!res.ok) {
-        setError(mapAnalysisError(body.error, body));
+        if (body.raw || body.safe) {
+          setError(`parse_failed | raw: ${body.raw ?? ""} | safe: ${body.safe ?? ""}`);
+        } else {
+          setError(mapAnalysisError(body.error, body));
+        }
       } else {
         setAnalysis({
           ...body.data,
