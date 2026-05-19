@@ -10,6 +10,15 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await req.json();
+  const numericDebtFields = ["balance", "monthly_payment", "interest_rate"] as const;
+  for (const field of numericDebtFields) {
+    if (body[field] !== undefined) {
+      const v = Number(body[field]);
+      if (isNaN(v) || v < 0 || v > 1_000_000_000_000) {
+        return NextResponse.json({ error: `Invalid ${field}` }, { status: 400 });
+      }
+    }
+  }
   const allowed = ["name", "balance", "owned_by", "monthly_payment", "category"];
   const update: Record<string, unknown> = {};
   for (const key of allowed) {
@@ -27,7 +36,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     }
   }).from("debts").update(update).eq("id", id).eq("user_id", user.id);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error("[API] DB error"); return NextResponse.json({ error: "Operation failed" }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }
 
@@ -47,6 +56,6 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
     }
   }).from("debts").delete().eq("id", id).eq("user_id", user.id);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error("[API] DB error"); return NextResponse.json({ error: "Operation failed" }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }

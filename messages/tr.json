@@ -17,7 +17,8 @@
     "billing": "Fatura",
     "settings": "Ayarlar",
     "signOut": "Çıkış yap",
-    "skipLink": "Ana içeriğe geç"
+    "skipLink": "Ana içeriğe geç",
+    "toggleMenu": "Menüyü aç/kapat"
   },
   "hero": {
     "h1": "Boşanmanın Finansal Tablosunu\nGör. Avukatınla Daha Hazırlıklı Konuş.",
@@ -1130,5 +1131,15 @@
     "s10_p": "Bu koşullar Türkiye hukukuna tabidir. Anlaşmazlıklar İstanbul mahkemelerinde çözülür.",
     "s11": "Değişiklikler",
     "s11_p": "Koşulları değiştirebiliriz. Önemli değişikliklerde e-posta ile bildirim yapılır."
+  },
+  "common": {
+    "countries": {
+      "US": "Amerika Birleşik Devletleri",
+      "UK": "Birleşik Krallık",
+      "DE": "Almanya",
+      "FR": "Fransa",
+      "ES": "İspanya",
+      "TR": "Türkiye"
+    }
   }
 }

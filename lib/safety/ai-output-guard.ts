@@ -21,8 +21,21 @@ export function sanitizeAIOutput(raw: string): string {
       const parsed = JSON.parse(raw);
       parsed.negotiation_strategy =
         "Based on the information entered, this scenario presents distinct financial considerations. We recommend discussing the specific points with a qualified legal professional.";
-      parsed.notes =
-        (parsed.notes || "") + " [Review recommended by SettleLens safety system]";
+      // Filter all text fields, not just negotiation_strategy
+      for (const field of ["notes"] as const) {
+        if (typeof parsed[field] === "string") {
+          const { safe: fieldSafe } = guardAIOutput(parsed[field] as string);
+          if (!fieldSafe) parsed[field] = "[Content filtered for compliance]";
+        }
+      }
+      parsed.notes = (parsed.notes || "") + " [Review recommended by SettleLens safety system]";
+      if (Array.isArray(parsed.key_risks)) {
+        parsed.key_risks = (parsed.key_risks as unknown[]).map((r) => {
+          if (typeof r !== "string") return r;
+          const { safe: rSafe } = guardAIOutput(r);
+          return rSafe ? r : "[Risk filtered]";
+        });
+      }
       return JSON.stringify(parsed);
     } catch {
       return raw;

@@ -17,7 +17,8 @@
     "billing": "Abrechnung",
     "settings": "Einstellungen",
     "signOut": "Abmelden",
-    "skipLink": "Zum Hauptinhalt springen"
+    "skipLink": "Zum Hauptinhalt springen",
+    "toggleMenu": "Menü umschalten"
   },
   "hero": {
     "h1": "Wissen Sie genau, wo Sie stehen.\nBevor Sie irgendetwas unterschreiben.",
@@ -1130,5 +1131,15 @@
     "s10_p": "Diese Bedingungen unterliegen türkischem Recht. Streitigkeiten werden vor Istanbuler Gerichten beigelegt.",
     "s11": "Änderungen",
     "s11_p": "Wir können die Bedingungen ändern. Bei wesentlichen Änderungen erfolgt eine E-Mail-Benachrichtigung."
+  },
+  "common": {
+    "countries": {
+      "US": "Vereinigte Staaten",
+      "UK": "Vereinigtes Königreich",
+      "DE": "Deutschland",
+      "FR": "Frankreich",
+      "ES": "Spanien",
+      "TR": "Türkei"
+    }
   }
 }

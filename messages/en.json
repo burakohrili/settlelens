@@ -17,7 +17,8 @@
     "billing": "Billing",
     "settings": "Settings",
     "signOut": "Sign out",
-    "skipLink": "Skip to main content"
+    "skipLink": "Skip to main content",
+    "toggleMenu": "Toggle menu"
   },
   "hero": {
     "h1": "Know Exactly Where You Stand.\nBefore You Sign Anything.",
@@ -1128,5 +1129,15 @@
     "s10_p": "These terms are governed by Turkish law. Disputes shall be resolved in Istanbul courts.",
     "s11": "Changes",
     "s11_p": "We may update these terms. Material changes will be notified by email."
+  },
+  "common": {
+    "countries": {
+      "US": "United States",
+      "UK": "United Kingdom",
+      "DE": "Germany",
+      "FR": "France",
+      "ES": "Spain",
+      "TR": "Turkey"
+    }
   }
 }

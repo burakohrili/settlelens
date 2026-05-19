@@ -1,5 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
+
+const sanitizeForPrompt = (s: unknown): string =>
+  String(s ?? "").replace(/[\r\n]+/g, " ").slice(0, 500);
 import { getJurisdiction, getInflationRate, getCurrency } from "@/lib/jurisdiction";
 import { sanitizeAIOutput } from "@/lib/safety/ai-output-guard";
 import { getConfidenceLabel, CONFIDENCE_LABEL_COPY } from "@/lib/jurisdiction/confidence-labels";
@@ -75,6 +78,14 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "analysis_limit_reached" }, { status: 403 });
     }
   }
+  // Server-side expiry check — UI redirect alone is not sufficient
+  if (
+    (planType === "clarified" || planType === "strategist") &&
+    profile.plan_expires_at &&
+    new Date(profile.plan_expires_at as string) < new Date()
+  ) {
+    return Response.json({ error: "plan_expired" }, { status: 403 });
+  }
   const assets = assetsRes.data ?? [];
   const debts = debtsRes.data ?? [];
   const income = incomeRes.data ?? [];
@@ -148,7 +159,7 @@ Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthl
   if (scenario.scenario_type === "offer_comparison") {
     userPrompt += `\n\nOFFER COMPARISON MODE:
 Offer source: ${scenario.offer_source ?? "unknown"}
-Offer terms: ${scenario.offer_raw_text ?? "not provided"}
+Offer terms: ${sanitizeForPrompt(scenario.offer_raw_text)}
 Compare this offer against the user's baseline financial position.
 Additionally include in your JSON:
 "offer_vs_baseline_year10": number,

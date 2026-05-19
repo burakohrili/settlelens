@@ -34,6 +34,7 @@ const COUNTRY_CURRENCY: Record<string, string> = {
 
 export default function Step1Page() {
   const t = useTranslations("onboarding_form.step1");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   const router = useRouter();
   const params = useParams();
@@ -135,12 +136,12 @@ export default function Step1Page() {
             className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <option value="">{t("selectCountry")}</option>
-            <option value="US">🇺🇸 United States</option>
-            <option value="UK">🇬🇧 United Kingdom</option>
-            <option value="DE">🇩🇪 Germany</option>
-            <option value="FR">🇫🇷 France</option>
-            <option value="ES">🇪🇸 Spain</option>
-            <option value="TR">🇹🇷 Turkey</option>
+            <option value="US">🇺🇸 {tCommon("countries.US")}</option>
+            <option value="UK">🇬🇧 {tCommon("countries.UK")}</option>
+            <option value="DE">🇩🇪 {tCommon("countries.DE")}</option>
+            <option value="FR">🇫🇷 {tCommon("countries.FR")}</option>
+            <option value="ES">🇪🇸 {tCommon("countries.ES")}</option>
+            <option value="TR">🇹🇷 {tCommon("countries.TR")}</option>
           </select>
         </div>
 
@@ -200,7 +201,7 @@ export default function Step1Page() {
           <button
             type="button"
             onClick={() => setRiskOpen((v) => !v)}
-            className="w-full flex items-center justify-between px-4 py-3 text-left font-ui text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE] transition-colors"
+            className="w-full flex items-center justify-between px-4 py-3 text-start font-ui text-sm font-medium text-[#2E4D6B] hover:bg-[#F7F3EE] transition-colors"
           >
             <span>
               {t("riskQuestion")}

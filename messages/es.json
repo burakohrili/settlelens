@@ -17,7 +17,8 @@
     "billing": "Facturación",
     "settings": "Configuración",
     "signOut": "Cerrar sesión",
-    "skipLink": "Ir al contenido principal"
+    "skipLink": "Ir al contenido principal",
+    "toggleMenu": "Alternar menú"
   },
   "hero": {
     "h1": "Sabe exactamente dónde estás.\nAntes de firmar cualquier cosa.",
@@ -191,7 +192,7 @@
     "copyright": "© 2026 SettleLens. Modelización financiera, no asesoramiento legal."
   },
   "auth": {
-    "loginTitle": "Bienvenido de nuevo",
+    "loginTitle": "Bienvenido/a de nuevo",
     "registerTitle": "Inicia tu análisis gratuito",
     "email": "Dirección de correo",
     "password": "Contraseña",
@@ -1128,5 +1129,15 @@
     "s10_p": "Estos términos se rigen por la ley turca. Las disputas se resolverán en los tribunales de Estambul.",
     "s11": "Cambios",
     "s11_p": "Podemos actualizar estos términos. Los cambios materiales serán notificados por correo electrónico."
+  },
+  "common": {
+    "countries": {
+      "US": "Estados Unidos",
+      "UK": "Reino Unido",
+      "DE": "Alemania",
+      "FR": "Francia",
+      "ES": "España",
+      "TR": "Turquía"
+    }
   }
 }

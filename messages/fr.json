@@ -17,7 +17,8 @@
     "billing": "Facturation",
     "settings": "Paramètres",
     "signOut": "Se déconnecter",
-    "skipLink": "Aller au contenu principal"
+    "skipLink": "Aller au contenu principal",
+    "toggleMenu": "Basculer le menu"
   },
   "hero": {
     "h1": "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
@@ -1128,5 +1129,15 @@
     "s10_p": "Ces conditions sont régies par le droit turc. Les litiges seront résolus devant les tribunaux d'Istanbul.",
     "s11": "Modifications",
     "s11_p": "Nous pouvons mettre à jour ces conditions. Les modifications importantes seront notifiées par e-mail."
+  },
+  "common": {
+    "countries": {
+      "US": "États-Unis",
+      "UK": "Royaume-Uni",
+      "DE": "Allemagne",
+      "FR": "France",
+      "ES": "Espagne",
+      "TR": "Turquie"
+    }
   }
 }

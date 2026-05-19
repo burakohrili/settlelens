@@ -10,7 +10,10 @@ function strip(s: string) {
 
 export async function POST(req: Request) {
   try {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const ip =
+      req.headers.get("x-real-ip") ??
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      "unknown";
 
     const adminClient = createAdminClient();
     const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString();

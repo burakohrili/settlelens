@@ -31,7 +31,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     }
   }).from("scenarios").update(update).eq("id", id).eq("user_id", user.id);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error("[API] DB error"); return NextResponse.json({ error: "Operation failed" }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }
 
@@ -51,6 +51,6 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
     }
   }).from("scenarios").delete().eq("id", id).eq("user_id", user.id);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { console.error("[API] DB error"); return NextResponse.json({ error: "Operation failed" }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }

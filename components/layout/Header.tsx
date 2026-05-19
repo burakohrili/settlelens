@@ -96,7 +96,7 @@ export function Header() {
         <button
           className="flex items-center justify-center text-[var(--cream)] md:hidden"
           onClick={() => setMobileOpen((o) => !o)}
-          aria-label="Toggle menu"
+          aria-label={t("toggleMenu")}
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>

@@ -45,6 +45,7 @@ type Profile = {
 
 export default function SettingsPage() {
   const t = useTranslations("settings");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   const router = useRouter();
   const supabase = createClient();
@@ -259,7 +260,7 @@ export default function SettingsPage() {
             >
               {COUNTRIES.map((c) => (
                 <option key={c.value} value={c.value}>
-                  {c.label}
+                  {tCommon(`countries.${c.value}`)}
                 </option>
               ))}
             </select>

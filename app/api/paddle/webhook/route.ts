@@ -12,6 +12,15 @@ export async function POST(req: Request) {
     return Response.json({ error: "Invalid signature" }, { status: 401 });
   }
 
+  // Replay attack protection — reject webhooks with timestamp > 5 minutes old
+  const sigParts = Object.fromEntries(
+    signature.split(";").map((p) => { const [k, ...v] = p.split("="); return [k, v.join("=")] as [string, string]; })
+  );
+  const tsNum = parseInt(sigParts["ts"] ?? "0", 10);
+  if (isNaN(tsNum) || Math.abs(Math.floor(Date.now() / 1000) - tsNum) > 300) {
+    return Response.json({ error: "Timestamp out of range" }, { status: 401 });
+  }
+
   let event: Record<string, unknown>;
   try {
     event = JSON.parse(rawBody) as Record<string, unknown>;
