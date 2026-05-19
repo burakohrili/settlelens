@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 type AuditEntry = {
@@ -25,6 +25,7 @@ const PAGE_SIZE = 20;
 
 export default function SecurityPage() {
   const t = useTranslations("settings");
+  const locale = useLocale();
   const router = useRouter();
   const supabase = createClient();
 
@@ -40,7 +41,7 @@ export default function SecurityPage() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        router.push("/en/login");
+        router.push(`/${locale}/login`);
         return;
       }
       setUserId(user.id);

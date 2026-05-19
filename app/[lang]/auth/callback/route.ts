@@ -9,7 +9,7 @@ export async function GET(
   const { lang } = await params;
   const { searchParams } = request.nextUrl;
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? `/dashboard`;
+  const next = searchParams.get("next") ?? `/${lang}/dashboard`;
 
   if (code) {
     // Create the redirect response first so Supabase can write session cookies directly onto it.

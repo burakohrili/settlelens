@@ -86,7 +86,7 @@ export default function NewScenarioPage() {
       .single();
 
     if (insertError || !data) {
-      setError("Could not save scenario. Please try again.");
+      setError(t("saveError"));
       setSaving(false);
       return;
     }
@@ -101,16 +101,16 @@ export default function NewScenarioPage() {
       <div className="flex items-center gap-3">
         <Link href="/scenarios" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-[var(--brown)]")}>
           <ArrowLeft size={16} className="mr-1" />
-          {locale === "tr" ? "Senaryolar" : locale === "de" ? "Szenarien" : locale === "fr" ? "Scénarios" : locale === "es" ? "Escenarios" : "Scenarios"}
+          {t("backToScenarios")}
         </Link>
       </div>
 
       <div>
         <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
-          {locale === "tr" ? "Yeni Senaryo" : locale === "de" ? "Neues Szenario" : locale === "fr" ? "Nouveau scénario" : locale === "es" ? "Nuevo escenario" : "New Scenario"}
+          {t("pageTitle")}
         </h1>
         <p className="font-ui text-sm text-[var(--brown)] mt-1">
-          {locale === "tr" ? "Farklı bir anlaşma pozisyonu modelle." : locale === "de" ? "Modellieren Sie eine andere Verhandlungsposition." : locale === "fr" ? "Modélisez une position de négociation différente." : locale === "es" ? "Modela una posición de negociación diferente." : "Model a different settlement position."}
+          {t("pageSubtitle")}
         </p>
       </div>
 
@@ -145,7 +145,7 @@ export default function NewScenarioPage() {
 
         <div className="border-t border-[var(--sand)] pt-4">
           <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-3">
-            {locale === "tr" ? "Nafaka" : locale === "de" ? "Unterhalt" : locale === "fr" ? "Pension alimentaire" : locale === "es" ? "Pensión compensatoria" : "Alimony"}
+            {t("alimonySection")}
           </p>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -168,7 +168,7 @@ export default function NewScenarioPage() {
 
         <div className="border-t border-[var(--sand)] pt-4">
           <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-3">
-            {locale === "tr" ? "Çocuk Nafakası" : locale === "de" ? "Kindesunterhalt" : locale === "fr" ? "Pension pour enfants" : locale === "es" ? "Pensión de alimentos" : "Child Support"}
+            {t("childSupportSection")}
           </p>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -191,7 +191,7 @@ export default function NewScenarioPage() {
       )}
 
       <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
-        <strong>Disclaimer:</strong> {t("disclaimer")}
+        <strong>{t("disclaimerLabel")}:</strong> {t("disclaimer")}
       </div>
 
       <button
@@ -204,9 +204,7 @@ export default function NewScenarioPage() {
         )}
       >
         <Save size={16} className="mr-2" />
-        {saving
-          ? (locale === "tr" ? "Kaydediliyor..." : locale === "de" ? "Wird gespeichert..." : locale === "fr" ? "Enregistrement..." : locale === "es" ? "Guardando..." : "Saving...")
-          : (locale === "tr" ? "Senaryoyu Kaydet" : locale === "de" ? "Szenario speichern" : locale === "fr" ? "Enregistrer le scénario" : locale === "es" ? "Guardar escenario" : "Save Scenario")}
+        {saving ? t("saving") : t("saveScenario")}
       </button>
     </div>
   );

@@ -13,6 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2 } from "lucide-react";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 const schema = z.object({
   email: z.string().email(),
@@ -44,7 +45,7 @@ export default function LoginPage() {
       return;
     }
     // Hard navigation: clears Next.js server cache so (app)/layout.tsx sees the new session cookie
-    window.location.href = "/dashboard";
+    window.location.href = `/${lang}/dashboard`;
   }
 
   async function signInWithGoogle() {
@@ -75,17 +76,23 @@ export default function LoginPage() {
             ))}
           </ul>
         </div>
-        <p className="font-ui text-xs text-[var(--brown)]">
-          © 2026 SettleLens. {t("loginQuoteSub")}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="font-ui text-xs text-[var(--brown)]">
+            © 2026 SettleLens. {t("loginQuoteSub")}
+          </p>
+          <LanguageSwitcher variant="dark" />
+        </div>
       </div>
 
       {/* Right panel */}
       <div className="flex flex-1 flex-col items-center justify-center bg-[var(--cream)] px-6 py-12">
         <div className="w-full max-w-sm">
-          <Link href={`/${lang}`} className="font-display text-lg font-semibold text-[var(--gold)] lg:hidden">
-            SettleLens
-          </Link>
+          <div className="flex items-center justify-between lg:hidden">
+            <Link href={`/${lang}`} className="font-display text-lg font-semibold text-[var(--gold)]">
+              SettleLens
+            </Link>
+            <LanguageSwitcher variant="light" />
+          </div>
           <h1 className="mt-4 font-display text-2xl font-semibold text-[var(--navy)] lg:mt-0">
             {t("loginTitle")}
           </h1>

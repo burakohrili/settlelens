@@ -204,6 +204,7 @@
     "termsConsent": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
     "dataConsent": "Je consens au traitement de mes données personnelles",
     "marketingConsent": "Je souhaite recevoir des conseils et mises à jour produit (optionnel)",
+    "kvkkConsent": "Je donne mon consentement explicite au traitement de mes données personnelles conformément au KVKK",
     "forgotPassword": "Mot de passe oublié ?",
     "confirmPassword": "Confirmer le mot de passe",
     "creatingAccount": "Création du compte...",
@@ -428,6 +429,7 @@
     "scenarioComparison": "Comparaison de scénarios",
     "keyRisks": "Facteurs de risque clés",
     "analyzeOffer": "Analyser une nouvelle offre",
+    "newScenario": "Nouveau scénario",
     "downloadPDF": "Télécharger le rapport PDF",
     "editAssets": "Modifier les actifs",
     "upgradeToRun": "Améliorez pour l'analyse IA →",
@@ -862,7 +864,16 @@
       "iKeepHouse": "Je garde la maison",
       "spouseKeepsHouse": "Le conjoint garde la maison",
       "weSellHouse": "Nous vendons la maison",
-      "noHouse": "Pas de maison / sans objet"
+      "noHouse": "Pas de maison / sans objet",
+      "backToScenarios": "Scénarios",
+      "pageTitle": "Nouveau scénario",
+      "pageSubtitle": "Modélisez une position de négociation différente.",
+      "alimonySection": "Pension alimentaire",
+      "childSupportSection": "Pension pour enfants",
+      "saving": "Enregistrement...",
+      "saveScenario": "Enregistrer le scénario",
+      "saveError": "Impossible d'enregistrer le scénario. Veuillez réessayer.",
+      "disclaimerLabel": "Avertissement"
     }
   },
   "blog": {

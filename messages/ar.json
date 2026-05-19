@@ -204,6 +204,7 @@
     "termsConsent": "أوافق على شروط الخدمة وسياسة الخصوصية",
     "dataConsent": "أوافق على معالجة بياناتي الشخصية",
     "marketingConsent": "أرغب في تلقي نصائح وتحديثات المنتج (اختياري)",
+    "kvkkConsent": "أعطي موافقتي الصريحة على معالجة بياناتي الشخصية وفقاً لقانون KVKK",
     "forgotPassword": "هل نسيت كلمة مرورك؟",
     "confirmPassword": "تأكيد كلمة المرور",
     "creatingAccount": "جارٍ إنشاء الحساب...",
@@ -428,6 +429,7 @@
     "scenarioComparison": "مقارنة السيناريوهات",
     "keyRisks": "عوامل المخاطر الرئيسية",
     "analyzeOffer": "تحليل عرض جديد",
+    "newScenario": "سيناريو جديد",
     "downloadPDF": "تنزيل تقرير PDF",
     "editAssets": "تعديل الأصول",
     "upgradeToRun": "قم بالترقية لتشغيل تحليل الذكاء الاصطناعي →",
@@ -862,7 +864,16 @@
       "iKeepHouse": "أحتفظ بالمنزل",
       "spouseKeepsHouse": "الزوج/الزوجة يحتفظ بالمنزل",
       "weSellHouse": "نبيع المنزل",
-      "noHouse": "لا يوجد منزل / غير منطبق"
+      "noHouse": "لا يوجد منزل / غير منطبق",
+      "backToScenarios": "السيناريوهات",
+      "pageTitle": "سيناريو جديد",
+      "pageSubtitle": "نمذجة موقف تفاوضي مختلف.",
+      "alimonySection": "النفقة الزوجية",
+      "childSupportSection": "نفقة الأطفال",
+      "saving": "جارٍ الحفظ...",
+      "saveScenario": "حفظ السيناريو",
+      "saveError": "تعذر حفظ السيناريو. يرجى المحاولة مرة أخرى.",
+      "disclaimerLabel": "إخلاء مسؤولية"
     }
   },
   "blog": {

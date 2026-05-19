@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 const PLAN_COLORS: Record<string, string> = {
@@ -22,6 +22,7 @@ type BillingProfile = {
 
 export default function BillingPage() {
   const t = useTranslations("settings");
+  const locale = useLocale();
   const router = useRouter();
   const supabase = createClient();
 
@@ -37,7 +38,7 @@ export default function BillingPage() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        router.push("/en/login");
+        router.push(`/${locale}/login`);
         return;
       }
 

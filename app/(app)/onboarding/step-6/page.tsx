@@ -202,7 +202,7 @@ export default function Step6Page() {
           <p className="font-ui text-sm text-[var(--red)]">{saveError}</p>
         )}
         <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]")}>
-          <strong>Disclaimer:</strong> {t("disclaimer")}
+          <strong>{t("disclaimerLabel")}:</strong> {t("disclaimer")}
         </div>
       </div>
     </WizardLayout>

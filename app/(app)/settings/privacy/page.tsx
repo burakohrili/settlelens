@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 type ConsentProfile = {
@@ -14,6 +14,7 @@ type ConsentProfile = {
 
 export default function PrivacyPage() {
   const t = useTranslations("settings");
+  const locale = useLocale();
   const router = useRouter();
   const supabase = createClient();
 
@@ -48,7 +49,7 @@ export default function PrivacyPage() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
-        router.push("/en/login");
+        router.push(`/${locale}/login`);
         return;
       }
       setUserId(user.id);

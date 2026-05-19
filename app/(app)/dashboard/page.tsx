@@ -462,7 +462,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           </Link>
         )}
         <Link
-          href={`/${lang}/onboarding/step-2`}
+          href="/settings/financial-data"
           className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
         >
           <Pencil size={16} className="mr-1" /> {t("editAssets")}

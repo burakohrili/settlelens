@@ -86,7 +86,7 @@ export function ConsentCheckboxes({ onValid }: Props) {
           id="consent-kvkk"
           checked={state.kvkk}
           onChange={() => toggle("kvkk")}
-          label="KVKK kapsamında verilerimin işlenmesine açık rıza veriyorum"
+          label={t("kvkkConsent")}
           required
         />
       )}

@@ -204,6 +204,7 @@
     "termsConsent": "I agree to the Terms of Service and Privacy Policy",
     "dataConsent": "I consent to the processing of my personal data",
     "marketingConsent": "I'd like to receive tips and product updates (optional)",
+    "kvkkConsent": "I give explicit consent to the processing of my personal data under KVKK",
     "forgotPassword": "Forgot your password?",
     "confirmPassword": "Confirm password",
     "creatingAccount": "Creating account...",
@@ -428,6 +429,7 @@
     "projection": "10-Year Net Worth Projection",
     "scenarioComparison": "Scenario Comparison",
     "keyRisks": "Key Risk Factors",
+    "newScenario": "New Scenario",
     "analyzeOffer": "Analyze New Offer",
     "downloadPDF": "Download PDF Report",
     "editAssets": "Edit Assets",
@@ -863,7 +865,16 @@
       "iKeepHouse": "I keep the house",
       "spouseKeepsHouse": "Spouse keeps the house",
       "weSellHouse": "We sell the house",
-      "noHouse": "No house / not applicable"
+      "noHouse": "No house / not applicable",
+      "backToScenarios": "Scenarios",
+      "pageTitle": "New Scenario",
+      "pageSubtitle": "Model a different settlement position.",
+      "alimonySection": "Alimony",
+      "childSupportSection": "Child Support",
+      "saving": "Saving...",
+      "saveScenario": "Save Scenario",
+      "saveError": "Could not save scenario. Please try again.",
+      "disclaimerLabel": "Disclaimer"
     }
   },
   "blog": {

@@ -65,7 +65,7 @@ export default async function ScenariosPage() {
             className={cn(buttonVariants({ variant: "outline" }), "border-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/10")}
           >
             <Plus size={16} className="mr-1" />
-            {locale === "tr" ? "Yeni Senaryo" : locale === "de" ? "Neu" : locale === "fr" ? "Nouveau" : locale === "es" ? "Nuevo" : "New Scenario"}
+            {t("newScenario")}
           </Link>
           <Link
             href="/scenarios/offer"

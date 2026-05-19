@@ -204,6 +204,7 @@
     "termsConsent": "Ich stimme den Nutzungsbedingungen und der Datenschutzerklärung zu",
     "dataConsent": "Ich stimme der Verarbeitung meiner persönlichen Daten zu",
     "marketingConsent": "Ich möchte Tipps und Produktupdates erhalten (optional)",
+    "kvkkConsent": "Ich stimme der Verarbeitung meiner personenbezogenen Daten gemäß KVKK ausdrücklich zu",
     "forgotPassword": "Passwort vergessen?",
     "confirmPassword": "Passwort bestätigen",
     "creatingAccount": "Konto wird erstellt...",
@@ -428,6 +429,7 @@
     "scenarioComparison": "Szenariovergleich",
     "keyRisks": "Wichtige Risikofaktoren",
     "analyzeOffer": "Neues Angebot analysieren",
+    "newScenario": "Neues Szenario",
     "downloadPDF": "PDF-Bericht herunterladen",
     "editAssets": "Vermögen bearbeiten",
     "upgradeToRun": "Upgrade für KI-Analyse →",
@@ -862,7 +864,16 @@
       "iKeepHouse": "Ich behalte das Haus",
       "spouseKeepsHouse": "Der Ehepartner behält das Haus",
       "weSellHouse": "Wir verkaufen das Haus",
-      "noHouse": "Kein Haus / nicht zutreffend"
+      "noHouse": "Kein Haus / nicht zutreffend",
+      "backToScenarios": "Szenarien",
+      "pageTitle": "Neues Szenario",
+      "pageSubtitle": "Modellieren Sie eine andere Verhandlungsposition.",
+      "alimonySection": "Unterhalt",
+      "childSupportSection": "Kindesunterhalt",
+      "saving": "Wird gespeichert...",
+      "saveScenario": "Szenario speichern",
+      "saveError": "Szenario konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "disclaimerLabel": "Haftungsausschluss"
     }
   },
   "blog": {

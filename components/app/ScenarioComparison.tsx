@@ -82,6 +82,8 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
           <button
             key={i}
             onClick={() => setActiveTab(i)}
+            aria-selected={activeTab === i}
+            role="tab"
             className={cn(
               "flex-1 rounded-md px-2 py-1.5 font-ui text-xs font-semibold transition-colors",
               activeTab === i
@@ -98,12 +100,14 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
       {/* Desktop: full table */}
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full font-ui text-sm border-collapse">
+          <caption className="sr-only">{t("metric")} comparison</caption>
           <thead>
             <tr>
-              <th className="text-left py-2 pr-4 text-[var(--brown)] font-semibold text-xs w-36">{t("metric")}</th>
+              <th scope="col" className="text-left py-2 pr-4 text-[var(--brown)] font-semibold text-xs w-36">{t("metric")}</th>
               {scenarios.map((s, i) => (
                 <th
                   key={i}
+                  scope="col"
                   className={cn(
                     "py-2 px-3 text-center font-semibold text-xs rounded-t-md",
                     i === recommendedIndex && !s.awaitingAnalysis

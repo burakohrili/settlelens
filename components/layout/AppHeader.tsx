@@ -16,6 +16,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 type Props = {
   userEmail?: string;
@@ -50,9 +51,11 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
       </Link>
 
       <div className="flex items-center gap-2">
+        <LanguageSwitcher variant="light" />
+
         {!isPaid && (
           <Link
-            href="/upgrade"
+            href={`/${locale}/upgrade`}
             className={cn(buttonVariants({ size: "sm" }), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90")}
           >
             {t("upgrade")}
@@ -78,13 +81,13 @@ export function AppHeader({ userEmail = "", userName = "", planType = "discovery
             <ChevronDown size={14} className="text-[var(--brown)]" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuItem onClick={() => router.push("/settings")} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
               <User size={14} /> {t("profile")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/settings/billing")} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings/billing`)} className="flex items-center gap-2 cursor-pointer">
               <CreditCard size={14} /> {t("billing")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/settings")} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem onClick={() => router.push(`/${locale}/settings`)} className="flex items-center gap-2 cursor-pointer">
               <Settings size={14} /> {t("settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
