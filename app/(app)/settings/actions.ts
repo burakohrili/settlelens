@@ -4,6 +4,9 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 
+const VALID_COUNTRIES = ["US", "UK", "DE", "FR", "ES", "TR"] as const;
+const VALID_LANGUAGES = ["en", "tr", "de", "fr", "es", "ar"] as const;
+
 export async function updateProfile(data: {
   name: string;
   preferred_language: string;
@@ -13,6 +16,9 @@ export async function updateProfile(data: {
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) throw new Error("Unauthorized");
+
+  if (data.country && !VALID_COUNTRIES.includes(data.country as never)) throw new Error("Invalid country");
+  if (data.preferred_language && !VALID_LANGUAGES.includes(data.preferred_language as never)) throw new Error("Invalid language");
 
   const admin = createAdminClient();
   // Use upsert so the profile row is created if it doesn't exist yet.

@@ -289,7 +289,8 @@
         "desc": "Organiza tus activos, deudas, ingresos y escenarios en un informe profesional antes de la reunión."
       }
     ],
-    "cardCta": "Empezar gratis"
+    "cardCta": "Empezar gratis",
+    "scenarioLimitReached": "Ha alcanzado el límite de escenarios de su plan. Actualice para crear más."
   },
   "whatItDoesNot": {
     "title": "Qué hace SettleLens — y qué no",
@@ -1077,7 +1078,9 @@
     "s7_p": "Los datos financieros se conservan mientras su cuenta esté activa. Al eliminar la cuenta, los datos se eliminan permanentemente en 30 días. Los registros de auditoría se conservan 2 años por razones regulatorias (sin datos personales).",
     "s8_title": "Seguridad",
     "s8_p": "Supabase Row Level Security: solo usted puede acceder a sus datos. Los datos se cifran en tránsito y en reposo. Paddle gestiona la seguridad de los pagos; SettleLens no almacena datos de tarjetas.",
-    "s9_title": "Contacto"
+    "s9_title": "Contacto",
+    "s10_title": "Notificación de Violación de Datos",
+    "s10_p": "En caso de una violación de datos que afecte sus datos personales, notificaremos a las autoridades supervisoras pertinentes dentro de las 72 horas según lo requiere el artículo 33 del RGPD. Si la violación puede resultar en un alto riesgo para sus derechos y libertades, informaremos a los usuarios afectados sin demora según el artículo 34 del RGPD."
   },
   "cookie_policy": {
     "title": "Política de cookies",

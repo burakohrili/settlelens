@@ -71,6 +71,9 @@ export default async function PrivacyPage() {
 
       <h2>9. {t("s9_title")}</h2>
       <p>privacy@settlelens.com</p>
+
+      <h2>10. {t("s10_title")}</h2>
+      <p>{t("s10_p")}</p>
     </LegalPageLayout>
   );
 }

@@ -1,6 +1,15 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
+function escapeHtml(text: string | undefined | null): string {
+  return String(text ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function generatePDF(html: string): Promise<Buffer> {
   const browser = await puppeteer.launch({
     args: chromium.args,
@@ -388,6 +397,8 @@ function riskColor(score: number): string {
 
 export function buildReportHTML(data: ReportData): string {
   const { userName, jurisdiction, date, lang, assets, debts, scenarios, currency } = data;
+  const safeUserName = escapeHtml(userName);
+  const safeJurisdiction = escapeHtml(jurisdiction);
   const L = REPORT_LABELS[lang] ?? REPORT_LABELS.en;
   const isRtl = lang === "ar";
 
@@ -399,8 +410,8 @@ export function buildReportHTML(data: ReportData): string {
     .map(
       (s, i) => `
       <div class="scenario-block" style="break-inside:avoid;">
-        <h3 style="color:#1C2B3A;border-bottom:2px solid #C8973A;padding-bottom:4px;">${L.scenario} ${i + 1}: ${s.name}</h3>
-        <p style="font-size:11px;color:#6b6b6b;font-style:italic;margin-top:0;">${s.confidence_label_text}</p>
+        <h3 style="color:#1C2B3A;border-bottom:2px solid #C8973A;padding-bottom:4px;">${L.scenario} ${i + 1}: ${escapeHtml(s.name)}</h3>
+        <p style="font-size:11px;color:#6b6b6b;font-style:italic;margin-top:0;">${escapeHtml(s.confidence_label_text)}</p>
         <table class="data-table">
           <tr><th>${L.metric}</th><th>${L.value}</th></tr>
           <tr><td>${L.netWorthNow}</td><td>${fmt(s.net_worth_now, currency)}</td></tr>
@@ -413,8 +424,8 @@ export function buildReportHTML(data: ReportData): string {
           <tr><td>${L.alimonyRange}</td><td>${fmt(s.alimony_range_low, currency)} – ${fmt(s.alimony_range_high, currency)}${L.mo}</td></tr>
           <tr><td>${L.childSupport}</td><td>${fmt(s.child_support_estimate, currency)}${L.mo}</td></tr>
         </table>
-        ${s.key_risks?.length ? `<p style="margin-top:10px;"><strong>${L.keyRisks}:</strong> ${(s.key_risks as string[]).join("; ")}</p>` : ""}
-        ${s.negotiation_strategy ? `<p style="margin-top:8px;"><strong>${L.financialNote}:</strong> ${s.negotiation_strategy}</p>` : ""}
+        ${s.key_risks?.length ? `<p style="margin-top:10px;"><strong>${L.keyRisks}:</strong> ${(s.key_risks as string[]).map(escapeHtml).join("; ")}</p>` : ""}
+        ${s.negotiation_strategy ? `<p style="margin-top:8px;"><strong>${L.financialNote}:</strong> ${escapeHtml(s.negotiation_strategy)}</p>` : ""}
       </div>`
     )
     .join("<hr style='margin:24px 0;border-color:#D4C5B0;'>");
@@ -452,9 +463,9 @@ export function buildReportHTML(data: ReportData): string {
   <h1>SettleLens</h1>
   <h2>${L.reportTitle}</h2>
   <div class="meta">
-    <div>${L.preparedFor}: ${userName}</div>
+    <div>${L.preparedFor}: ${safeUserName}</div>
     <div>${L.date}: ${date}</div>
-    <div>${L.jurisdiction}: ${jurisdiction}</div>
+    <div>${L.jurisdiction}: ${safeJurisdiction}</div>
     <div>${L.scenariosAnalyzed}: ${scenarios.length}</div>
   </div>
 </div>
@@ -488,17 +499,17 @@ export function buildReportHTML(data: ReportData): string {
   <h2>${L.assets}</h2>
   <table class="data-table">
     <tr><th>${L.name}</th><th>${L.category}</th><th>${L.currentValue}</th><th>${L.ownedBy}</th></tr>
-    ${assets.map((a) => `<tr><td>${a.name}</td><td>${a.category}</td><td>${fmt(a.current_value, currency)}</td><td>${a.owned_by}</td></tr>`).join("")}
+    ${assets.map((a) => `<tr><td>${escapeHtml(a.name)}</td><td>${escapeHtml(a.category)}</td><td>${fmt(a.current_value, currency)}</td><td>${escapeHtml(a.owned_by)}</td></tr>`).join("")}
   </table>
   ${assets.some((a) => a.category === "crypto") ? `
   <div style="margin-top:10px;background:#FFF8E1;border:1px solid #F59E0B;border-radius:6px;padding:10px;font-size:11px;color:#92400E;">
     <strong>⚠ ${L.cryptoNotice}:</strong> ${L.cryptoNoticeText}
     ${assets.filter((a) => a.category === "crypto").map((a) => {
       const extra = [];
-      if (a.crypto_token) extra.push(`${L.token}: ${a.crypto_token}`);
+      if (a.crypto_token) extra.push(`${L.token}: ${escapeHtml(a.crypto_token)}`);
       if (a.crypto_quantity) extra.push(`${L.qty}: ${Number(a.crypto_quantity).toFixed(8)}`);
-      if (a.crypto_exchange) extra.push(`${L.heldAt}: ${a.crypto_exchange}`);
-      return `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #F59E0B;">${a.name}${extra.length ? " — " + extra.join(" | ") : ""}</div>`;
+      if (a.crypto_exchange) extra.push(`${L.heldAt}: ${escapeHtml(a.crypto_exchange)}`);
+      return `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #F59E0B;">${escapeHtml(a.name)}${extra.length ? " — " + extra.join(" | ") : ""}</div>`;
     }).join("")}
   </div>` : ""}
 </section>
@@ -507,7 +518,7 @@ export function buildReportHTML(data: ReportData): string {
   <h2>${L.debts}</h2>
   <table class="data-table">
     <tr><th>${L.name}</th><th>${L.category}</th><th>${L.balance}</th><th>${L.monthlyPayment}</th></tr>
-    ${debts.map((d) => `<tr><td>${d.name}</td><td>${d.category}</td><td>${fmt(d.balance, currency)}</td><td>${fmt(d.monthly_payment, currency)}${L.mo}</td></tr>`).join("")}
+    ${debts.map((d) => `<tr><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.category)}</td><td>${fmt(d.balance, currency)}</td><td>${fmt(d.monthly_payment, currency)}${L.mo}</td></tr>`).join("")}
   </table>
 </section>
 

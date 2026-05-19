@@ -42,8 +42,8 @@ export async function POST(req: NextRequest) {
       .from("assets").select("*").eq("user_id", user.id),
     (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => Promise<{ data: Record<string, unknown>[] | null }> } } })
       .from("debts").select("*").eq("user_id", user.id),
-    (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => Promise<{ data: Record<string, unknown>[] | null }> } } })
-      .from("scenarios").select("*").eq("user_id", user.id),
+    (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { order: (c: string, o: Record<string, unknown>) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null }> } } } } })
+      .from("scenarios").select("*").eq("user_id", user.id).order("created_at", { ascending: false }).limit(10),
   ]);
 
   const assets = assetsRes.data ?? [];

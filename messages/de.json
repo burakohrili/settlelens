@@ -289,7 +289,8 @@
         "desc": "Organisieren Sie Ihre Finanzdaten vor dem Gespräch in einem professionellen Bericht."
       }
     ],
-    "cardCta": "Kostenlos starten"
+    "cardCta": "Kostenlos starten",
+    "scenarioLimitReached": "Sie haben das Szenario-Limit Ihres Plans erreicht. Upgrade für mehr."
   },
   "whatItDoesNot": {
     "title": "Was SettleLens tut — und was nicht",
@@ -1079,7 +1080,9 @@
     "s7_p": "Finanzdaten werden gespeichert, solange Ihr Konto aktiv ist. Nach der Kontolöschung werden Daten innerhalb von 30 Tagen dauerhaft gelöscht. Audit-Logs werden 2 Jahre aufbewahrt (ohne personenbezogene Daten).",
     "s8_title": "Sicherheit",
     "s8_p": "Supabase Row Level Security: nur Sie können auf Ihre eigenen Daten zugreifen. Daten werden bei Übertragung und Speicherung verschlüsselt.",
-    "s9_title": "Kontakt"
+    "s9_title": "Kontakt",
+    "s10_title": "Benachrichtigung bei Datenschutzverletzungen",
+    "s10_p": "Im Falle einer Datenschutzverletzung, die Ihre personenbezogenen Daten betrifft, benachrichtigen wir die zuständigen Aufsichtsbehörden gemäß DSGVO Art. 33 innerhalb von 72 Stunden. Wenn die Verletzung voraussichtlich zu einem hohen Risiko für Ihre Rechte und Freiheiten führt, informieren wir die Betroffenen unverzüglich gemäß DSGVO Art. 34."
   },
   "cookie_policy": {
     "title": "Cookie-Richtlinie",

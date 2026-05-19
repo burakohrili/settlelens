@@ -64,6 +64,18 @@ export default function Step4Page() {
   }
 
   async function handleNext() {
+    const incomeNumericFields = ["annual_gross", "annual_net", "other_income_annual"] as const;
+    for (const field of incomeNumericFields) {
+      const v = Number(me[field]);
+      if (isNaN(v) || v < 0 || v > 1_000_000_000) return;
+    }
+    if (!spouseUnknown) {
+      for (const field of incomeNumericFields) {
+        const v = Number(spouse[field]);
+        if (isNaN(v) || v < 0 || v > 1_000_000_000) return;
+      }
+    }
+
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {

@@ -48,6 +48,15 @@ export default function Step5Page() {
   }
 
   async function handleNext() {
+    const validCustody = ["primary_me", "primary_spouse", "joint_50_50", "other"];
+    if (hasChildren && children.length > 0) {
+      for (const child of children) {
+        const age = Number(child.age);
+        if (isNaN(age) || age < 0 || age > 25) return;
+        if (child.custody_arrangement && !validCustody.includes(child.custody_arrangement)) return;
+      }
+    }
+
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {

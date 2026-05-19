@@ -289,7 +289,8 @@
         "desc": "Varlıklarını, borçlarını, gelirini ve senaryolarını toplantıdan önce profesyonel bir raporda düzenle."
       }
     ],
-    "cardCta": "Ücretsiz başla"
+    "cardCta": "Ücretsiz başla",
+    "scenarioLimitReached": "Plan limitinize ulaştınız. Daha fazla senaryo için yükseltin."
   },
   "whatItDoesNot": {
     "title": "Ne yapar, ne yapmaz?",
@@ -1079,7 +1080,9 @@
     "s7_p": "Finansal veriler hesabınız aktif olduğu sürece saklanır. Hesabı sildiğinizde veriler 30 gün sonra kalıcı olarak silinir. Denetim logları düzenleyici gereksinimler nedeniyle 2 yıl saklanır (kişisel veri içermez).",
     "s8_title": "Güvenlik",
     "s8_p": "Supabase Row Level Security: yalnızca siz kendi verilerinize erişebilirsiniz. Veriler aktarım ve depolamada şifrelenir. Paddle ödeme güvenliğini yönetir; SettleLens kart verisi saklamaz.",
-    "s9_title": "İletişim"
+    "s9_title": "İletişim",
+    "s10_title": "Veri İhlali Bildirimi",
+    "s10_p": "Kişisel verilerinizi etkileyen bir veri ihlali durumunda, GDPR Madde 33 gereği ilgili denetim makamlerini 72 saat içinde bilgilendireceğiz. İhlal haklarınız ve özgürlükleriniz için yüksek risk oluşturuyorsa, GDPR Madde 34 gereği etkilenen kullanıcıları gereksiz gecikme olmaksızın bilgilendireceğiz."
   },
   "cookie_policy": {
     "title": "Çerez Politikası",

@@ -172,6 +172,10 @@ export default function SettingsPage() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      setTimeout(async () => {
+        await supabase.auth.signOut();
+        router.push(`/${locale}/login`);
+      }, 2000);
     }
   };
 

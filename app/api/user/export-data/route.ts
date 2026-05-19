@@ -162,7 +162,12 @@ export async function GET() {
     analyses: analysesResult.data ?? [],
   };
 
-  return new Response(JSON.stringify(exportData, null, 2), {
+  const exportJson = JSON.stringify(exportData, null, 2);
+  if (exportJson.length > 50 * 1024 * 1024) {
+    return Response.json({ error: "Export too large. Please contact support@settlelens.com." }, { status: 413 });
+  }
+
+  return new Response(exportJson, {
     headers: {
       "Content-Type": "application/json",
       "Content-Disposition":

@@ -10,6 +10,32 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await req.json();
+
+  if (body.retirement_split_me !== undefined) {
+    const v = Number(body.retirement_split_me);
+    if (isNaN(v) || v < 0 || v > 100) return NextResponse.json({ error: "Invalid retirement_split_me" }, { status: 400 });
+  }
+  for (const field of ["alimony_monthly", "child_support_monthly"] as const) {
+    if (body[field] !== undefined) {
+      const v = Number(body[field]);
+      if (isNaN(v) || v < 0 || v > 1_000_000_000) return NextResponse.json({ error: `Invalid ${field}` }, { status: 400 });
+    }
+  }
+  if (body.alimony_years !== undefined) {
+    const v = Number(body.alimony_years);
+    if (isNaN(v) || v < 0 || v > 50) return NextResponse.json({ error: "Invalid alimony_years" }, { status: 400 });
+  }
+  const houseOutcomeValues = ["i_keep", "spouse_keeps", "sell", "not_applicable"];
+  if (body.house_outcome !== undefined && !houseOutcomeValues.includes(body.house_outcome)) {
+    return NextResponse.json({ error: "Invalid house_outcome" }, { status: 400 });
+  }
+  const directionValues = ["i_receive", "i_pay"];
+  for (const field of ["alimony_direction", "child_support_direction"] as const) {
+    if (body[field] !== undefined && !directionValues.includes(body[field])) {
+      return NextResponse.json({ error: `Invalid ${field}` }, { status: 400 });
+    }
+  }
+
   const allowed = [
     "name", "house_outcome", "retirement_split_me",
     "alimony_monthly", "alimony_years", "alimony_direction",

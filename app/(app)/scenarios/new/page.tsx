@@ -34,8 +34,11 @@ const DEFAULT_FORM: ScenarioForm = {
   child_support_direction: "i_receive",
 };
 
+const SCENARIO_LIMITS: Record<string, number> = { discovery: 3, clarified: 1, strategist: -1, professional: -1 };
+
 export default function NewScenarioPage() {
   const t = useTranslations("onboarding_form.step6");
+  const tScenarios = useTranslations("userScenarios");
   const locale = useLocale();
   const router = useRouter();
   const supabase = createClient();
@@ -63,6 +66,16 @@ export default function NewScenarioPage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       router.push(`/${locale}/login`);
+      return;
+    }
+
+    // Scenario limit check
+    const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } } }).from("profiles").select("plan_type").eq("id", user.id).single();
+    const { count: scenarioCount } = await (supabase as never as { from: (t: string) => { select: (s: string, o: Record<string, unknown>) => { eq: (c: string, v: string) => Promise<{ count: number | null }> } } }).from("scenarios").select("id", { count: "exact", head: true }).eq("user_id", user.id);
+    const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
+    if (limit !== -1 && (scenarioCount ?? 0) >= limit) {
+      setError(tScenarios("scenarioLimitReached"));
+      setSaving(false);
       return;
     }
 

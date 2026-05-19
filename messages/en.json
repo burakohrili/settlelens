@@ -289,7 +289,8 @@
         "desc": "Organize your assets, debts, income, and scenarios into a professional report — before the meeting."
       }
     ],
-    "cardCta": "Start free"
+    "cardCta": "Start free",
+    "scenarioLimitReached": "You have reached your plan's scenario limit. Upgrade to create more."
   },
   "whatItDoesNot": {
     "title": "What SettleLens does — and what it doesn't",
@@ -1077,7 +1078,9 @@
     "s7_p": "Financial data is retained while your account is active. On account deletion, data is permanently deleted within 30 days. Audit logs are retained for 2 years for regulatory reasons (no personal data).",
     "s8_title": "Security",
     "s8_p": "Supabase Row Level Security: only you can access your own data. Data is encrypted in transit and at rest. Paddle manages payment security; SettleLens stores no card data.",
-    "s9_title": "Contact"
+    "s9_title": "Contact",
+    "s10_title": "Data Breach Notification",
+    "s10_p": "In the event of a data breach affecting your personal data, we will notify relevant supervisory authorities within 72 hours as required by GDPR Article 33. If the breach is likely to result in a high risk to your rights and freedoms, we will inform affected users without undue delay as required by GDPR Article 34."
   },
   "cookie_policy": {
     "title": "Cookie Policy",
