@@ -26,8 +26,8 @@ type OfferResult = {
   confidence_label_text?: string;
 };
 
-function fmt(n: number, currency = "USD"): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(n || 0);
+function fmt(n: number, currency = "USD", locale = "en"): string {
+  return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(n || 0);
 }
 
 const COUNTRY_CURRENCY: Record<string, string> = {
@@ -256,7 +256,7 @@ export default function OfferPage() {
               <p className={cn("font-ui font-semibold text-base", assessmentColor)}>{assessmentLabel}</p>
               {result.offer_vs_baseline_year10 !== undefined && (
                 <p className="font-mono text-sm mt-1 text-[var(--brown)]">
-                  {t("yearDiff")}: <strong className={assessmentColor}>{fmt(result.offer_vs_baseline_year10, currency)}</strong> {t("vsBaseline")}
+                  {t("yearDiff")}: <strong className={assessmentColor}>{fmt(result.offer_vs_baseline_year10, currency, locale)}</strong> {t("vsBaseline")}
                 </p>
               )}
               {result.offer_tone_note && (
@@ -269,11 +269,11 @@ export default function OfferPage() {
           <div className="grid grid-cols-3 gap-3">
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("netWorthNow")}</p>
-              <p className="font-mono text-base font-bold text-[var(--navy)] mt-1">{fmt(result.net_worth_now, currency)}</p>
+              <p className="font-mono text-base font-bold text-[var(--navy)] mt-1">{fmt(result.net_worth_now, currency, locale)}</p>
             </div>
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("year10")}</p>
-              <p className="font-mono text-base font-bold text-[var(--gold)] mt-1">{fmt(result.year10, currency)}</p>
+              <p className="font-mono text-base font-bold text-[var(--gold)] mt-1">{fmt(result.year10, currency, locale)}</p>
             </div>
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("riskScore")}</p>

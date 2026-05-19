@@ -6,7 +6,6 @@ import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { Disclaimer } from "@/components/layout/Disclaimer";
 import { Loader2, ArrowLeft, AlertTriangle, HelpCircle, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
@@ -73,6 +72,7 @@ export default function ScenarioDetailPage() {
   const [editChildSupport, setEditChildSupport] = useState(0);
   const [editChildDir, setEditChildDir] = useState("i_receive");
   const [saving, setSaving] = useState(false);
+  const [originalValues, setOriginalValues] = useState<Record<string, unknown> | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -111,6 +111,16 @@ export default function ScenarioDetailPage() {
         setEditAlimonyDir(s.alimony_direction);
         setEditChildSupport(s.child_support_monthly);
         setEditChildDir(s.child_support_direction ?? "i_receive");
+        setOriginalValues({
+          name: s.name,
+          house: s.house_outcome,
+          retirement: s.retirement_split_me,
+          alimonyMonthly: s.alimony_monthly,
+          alimonyYears: s.alimony_years,
+          alimonyDir: s.alimony_direction,
+          childSupport: s.child_support_monthly,
+          childDir: s.child_support_direction ?? "i_receive",
+        });
       }
 
       const { data: analyses } = await (supabase as never as {
@@ -399,7 +409,16 @@ export default function ScenarioDetailPage() {
             <div className="flex gap-2 pt-1">
               <button
                 onClick={handleSaveEdit}
-                disabled={saving}
+                disabled={saving || (originalValues !== null && (
+                  editName === originalValues.name &&
+                  editHouse === originalValues.house &&
+                  editRetirement === originalValues.retirement &&
+                  editAlimonyMonthly === originalValues.alimonyMonthly &&
+                  editAlimonyYears === originalValues.alimonyYears &&
+                  editAlimonyDir === originalValues.alimonyDir &&
+                  editChildSupport === originalValues.childSupport &&
+                  editChildDir === originalValues.childDir
+                ))}
                 className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90", saving && "opacity-70")}
               >
                 {saving ? <Loader2 size={14} className="animate-spin mr-1" /> : null}
@@ -562,7 +581,6 @@ export default function ScenarioDetailPage() {
         </div>
       )}
 
-      <Disclaimer />
     </div>
   );
 }

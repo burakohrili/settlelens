@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
     );
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json({ error: `Unauthorized: ${authError?.message ?? "no session"}` }, { status: 401 });
+      console.error("[update-profile] auth error:", authError?.message);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const admin = createAdminClient();
@@ -36,13 +37,13 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("[update-profile] upsert error:", error.code, error.message);
-      return NextResponse.json({ error: error.message, code: error.code }, { status: 500 });
+      return NextResponse.json({ error: "Profile update failed" }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("[update-profile] unexpected error:", msg);
-    return NextResponse.json({ error: `Server error: ${msg}` }, { status: 500 });
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }

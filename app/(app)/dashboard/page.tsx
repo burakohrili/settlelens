@@ -8,7 +8,6 @@ import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdi
 export const dynamic = "force-dynamic";
 import { ProjectionChart } from "@/components/app/ProjectionChart";
 import { ScenarioComparison } from "@/components/app/ScenarioComparison";
-import { Disclaimer } from "@/components/layout/Disclaimer";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,8 +36,8 @@ type Analysis = {
   raw_json: Record<string, unknown>;
 };
 
-function fmt(n: number, currency: string): string {
-  return new Intl.NumberFormat("en-US", {
+function fmt(n: number, currency: string, locale: string = "en"): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -241,16 +240,16 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
               <div className="grid grid-cols-3 gap-3 mb-4">
                 <div className="text-center">
                   <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("totalAssets")}</p>
-                  <p className="font-mono text-base font-bold text-[var(--navy)]">{fmt(grossAssets, currency)}</p>
+                  <p className="font-mono text-base font-bold text-[var(--navy)]">{fmt(grossAssets, currency, appLocale)}</p>
                 </div>
                 <div className="text-center">
                   <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("totalDebts")}</p>
-                  <p className="font-mono text-base font-bold text-[var(--danger)]">{fmt(totalDebts, currency)}</p>
+                  <p className="font-mono text-base font-bold text-[var(--danger)]">{fmt(totalDebts, currency, appLocale)}</p>
                 </div>
                 <div className="text-center">
                   <p className="font-ui text-xs text-[var(--brown)] mb-1">{t("netWorthCalc")}</p>
                   <p className={cn("font-mono text-base font-bold", calcNetWorth >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>
-                    {fmt(calcNetWorth, currency)}
+                    {fmt(calcNetWorth, currency, appLocale)}
                   </p>
                 </div>
               </div>
@@ -478,8 +477,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {scenarioList.length > 0 && <DashboardFAQ />}
-
-      <Disclaimer className="mt-4" />
     </div>
   );
 }

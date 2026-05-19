@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   score: number; // 1–10
@@ -34,6 +35,7 @@ function scoreColor(score: number): string {
 const TRACK_PATH = describeArc(CX, CY, RADIUS, -180, 0);
 
 export function RiskGauge({ score }: Props) {
+  const t = useTranslations("common");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export function RiskGauge({ score }: Props) {
   const color = scoreColor(clampedScore);
 
   return (
-    <div className="flex flex-col items-center justify-center h-14" role="img" aria-label={`Risk score: ${clampedScore} out of 10`}>
+    <div className="flex flex-col items-center justify-center h-14" role="img" aria-label={t("riskScoreLabel", { score: clampedScore })}>
       <svg viewBox="0 0 120 70" width="110" height="65" aria-hidden="true">
         {/* Track */}
         <path

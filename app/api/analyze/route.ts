@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
   }
   // Server-side expiry check — UI redirect alone is not sufficient
   if (
-    (planType === "clarified" || planType === "strategist") &&
+    (planType === "clarified" || planType === "strategist" || planType === "professional") &&
     profile.plan_expires_at &&
     new Date(profile.plan_expires_at as string) < new Date()
   ) {
@@ -195,7 +195,7 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
     const isTimeout = err instanceof Error && (err.name === "AbortError" || msg.includes("abort"));
     console.error("[analyze] Anthropic error:", isTimeout ? "client timeout" : msg);
     return Response.json(
-      { error: isTimeout ? "analysis_timeout" : "ai_unavailable", detail: isTimeout ? "" : msg.slice(0, 120) },
+      { error: isTimeout ? "analysis_timeout" : "ai_unavailable" },
       { status: 503 }
     );
   }

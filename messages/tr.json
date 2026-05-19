@@ -624,6 +624,33 @@
     "upgradeButton": "Yükselt"
   },
   "settings": {
+    "financialData": {
+      "title": "Finansal Veriler",
+      "desc": "Varlıklarınızı, borçlarınızı, gelirinizi ve çocuklarınızı gözden geçirin ve güncelleyin. Hızlı değişiklikler için satır içi düzenle butonlarını kullanın.",
+      "assets": "Varlıklar",
+      "debts": "Borçlar",
+      "income": "Gelir",
+      "children": "Çocuklar",
+      "edit": "Düzenle",
+      "addAsset": "Varlık Ekle",
+      "addDebt": "Borç Ekle",
+      "noAssets": "Henüz varlık eklenmedi.",
+      "noDebts": "Henüz borç eklenmedi.",
+      "noIncome": "Henüz gelir bilgisi yok.",
+      "noChildren": "Henüz çocuk eklenmedi.",
+      "editStep": "Kurulum sihirbazında yönet",
+      "save": "Kaydet",
+      "cancel": "İptal",
+      "deleteConfirm": "Silmeyi onayla",
+      "name": "Ad",
+      "value": "Değer",
+      "owner": "Sahip",
+      "balance": "Bakiye",
+      "joint": "Ortak",
+      "me": "Ben",
+      "spouse": "Eşim",
+      "perYear": "/ yıl"
+    },
     "navAccount": "Hesap",
     "navBilling": "Fatura",
     "navPrivacy": "Gizlilik",
@@ -813,7 +840,8 @@
       "cat_credit_card": "Kredi Kartı",
       "cat_student_loan": "Öğrenci Kredisi",
       "cat_personal_loan": "Kişisel Kredi",
-      "cat_other": "Diğer"
+      "cat_other": "Diğer",
+      "saveError": "Borçlarınız kaydedilemedi. Lütfen tekrar deneyin."
     },
     "step4": {
       "myIncome": "Benim Gelirim",
@@ -1136,6 +1164,7 @@
     "s11_p": "Koşulları değiştirebiliriz. Önemli değişikliklerde e-posta ile bildirim yapılır."
   },
   "common": {
+    "riskScoreLabel": "Risk puanı: {score} / 10",
     "countries": {
       "US": "Amerika Birleşik Devletleri",
       "UK": "Birleşik Krallık",

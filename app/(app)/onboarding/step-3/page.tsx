@@ -45,6 +45,7 @@ export default function Step3Page() {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [hasDebts, setHasDebts] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -66,14 +67,27 @@ export default function Step3Page() {
 
   async function handleNext() {
     setSaving(true);
+    setSaveError(null);
     const { data: { user } } = await supabase.auth.getUser();
     if (user && hasDebts && debts.length > 0) {
-      await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
+      const { error: deleteError } = await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<{ error: unknown }> } } })
         .from("debts").delete().eq("user_id", user.id);
+      if (deleteError) {
+        console.error("[step-3] debt delete error:", deleteError);
+        setSaveError(t("saveError"));
+        setSaving(false);
+        return;
+      }
       const rows = debts.filter((d) => d.name).map((d) => ({ ...d, user_id: user.id, id: undefined }));
       if (rows.length > 0) {
-        await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+        const { error: insertError } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: unknown }> } })
           .from("debts").insert(rows);
+        if (insertError) {
+          console.error("[step-3] debt insert error:", insertError);
+          setSaveError(t("saveError"));
+          setSaving(false);
+          return;
+        }
       }
     }
     router.push(`/${lang}/onboarding/step-4`);
@@ -87,6 +101,9 @@ export default function Step3Page() {
       nextDisabled={saving || (hasDebts === true && debts.some((d) => !d.name))}
     >
       <div className="space-y-4">
+        {saveError && (
+          <p role="alert" className="rounded-md bg-red-50 border border-red-200 px-3 py-2 font-ui text-sm text-red-700">{saveError}</p>
+        )}
         {hasDebts === null && (
           <div>
             <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">{t("hasDebts")}</p>

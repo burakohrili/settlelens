@@ -62,10 +62,37 @@ export async function POST(req: Request) {
 
   switch (eventType) {
     case "transaction.completed": {
-      const userId = (data.custom_data as Record<string, string> | null)?.userId;
       const items = data.items as Array<{ price: { id: string } }> | null;
       const priceId = items?.[0]?.price?.id;
       const plan = getPlanFromPriceId(priceId ?? "");
+
+      // Resolve userId by paddle_customer_id (server-side lookup) to prevent client manipulation.
+      // Fall back to customData only for first-time customers whose profile may not yet have the customer_id.
+      const paddleCustomerId = data.customer_id as string | undefined;
+      let userId: string | undefined;
+      if (paddleCustomerId) {
+        const { data: foundProfile } = await (supabase as never as {
+          from: (t: string) => {
+            select: (s: string) => {
+              eq: (c: string, v: string) => {
+                single: () => Promise<{ data: { id: string } | null }>;
+              };
+            };
+          };
+        })
+          .from("profiles")
+          .select("id")
+          .eq("paddle_customer_id", paddleCustomerId)
+          .single();
+        userId = foundProfile?.id;
+      }
+      // Fallback for new customers (no paddle_customer_id in profile yet)
+      if (!userId) {
+        userId = (data.custom_data as Record<string, string> | null)?.userId;
+        if (userId && paddleCustomerId) {
+          console.warn("[webhook] userId resolved from customData for new customer — verify paddle_customer_id mismatch", { paddleCustomerId });
+        }
+      }
 
       if (userId && plan !== "discovery") {
         const updateData: Record<string, unknown> = {
@@ -133,11 +160,19 @@ export async function POST(req: Request) {
     }
 
     case "subscription.activated": {
-      const userId = (data.custom_data as Record<string, string> | null)?.userId;
       const items = data.items as Array<{ price: { id: string } }> | null;
       const plan = getPlanFromPriceId(items?.[0]?.price?.id ?? "");
+      const subCustomerId = data.customer_id as string | undefined;
+      let subUserId: string | undefined;
+      if (subCustomerId) {
+        const { data: fp } = await (supabase as never as {
+          from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> } } };
+        }).from("profiles").select("id").eq("paddle_customer_id", subCustomerId).single();
+        subUserId = fp?.id;
+      }
+      if (!subUserId) subUserId = (data.custom_data as Record<string, string> | null)?.userId;
 
-      if (userId) {
+      if (subUserId) {
         await (supabase as never as {
           from: (t: string) => {
             update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
@@ -145,17 +180,25 @@ export async function POST(req: Request) {
         })
           .from("profiles")
           .update({ plan_type: plan, paddle_subscription_id: data.id })
-          .eq("id", userId);
+          .eq("id", subUserId);
       }
       break;
     }
 
     case "subscription.updated": {
-      const userId = (data.custom_data as Record<string, string> | null)?.userId;
       const items = data.items as Array<{ price: { id: string } }> | null;
       const plan = getPlanFromPriceId(items?.[0]?.price?.id ?? "");
+      const updCustomerId = data.customer_id as string | undefined;
+      let updUserId: string | undefined;
+      if (updCustomerId) {
+        const { data: fp } = await (supabase as never as {
+          from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> } } };
+        }).from("profiles").select("id").eq("paddle_customer_id", updCustomerId).single();
+        updUserId = fp?.id;
+      }
+      if (!updUserId) updUserId = (data.custom_data as Record<string, string> | null)?.userId;
 
-      if (userId) {
+      if (updUserId) {
         await (supabase as never as {
           from: (t: string) => {
             update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
@@ -163,7 +206,7 @@ export async function POST(req: Request) {
         })
           .from("profiles")
           .update({ plan_type: plan })
-          .eq("id", userId);
+          .eq("id", updUserId);
       }
       break;
     }

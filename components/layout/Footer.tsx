@@ -34,7 +34,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#111923] pt-12 pb-6">
+    <footer className="bg-[#111923] pt-12 pb-6" dir={locale === "ar" ? "rtl" : "ltr"}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* Col 1: Brand */}

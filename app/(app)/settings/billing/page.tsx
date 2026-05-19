@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { Loader2 } from "lucide-react";
 
 const PLAN_COLORS: Record<string, string> = {
   discovery: "text-[#8B7355] bg-[#F7F3EE]",
@@ -93,7 +94,8 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="flex h-32 items-center justify-center text-[#8B7355]">
+      <div className="flex h-32 items-center justify-center gap-2 text-[#8B7355]">
+        <Loader2 size={18} className="animate-spin" />
         {t("loading")}
       </div>
     );
@@ -144,7 +146,7 @@ export default function BillingPage() {
             {profile?.plan_expires_at && (
               <p className="mt-1 text-sm text-[#8B7355]">
                 {t("accessUntil")}{" "}
-                {new Date(profile.plan_expires_at).toLocaleDateString(undefined, {
+                {new Date(profile.plan_expires_at).toLocaleDateString(locale, {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

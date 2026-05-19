@@ -624,6 +624,33 @@
     "upgradeButton": "Upgrade"
   },
   "settings": {
+    "financialData": {
+      "title": "Financial Data",
+      "desc": "Review and update your assets, debts, income, and children. Use the inline edit buttons for quick changes, or add new entries.",
+      "assets": "Assets",
+      "debts": "Debts",
+      "income": "Income",
+      "children": "Children",
+      "edit": "Edit",
+      "addAsset": "Add Asset",
+      "addDebt": "Add Debt",
+      "noAssets": "No assets added yet.",
+      "noDebts": "No debts added yet.",
+      "noIncome": "No income data yet.",
+      "noChildren": "No children added.",
+      "editStep": "Manage in setup wizard",
+      "save": "Save",
+      "cancel": "Cancel",
+      "deleteConfirm": "Confirm delete",
+      "name": "Name",
+      "value": "Value",
+      "owner": "Owner",
+      "balance": "Balance",
+      "joint": "Joint",
+      "me": "Me",
+      "spouse": "Spouse",
+      "perYear": "/ yr"
+    },
     "navAccount": "Account",
     "navBilling": "Billing",
     "navPrivacy": "Privacy",
@@ -813,7 +840,8 @@
       "cat_credit_card": "Credit Card",
       "cat_student_loan": "Student Loan",
       "cat_personal_loan": "Personal Loan",
-      "cat_other": "Other"
+      "cat_other": "Other",
+      "saveError": "Could not save your debts. Please try again."
     },
     "step4": {
       "myIncome": "My Income",
@@ -1134,6 +1162,7 @@
     "s11_p": "We may update these terms. Material changes will be notified by email."
   },
   "common": {
+    "riskScoreLabel": "Risk score: {score} out of 10",
     "countries": {
       "US": "United States",
       "UK": "United Kingdom",

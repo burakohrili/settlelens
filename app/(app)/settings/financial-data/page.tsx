@@ -6,14 +6,10 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Home, CreditCard, TrendingDown, Users, Pencil, Plus } from "lucide-react";
 import { AssetList, DebtList } from "@/components/app/FinancialDataClient";
+import { getTranslations } from "next-intl/server";
+import { getAppLocale } from "@/lib/get-app-locale";
 
 const VALID_LOCALES = ["en", "tr", "de", "fr", "es", "ar"];
-
-function getLocale(preferred: string | null | undefined, cookie: string | null | undefined): string {
-  if (preferred && VALID_LOCALES.includes(preferred)) return preferred;
-  if (cookie && VALID_LOCALES.includes(cookie)) return cookie;
-  return "en";
-}
 
 type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number };
 type Debt = { id: string; name: string; category: string; balance: number; owned_by: string };
@@ -23,15 +19,6 @@ type Child = { id: string; age: number; custody_arrangement: string };
 function fmt(n: number) {
   return new Intl.NumberFormat("en", { maximumFractionDigits: 0 }).format(n);
 }
-
-const LABELS: Record<string, { assets: string; debts: string; income: string; children: string; edit: string; add: string; addAsset: string; addDebt: string; noAssets: string; noDebts: string; noIncome: string; noChildren: string; title: string; desc: string; editStep: string; save: string; cancel: string; deleteConfirm: string; name: string; value: string; owner: string; balance: string; joint: string; me: string; spouse: string }> = {
-  en: { title: "Financial Data", desc: "Review and update your assets, debts, income, and children. Use the inline edit buttons for quick changes, or add new entries.", assets: "Assets", debts: "Debts", income: "Income", children: "Children", edit: "Edit", add: "Add", addAsset: "Add Asset", addDebt: "Add Debt", noAssets: "No assets added yet.", noDebts: "No debts added yet.", noIncome: "No income data yet.", noChildren: "No children added.", editStep: "Manage in setup wizard", save: "Save", cancel: "Cancel", deleteConfirm: "Confirm delete", name: "Name", value: "Value", owner: "Owner", balance: "Balance", joint: "Joint", me: "Me", spouse: "Spouse" },
-  tr: { title: "Finansal Veriler", desc: "Varlıklarınızı, borçlarınızı, gelirinizi ve çocuklarınızı gözden geçirin ve güncelleyin. Hızlı değişiklikler için satır içi düzenle butonlarını kullanın.", assets: "Varlıklar", debts: "Borçlar", income: "Gelir", children: "Çocuklar", edit: "Düzenle", add: "Ekle", addAsset: "Varlık Ekle", addDebt: "Borç Ekle", noAssets: "Henüz varlık eklenmedi.", noDebts: "Henüz borç eklenmedi.", noIncome: "Henüz gelir bilgisi yok.", noChildren: "Henüz çocuk eklenmedi.", editStep: "Kurulum sihirbazında yönet", save: "Kaydet", cancel: "İptal", deleteConfirm: "Silmeyi onayla", name: "Ad", value: "Değer", owner: "Sahip", balance: "Bakiye", joint: "Ortak", me: "Ben", spouse: "Eşim" },
-  de: { title: "Finanzdaten", desc: "Überprüfen und aktualisieren Sie Ihre Vermögenswerte, Schulden, Einkommen und Kinder.", assets: "Vermögen", debts: "Schulden", income: "Einkommen", children: "Kinder", edit: "Bearbeiten", add: "Hinzufügen", addAsset: "Vermögen hinzufügen", addDebt: "Schuld hinzufügen", noAssets: "Noch keine Vermögenswerte.", noDebts: "Noch keine Schulden.", noIncome: "Noch keine Einkommensdaten.", noChildren: "Noch keine Kinder.", editStep: "Im Setup-Assistenten verwalten", save: "Speichern", cancel: "Abbrechen", deleteConfirm: "Löschen bestätigen", name: "Name", value: "Wert", owner: "Besitzer", balance: "Guthaben", joint: "Gemeinsam", me: "Ich", spouse: "Ehepartner" },
-  fr: { title: "Données financières", desc: "Consultez et mettez à jour vos actifs, dettes, revenus et enfants.", assets: "Actifs", debts: "Dettes", income: "Revenus", children: "Enfants", edit: "Modifier", add: "Ajouter", addAsset: "Ajouter un actif", addDebt: "Ajouter une dette", noAssets: "Aucun actif ajouté.", noDebts: "Aucune dette ajoutée.", noIncome: "Pas de données de revenus.", noChildren: "Aucun enfant ajouté.", editStep: "Gérer dans l'assistant", save: "Enregistrer", cancel: "Annuler", deleteConfirm: "Confirmer la suppression", name: "Nom", value: "Valeur", owner: "Propriétaire", balance: "Solde", joint: "Joint", me: "Moi", spouse: "Conjoint(e)" },
-  es: { title: "Datos financieros", desc: "Revisa y actualiza tus activos, deudas, ingresos e hijos.", assets: "Activos", debts: "Deudas", income: "Ingresos", children: "Hijos", edit: "Editar", add: "Añadir", addAsset: "Añadir activo", addDebt: "Añadir deuda", noAssets: "Aún no se han añadido activos.", noDebts: "Aún no se han añadido deudas.", noIncome: "No hay datos de ingresos.", noChildren: "No se han añadido hijos.", editStep: "Gestionar en el asistente", save: "Guardar", cancel: "Cancelar", deleteConfirm: "Confirmar eliminación", name: "Nombre", value: "Valor", owner: "Propietario", balance: "Saldo", joint: "Conjunto", me: "Yo", spouse: "Cónyuge" },
-  ar: { title: "البيانات المالية", desc: "راجع وحدّث أصولك وديونك ودخلك وأطفالك.", assets: "الأصول", debts: "الديون", income: "الدخل", children: "الأطفال", edit: "تعديل", add: "إضافة", addAsset: "إضافة أصل", addDebt: "إضافة دين", noAssets: "لم تُضَف أصول بعد.", noDebts: "لم تُضَف ديون بعد.", noIncome: "لا توجد بيانات دخل.", noChildren: "لم يُضَف أطفال.", editStep: "الإدارة في معالج الإعداد", save: "حفظ", cancel: "إلغاء", deleteConfirm: "تأكيد الحذف", name: "الاسم", value: "القيمة", owner: "المالك", balance: "الرصيد", joint: "مشترك", me: "أنا", spouse: "الزوج/الزوجة" },
-};
 
 export default async function FinancialDataPage() {
   const supabase = await createClient();
@@ -44,21 +31,17 @@ export default async function FinancialDataPage() {
     redirect(`/${loc}/login`);
   }
 
+  const t = await getTranslations("settings.financialData");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const db = supabase as any;
 
-  const [profileRes, assetsRes, debtsRes, incomeRes, childrenRes] = await Promise.all([
-    db.from("profiles").select("preferred_language").eq("id", user.id).single(),
+  const [assetsRes, debtsRes, incomeRes, childrenRes] = await Promise.all([
     db.from("assets").select("id, name, category, current_value, owned_by, mortgage_balance").eq("user_id", user.id).order("created_at"),
     db.from("debts").select("id, name, category, balance, owned_by").eq("user_id", user.id).order("created_at"),
     db.from("income").select("id, person, annual_net, employment_type").eq("user_id", user.id).order("created_at"),
     db.from("children").select("id, age, custody_arrangement").eq("user_id", user.id).order("created_at"),
   ]);
-
-  const cookieStore = await cookies();
-  const cookieLang = cookieStore.get("NEXT_LOCALE")?.value;
-  const locale = getLocale(profileRes?.data?.preferred_language as string, cookieLang);
-  const L = LABELS[locale] ?? LABELS.en;
 
   const assets: Asset[] = assetsRes.data ?? [];
   const debts: Debt[] = debtsRes.data ?? [];
@@ -68,31 +51,41 @@ export default async function FinancialDataPage() {
   const totalAssets = assets.reduce((s, a) => s + (a.current_value ?? 0), 0);
   const totalDebts = debts.reduce((s, d) => s + (d.balance ?? 0), 0);
 
+  const labels = {
+    save: t("save"),
+    cancel: t("cancel"),
+    deleteConfirm: t("deleteConfirm"),
+    name: t("name"),
+    value: t("value"),
+    owner: t("owner"),
+    balance: t("balance"),
+    joint: t("joint"),
+    me: t("me"),
+    spouse: t("spouse"),
+  };
+
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h2 className="font-display text-xl font-bold text-[var(--navy)]">{L.title}</h2>
-        <p className="font-ui text-sm text-[var(--brown)] mt-1">{L.desc}</p>
+        <h2 className="font-display text-xl font-bold text-[var(--navy)]">{t("title")}</h2>
+        <p className="font-ui text-sm text-[var(--brown)] mt-1">{t("desc")}</p>
       </div>
 
       {/* Assets */}
       <section className="rounded-xl border border-[var(--sand)] bg-white overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--sand)] bg-[var(--cream)]">
           <h3 className="font-ui text-sm font-semibold text-[var(--navy)] flex items-center gap-2">
-            <Home size={15} /> {L.assets}
+            <Home size={15} /> {t("assets")}
             {assets.length > 0 && <span className="text-[var(--brown)] font-normal">— {fmt(totalAssets)}</span>}
           </h3>
           <Link href="/onboarding/step-2" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs text-[var(--gold)] hover:text-[var(--gold)] gap-1")}>
-            <Plus size={12} /> {L.addAsset}
+            <Plus size={12} /> {t("addAsset")}
           </Link>
         </div>
         {assets.length === 0 ? (
-          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{L.noAssets}</p>
+          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{t("noAssets")}</p>
         ) : (
-          <AssetList
-            initialAssets={assets}
-            labels={{ save: L.save, cancel: L.cancel, deleteConfirm: L.deleteConfirm, name: L.name, value: L.value, owner: L.owner, balance: L.balance, joint: L.joint, me: L.me, spouse: L.spouse }}
-          />
+          <AssetList initialAssets={assets} labels={labels} />
         )}
       </section>
 
@@ -100,20 +93,17 @@ export default async function FinancialDataPage() {
       <section className="rounded-xl border border-[var(--sand)] bg-white overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--sand)] bg-[var(--cream)]">
           <h3 className="font-ui text-sm font-semibold text-[var(--navy)] flex items-center gap-2">
-            <CreditCard size={15} /> {L.debts}
+            <CreditCard size={15} /> {t("debts")}
             {debts.length > 0 && <span className="text-[var(--red)] font-normal">— {fmt(totalDebts)}</span>}
           </h3>
           <Link href="/onboarding/step-3" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs text-[var(--gold)] hover:text-[var(--gold)] gap-1")}>
-            <Plus size={12} /> {L.addDebt}
+            <Plus size={12} /> {t("addDebt")}
           </Link>
         </div>
         {debts.length === 0 ? (
-          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{L.noDebts}</p>
+          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{t("noDebts")}</p>
         ) : (
-          <DebtList
-            initialDebts={debts}
-            labels={{ save: L.save, cancel: L.cancel, deleteConfirm: L.deleteConfirm, name: L.name, value: L.value, owner: L.owner, balance: L.balance, joint: L.joint, me: L.me, spouse: L.spouse }}
-          />
+          <DebtList initialDebts={debts} labels={labels} />
         )}
       </section>
 
@@ -121,23 +111,23 @@ export default async function FinancialDataPage() {
       <section className="rounded-xl border border-[var(--sand)] bg-white overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--sand)] bg-[var(--cream)]">
           <h3 className="font-ui text-sm font-semibold text-[var(--navy)] flex items-center gap-2">
-            <TrendingDown size={15} className="rotate-180" /> {L.income}
+            <TrendingDown size={15} className="rotate-180" /> {t("income")}
           </h3>
           <Link href="/onboarding/step-4" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs text-[var(--gold)] hover:text-[var(--gold)] gap-1")}>
-            <Pencil size={12} /> {L.edit}
+            <Pencil size={12} /> {t("edit")}
           </Link>
         </div>
         {income.length === 0 ? (
-          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{L.noIncome}</p>
+          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{t("noIncome")}</p>
         ) : (
           <ul className="divide-y divide-[var(--sand)]">
             {income.map((inc) => (
               <li key={inc.id} className="flex items-center justify-between px-5 py-3">
                 <div className="flex items-center gap-2 text-[var(--navy)]">
-                  <span className="font-ui text-sm capitalize">{inc.person === "me" ? L.me : L.spouse}</span>
+                  <span className="font-ui text-sm capitalize">{inc.person === "me" ? t("me") : t("spouse")}</span>
                   <span className="font-ui text-xs text-[var(--brown)] capitalize">{inc.employment_type?.replace("_", " ")}</span>
                 </div>
-                <span className="font-mono text-sm text-[var(--green)]">{fmt(inc.annual_net)} / yr</span>
+                <span className="font-mono text-sm text-[var(--green)]">{fmt(inc.annual_net)} {t("perYear")}</span>
               </li>
             ))}
           </ul>
@@ -148,14 +138,14 @@ export default async function FinancialDataPage() {
       <section className="rounded-xl border border-[var(--sand)] bg-white overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--sand)] bg-[var(--cream)]">
           <h3 className="font-ui text-sm font-semibold text-[var(--navy)] flex items-center gap-2">
-            <Users size={15} /> {L.children}
+            <Users size={15} /> {t("children")}
           </h3>
           <Link href="/onboarding/step-5" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs text-[var(--gold)] hover:text-[var(--gold)] gap-1")}>
-            <Pencil size={12} /> {L.edit}
+            <Pencil size={12} /> {t("edit")}
           </Link>
         </div>
         {children.length === 0 ? (
-          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{L.noChildren}</p>
+          <p className="px-5 py-4 font-ui text-sm text-[var(--brown)]">{t("noChildren")}</p>
         ) : (
           <ul className="divide-y divide-[var(--sand)]">
             {children.map((c) => (
@@ -172,7 +162,7 @@ export default async function FinancialDataPage() {
         href="/onboarding/step-1"
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "w-full text-xs text-[var(--brown)] hover:text-[var(--navy)] gap-1.5")}
       >
-        <Pencil size={12} /> {L.editStep}
+        <Pencil size={12} /> {t("editStep")}
       </Link>
     </div>
   );

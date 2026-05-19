@@ -624,6 +624,33 @@
     "upgradeButton": "Mejorar"
   },
   "settings": {
+    "financialData": {
+      "title": "Datos financieros",
+      "desc": "Revisa y actualiza tus activos, deudas, ingresos e hijos.",
+      "assets": "Activos",
+      "debts": "Deudas",
+      "income": "Ingresos",
+      "children": "Hijos",
+      "edit": "Editar",
+      "addAsset": "Añadir activo",
+      "addDebt": "Añadir deuda",
+      "noAssets": "Aún no se han añadido activos.",
+      "noDebts": "Aún no se han añadido deudas.",
+      "noIncome": "No hay datos de ingresos.",
+      "noChildren": "No se han añadido hijos.",
+      "editStep": "Gestionar en el asistente",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "deleteConfirm": "Confirmar eliminación",
+      "name": "Nombre",
+      "value": "Valor",
+      "owner": "Propietario",
+      "balance": "Saldo",
+      "joint": "Conjunto",
+      "me": "Yo",
+      "spouse": "Cónyuge",
+      "perYear": "/ año"
+    },
     "navAccount": "Cuenta",
     "navBilling": "Facturación",
     "navPrivacy": "Privacidad",
@@ -813,7 +840,8 @@
       "cat_credit_card": "Tarjeta de crédito",
       "cat_student_loan": "Préstamo estudiantil",
       "cat_personal_loan": "Préstamo personal",
-      "cat_other": "Otro"
+      "cat_other": "Otro",
+      "saveError": "No se pudieron guardar sus deudas. Por favor, inténtelo de nuevo."
     },
     "step4": {
       "myIncome": "Mis Ingresos",
@@ -1134,6 +1162,7 @@
     "s11_p": "Podemos actualizar estos términos. Los cambios materiales serán notificados por correo electrónico."
   },
   "common": {
+    "riskScoreLabel": "Puntuación de riesgo: {score} de 10",
     "countries": {
       "US": "Estados Unidos",
       "UK": "Reino Unido",

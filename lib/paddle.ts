@@ -75,9 +75,15 @@ export async function verifyPaddleSignature(
 }
 
 export function getPlanFromPriceId(priceId: string): string {
-  if (priceId === process.env.PADDLE_CLARIFIED_PRICE_ID) return "clarified";
-  if (priceId === process.env.PADDLE_STRATEGIST_PRICE_ID) return "strategist";
-  if (priceId === process.env.PADDLE_PROFESSIONAL_PRICE_ID) return "professional";
+  const clarifiedId = process.env.PADDLE_CLARIFIED_PRICE_ID;
+  const strategistId = process.env.PADDLE_STRATEGIST_PRICE_ID;
+  const professionalId = process.env.PADDLE_PROFESSIONAL_PRICE_ID;
+  if (!clarifiedId || !strategistId || !professionalId) {
+    console.error("[paddle] CRITICAL: Price ID env vars not configured — silent downgrade risk");
+  }
+  if (priceId && clarifiedId && priceId === clarifiedId) return "clarified";
+  if (priceId && strategistId && priceId === strategistId) return "strategist";
+  if (priceId && professionalId && priceId === professionalId) return "professional";
   return "discovery";
 }
 

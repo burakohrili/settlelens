@@ -624,6 +624,33 @@
     "upgradeButton": "Upgrade"
   },
   "settings": {
+    "financialData": {
+      "title": "Finanzdaten",
+      "desc": "Überprüfen und aktualisieren Sie Ihre Vermögenswerte, Schulden, Einkommen und Kinder.",
+      "assets": "Vermögen",
+      "debts": "Schulden",
+      "income": "Einkommen",
+      "children": "Kinder",
+      "edit": "Bearbeiten",
+      "addAsset": "Vermögen hinzufügen",
+      "addDebt": "Schuld hinzufügen",
+      "noAssets": "Noch keine Vermögenswerte.",
+      "noDebts": "Noch keine Schulden.",
+      "noIncome": "Noch keine Einkommensdaten.",
+      "noChildren": "Noch keine Kinder.",
+      "editStep": "Im Setup-Assistenten verwalten",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "deleteConfirm": "Löschen bestätigen",
+      "name": "Name",
+      "value": "Wert",
+      "owner": "Besitzer",
+      "balance": "Guthaben",
+      "joint": "Gemeinsam",
+      "me": "Ich",
+      "spouse": "Ehepartner",
+      "perYear": "/ Jahr"
+    },
     "navAccount": "Konto",
     "navBilling": "Abrechnung",
     "navPrivacy": "Datenschutz",
@@ -813,7 +840,8 @@
       "cat_credit_card": "Kreditkarte",
       "cat_student_loan": "Studienkredit",
       "cat_personal_loan": "Privatkredit",
-      "cat_other": "Sonstiges"
+      "cat_other": "Sonstiges",
+      "saveError": "Ihre Schulden konnten nicht gespeichert werden. Bitte versuchen Sie es erneut."
     },
     "step4": {
       "myIncome": "Mein Einkommen",
@@ -1136,6 +1164,7 @@
     "s11_p": "Wir können die Bedingungen ändern. Bei wesentlichen Änderungen erfolgt eine E-Mail-Benachrichtigung."
   },
   "common": {
+    "riskScoreLabel": "Risikobewertung: {score} von 10",
     "countries": {
       "US": "Vereinigte Staaten",
       "UK": "Vereinigtes Königreich",

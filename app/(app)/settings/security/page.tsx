@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { Loader2 } from "lucide-react";
 
 type AuditEntry = {
   action: string;
@@ -87,7 +88,8 @@ export default function SecurityPage() {
 
   if (loading) {
     return (
-      <div className="flex h-32 items-center justify-center text-[#8B7355]">
+      <div className="flex h-32 items-center justify-center gap-2 text-[#8B7355]">
+        <Loader2 size={18} className="animate-spin" />
         {t("loading")}
       </div>
     );
@@ -146,7 +148,7 @@ export default function SecurityPage() {
                       {entry.display_text || entry.action}
                     </p>
                     <p className="text-xs text-[#8B7355]">
-                      {new Date(entry.created_at).toLocaleString("en-US", {
+                      {new Date(entry.created_at).toLocaleString(locale, {
                         year: "numeric",
                         month: "short",
                         day: "numeric",

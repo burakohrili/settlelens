@@ -15,14 +15,7 @@ const LANGUAGES = [
   { value: "ar", label: "العربية" },
 ];
 
-const COUNTRIES = [
-  { value: "US", label: "United States" },
-  { value: "UK", label: "United Kingdom" },
-  { value: "DE", label: "Germany" },
-  { value: "FR", label: "France" },
-  { value: "ES", label: "Spain" },
-  { value: "TR", label: "Turkey" },
-];
+// COUNTRIES is built inside the component using tCommon("countries.*")
 
 const US_STATES = [
   "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
@@ -47,6 +40,15 @@ export default function SettingsPage() {
   const t = useTranslations("settings");
   const tCommon = useTranslations("common");
   const locale = useLocale();
+
+  const COUNTRIES = [
+    { value: "US", label: tCommon("countries.US") },
+    { value: "UK", label: tCommon("countries.UK") },
+    { value: "DE", label: tCommon("countries.DE") },
+    { value: "FR", label: tCommon("countries.FR") },
+    { value: "ES", label: tCommon("countries.ES") },
+    { value: "TR", label: tCommon("countries.TR") },
+  ];
   const router = useRouter();
   const supabase = createClient();
 

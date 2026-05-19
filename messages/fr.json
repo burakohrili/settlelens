@@ -624,6 +624,33 @@
     "upgradeButton": "Améliorer"
   },
   "settings": {
+    "financialData": {
+      "title": "Données financières",
+      "desc": "Consultez et mettez à jour vos actifs, dettes, revenus et enfants.",
+      "assets": "Actifs",
+      "debts": "Dettes",
+      "income": "Revenus",
+      "children": "Enfants",
+      "edit": "Modifier",
+      "addAsset": "Ajouter un actif",
+      "addDebt": "Ajouter une dette",
+      "noAssets": "Aucun actif ajouté.",
+      "noDebts": "Aucune dette ajoutée.",
+      "noIncome": "Pas de données de revenus.",
+      "noChildren": "Aucun enfant ajouté.",
+      "editStep": "Gérer dans l'assistant",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "deleteConfirm": "Confirmer la suppression",
+      "name": "Nom",
+      "value": "Valeur",
+      "owner": "Propriétaire",
+      "balance": "Solde",
+      "joint": "Joint",
+      "me": "Moi",
+      "spouse": "Conjoint(e)",
+      "perYear": "/ an"
+    },
     "navAccount": "Compte",
     "navBilling": "Facturation",
     "navPrivacy": "Confidentialité",
@@ -813,7 +840,8 @@
       "cat_credit_card": "Carte de crédit",
       "cat_student_loan": "Prêt étudiant",
       "cat_personal_loan": "Prêt personnel",
-      "cat_other": "Autre"
+      "cat_other": "Autre",
+      "saveError": "Impossible d'enregistrer vos dettes. Veuillez réessayer."
     },
     "step4": {
       "myIncome": "Mes Revenus",
@@ -1134,6 +1162,7 @@
     "s11_p": "Nous pouvons mettre à jour ces conditions. Les modifications importantes seront notifiées par e-mail."
   },
   "common": {
+    "riskScoreLabel": "Score de risque : {score} sur 10",
     "countries": {
       "US": "États-Unis",
       "UK": "Royaume-Uni",
