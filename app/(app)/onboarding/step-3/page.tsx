@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumericInput } from "@/components/ui/NumericInput";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
@@ -126,11 +127,11 @@ export default function Step3Page() {
                     </div>
                     <div>
                       <Label htmlFor={`debt-balance-${i}`}>{t("balance")}</Label>
-                      <Input id={`debt-balance-${i}`} type="number" min={0} value={debt.balance || ""} onChange={(e) => updateDebt(i, "balance", parseFloat(e.target.value) || 0)} className="mt-1" />
+                      <NumericInput value={debt.balance} onChange={(v) => updateDebt(i, "balance", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
                     </div>
                     <div>
                       <Label htmlFor={`debt-payment-${i}`}>{t("monthlyPayment")}</Label>
-                      <Input id={`debt-payment-${i}`} type="number" min={0} value={debt.monthly_payment || ""} onChange={(e) => updateDebt(i, "monthly_payment", parseFloat(e.target.value) || 0)} className="mt-1" />
+                      <NumericInput value={debt.monthly_payment} onChange={(v) => updateDebt(i, "monthly_payment", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
                     </div>
                     <div>
                       <Label htmlFor={`debt-rate-${i}`}>{t("interestRate")}</Label>

@@ -29,8 +29,8 @@ export function Footer() {
   const companyLinks = [
     { key: "about", href: `/${locale}/about` },
     { key: "contact", href: `/${locale}/contact` },
-    { key: "trust", href: `/${locale}/trust`, label: "Trust & Privacy" },
-    { key: "methodology", href: `/${locale}/methodology`, label: "Methodology" },
+    { key: "trust", href: `/${locale}/trust` },
+    { key: "methodology", href: `/${locale}/methodology` },
   ];
 
   return (
@@ -43,7 +43,7 @@ export function Footer() {
               SettleLens
             </p>
             <p className="mt-1 font-ui text-xs text-[var(--sand)]">
-              See Your Settlement Clearly
+              {t("tagline")}
             </p>
             <p className="mt-3 font-ui text-xs leading-relaxed text-[var(--brown)]">
               {t("disclaimer")}
@@ -81,7 +81,7 @@ export function Footer() {
           {/* Col 2: Product */}
           <div>
             <p className="font-ui text-xs font-semibold uppercase tracking-widest text-[var(--sand)]">
-              Product
+              {t("product")}
             </p>
             <ul className="mt-3 space-y-2">
               {productLinks.map(({ key, href }) => (
@@ -100,7 +100,7 @@ export function Footer() {
           {/* Col 3: Legal */}
           <div>
             <p className="font-ui text-xs font-semibold uppercase tracking-widest text-[var(--sand)]">
-              Legal
+              {t("legal")}
             </p>
             <ul className="mt-3 space-y-2">
               {legalLinks.map(({ key, href, label }) => (
@@ -119,16 +119,16 @@ export function Footer() {
           {/* Col 4: Company */}
           <div>
             <p className="font-ui text-xs font-semibold uppercase tracking-widest text-[var(--sand)]">
-              Company
+              {t("company")}
             </p>
             <ul className="mt-3 space-y-2">
-              {companyLinks.map(({ key, href, label }) => (
+              {companyLinks.map(({ key, href }) => (
                 <li key={key}>
                   <Link
                     href={href}
                     className="font-ui text-sm text-[var(--brown)] hover:text-[var(--cream)] transition-colors"
                   >
-                    {label ?? links[key]}
+                    {links[key]}
                   </Link>
                 </li>
               ))}

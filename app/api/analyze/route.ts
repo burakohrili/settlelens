@@ -83,7 +83,8 @@ export async function POST(req: NextRequest) {
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
-  const inflation = getInflationRate(country);
+  const inflation = (scenario.inflation_rate_override as number | null) ?? getInflationRate(country);
+  const investmentReturn = country === "TR" ? 0.08 : country === "UK" ? 0.04 : 0.05;
   const marriageYears = new Date().getFullYear() - ((profile.marriage_year as number) ?? 2010);
   const lang = (profile.preferred_language as string) ?? "en";
 
@@ -106,11 +107,16 @@ export async function POST(req: NextRequest) {
     : lang === "ar" ? "اكتب جميع حقول النص بالعربية."
     : "Write all text fields in ENGLISH.";
 
+  const riskGuidance = hasHighRisk
+    ? "User has HIGH-RISK signals. Set risk_score between 7-10."
+    : "risk_score 1-10: start at 5. Add points for: negative monthly cashflow (+2), alimony direction=i_pay AND years>3 (+1), no income data (+2), crypto assets (+1), unknown spouse income (+1). Clamp result between 1 and 10.";
+
   const systemPrompt = `You are SettleLens's financial modeling engine.
 RULES: Return ONLY valid JSON. No markdown. No preamble. No trailing text.
 ${langInstruction}
 Include "Not legal or financial advice — for informational modeling only" in the notes field.
-Use jurisdiction-specific formulas only. Be conservative in projections.`;
+Use jurisdiction-specific formulas only. Be conservative in projections.
+${riskGuidance}`;
 
   const assetsSummary = assets.map((a) => ({
     cat: a.category,
@@ -134,7 +140,7 @@ Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
 Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net
 Children:${children.length}
 Scenario: house=${scenario.house_outcome}, retirement_split=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
-Inflation:${(inflation * 100).toFixed(1)}%, Investment return:5%, Response language:${lang}
+Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 
 Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":""}`;
 

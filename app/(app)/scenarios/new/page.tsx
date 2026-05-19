@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumericInput } from "@/components/ui/NumericInput";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { ArrowLeft, Save } from "lucide-react";
@@ -149,7 +150,7 @@ export default function NewScenarioPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>{t("alimonyMonthly")}</Label>
-              <Input type="number" min={0} value={form.alimony_monthly || ""} onChange={(e) => update("alimony_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
+              <NumericInput value={form.alimony_monthly} onChange={(v) => update("alimony_monthly", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div>
               <Label>{t("alimonyYears")}</Label>
@@ -172,7 +173,7 @@ export default function NewScenarioPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>{t("childSupport")}</Label>
-              <Input type="number" min={0} value={form.child_support_monthly || ""} onChange={(e) => update("child_support_monthly", parseFloat(e.target.value) || 0)} className="mt-1" placeholder="0" />
+              <NumericInput value={form.child_support_monthly} onChange={(v) => update("child_support_monthly", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div>
               <Label>{t("alimonyDirection")}</Label>

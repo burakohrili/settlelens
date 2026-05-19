@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Pencil, Trash2, Check, X, Loader2, Briefcase, Home, Car, PiggyBank, TrendingDown, CreditCard } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { NumericInput } from "@/components/ui/NumericInput";
 
 type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number };
 type Debt = { id: string; name: string; category: string; balance: number; owned_by: string };
@@ -17,6 +18,9 @@ type Labels = {
   value: string;
   owner: string;
   balance: string;
+  joint: string;
+  me: string;
+  spouse: string;
 };
 
 function fmt(n: number) {
@@ -98,10 +102,9 @@ export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; l
                   placeholder={labels.name}
                   className="col-span-1 border border-[var(--sand)] rounded px-2 py-1 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
                 />
-                <input
-                  type="number"
+                <NumericInput
                   value={editValue}
-                  onChange={(e) => setEditValue(Number(e.target.value))}
+                  onChange={setEditValue}
                   placeholder={labels.value}
                   className="border border-[var(--sand)] rounded px-2 py-1 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
                 />
@@ -110,9 +113,9 @@ export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; l
                   onChange={(e) => setEditOwner(e.target.value)}
                   className="border border-[var(--sand)] rounded px-2 py-1 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
                 >
-                  <option value="joint">Joint</option>
-                  <option value="me">Me</option>
-                  <option value="spouse">Spouse</option>
+                  <option value="joint">{labels.joint}</option>
+                  <option value="me">{labels.me}</option>
+                  <option value="spouse">{labels.spouse}</option>
                 </select>
               </div>
               <div className="flex gap-2">
@@ -237,10 +240,9 @@ export function DebtList({ initialDebts, labels }: { initialDebts: Debt[]; label
                   placeholder={labels.name}
                   className="col-span-1 border border-[var(--sand)] rounded px-2 py-1 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
                 />
-                <input
-                  type="number"
+                <NumericInput
                   value={editBalance}
-                  onChange={(e) => setEditBalance(Number(e.target.value))}
+                  onChange={setEditBalance}
                   placeholder={labels.balance}
                   className="border border-[var(--sand)] rounded px-2 py-1 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
                 />
@@ -249,9 +251,9 @@ export function DebtList({ initialDebts, labels }: { initialDebts: Debt[]; label
                   onChange={(e) => setEditOwner(e.target.value)}
                   className="border border-[var(--sand)] rounded px-2 py-1 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
                 >
-                  <option value="joint">Joint</option>
-                  <option value="me">Me</option>
-                  <option value="spouse">Spouse</option>
+                  <option value="joint">{labels.joint}</option>
+                  <option value="me">{labels.me}</option>
+                  <option value="spouse">{labels.spouse}</option>
                 </select>
               </div>
               <div className="flex gap-2">

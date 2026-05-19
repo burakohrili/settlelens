@@ -170,6 +170,10 @@
     "note": "Aucune carte de crédit requise pour l'analyse de base."
   },
   "footer": {
+    "tagline": "Voyez votre accord clairement",
+    "product": "Produit",
+    "legal": "Juridique",
+    "company": "Entreprise",
     "disclaimer": "SettleLens fournit une modélisation financière à des fins d'information uniquement. Pas de conseil juridique ou financier. Consultez toujours un avocat qualifié.",
     "links": {
       "howItWorks": "Comment ça marche",
@@ -179,7 +183,9 @@
       "terms": "Conditions d'utilisation",
       "cookies": "Politique des cookies",
       "about": "À propos",
-      "contact": "Contact"
+      "contact": "Contact",
+      "trust": "Confiance et confidentialité",
+      "methodology": "Méthodologie"
     },
     "copyright": "© 2026 SettleLens. Modélisation financière, pas de conseil juridique."
   },
@@ -455,7 +461,36 @@
     "emptyStep3": "Lancez l'analyse IA (~15–20 secondes)",
     "emptyStep4": "Comparez les résultats financiers sur 10 ans",
     "emptyCTA": "Créer mon premier scénario",
-    "awaitingAnalysis": "En attente d'analyse"
+    "awaitingAnalysis": "En attente d'analyse",
+    "faqTitle": "Questions fréquemment posées",
+    "faq_q1": "Quelle est la précision de mon analyse ?",
+    "faq_a1": "SettleLens utilise des hypothèses spécifiques à chaque juridiction et les données financières que vous avez saisies. Les actifs cachés, le pouvoir discrétionnaire des juges et les accords complexes peuvent modifier les résultats réels. Vérifiez toujours avec un avocat qualifié.",
+    "faq_q2": "Dois-je créer plusieurs scénarios ?",
+    "faq_a2": "Oui. Comparer 'Je garde la maison' vs. 'Nous vendons' rend concret l'écart financier sur 10 ans. Créez au moins 2–3 scénarios pour voir où se situent les vraies différences.",
+    "faq_q3": "L'inflation est-elle prise en compte ?",
+    "faq_a3": "Oui. Chaque pays utilise son propre taux d'inflation (ex. USA : 3,5%, UK : 4%, TR : 45%). Vous pouvez définir un taux personnalisé par scénario via le champ de dérogation d'inflation.",
+    "faq_q4": "Puis-je utiliser SettleLens à la place d'un avocat ?",
+    "faq_a4": "Non. SettleLens est une modélisation financière, pas un conseil juridique. Il vous aide à vous préparer pour vos rendez-vous avec votre avocat — afin de poser des questions plus précises et de prendre des décisions plus éclairées.",
+    "faq_q5": "Mes données sont-elles sécurisées ?",
+    "faq_a5": "Chaque utilisateur ne peut accéder qu'à ses propres données (sécurité au niveau des lignes). Vos données ne sont jamais consignées dans les consoles de développement ni utilisées à des fins publicitaires. Vous pouvez exporter ou supprimer définitivement toutes vos données à tout moment.",
+    "faq_q6": "Que contient le rapport PDF ?",
+    "faq_a6": "Inventaire des actifs, tableau des dettes, projections sur 10 ans, analyse des risques, notes de négociation et questions pour votre avocat. Plan Clarified : 1 PDF. Strategist/Professional : illimité.",
+    "journey": {
+      "title": "Votre progression",
+      "step1": "Données saisies",
+      "step2": "Scénario créé",
+      "step3": "Analyse effectuée",
+      "step4": "Offre analysée",
+      "step5": "PDF exporté",
+      "mobileCurrent": "Étape {current} sur {total} : {label}"
+    },
+    "insight": {
+      "compareScenarios": "{best} projette une valeur nette {pct}% plus élevée à l'an 10 par rapport à {worst}.",
+      "negativeCashflow": "Votre scénario projette un déficit mensuel de {amount} — réviser les hypothèses de dépenses pourrait aider.",
+      "highRisk": "Votre profil de risque est élevé. Considérez l'impact des hypothèses de durée d'aliments sur votre position à long terme.",
+      "addSecondScenario": "Vous avez un scénario. En ajouter un second permet de comparer les résultats de règlement côte à côte.",
+      "default": "Votre projection sur 10 ans est prête. Consultez le graphique ci-dessous pour comparer les résultats."
+    }
   },
   "scenarioComparison": {
     "metric": "Indicateur",

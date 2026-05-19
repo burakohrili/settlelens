@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumericInput } from "@/components/ui/NumericInput";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
@@ -96,7 +97,6 @@ export default function Step2Page() {
           .from("assets").insert(rows);
       }
     }
-    router.refresh();
     router.push(`/${lang}/onboarding/step-3`);
   }
 
@@ -148,36 +148,30 @@ export default function Step2Page() {
                 </div>
                 <div>
                   <Label htmlFor={`asset-value-${i}`}>{t("currentValue")}</Label>
-                  <Input
-                    id={`asset-value-${i}`}
-                    type="number"
+                  <NumericInput
+                    value={asset.current_value}
+                    onChange={(v) => updateAsset(i, "current_value", v)}
                     min={0}
-                    value={asset.current_value || ""}
-                    onChange={(e) => updateAsset(i, "current_value", parseFloat(e.target.value) || 0)}
-                    className="mt-1"
+                    className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 </div>
                 <div>
                   <Label htmlFor={`asset-purchase-${i}`}>{t("purchasePrice")}</Label>
-                  <Input
-                    id={`asset-purchase-${i}`}
-                    type="number"
+                  <NumericInput
+                    value={asset.purchase_price}
+                    onChange={(v) => updateAsset(i, "purchase_price", v)}
                     min={0}
-                    value={asset.purchase_price || ""}
-                    onChange={(e) => updateAsset(i, "purchase_price", parseFloat(e.target.value) || 0)}
-                    className="mt-1"
+                    className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 </div>
                 {asset.category === "real_estate" && (
                   <div>
                     <Label htmlFor={`asset-mortgage-${i}`}>{t("mortgageBalance")}</Label>
-                    <Input
-                      id={`asset-mortgage-${i}`}
-                      type="number"
+                    <NumericInput
+                      value={asset.mortgage_balance}
+                      onChange={(v) => updateAsset(i, "mortgage_balance", v)}
                       min={0}
-                      value={asset.mortgage_balance || ""}
-                      onChange={(e) => updateAsset(i, "mortgage_balance", parseFloat(e.target.value) || 0)}
-                      className="mt-1"
+                      className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
                   </div>
                 )}

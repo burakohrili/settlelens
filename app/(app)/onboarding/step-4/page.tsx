@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumericInput } from "@/components/ui/NumericInput";
 import { cn } from "@/lib/utils";
 
 type IncomeRow = {
@@ -105,11 +106,11 @@ export default function Step4Page() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>{t("annualGross")}</Label>
-              <Input type="number" min={0} value={me.annual_gross || ""} onChange={(e) => updateMe("annual_gross", parseFloat(e.target.value) || 0)} className="mt-1" />
+              <NumericInput value={me.annual_gross} onChange={(v) => updateMe("annual_gross", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div>
               <Label>{t("annualNet")}</Label>
-              <Input type="number" min={0} value={me.annual_net || ""} onChange={(e) => updateMe("annual_net", parseFloat(e.target.value) || 0)} className="mt-1" />
+              <NumericInput value={me.annual_net} onChange={(v) => updateMe("annual_net", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div className="col-span-2">
               <Label>{t("employmentType")}</Label>
@@ -119,7 +120,7 @@ export default function Step4Page() {
             </div>
             <div className="col-span-2">
               <Label>{t("otherIncome")} <span className="text-[var(--brown)] font-normal">{t("otherIncomeHint")}</span></Label>
-              <Input type="number" min={0} value={me.other_income_annual || ""} onChange={(e) => updateMe("other_income_annual", parseFloat(e.target.value) || 0)} className="mt-1" />
+              <NumericInput value={me.other_income_annual} onChange={(v) => updateMe("other_income_annual", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
           </div>
         </div>
@@ -144,11 +145,11 @@ export default function Step4Page() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label>{t("annualGross")}</Label>
-                <Input type="number" min={0} value={spouse.annual_gross || ""} onChange={(e) => updateSpouse("annual_gross", parseFloat(e.target.value) || 0)} className="mt-1" />
+                <NumericInput value={spouse.annual_gross} onChange={(v) => updateSpouse("annual_gross", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
               </div>
               <div>
                 <Label>{t("annualNet")}</Label>
-                <Input type="number" min={0} value={spouse.annual_net || ""} onChange={(e) => updateSpouse("annual_net", parseFloat(e.target.value) || 0)} className="mt-1" />
+                <NumericInput value={spouse.annual_net} onChange={(v) => updateSpouse("annual_net", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
               </div>
               <div className="col-span-2">
                 <Label>{t("employmentType")}</Label>
@@ -158,7 +159,7 @@ export default function Step4Page() {
               </div>
               <div className="col-span-2">
                 <Label>{t("otherIncome")}</Label>
-                <Input type="number" min={0} value={spouse.other_income_annual || ""} onChange={(e) => updateSpouse("other_income_annual", parseFloat(e.target.value) || 0)} className="mt-1" />
+                <NumericInput value={spouse.other_income_annual} onChange={(v) => updateSpouse("other_income_annual", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
               </div>
             </div>
           )}

@@ -170,6 +170,10 @@
     "note": "Keine Kreditkarte für die Grundanalyse erforderlich."
   },
   "footer": {
+    "tagline": "Sehen Sie Ihre Einigung klar",
+    "product": "Produkt",
+    "legal": "Rechtliches",
+    "company": "Unternehmen",
     "disclaimer": "SettleLens bietet Finanzmodellierung nur zu Informationszwecken an. Keine Rechts- oder Finanzberatung. Konsultieren Sie immer einen qualifizierten Anwalt.",
     "links": {
       "howItWorks": "So funktioniert es",
@@ -179,7 +183,9 @@
       "terms": "Nutzungsbedingungen",
       "cookies": "Cookie-Richtlinie",
       "about": "Über uns",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "trust": "Vertrauen & Datenschutz",
+      "methodology": "Methodik"
     },
     "copyright": "© 2026 SettleLens. Finanzmodellierung, keine Rechtsberatung."
   },
@@ -455,7 +461,36 @@
     "emptyStep3": "KI-Analyse starten (~15–20 Sekunden)",
     "emptyStep4": "10-Jahres-Finanzprognosen vergleichen",
     "emptyCTA": "Erstes Szenario erstellen",
-    "awaitingAnalysis": "Analyse ausstehend"
+    "awaitingAnalysis": "Analyse ausstehend",
+    "faqTitle": "Häufig gestellte Fragen",
+    "faq_q1": "Wie genau ist meine Analyse?",
+    "faq_a1": "SettleLens verwendet länderspezifische Annahmen und die von Ihnen eingegebenen Finanzdaten. Versteckte Vermögenswerte, richterliches Ermessen und komplexe Vereinbarungen können die tatsächlichen Ergebnisse verändern. Überprüfen Sie dies immer mit einem qualifizierten Anwalt.",
+    "faq_q2": "Sollte ich mehrere Szenarien erstellen?",
+    "faq_a2": "Ja. Der Vergleich 'Ich behalte das Haus' vs. 'Wir verkaufen' macht den 10-Jahres-Finanzunterschied konkret. Erstellen Sie mindestens 2–3 Szenarien, um die wesentlichen Unterschiede zu sehen.",
+    "faq_q3": "Wird die Inflation berücksichtigt?",
+    "faq_a3": "Ja. Jedes Land verwendet seine eigene Inflationsrate (z.B. USA: 3,5%, UK: 4%, TR: 45%). Sie können pro Szenario eine benutzerdefinierte Rate über das Inflations-Override-Feld festlegen.",
+    "faq_q4": "Kann ich SettleLens statt eines Anwalts verwenden?",
+    "faq_a4": "Nein. SettleLens ist Finanzmodellierung, keine Rechtsberatung. Es hilft Ihnen, besser vorbereitet zu Anwaltsgesprächen zu gehen — damit Sie schärfere Fragen stellen und fundiertere Entscheidungen treffen können.",
+    "faq_q5": "Sind meine Daten sicher?",
+    "faq_a5": "Jeder Nutzer kann nur auf seine eigenen Daten zugreifen (Row Level Security). Ihre Daten werden nie in Entwicklerkonsolen protokolliert oder für Werbezwecke verwendet. Sie können alle Daten jederzeit exportieren oder dauerhaft löschen.",
+    "faq_q6": "Was enthält der PDF-Bericht?",
+    "faq_a6": "Vermögensverzeichnis, Schuldenübersicht, 10-Jahres-Projektionen, Risikoanalyse, Verhandlungsnotizen und Fragen für Ihren Anwalt. Clarified-Plan: 1 PDF. Strategist/Professional: unbegrenzt.",
+    "journey": {
+      "title": "Ihr Fortschritt",
+      "step1": "Daten eingegeben",
+      "step2": "Szenario erstellt",
+      "step3": "Analyse durchgeführt",
+      "step4": "Angebot analysiert",
+      "step5": "PDF exportiert",
+      "mobileCurrent": "Schritt {current} von {total}: {label}"
+    },
+    "insight": {
+      "compareScenarios": "{best} projiziert ein um {pct}% stärkeres Nettovermögen in Jahr 10 gegenüber {worst}.",
+      "negativeCashflow": "Ihr Szenario projiziert einen monatlichen Fehlbetrag von {amount} — eine Überprüfung der Ausgabenannahmen kann helfen.",
+      "highRisk": "Ihr Risikoprofil ist erhöht. Bedenken Sie, wie Unterhaltsannahmen Ihre langfristige Position beeinflussen.",
+      "addSecondScenario": "Sie haben ein Szenario. Ein zweites ermöglicht den direkten Vergleich von Einigungsergebnissen.",
+      "default": "Ihre 10-Jahres-Projektion ist bereit. Vergleichen Sie die Ergebnisse im folgenden Diagramm."
+    }
   },
   "scenarioComparison": {
     "metric": "Kennzahl",

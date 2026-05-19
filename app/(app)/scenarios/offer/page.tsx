@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumericInput } from "@/components/ui/NumericInput";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Disclaimer } from "@/components/layout/Disclaimer";
@@ -25,9 +26,13 @@ type OfferResult = {
   confidence_label_text?: string;
 };
 
-function fmt(n: number): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n || 0);
+function fmt(n: number, currency = "USD"): string {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(n || 0);
 }
+
+const COUNTRY_CURRENCY: Record<string, string> = {
+  US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY",
+};
 
 export default function OfferPage() {
   const t = useTranslations("scenario_offer");
@@ -46,8 +51,9 @@ export default function OfferPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<OfferResult | null>(null);
+  const [currency, setCurrency] = useState("USD");
 
-  // Plan check — redirect discovery users to upgrade
+  // Plan check + currency load
   useEffect(() => {
     async function checkPlan() {
       const { data: { user } } = await supabase.auth.getUser();
@@ -56,13 +62,17 @@ export default function OfferPage() {
         from: (t: string) => {
           select: (s: string) => {
             eq: (c: string, v: string) => {
-              single: () => Promise<{ data: { plan_type: string } | null }>
+              single: () => Promise<{ data: { plan_type: string; country?: string } | null }>
             }
           }
         }
-      }).from("profiles").select("plan_type").eq("id", user.id).single();
+      }).from("profiles").select("plan_type, country").eq("id", user.id).single();
       if (!profile || profile.plan_type === "discovery") {
-        router.push("/upgrade");
+        router.push(`/${locale}/upgrade`);
+        return;
+      }
+      if (profile.country) {
+        setCurrency(COUNTRY_CURRENCY[profile.country] ?? "USD");
       }
     }
     checkPlan();
@@ -176,7 +186,7 @@ export default function OfferPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>{t("alimonyMonthly")}</Label>
-              <Input type="number" min={0} value={alimonyMonthly} onChange={(e) => setAlimonyMonthly(e.target.value)} className="mt-1" placeholder="0" />
+              <NumericInput value={parseFloat(alimonyMonthly) || 0} onChange={(v) => setAlimonyMonthly(v.toString())} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div>
               <Label>{t("alimonyYears")}</Label>
@@ -233,7 +243,7 @@ export default function OfferPage() {
               <p className={cn("font-ui font-semibold text-base", assessmentColor)}>{assessmentLabel}</p>
               {result.offer_vs_baseline_year10 !== undefined && (
                 <p className="font-mono text-sm mt-1 text-[var(--brown)]">
-                  {t("yearDiff")}: <strong className={assessmentColor}>{fmt(result.offer_vs_baseline_year10)}</strong> {t("vsBaseline")}
+                  {t("yearDiff")}: <strong className={assessmentColor}>{fmt(result.offer_vs_baseline_year10, currency)}</strong> {t("vsBaseline")}
                 </p>
               )}
               {result.offer_tone_note && (
@@ -246,11 +256,11 @@ export default function OfferPage() {
           <div className="grid grid-cols-3 gap-3">
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("netWorthNow")}</p>
-              <p className="font-mono text-base font-bold text-[var(--navy)] mt-1">{fmt(result.net_worth_now)}</p>
+              <p className="font-mono text-base font-bold text-[var(--navy)] mt-1">{fmt(result.net_worth_now, currency)}</p>
             </div>
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("year10")}</p>
-              <p className="font-mono text-base font-bold text-[var(--gold)] mt-1">{fmt(result.year10)}</p>
+              <p className="font-mono text-base font-bold text-[var(--gold)] mt-1">{fmt(result.year10, currency)}</p>
             </div>
             <div className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
               <p className="font-ui text-xs text-[var(--brown)] uppercase">{t("riskScore")}</p>

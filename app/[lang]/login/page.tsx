@@ -152,7 +152,10 @@ export default function LoginPage() {
             onClick={signInWithGoogle}
             className={cn(buttonVariants({ variant: "outline" }), "w-full border-[var(--sand)] font-ui")}
           >
-            <span className="mr-2 text-base">G</span> {t("googleCta")}
+            <span dir="ltr" className="flex items-center justify-center gap-2 w-full">
+              <span className="text-base font-bold">G</span>
+              <span>{t("googleCta")}</span>
+            </span>
           </button>
 
           <p className="mt-6 text-center font-ui text-sm text-[var(--brown)]">

@@ -76,6 +76,12 @@ export default function ScenarioDetailPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (showDeleteConfirm) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => { document.body.style.overflow = ""; };
+  }, [showDeleteConfirm]);
+
+  useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push(`/${locale}/login`); return; }

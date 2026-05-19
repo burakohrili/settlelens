@@ -14,6 +14,11 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Plus, Download, Pencil, AlertTriangle, TrendingUp } from "lucide-react";
 import { DiscoveryPreview } from "@/components/app/DiscoveryPreview";
+import { DashboardFAQ } from "@/components/app/DashboardFAQ";
+import { CountUpNumber } from "@/components/app/CountUpNumber";
+import { RiskGauge } from "@/components/app/RiskGauge";
+import { JourneyProgress } from "@/components/app/JourneyProgress";
+import { NarrativeInsight } from "@/components/app/NarrativeInsight";
 
 type Analysis = {
   net_worth_now: number;
@@ -145,6 +150,16 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     },
     null
   );
+  const worstEntry = analyzedScenarios.reduce<{ value: number; name: string } | null>(
+    (worst, s) => {
+      if (!s.analysis) return worst;
+      if (!worst || s.analysis.net_worth_year10 < worst.value) {
+        return { value: s.analysis.net_worth_year10, name: s.scenario.name as string };
+      }
+      return worst;
+    },
+    null
+  );
   const bestYear10 = bestEntry?.value ?? -Infinity;
   const bestScenarioName = bestEntry?.name ?? null;
   const firstAnalysis = analyzedScenarios[0]?.analysis;
@@ -207,6 +222,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           {getJurisdictionName(j)} · {t("yearsOfMarriage", { count: marriageYears })} · {t("planLabel", { plan: plan.charAt(0).toUpperCase() + plan.slice(1) })}
         </p>
       </div>
+
+      {/* Journey progress */}
+      <JourneyProgress
+        hasAssets={grossAssets > 0}
+        hasScenarios={scenarioList.length > 0}
+        hasAnalyses={hasAnalyses}
+        hasOfferScenario={scenarioList.some((s) => (s.scenario_type as string) === "offer_comparison")}
+      />
 
       {/* No analysis yet — onboarding complete but no scenarios analyzed */}
       {!hasAnalyses && (
@@ -306,42 +329,69 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         </>
       )}
 
+      {/* Narrative insight strip */}
+      {hasAnalyses && (
+        <NarrativeInsight
+          analyzedCount={analyzedScenarios.length}
+          bestScenarioName={bestScenarioName}
+          worstScenarioName={worstEntry?.name ?? null}
+          bestYear10={bestYear10 === -Infinity ? 0 : bestYear10}
+          worstYear10={worstEntry?.value ?? 0}
+          avgRisk={avgRisk}
+          firstMonthlyCashflow={firstAnalysis?.monthly_cash_flow ?? null}
+          currency={currency}
+        />
+      )}
+
       {/* Summary cards */}
       {hasAnalyses && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("netWorthNow")}</p>
-            <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}>
-              {fmt(firstAnalysis?.net_worth_now ?? 0, currency)}
-            </p>
+            <CountUpNumber
+              value={firstAnalysis?.net_worth_now ?? 0}
+              currency={currency}
+              className={cn("font-mono text-xl font-bold mt-1 block", (firstAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}
+            />
           </div>
-          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("bestYear10")}</p>
-            <p className={cn("font-mono text-xl font-bold mt-1 text-[var(--gold)]")}>
-              {bestYear10 === -Infinity ? "—" : fmt(bestYear10, currency)}
-            </p>
+            {bestYear10 === -Infinity ? (
+              <p className="font-mono text-xl font-bold mt-1 text-[var(--gold)]">—</p>
+            ) : (
+              <CountUpNumber
+                value={bestYear10}
+                currency={currency}
+                className="font-mono text-xl font-bold mt-1 block text-[var(--gold)]"
+              />
+            )}
             {bestScenarioName && (
               <p className="font-ui text-xs text-[var(--brown)] mt-1 truncate">{bestScenarioName}</p>
             )}
           </div>
-          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("monthlyCashFlow")}</p>
-            <p className={cn("font-mono text-xl font-bold mt-1", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>
-              {fmt(firstAnalysis?.monthly_cash_flow ?? 0, currency)}<span className="text-xs font-normal">/mo</span>
-            </p>
+            <CountUpNumber
+              value={firstAnalysis?.monthly_cash_flow ?? 0}
+              currency={currency}
+              suffix="/mo"
+              className={cn("font-mono text-xl font-bold mt-1 block", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}
+            />
           </div>
-          <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+          <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("riskScore")}</p>
-            <p className={cn("font-mono text-xl font-bold mt-1", (avgRisk ?? 5) >= 7 ? "text-[var(--danger)]" : (avgRisk ?? 5) >= 4 ? "text-[var(--gold)]" : "text-[var(--gain)]")}>
-              {avgRisk ?? "—"}<span className="text-xs font-normal">/10</span>
-            </p>
+            {avgRisk != null ? (
+              <RiskGauge score={avgRisk} />
+            ) : (
+              <p className="font-mono text-xl font-bold mt-1 text-[var(--brown)]">—</p>
+            )}
           </div>
         </div>
       )}
 
       {/* Chart */}
       {hasAnalyses && chartScenarios.length > 0 && (
-        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:shadow-md transition-shadow duration-200">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("projection")}</h2>
           <ProjectionChart scenarios={chartScenarios} currency={currency} />
         </div>
@@ -349,7 +399,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       {/* Scenario comparison — show when 2+ scenarios exist */}
       {scenarioList.length > 1 && (
-        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:shadow-md transition-shadow duration-200">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("scenarioComparison")}</h2>
           <ScenarioComparison
             scenarios={allScenariosComparison}
@@ -361,7 +411,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       {/* Key risks */}
       {hasAnalyses && firstAnalysis?.key_risks && (firstAnalysis.key_risks as string[]).length > 0 && (
-        <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
+        <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:shadow-md transition-shadow duration-200">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-3 flex items-center gap-2">
             <AlertTriangle size={16} className="text-[var(--danger)]" /> {t("keyRisks")}
           </h2>
@@ -426,6 +476,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           </Link>
         )}
       </div>
+
+      {scenarioList.length > 0 && <DashboardFAQ />}
 
       <Disclaimer className="mt-4" />
     </div>

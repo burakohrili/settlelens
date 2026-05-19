@@ -170,6 +170,10 @@
     "note": "No se necesita tarjeta de crédito para el análisis básico."
   },
   "footer": {
+    "tagline": "Ve tu acuerdo con claridad",
+    "product": "Producto",
+    "legal": "Legal",
+    "company": "Empresa",
     "disclaimer": "SettleLens proporciona modelización financiera solo con fines informativos. No es asesoramiento legal o financiero. Consulta siempre a un abogado cualificado.",
     "links": {
       "howItWorks": "Cómo funciona",
@@ -179,7 +183,9 @@
       "terms": "Términos de servicio",
       "cookies": "Política de cookies",
       "about": "Acerca de",
-      "contact": "Contacto"
+      "contact": "Contacto",
+      "trust": "Confianza y privacidad",
+      "methodology": "Metodología"
     },
     "copyright": "© 2026 SettleLens. Modelización financiera, no asesoramiento legal."
   },
@@ -455,7 +461,36 @@
     "emptyStep3": "Ejecuta el análisis de IA (~15–20 segundos)",
     "emptyStep4": "Compara los resultados financieros a 10 años",
     "emptyCTA": "Crear mi primer escenario",
-    "awaitingAnalysis": "Análisis pendiente"
+    "awaitingAnalysis": "Análisis pendiente",
+    "faqTitle": "Preguntas frecuentes",
+    "faq_q1": "¿Qué tan preciso es mi análisis?",
+    "faq_a1": "SettleLens usa suposiciones específicas de cada jurisdicción y los datos financieros que ingresaste. Los activos ocultos, la discrecionalidad judicial y los acuerdos complejos pueden alterar los resultados reales. Siempre verifica con un abogado cualificado.",
+    "faq_q2": "¿Debo crear varios escenarios?",
+    "faq_a2": "Sí. Comparar 'Me quedo con la casa' vs. 'La vendemos' hace concreto el gap financiero a 10 años. Crea al menos 2–3 escenarios para ver dónde están las diferencias reales.",
+    "faq_q3": "¿Se tiene en cuenta la inflación?",
+    "faq_a3": "Sí. Cada país usa su propia tasa de inflación (ej. EEUU: 3,5%, UK: 4%, TR: 45%). Puedes establecer una tasa personalizada por escenario usando el campo de anulación de inflación.",
+    "faq_q4": "¿Puedo usar SettleLens en lugar de un abogado?",
+    "faq_a4": "No. SettleLens es modelización financiera, no asesoramiento legal. Te ayuda a llegar mejor preparado a las reuniones con tu abogado — para hacer preguntas más precisas y tomar decisiones más informadas.",
+    "faq_q5": "¿Están seguros mis datos?",
+    "faq_a5": "Cada usuario solo puede acceder a sus propios datos (Seguridad a nivel de fila). Tus datos nunca se registran en consolas de desarrollo ni se usan con fines publicitarios. Puedes exportar o eliminar permanentemente todos tus datos en cualquier momento.",
+    "faq_q6": "¿Qué incluye el informe PDF?",
+    "faq_a6": "Inventario de activos, tabla de deudas, proyecciones a 10 años, análisis de riesgos, notas de negociación y preguntas para tu abogado. Plan Clarified: 1 PDF. Strategist/Professional: ilimitado.",
+    "journey": {
+      "title": "Tu progreso",
+      "step1": "Datos introducidos",
+      "step2": "Escenario creado",
+      "step3": "Análisis ejecutado",
+      "step4": "Oferta analizada",
+      "step5": "PDF exportado",
+      "mobileCurrent": "Paso {current} de {total}: {label}"
+    },
+    "insight": {
+      "compareScenarios": "{best} proyecta un patrimonio neto {pct}% más sólido en el año 10 vs {worst}.",
+      "negativeCashflow": "Tu escenario proyecta un déficit mensual de {amount} — revisar las hipótesis de gastos puede ayudar.",
+      "highRisk": "Tu perfil de riesgo es elevado. Considera cómo las hipótesis de duración de la pensión afectan tu posición a largo plazo.",
+      "addSecondScenario": "Tienes un escenario. Agregar un segundo te permite comparar resultados de acuerdo lado a lado.",
+      "default": "Tu proyección a 10 años está lista. Revisa el gráfico a continuación para comparar resultados."
+    }
   },
   "scenarioComparison": {
     "metric": "Métrica",

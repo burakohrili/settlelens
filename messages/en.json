@@ -170,6 +170,10 @@
     "note": "No credit card required for basic analysis."
   },
   "footer": {
+    "tagline": "See Your Settlement Clearly",
+    "product": "Product",
+    "legal": "Legal",
+    "company": "Company",
     "disclaimer": "SettleLens provides financial modeling for informational purposes only. Not legal or financial advice. Always consult a qualified attorney.",
     "links": {
       "howItWorks": "How It Works",
@@ -179,7 +183,9 @@
       "terms": "Terms of Service",
       "cookies": "Cookie Policy",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "trust": "Trust & Privacy",
+      "methodology": "Methodology"
     },
     "copyright": "© 2026 SettleLens. Financial modeling, not legal advice."
   },
@@ -456,7 +462,36 @@
     "emptyStep3": "Run AI analysis (~15–20 seconds)",
     "emptyStep4": "Compare 10-year financial outcomes",
     "emptyCTA": "Create My First Scenario",
-    "awaitingAnalysis": "Awaiting Analysis"
+    "awaitingAnalysis": "Awaiting Analysis",
+    "faqTitle": "Frequently Asked Questions",
+    "faq_q1": "How accurate is my analysis?",
+    "faq_a1": "SettleLens uses jurisdiction-specific assumptions and the financial data you entered. Hidden assets, judicial discretion, and complex agreements may alter real-world outcomes. Always verify with a qualified lawyer.",
+    "faq_q2": "Should I create multiple scenarios?",
+    "faq_a2": "Yes. Comparing 'I keep the house' vs. 'we sell' makes the 10-year financial gap concrete. Create at least 2–3 scenarios to see where the real differences lie.",
+    "faq_q3": "Is inflation factored in?",
+    "faq_a3": "Yes. Each country uses its own inflation rate (e.g. US: 3.5%, UK: 4%, TR: 45%). You can set a custom rate per scenario using the inflation override field.",
+    "faq_q4": "Can I use SettleLens instead of a lawyer?",
+    "faq_a4": "No. SettleLens is financial modeling, not legal advice. It helps you arrive at attorney meetings better prepared — so you can ask sharper questions and make more informed decisions.",
+    "faq_q5": "Is my data secure?",
+    "faq_a5": "Each user can only access their own data (Row Level Security). Your data is never logged to developer consoles or used for advertising. You can export or permanently delete all data at any time.",
+    "faq_q6": "What does the PDF report include?",
+    "faq_a6": "Asset inventory, debt table, 10-year projections, risk analysis, negotiation notes, and questions for your lawyer. Clarified plan: 1 PDF. Strategist/Professional: unlimited.",
+    "journey": {
+      "title": "Your Progress",
+      "step1": "Data entered",
+      "step2": "Scenario created",
+      "step3": "Analysis run",
+      "step4": "Offer analyzed",
+      "step5": "PDF exported",
+      "mobileCurrent": "Step {current} of {total}: {label}"
+    },
+    "insight": {
+      "compareScenarios": "{best} projects {pct}% stronger net worth at Year 10 vs {worst}.",
+      "negativeCashflow": "Your scenario projects a monthly shortfall of {amount} — reviewing expense assumptions may help.",
+      "highRisk": "Your risk profile is elevated. Consider how alimony duration assumptions affect your long-term position.",
+      "addSecondScenario": "You have one scenario. Adding a second lets you compare settlement outcomes side by side.",
+      "default": "Your 10-year projection is ready. Review the chart below to compare outcomes."
+    }
   },
   "scenarioComparison": {
     "metric": "Metric",
