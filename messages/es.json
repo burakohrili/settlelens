@@ -286,7 +286,8 @@
         "title": "¿Cómo me preparo para mi abogado?",
         "desc": "Organiza tus activos, deudas, ingresos y escenarios en un informe profesional antes de la reunión."
       }
-    ]
+    ],
+    "cardCta": "Empezar gratis"
   },
   "whatItDoesNot": {
     "title": "Qué hace SettleLens — y qué no",
@@ -652,6 +653,8 @@
     "pwUpdating": "Actualizando...",
     "updatePassword": "Actualizar contraseña",
     "pwUpdated": "Contraseña actualizada correctamente.",
+    "pwMinCharsPlaceholder": "Mín. 8 caracteres",
+    "repeatPasswordPlaceholder": "Repetir nueva contraseña",
     "billingTitle": "Facturación",
     "billingDesc": "Gestione su suscripción e información de facturación.",
     "loading": "Cargando...",

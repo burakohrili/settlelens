@@ -286,7 +286,8 @@
         "title": "Wie bereite ich mich auf das Anwaltsgespräch vor?",
         "desc": "Organisieren Sie Ihre Finanzdaten vor dem Gespräch in einem professionellen Bericht."
       }
-    ]
+    ],
+    "cardCta": "Kostenlos starten"
   },
   "whatItDoesNot": {
     "title": "Was SettleLens tut — und was nicht",
@@ -652,6 +653,8 @@
     "pwUpdating": "Wird aktualisiert...",
     "updatePassword": "Passwort aktualisieren",
     "pwUpdated": "Passwort erfolgreich aktualisiert.",
+    "pwMinCharsPlaceholder": "Min. 8 Zeichen",
+    "repeatPasswordPlaceholder": "Neues Passwort wiederholen",
     "billingTitle": "Abrechnung",
     "billingDesc": "Verwalten Sie Ihr Abonnement und Ihre Rechnungsinformationen.",
     "loading": "Wird geladen...",

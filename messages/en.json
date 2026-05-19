@@ -653,6 +653,8 @@
     "pwUpdating": "Updating...",
     "updatePassword": "Update Password",
     "pwUpdated": "Password updated successfully.",
+    "pwMinCharsPlaceholder": "Min. 8 characters",
+    "repeatPasswordPlaceholder": "Repeat new password",
     "billingTitle": "Billing",
     "billingDesc": "Manage your subscription and billing information.",
     "loading": "Loading...",

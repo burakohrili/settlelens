@@ -331,7 +331,7 @@ export default function SettingsPage() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm focus:border-[#C8973A] focus:outline-none"
-            placeholder="Min. 8 characters"
+            placeholder={t("pwMinCharsPlaceholder")}
           />
         </div>
 
@@ -344,7 +344,7 @@ export default function SettingsPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm focus:border-[#C8973A] focus:outline-none"
-            placeholder="Repeat new password"
+            placeholder={t("repeatPasswordPlaceholder")}
           />
         </div>
 

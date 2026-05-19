@@ -286,7 +286,8 @@
         "title": "Comment me préparer pour mon avocat ?",
         "desc": "Organisez vos actifs, dettes, revenus et scénarios dans un rapport professionnel avant la réunion."
       }
-    ]
+    ],
+    "cardCta": "Commencer gratuitement"
   },
   "whatItDoesNot": {
     "title": "Ce que fait SettleLens — et ce qu'il ne fait pas",
@@ -652,6 +653,8 @@
     "pwUpdating": "Mise à jour...",
     "updatePassword": "Mettre à jour le mot de passe",
     "pwUpdated": "Mot de passe mis à jour avec succès.",
+    "pwMinCharsPlaceholder": "Min. 8 caractères",
+    "repeatPasswordPlaceholder": "Répéter le nouveau mot de passe",
     "billingTitle": "Facturation",
     "billingDesc": "Gérez votre abonnement et vos informations de facturation.",
     "loading": "Chargement...",

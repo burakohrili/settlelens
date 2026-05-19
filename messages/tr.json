@@ -286,7 +286,8 @@
         "title": "Avukata gitmeden önce ne hazırlamalıyım?",
         "desc": "Varlıklarını, borçlarını, gelirini ve senaryolarını toplantıdan önce profesyonel bir raporda düzenle."
       }
-    ]
+    ],
+    "cardCta": "Ücretsiz başla"
   },
   "whatItDoesNot": {
     "title": "Ne yapar, ne yapmaz?",
@@ -652,6 +653,8 @@
     "pwUpdating": "Güncelleniyor...",
     "updatePassword": "Şifreyi Güncelle",
     "pwUpdated": "Şifre başarıyla güncellendi.",
+    "pwMinCharsPlaceholder": "Min. 8 karakter",
+    "repeatPasswordPlaceholder": "Yeni şifreyi tekrarla",
     "billingTitle": "Faturalama",
     "billingDesc": "Aboneliğinizi ve fatura bilgilerinizi yönetin.",
     "loading": "Yükleniyor...",
