@@ -47,7 +47,12 @@ export default async function CookiePolicyPage() {
         <tbody>
           <tr className="border-b border-[var(--sand)]/50">
             <td className="py-2 font-mono text-xs">ph_*</td>
-            <td className="py-2">{t("ph_purpose")}</td>
+            <td className="py-2">
+              {t("ph_purpose_label")}{" "}
+              <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="underline text-[var(--slate)]">
+                {t("ph_privacy_link")}
+              </a>
+            </td>
             <td className="py-2">{t("ph_duration")}</td>
             <td className="py-2">3rd party</td>
           </tr>

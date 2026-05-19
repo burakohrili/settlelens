@@ -160,7 +160,7 @@ export default function PrivacyPage() {
       });
       if (!res.ok) throw new Error("Deletion failed");
       await supabase.auth.signOut();
-      router.push("/en");
+      router.push(`/${locale}`);
     } catch {
       setDeleteError(t("deleteFail"));
       setDeleting(false);

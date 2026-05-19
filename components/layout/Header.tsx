@@ -46,7 +46,7 @@ export function Header() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-[var(--gold)] focus:px-4 focus:py-2 focus:font-ui focus:text-sm focus:font-semibold focus:text-[var(--navy)]"
       >
-        Skip to main content
+        {t("skipLink")}
       </a>
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${

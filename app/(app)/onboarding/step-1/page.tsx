@@ -44,6 +44,7 @@ export default function Step1Page() {
   const [stateProvince, setStateProvince] = useState("");
   const [marriageYear, setMarriageYear] = useState("");
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const [riskOpen, setRiskOpen] = useState(false);
   const [selectedRisks, setSelectedRisks] = useState<Set<string>>(new Set());
@@ -88,19 +89,26 @@ export default function Step1Page() {
   async function handleNext() {
     if (!country || !marriageYear) return;
     setSaving(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      await (supabase as never as { from: (t: string) => { upsert: (d: Record<string, unknown>) => Promise<unknown> } })
-        .from("profiles").upsert({
-          id: user.id,
-          country,
-          state_province: stateProvince || null,
-          marriage_year: parseInt(marriageYear),
-          preferred_language: lang,
-          has_high_risk_signals: hasHighRisk,
-        });
+    setSaveError("");
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { error } = await (supabase as never as { from: (t: string) => { upsert: (d: Record<string, unknown>) => Promise<{ error: unknown }> } })
+          .from("profiles").upsert({
+            id: user.id,
+            country,
+            state_province: stateProvince || null,
+            marriage_year: parseInt(marriageYear),
+            preferred_language: lang,
+            has_high_risk_signals: hasHighRisk,
+          });
+        if (error) { setSaveError(t("saveError")); setSaving(false); return; }
+      }
+      router.push(`/${lang}/onboarding/step-2`);
+    } catch {
+      setSaveError(t("saveError"));
+      setSaving(false);
     }
-    router.push(`/${lang}/onboarding/step-2`);
   }
 
   return (
@@ -109,6 +117,9 @@ export default function Step1Page() {
       onNext={handleNext}
       nextDisabled={!country || !marriageYear || saving}
     >
+      {saveError && (
+        <p className="font-ui text-sm text-[var(--red)]">{saveError}</p>
+      )}
       <div className="space-y-5">
         <div className="flex items-start gap-2 rounded-md bg-[var(--cream)] border border-[var(--sand)] px-3 py-2">
           <ShieldCheck size={15} className="mt-0.5 shrink-0 text-[var(--brown)]" />

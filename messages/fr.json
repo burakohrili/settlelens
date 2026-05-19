@@ -16,7 +16,8 @@
     "profile": "Profil",
     "billing": "Facturation",
     "settings": "Paramètres",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "skipLink": "Aller au contenu principal"
   },
   "hero": {
     "h1": "Sachez exactement où vous en êtes.\nAvant de signer quoi que ce soit.",
@@ -341,7 +342,7 @@
     "s5_title": "Sécurité des paiements",
     "s5_p": "Les paiements sont traités par Paddle (Merchant of Record). Les coordonnées de carte n'atteignent jamais les serveurs de SettleLens.",
     "s6_title": "Qui peut voir vos données",
-    "s6_highlight": "Aucun employé d'Anthropic, aucun membre de l'équipe SettleLens ni aucun tiers n'a accédé à vos données financières. Seul vous pouvez voir vos scénarios, actifs et rapports.",
+    "s6_highlight": "SettleLens est conçu pour qu'aucun employé d'Anthropic, aucun membre de l'équipe ni aucun tiers ne puisse accéder à vos données financières. Seul vous avez accès à vos scénarios, actifs et rapports.",
     "link": "Voir notre page complète confidentialité & confiance →",
     "s6_rls": "Supabase Row Level Security : chaque requête applique auth.uid() = user_id."
   },
@@ -716,7 +717,7 @@
     "securityTitle": "Journal de sécurité",
     "securityDesc": "Un enregistrement des actions importantes sur votre compte.",
     "trustTitle": "Vos données sont privées.",
-    "trustDesc": "Aucun employé d'Anthropic, membre de l'équipe SettleLens ou tiers n'a accédé à vos données financières. Seul vous pouvez les consulter.",
+    "trustDesc": "SettleLens est conçu pour qu'aucun employé d'Anthropic, membre de l'équipe ou tiers ne puisse accéder à vos données financières. Seul vous avez accès.",
     "thirdPartyTitle": "Accès tiers",
     "thirdPartyNone": "Aucun",
     "thirdPartyNote": "SettleLens ne partage pas vos données financières avec des tiers. Les paiements sont traités par Paddle.",
@@ -752,7 +753,8 @@
       "riskNote": "Cela nous aide à ajuster notre niveau de confiance. Cela ne vous empêche pas de continuer.",
       "riskTitle": "Un soutien professionnel peut être nécessaire",
       "riskNotice": "Cette situation peut nécessiter des conseils juridiques professionnels. SettleLens peut vous aider à organiser des scénarios financiers, mais veuillez consulter un avocat ou un médiateur qualifié avant de prendre des décisions.",
-      "incognitoTip": "Pour plus de confidentialité, envisagez d'utiliser une fenêtre de navigation privée lors de la saisie de vos données financières."
+      "incognitoTip": "Pour plus de confidentialité, envisagez d'utiliser une fenêtre de navigation privée lors de la saisie de vos données financières.",
+      "saveError": "Impossible d'enregistrer vos informations. Veuillez réessayer."
     },
     "step2": {
       "assetName": "Nom du bien",
@@ -1091,6 +1093,8 @@
     "consent_purpose": "Préférence cookies",
     "consent_duration": "1 an",
     "ph_purpose": "Analytiques PostHog",
+    "ph_purpose_label": "Analytiques PostHog",
+    "ph_privacy_link": "Politique de confidentialité",
     "ph_duration": "1 an",
     "marketing_not_used": "✓ Non utilisés",
     "manage_p": "Vous pouvez mettre à jour vos préférences via la bannière de cookies en bas de page."

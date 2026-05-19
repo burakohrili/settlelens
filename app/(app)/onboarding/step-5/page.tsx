@@ -106,10 +106,10 @@ export default function Step5Page() {
                       <Input
                         type="number"
                         min={0}
-                        max={17}
+                        max={25}
                         value={child.age || ""}
                         onChange={(e) => updateChild(i, "age", parseInt(e.target.value) || 0)}
-                        placeholder="0–17"
+                        placeholder="0–25"
                         className="mt-1"
                       />
                     </div>

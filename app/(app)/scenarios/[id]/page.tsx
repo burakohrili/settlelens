@@ -59,6 +59,7 @@ export default function ScenarioDetailPage() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [plan, setPlan] = useState("discovery");
+  const [planExpiresAt, setPlanExpiresAt] = useState<string | null>(null);
   const [analysisCount, setAnalysisCount] = useState(0);
 
   // Edit state
@@ -88,12 +89,13 @@ export default function ScenarioDetailPage() {
 
       const { data: profile } = await (supabase as never as {
         from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } }
-      }).from("profiles").select("country,state_province,plan_type").eq("id", user.id).single();
+      }).from("profiles").select("country,state_province,plan_type,plan_expires_at").eq("id", user.id).single();
 
       if (profile) {
         const country = profile.country as string;
         setCurrency({ US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY" }[country] ?? "USD");
         setPlan(profile.plan_type as string ?? "discovery");
+        setPlanExpiresAt(profile.plan_expires_at as string | null);
       }
 
       const { data: s } = await (supabase as never as {
@@ -196,6 +198,10 @@ export default function ScenarioDetailPage() {
 
   async function handleRunAnalysis() {
     if (plan === "discovery") {
+      router.push("/upgrade");
+      return;
+    }
+    if (plan === "clarified" && planExpiresAt && new Date() > new Date(planExpiresAt)) {
       router.push("/upgrade");
       return;
     }
