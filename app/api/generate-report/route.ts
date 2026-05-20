@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { buildReportHTML, generatePDF } from "@/lib/pdf-generator";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
+import { writeAuditLog } from "@/lib/audit";
 import { NextRequest } from "next/server";
 
 export const maxDuration = 60;
@@ -116,14 +117,13 @@ export async function POST(req: NextRequest) {
   });
 
   // 6. Audit log
-  await (supabase as never as { from: (t: string) => { insert: (d: unknown) => Promise<unknown> } })
-    .from("audit_log").insert({
-      user_id: user.id,
-      action: "report_generated",
-      user_visible: true,
-      display_text: "Report generated",
-      metadata: { report_type: plan === "professional" ? "professional" : "standard", scenario_count: scenarios.length },
-    });
+  await writeAuditLog(supabase, {
+    user_id: user.id,
+    action: "report_generated",
+    user_visible: true,
+    display_text: "Report generated",
+    metadata: { report_type: plan === "professional" ? "professional" : "standard", scenario_count: scenarios.length },
+  }, "generate-report");
 
   // 7. Generate PDF and return binary response
   const pdfBuffer = await generatePDF(html);

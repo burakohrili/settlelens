@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { createServerClient } from "@supabase/ssr";
+import { writeAuditLog } from "@/lib/audit";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -43,15 +44,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Profile creation failed" }, { status: 500 });
   }
 
-  await (admin as never as {
-    from: (t: string) => { insert: (d: unknown) => Promise<unknown> }
-  }).from("audit_log").insert({
+  await writeAuditLog(admin, {
     user_id: userId,
     action: "user_registered",
     user_visible: true,
     display_text: "Account created",
     metadata: { lang },
-  });
+  }, "setup-account");
 
   return NextResponse.json({ ok: true });
 }

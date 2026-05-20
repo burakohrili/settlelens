@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { verifyPaddleSignature, getPlanFromPriceId } from "@/lib/paddle";
 import { sendEmail } from "@/lib/email";
+import { writeAuditLog } from "@/lib/audit";
 
 // Resolve user by paddle_customer_id stored in profiles
 async function resolveUserByCustomerId(
@@ -54,11 +55,11 @@ async function logMappingMissing(
   }
 ) {
   console.error("[webhook] mapping_missing — no profile found", meta);
-  await (supabase as never as {
-    from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-  })
-    .from("audit_log")
-    .insert({ action: "webhook_mapping_missing", metadata: meta, user_visible: false });
+  await writeAuditLog(supabase, {
+    action: "webhook_mapping_missing",
+    metadata: meta,
+    user_visible: false,
+  }, "webhook:mapping_missing");
   if (meta.eventId) {
     await (supabase as never as {
       from: (t: string) => {
@@ -179,17 +180,13 @@ export async function POST(req: Request) {
           .update(updateData)
           .eq("id", userId);
 
-        await (supabase as never as {
-          from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-        })
-          .from("audit_log")
-          .insert({
-            user_id: userId,
-            action: "plan_upgraded",
-            metadata: { plan },
-            user_visible: true,
-            display_text: `Plan upgraded to ${plan}`,
-          });
+        await writeAuditLog(supabase, {
+          user_id: userId,
+          action: "plan_upgraded",
+          metadata: { plan },
+          user_visible: true,
+          display_text: `Plan upgraded to ${plan}`,
+        }, "webhook:transaction.completed");
 
         if (profileResult.data?.email) {
           await sendEmail({
@@ -330,16 +327,12 @@ export async function POST(req: Request) {
         .eq("paddle_subscription_id", subId)
         .single();
       if (pastDueProfile.data) {
-        await (supabase as never as {
-          from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-        })
-          .from("audit_log")
-          .insert({
-            user_id: pastDueProfile.data.id,
-            action: "subscription_past_due",
-            metadata: { subscription_id: subId },
-            user_visible: false,
-          });
+        await writeAuditLog(supabase, {
+          user_id: pastDueProfile.data.id,
+          action: "subscription_past_due",
+          metadata: { subscription_id: subId },
+          user_visible: false,
+        }, "webhook:subscription.past_due");
         await sendEmail({ type: "payment-failed", to: pastDueProfile.data.email });
       }
       break;
@@ -369,16 +362,12 @@ export async function POST(req: Request) {
           .from("profiles")
           .update({ plan_type: "discovery" })
           .eq("paddle_subscription_id", subId);
-        await (supabase as never as {
-          from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-        })
-          .from("audit_log")
-          .insert({
-            user_id: pausedProfile.data.id,
-            action: "subscription_paused",
-            metadata: { subscription_id: subId },
-            user_visible: false,
-          });
+        await writeAuditLog(supabase, {
+          user_id: pausedProfile.data.id,
+          action: "subscription_paused",
+          metadata: { subscription_id: subId },
+          user_visible: false,
+        }, "webhook:subscription.paused");
         await sendEmail({ type: "subscription-cancelled", to: pausedProfile.data.email });
       }
       break;
@@ -409,16 +398,12 @@ export async function POST(req: Request) {
             .from("profiles")
             .update({ plan_type: "discovery", paddle_subscription_id: null, plan_expires_at: null })
             .eq("id", refundProfile.data.id);
-          await (supabase as never as {
-            from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-          })
-            .from("audit_log")
-            .insert({
-              user_id: refundProfile.data.id,
-              action: "refund_processed",
-              metadata: { customer_id: customerId },
-              user_visible: false,
-            });
+          await writeAuditLog(supabase, {
+            user_id: refundProfile.data.id,
+            action: "refund_processed",
+            metadata: { customer_id: customerId },
+            user_visible: false,
+          }, "webhook:refund.created");
         }
       }
       break;
