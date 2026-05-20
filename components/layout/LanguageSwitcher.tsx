@@ -35,10 +35,15 @@ export function LanguageSwitcher({ variant = "light" }: Props) {
       segments[1] = next;
       router.push(segments.join("/") || `/${next}`);
     } else {
-      // (app) route — no locale in URL; set cookie and do a hard reload so
-      // next-intl's server-side getRequestConfig picks up the new locale
-      document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000`;
-      window.location.reload();
+      // (app) route — update DB + cookies then hard reload so layout
+      // re-reads preferred_language and next-intl picks up new locale
+      fetch("/api/user/locale", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale: next }),
+      }).finally(() => {
+        window.location.reload();
+      });
     }
   }
 
