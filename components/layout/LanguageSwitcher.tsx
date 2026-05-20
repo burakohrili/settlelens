@@ -35,9 +35,10 @@ export function LanguageSwitcher({ variant = "light" }: Props) {
       segments[1] = next;
       router.push(segments.join("/") || `/${next}`);
     } else {
-      // (app) route — no locale in URL; set cookie and refresh in place
+      // (app) route — no locale in URL; set cookie and do a hard reload so
+      // next-intl's server-side getRequestConfig picks up the new locale
       document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000`;
-      router.refresh();
+      window.location.reload();
     }
   }
 
