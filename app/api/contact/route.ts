@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
+import { createHash } from "node:crypto";
 import { sendEmail } from "@/lib/email";
 import { createAdminClient } from "@/lib/supabase/server";
+
+function hashPii(s: string): string {
+  return createHash("sha256").update(s.toLowerCase().trim()).digest("hex").slice(0, 16);
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -43,7 +48,7 @@ export async function POST(req: Request) {
 
     await adminClient.from("audit_log").insert({
       action: "contact_form",
-      metadata: { ip, email: email.slice(0, 100), name: name.slice(0, 100) },
+      metadata: { ip, email_hash: hashPii(email), name_initial: name.trim().slice(0, 1) },
     });
 
     await sendEmail({ type: "contact", from: email, name, subject, message });

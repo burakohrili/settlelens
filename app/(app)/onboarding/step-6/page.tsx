@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { SCENARIO_LIMITS } from "@/lib/plan-limits";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -140,14 +141,21 @@ export default function Step6Page() {
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
+      const { data: profile } = await (supabase as never as {
+        from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } }
+      }).from("profiles").select("plan_type").eq("id", user.id).single();
+
       await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
         .from("scenarios").delete().eq("user_id", user.id);
 
-      const rows = scenarios.filter((s) => s.name).map((s) => {
+      const allRows = scenarios.filter((s) => s.name).map((s) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id: _id, ...rest } = s;
         return { ...rest, user_id: user.id, scenario_type: "custom", is_active: true };
       });
+
+      const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
+      const rows = limit === -1 ? allRows : allRows.slice(0, limit);
 
       if (rows.length > 0) {
         const { error } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })

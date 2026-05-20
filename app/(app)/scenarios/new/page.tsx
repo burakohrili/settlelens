@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { SCENARIO_LIMITS } from "@/lib/plan-limits";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { NumericInput } from "@/components/ui/NumericInput";
@@ -33,8 +34,6 @@ const DEFAULT_FORM: ScenarioForm = {
   child_support_monthly: 0,
   child_support_direction: "i_receive",
 };
-
-const SCENARIO_LIMITS: Record<string, number> = { discovery: 3, clarified: 1, strategist: -1, professional: -1 };
 
 export default function NewScenarioPage() {
   const t = useTranslations("onboarding_form.step6");
