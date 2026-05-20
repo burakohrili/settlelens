@@ -37,7 +37,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         persistence: "localStorage+cookie",
         opt_out_capturing_by_default: true,
         loaded: (ph) => {
-          if (localStorage.getItem("sl_cookie_consent") === "accepted") {
+          if (localStorage.getItem("sl_cookie_consent") === "all") {
             ph.opt_in_capturing();
           }
         },

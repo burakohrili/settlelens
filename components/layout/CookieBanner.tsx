@@ -23,7 +23,7 @@ export function CookieBanner() {
   }, []);
 
   function accept() {
-    localStorage.setItem(STORAGE_KEY, "accepted");
+    localStorage.setItem(STORAGE_KEY, "all");
     setConsent("all");
     setVisible(false);
     window.dispatchEvent(new Event("sl:cookie-accepted"));

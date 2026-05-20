@@ -381,8 +381,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
   },
 };
 
-function fmt(n: number, currency: string): string {
-  return new Intl.NumberFormat("en-US", {
+function fmt(n: number, currency: string, locale = "en"): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -401,6 +401,7 @@ export function buildReportHTML(data: ReportData): string {
   const safeJurisdiction = escapeHtml(jurisdiction);
   const L = REPORT_LABELS[lang] ?? REPORT_LABELS.en;
   const isRtl = lang === "ar";
+  const fmtL = (n: number) => fmt(n, currency, lang);
 
   const totalAssets = assets.reduce((s, a) => s + (a.current_value || 0), 0);
   const totalMortgages = assets.reduce((s, a) => s + (a.mortgage_balance ?? 0), 0);
@@ -415,15 +416,15 @@ export function buildReportHTML(data: ReportData): string {
         <p style="font-size:11px;color:#6b6b6b;font-style:italic;margin-top:0;">${escapeHtml(s.confidence_label_text)}</p>
         <table class="data-table">
           <tr><th>${L.metric}</th><th>${L.value}</th></tr>
-          <tr><td>${L.netWorthNow}</td><td>${fmt(s.net_worth_now, currency)}</td></tr>
-          <tr><td>${L.year1}</td><td>${fmt(s.year1, currency)}</td></tr>
-          <tr><td>${L.year3}</td><td>${fmt(s.year3, currency)}</td></tr>
-          <tr><td>${L.year5}</td><td>${fmt(s.year5, currency)}</td></tr>
-          <tr><td>${L.year10}</td><td>${fmt(s.year10, currency)}</td></tr>
-          <tr><td>${L.monthlyCashFlow}</td><td>${fmt(s.monthly_cashflow, currency)}${L.mo}</td></tr>
+          <tr><td>${L.netWorthNow}</td><td>${fmtL(s.net_worth_now)}</td></tr>
+          <tr><td>${L.year1}</td><td>${fmtL(s.year1)}</td></tr>
+          <tr><td>${L.year3}</td><td>${fmtL(s.year3)}</td></tr>
+          <tr><td>${L.year5}</td><td>${fmtL(s.year5)}</td></tr>
+          <tr><td>${L.year10}</td><td>${fmtL(s.year10)}</td></tr>
+          <tr><td>${L.monthlyCashFlow}</td><td>${fmtL(s.monthly_cashflow)}${L.mo}</td></tr>
           <tr><td>${L.riskScore}</td><td style="color:${riskColor(s.risk_score)};font-weight:bold;">${s.risk_score}/10</td></tr>
-          <tr><td>${L.alimonyRange}</td><td>${fmt(s.alimony_range_low, currency)} – ${fmt(s.alimony_range_high, currency)}${L.mo}</td></tr>
-          <tr><td>${L.childSupport}</td><td>${fmt(s.child_support_estimate, currency)}${L.mo}</td></tr>
+          <tr><td>${L.alimonyRange}</td><td>${fmtL(s.alimony_range_low)} – ${fmtL(s.alimony_range_high)}${L.mo}</td></tr>
+          <tr><td>${L.childSupport}</td><td>${fmtL(s.child_support_estimate)}${L.mo}</td></tr>
         </table>
         ${s.key_risks?.length ? `<p style="margin-top:10px;"><strong>${L.keyRisks}:</strong> ${(s.key_risks as string[]).map(escapeHtml).join("; ")}</p>` : ""}
         ${s.negotiation_strategy ? `<p style="margin-top:8px;"><strong>${L.financialNote}:</strong> ${escapeHtml(s.negotiation_strategy)}</p>` : ""}
@@ -483,15 +484,15 @@ export function buildReportHTML(data: ReportData): string {
   <div class="summary-grid">
     <div class="summary-card">
       <div class="label">${L.totalAssets}</div>
-      <div class="value">${fmt(totalAssets, currency)}</div>
+      <div class="value">${fmtL(totalAssets)}</div>
     </div>
     <div class="summary-card">
       <div class="label">${L.totalDebts}</div>
-      <div class="value" style="color:#E85252;">${fmt(totalDebts, currency)}</div>
+      <div class="value" style="color:#E85252;">${fmtL(totalDebts)}</div>
     </div>
     <div class="summary-card">
       <div class="label">${L.netWorth}</div>
-      <div class="value" style="color:${netWorth >= 0 ? "#4FA86E" : "#E85252"};">${fmt(netWorth, currency)}</div>
+      <div class="value" style="color:${netWorth >= 0 ? "#4FA86E" : "#E85252"};">${fmtL(netWorth)}</div>
     </div>
   </div>
 </section>
@@ -500,7 +501,7 @@ export function buildReportHTML(data: ReportData): string {
   <h2>${L.assets}</h2>
   <table class="data-table">
     <tr><th>${L.name}</th><th>${L.category}</th><th>${L.currentValue}</th><th>${L.ownedBy}</th></tr>
-    ${assets.map((a) => `<tr><td>${escapeHtml(a.name)}</td><td>${escapeHtml(a.category)}</td><td>${fmt(a.current_value, currency)}</td><td>${escapeHtml(a.owned_by)}</td></tr>`).join("")}
+    ${assets.map((a) => `<tr><td>${escapeHtml(a.name)}</td><td>${escapeHtml(a.category)}</td><td>${fmtL(a.current_value)}</td><td>${escapeHtml(a.owned_by)}</td></tr>`).join("")}
   </table>
   ${assets.some((a) => a.category === "crypto") ? `
   <div style="margin-top:10px;background:#FFF8E1;border:1px solid #F59E0B;border-radius:6px;padding:10px;font-size:11px;color:#92400E;">
@@ -519,7 +520,7 @@ export function buildReportHTML(data: ReportData): string {
   <h2>${L.debts}</h2>
   <table class="data-table">
     <tr><th>${L.name}</th><th>${L.category}</th><th>${L.balance}</th><th>${L.monthlyPayment}</th></tr>
-    ${debts.map((d) => `<tr><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.category)}</td><td>${fmt(d.balance, currency)}</td><td>${fmt(d.monthly_payment, currency)}${L.mo}</td></tr>`).join("")}
+    ${debts.map((d) => `<tr><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.category)}</td><td>${fmtL(d.balance)}</td><td>${fmtL(d.monthly_payment)}${L.mo}</td></tr>`).join("")}
   </table>
 </section>
 

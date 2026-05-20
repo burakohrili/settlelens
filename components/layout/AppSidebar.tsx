@@ -35,7 +35,7 @@ export function AppSidebar({ planType = "discovery", locale = "en" }: Props) {
       <aside className="hidden w-56 shrink-0 flex-col border-r border-[var(--sand)] bg-[var(--cream)] md:flex">
         <nav className="flex flex-1 flex-col gap-1 p-3 pt-4">
           {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
-            const fullHref = `/${locale}/${href}`;
+            const fullHref = `/${href}`;
             const active = pathname === fullHref || pathname.startsWith(`${fullHref}/`);
             return (
               <Link
@@ -64,7 +64,7 @@ export function AppSidebar({ planType = "discovery", locale = "en" }: Props) {
               {t("upgradeDesc")}
             </p>
             <Link
-              href={`/${locale}/upgrade`}
+              href="/upgrade"
               className={cn(buttonVariants({ size: "sm" }), "mt-2 w-full bg-[var(--gold)] text-[var(--navy)] hover:bg-[var(--gold)]/90 text-xs justify-center")}
             >
               <Zap size={12} className="mr-1" /> {t("upgradeButton")}
@@ -75,7 +75,7 @@ export function AppSidebar({ planType = "discovery", locale = "en" }: Props) {
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 flex h-14 items-center justify-around border-t border-[var(--sand)] bg-[var(--cream)] md:hidden">
         {NAV_ITEMS.map(({ key, tKey, icon: Icon, href }) => {
-          const fullHref = `/${locale}/${href}`;
+          const fullHref = `/${href}`;
           const active = pathname === fullHref || pathname.startsWith(`${fullHref}/`);
           return (
             <Link

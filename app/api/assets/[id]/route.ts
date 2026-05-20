@@ -19,7 +19,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       }
     }
   }
-  const allowed = ["name", "current_value", "owned_by", "mortgage_balance", "category"];
+  const allowed = ["name", "current_value", "owned_by", "mortgage_balance", "category",
+    "purchase_price", "crypto_quantity", "crypto_price_at_entry", "crypto_token",
+    "crypto_exchange", "notes", "is_marital", "acquisition_year"];
   const update: Record<string, unknown> = {};
   for (const key of allowed) {
     if (key in body) update[key] = body[key];

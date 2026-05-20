@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       .filter("metadata->>ip", "eq", ip);
 
     if ((recentContacts ?? 0) >= 3) {
-      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+      return NextResponse.json({ error: "rate_limited" }, { status: 429 });
     }
 
     const body = await req.json();
@@ -35,10 +35,10 @@ export async function POST(req: Request) {
     const message = strip(body.message ?? "");
 
     if (!name || !email || !subject || !message) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      return NextResponse.json({ error: "missing_fields" }, { status: 400 });
     }
     if (!EMAIL_RE.test(email)) {
-      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+      return NextResponse.json({ error: "invalid_email" }, { status: 400 });
     }
 
     await adminClient.from("audit_log").insert({

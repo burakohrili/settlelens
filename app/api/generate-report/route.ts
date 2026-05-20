@@ -59,40 +59,37 @@ export async function POST(req: NextRequest) {
   const debts = debtsRes.data ?? [];
   const scenarios = scenariosRes.data ?? [];
 
-  // 4. Fetch latest analysis for each scenario
-  const scenariosWithAnalysis = await Promise.all(
-    scenarios.map(async (s) => {
-      const { data: analyses } = await (supabase as never as {
-        from: (t: string) => {
-          select: (s: string) => {
-            eq: (c: string, v: string) => {
-              order: (col: string, opts: { ascending: boolean }) => {
-                limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null }>
-              }
-            }
-          }
+  // 4. Fetch latest analysis for each scenario — single IN query instead of N+1
+  const scenarioIds = scenarios.map((s) => s.id as string);
+  const { data: allAnalyses } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        in: (c: string, v: string[]) => {
+          order: (col: string, opts: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null }>
         }
-      }).from("analyses").select("*").eq("scenario_id", s.id as string).order("created_at", { ascending: false }).limit(1);
+      }
+    }
+  }).from("analyses").select("*").in("scenario_id", scenarioIds).order("created_at", { ascending: false });
 
-      const analysis = analyses?.[0];
-      return {
-        name: s.name as string,
-        net_worth_now: (analysis?.net_worth_now as number) ?? 0,
-        year1: (analysis?.net_worth_year1 as number) ?? 0,
-        year3: (analysis?.net_worth_year3 as number) ?? 0,
-        year5: (analysis?.net_worth_year5 as number) ?? 0,
-        year10: (analysis?.net_worth_year10 as number) ?? 0,
-        monthly_cashflow: (analysis?.monthly_cash_flow as number) ?? 0,
-        risk_score: (analysis?.risk_score as number) ?? 5,
-        alimony_range_low: (analysis?.alimony_range_low as number) ?? 0,
-        alimony_range_high: (analysis?.alimony_range_high as number) ?? 0,
-        child_support_estimate: (analysis?.child_support_estimate as number) ?? 0,
-        negotiation_strategy: (analysis?.negotiation_strategy as string) ?? "",
-        key_risks: (analysis?.key_risks as string[]) ?? [],
-        confidence_label_text: ((analysis?.raw_json as Record<string, unknown>)?.confidence_label_text as string) ?? "",
-      };
-    })
-  );
+  const scenariosWithAnalysis = scenarios.map((s) => {
+    const analysis = (allAnalyses ?? []).find((a) => a.scenario_id === s.id);
+    return {
+      name: s.name as string,
+      net_worth_now: (analysis?.net_worth_now as number) ?? 0,
+      year1: (analysis?.net_worth_year1 as number) ?? 0,
+      year3: (analysis?.net_worth_year3 as number) ?? 0,
+      year5: (analysis?.net_worth_year5 as number) ?? 0,
+      year10: (analysis?.net_worth_year10 as number) ?? 0,
+      monthly_cashflow: (analysis?.monthly_cash_flow as number) ?? 0,
+      risk_score: (analysis?.risk_score as number) ?? 5,
+      alimony_range_low: (analysis?.alimony_range_low as number) ?? 0,
+      alimony_range_high: (analysis?.alimony_range_high as number) ?? 0,
+      child_support_estimate: (analysis?.child_support_estimate as number) ?? 0,
+      negotiation_strategy: (analysis?.negotiation_strategy as string) ?? "",
+      key_risks: (analysis?.key_risks as string[]) ?? [],
+      confidence_label_text: ((analysis?.raw_json as Record<string, unknown>)?.confidence_label_text as string) ?? "",
+    };
+  });
 
   // 5. Build HTML and generate PDF
   const country = profile.country as string;
@@ -131,6 +128,7 @@ export async function POST(req: NextRequest) {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
+      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:;",
     },
   });
 }

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
@@ -75,6 +75,7 @@ export default async function AppLayout({
   }
 
   setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: "nav" });
   // Load messages directly — bypass getMessages() cache layer
   let messages: Record<string, unknown>;
   try {
@@ -91,7 +92,7 @@ export default async function AppLayout({
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--navy)] focus:px-3 focus:py-2 focus:text-sm focus:text-[var(--cream)] focus:outline-none"
       >
-        Skip to main content
+        {tNav("skipLink")}
       </a>
       <AppHeader
         userEmail={user.email ?? ""}

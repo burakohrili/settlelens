@@ -21,13 +21,14 @@ type ScenarioLine = {
 type Props = {
   scenarios: ScenarioLine[];
   currency: string;
+  locale?: string;
 };
 
 const COLORS = ["#C8973A", "#2E4D6B", "#4FA86E"];
 
-function fmtShort(n: number, currency: string): string {
+function fmtShort(n: number, currency: string, locale = "en"): string {
   const abs = Math.abs(n);
-  const symbol = new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 })
+  const symbol = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 })
     .format(0)
     .replace(/[\d,.\s]/g, "")
     .trim();
@@ -36,7 +37,7 @@ function fmtShort(n: number, currency: string): string {
   return `${symbol}${n.toFixed(0)}`;
 }
 
-export function ProjectionChart({ scenarios, currency }: Props) {
+export function ProjectionChart({ scenarios, currency, locale = "en" }: Props) {
   const t = useTranslations("projectionChart");
   const [visible, setVisible] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -85,13 +86,13 @@ export function ProjectionChart({ scenarios, currency }: Props) {
             tick={{ fontSize: 11, fontFamily: "Inter, sans-serif", fill: "#8B7355" }}
           />
           <YAxis
-            tickFormatter={(v) => fmtShort(v, currency)}
+            tickFormatter={(v) => fmtShort(v, currency, locale)}
             tick={{ fontSize: 10, fontFamily: "Inter, sans-serif", fill: "#8B7355" }}
             width={60}
           />
           <Tooltip
             formatter={(value, name) => [
-              new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(Number(value)),
+              new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(Number(value)),
               name as string,
             ]}
             labelFormatter={(label) => t("yearLabel", { label })}
@@ -125,7 +126,7 @@ export function ProjectionChart({ scenarios, currency }: Props) {
               />
               <span className="font-semibold text-[var(--navy)]">{s.name}</span>
               <span>·</span>
-              <span>{t("yearLabel", { label: 10 })}: {fmtShort(lastPoint?.value ?? 0, currency)}</span>
+              <span>{t("yearLabel", { label: 10 })}: {fmtShort(lastPoint?.value ?? 0, currency, locale)}</span>
             </p>
           );
         })}

@@ -21,12 +21,13 @@ type ScenarioData = {
 type Props = {
   scenarios: ScenarioData[];
   currency: string;
+  locale?: string;
   recommendedIndex?: number;
   awaitingLabel?: string;
 };
 
-function fmt(n: number, currency: string): string {
-  return new Intl.NumberFormat("en-US", {
+function fmt(n: number, currency: string, locale = "en"): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -45,7 +46,7 @@ function riskIcon(score: number): string {
   return "●";
 }
 
-export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, awaitingLabel }: Props) {
+export function ScenarioComparison({ scenarios, currency, locale = "en", recommendedIndex = 0, awaitingLabel }: Props) {
   const t = useTranslations("scenarioComparison");
   const [activeTab, setActiveTab] = useState(0);
 
@@ -155,7 +156,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
                         )}
                       >
                         {row.format === "currency" || row.format === "cashflow"
-                          ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
+                          ? `${fmt(val, currency, locale)}${row.format === "cashflow" ? t("perMonth") : ""}`
                           : row.key === "risk_score"
                             ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
                             : `${val}/10`}
@@ -202,7 +203,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
                       row.key !== "risk_score" && row.key !== "monthly_cashflow" && "text-[var(--navy)]"
                     )}>
                       {row.format === "currency" || row.format === "cashflow"
-                        ? `${fmt(val, currency)}${row.format === "cashflow" ? t("perMonth") : ""}`
+                        ? `${fmt(val, currency, locale)}${row.format === "cashflow" ? t("perMonth") : ""}`
                         : row.key === "risk_score"
                           ? <span aria-label={`${val}/10`}>{riskIcon(val)} {val}/10</span>
                           : `${val}/10`}

@@ -4,9 +4,9 @@ import { createServerClient } from "@supabase/ssr";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { userId, email, name, lang, kvkkConsent, marketingConsent } = body;
+  const { userId, name, lang, kvkkConsent, marketingConsent } = body;
 
-  if (!userId || !email) {
+  if (!userId) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     from: (t: string) => { upsert: (d: unknown, opts: unknown) => Promise<{ error: unknown }> }
   }).from("profiles").upsert({
     id: userId,
-    email,
+    email: user.email ?? "",
     name: name ?? "",
     preferred_language: lang ?? "en",
     gdpr_consent: true,

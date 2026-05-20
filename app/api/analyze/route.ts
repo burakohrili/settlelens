@@ -262,5 +262,5 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
       });
   });
 
-  return Response.json({ success: true, data: result });
+  return Response.json({ success: true, data: result, pending_persist: true });
 }

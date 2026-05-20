@@ -107,7 +107,7 @@ export function DiscoveryPreview({ scenarios }: { scenarios: Scenario[] }) {
             </p>
           </div>
           <Link
-            href={`/${locale}/upgrade`}
+            href="/upgrade"
             className={cn(
               buttonVariants(),
               "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90 shrink-0 whitespace-nowrap"

@@ -74,6 +74,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const lang = await getLocale();
   const t = await getTranslations("dashboard");
+  const tScenario = await getTranslations("scenarioComparison");
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
@@ -339,6 +340,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           avgRisk={avgRisk}
           firstMonthlyCashflow={firstAnalysis?.monthly_cash_flow ?? null}
           currency={currency}
+          locale={appLocale}
         />
       )}
 
@@ -373,7 +375,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <CountUpNumber
               value={firstAnalysis?.monthly_cash_flow ?? 0}
               currency={currency}
-              suffix="/mo"
+              suffix={tScenario("perMonth")}
               className={cn("font-mono text-xl font-bold mt-1 block", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}
             />
           </div>
@@ -392,7 +394,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       {hasAnalyses && chartScenarios.length > 0 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:shadow-md transition-shadow duration-200">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-4">{t("projection")}</h2>
-          <ProjectionChart scenarios={chartScenarios} currency={currency} />
+          <ProjectionChart scenarios={chartScenarios} currency={currency} locale={appLocale} />
         </div>
       )}
 
@@ -403,6 +405,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <ScenarioComparison
             scenarios={allScenariosComparison}
             currency={currency}
+            locale={appLocale}
             awaitingLabel={t("awaitingAnalysis")}
           />
         </div>

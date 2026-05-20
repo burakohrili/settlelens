@@ -13,6 +13,7 @@ type Props = {
   avgRisk: number | null;
   firstMonthlyCashflow: number | null;
   currency: string;
+  locale: string;
 };
 
 export function NarrativeInsight({
@@ -24,6 +25,7 @@ export function NarrativeInsight({
   avgRisk,
   firstMonthlyCashflow,
   currency,
+  locale,
 }: Props) {
   const t = useTranslations("dashboard.insight");
   const [visible, setVisible] = useState(false);
@@ -34,7 +36,7 @@ export function NarrativeInsight({
   }, []);
 
   const fmtCurrency = (n: number) =>
-    new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(Math.abs(n));
+    new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(Math.abs(n));
 
   let insight: string;
 
