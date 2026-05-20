@@ -31,6 +31,7 @@ export default function Step5Page() {
   const [hasChildren, setHasChildren] = useState<boolean | null>(null);
   const [children, setChildren] = useState<Child[]>([]);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     async function load() {
@@ -48,6 +49,7 @@ export default function Step5Page() {
   }
 
   async function handleNext() {
+    setSaveError("");
     const validCustody = ["primary_me", "primary_spouse", "joint_50_50", "other"];
     if (hasChildren && children.length > 0) {
       for (const child of children) {
@@ -64,8 +66,13 @@ export default function Step5Page() {
         .from("children").delete().eq("user_id", user.id);
       if (hasChildren && children.length > 0) {
         const rows = children.map((c) => ({ ...c, user_id: user.id, id: undefined }));
-        await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+        const { error: insertError } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
           .from("children").insert(rows);
+        if (insertError) {
+          setSaveError(t("saveError"));
+          setSaving(false);
+          return;
+        }
       }
     }
     router.push(`/${lang}/onboarding/step-6`);
@@ -88,6 +95,11 @@ export default function Step5Page() {
       nextDisabled={nextDisabled}
     >
       <div className="space-y-4">
+        {saveError && (
+          <p className="rounded-md bg-red-50 px-3 py-2 font-ui text-sm text-[var(--danger)]" role="alert">
+            {saveError}
+          </p>
+        )}
         {hasChildren === null && (
           <div>
             <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">{t("hasChildren")}</p>

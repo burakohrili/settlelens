@@ -823,7 +823,8 @@
       "cat_crypto": "Cripto",
       "cat_other": "Otro",
       "cryptoPriceAtEntry": "Precio de compra (opcional)",
-      "mortgageExceedsValue": "El saldo hipotecario no puede superar el valor del activo."
+      "mortgageExceedsValue": "El saldo hipotecario no puede superar el valor del activo.",
+      "saveError": "No se pudieron guardar tus activos. Por favor, inténtalo de nuevo."
     },
     "step3": {
       "hasDebts": "¿Tiene deudas (distintas a las hipotecas ya registradas)?",
@@ -869,7 +870,8 @@
       "retired": "Jubilado",
       "unemployed": "Desempleado",
       "perYear": "/año",
-      "netExceedsGross": "El ingreso neto no puede superar el ingreso bruto."
+      "netExceedsGross": "El ingreso neto no puede superar el ingreso bruto.",
+      "saveError": "No se pudo guardar tu información de ingresos. Por favor, inténtalo de nuevo."
     },
     "step5": {
       "hasChildren": "¿Tiene hijos menores de edad (menores de 18 años)?",
@@ -885,7 +887,8 @@
       "joint5050": "Conjunta 50/50",
       "primaryMe": "Principal — Yo",
       "primarySpouse": "Principal — Cónyuge",
-      "otherTbd": "Otro / Por determinar"
+      "otherTbd": "Otro / Por determinar",
+      "saveError": "No se pudo guardar la información de los hijos. Por favor, inténtalo de nuevo."
     },
     "step6": {
       "intro": "Cree hasta 3 escenarios — compare diferentes supuestos de acuerdo uno al lado del otro. Cada escenario puede tener diferentes supuestos de vivienda, pensión alimenticia y manutención infantil. Puede editarlos más tarde desde su panel de control.",

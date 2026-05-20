@@ -101,8 +101,13 @@ export default function Step2Page() {
         .from("assets").delete().eq("user_id", user.id);
       const rows = assets.filter((a) => a.name).map((a) => ({ ...a, user_id: user.id, id: undefined }));
       if (rows.length > 0) {
-        await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+        const { error: insertError } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
           .from("assets").insert(rows);
+        if (insertError) {
+          setSaveError(t("saveError"));
+          setSaving(false);
+          return;
+        }
       }
     }
     router.push(`/${lang}/onboarding/step-3`);

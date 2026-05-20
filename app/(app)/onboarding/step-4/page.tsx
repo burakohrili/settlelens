@@ -101,8 +101,13 @@ export default function Step4Page() {
           { ...newIncome("spouse"), user_id: user.id, annual_gross: -1, annual_net: -1 },
         ]),
       ];
-      await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+      const { error: insertError } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
         .from("income").insert(rows);
+      if (insertError) {
+        setSaveError(t("saveError"));
+        setSaving(false);
+        return;
+      }
     }
     router.push(`/${lang}/onboarding/step-5`);
   }

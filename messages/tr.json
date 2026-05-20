@@ -837,7 +837,8 @@
       "cat_business": "İşletme",
       "cat_crypto": "Kripto",
       "cat_other": "Diğer",
-      "mortgageExceedsValue": "İpotek bakiyesi varlık değerini aşamaz."
+      "mortgageExceedsValue": "İpotek bakiyesi varlık değerini aşamaz.",
+      "saveError": "Varlıklarınız kaydedilemedi. Lütfen tekrar deneyin."
     },
     "step3": {
       "hasDebts": "Girilen ipotekler dışında borcunuz var mı?",
@@ -883,7 +884,8 @@
       "retired": "Emekli",
       "unemployed": "İşsiz",
       "perYear": "/yıl",
-      "netExceedsGross": "Net gelir brüt geliri aşamaz."
+      "netExceedsGross": "Net gelir brüt geliri aşamaz.",
+      "saveError": "Gelir bilgileriniz kaydedilemedi. Lütfen tekrar deneyin."
     },
     "step5": {
       "hasChildren": "18 yaşın altında küçük çocuğunuz var mı?",
@@ -899,7 +901,8 @@
       "joint5050": "Ortak 50/50",
       "primaryMe": "Birincil — Ben",
       "primarySpouse": "Birincil — Eşim",
-      "otherTbd": "Diğer / Belirsiz"
+      "otherTbd": "Diğer / Belirsiz",
+      "saveError": "Çocuk bilgileri kaydedilemedi. Lütfen tekrar deneyin."
     },
     "step6": {
       "intro": "3 adede kadar senaryo oluşturun — farklı anlaşma varsayımlarını yan yana karşılaştırın. Her senaryo farklı ev, nafaka ve çocuk nafakası varsayımlarına sahip olabilir. Bunları daha sonra kontrol panelinizden düzenleyebilirsiniz.",

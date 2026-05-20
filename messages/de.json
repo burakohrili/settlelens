@@ -823,7 +823,8 @@
       "cat_business": "Unternehmen",
       "cat_crypto": "Krypto",
       "cat_other": "Sonstiges",
-      "mortgageExceedsValue": "Die Hypothek darf den Vermögenswert nicht übersteigen."
+      "mortgageExceedsValue": "Die Hypothek darf den Vermögenswert nicht übersteigen.",
+      "saveError": "Ihre Vermögenswerte konnten nicht gespeichert werden. Bitte versuchen Sie es erneut."
     },
     "step3": {
       "hasDebts": "Haben Sie Schulden (außer den bereits eingetragenen Hypotheken)?",
@@ -869,7 +870,8 @@
       "retired": "Im Ruhestand",
       "unemployed": "Arbeitslos",
       "perYear": "/Jahr",
-      "netExceedsGross": "Das Nettoeinkommen darf das Bruttoeinkommen nicht übersteigen."
+      "netExceedsGross": "Das Nettoeinkommen darf das Bruttoeinkommen nicht übersteigen.",
+      "saveError": "Ihre Einkommensdaten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut."
     },
     "step5": {
       "hasChildren": "Haben Sie minderjährige Kinder (unter 18)?",
@@ -885,7 +887,8 @@
       "joint5050": "Gemeinsam 50/50",
       "primaryMe": "Hauptsorgrecht — Ich",
       "primarySpouse": "Hauptsorgrecht — Ehepartner",
-      "otherTbd": "Sonstiges / Noch nicht entschieden"
+      "otherTbd": "Sonstiges / Noch nicht entschieden",
+      "saveError": "Kinderinformationen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut."
     },
     "step6": {
       "intro": "Erstellen Sie bis zu 3 Szenarien — vergleichen Sie verschiedene Vergleichsannahmen nebeneinander. Jedes Szenario kann unterschiedliche Annahmen zu Haus, Unterhalt und Kindesunterhalt haben. Sie können diese später über Ihr Dashboard bearbeiten.",

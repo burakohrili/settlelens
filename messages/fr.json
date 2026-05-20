@@ -823,7 +823,8 @@
       "cat_crypto": "Crypto",
       "cat_other": "Autre",
       "cryptoPriceAtEntry": "Prix à l'achat (optionnel)",
-      "mortgageExceedsValue": "Le solde hypothécaire ne peut pas dépasser la valeur du bien."
+      "mortgageExceedsValue": "Le solde hypothécaire ne peut pas dépasser la valeur du bien.",
+      "saveError": "Impossible d'enregistrer vos actifs. Veuillez réessayer."
     },
     "step3": {
       "hasDebts": "Avez-vous des dettes (autres que les hypothèques déjà saisies) ?",
@@ -869,7 +870,8 @@
       "retired": "Retraité",
       "unemployed": "Sans emploi",
       "perYear": "/an",
-      "netExceedsGross": "Le revenu net ne peut pas dépasser le revenu brut."
+      "netExceedsGross": "Le revenu net ne peut pas dépasser le revenu brut.",
+      "saveError": "Impossible d'enregistrer vos informations de revenu. Veuillez réessayer."
     },
     "step5": {
       "hasChildren": "Avez-vous des enfants mineurs (moins de 18 ans) ?",
@@ -885,7 +887,8 @@
       "joint5050": "Garde partagée 50/50",
       "primaryMe": "Garde principale — Moi",
       "primarySpouse": "Garde principale — Conjoint(e)",
-      "otherTbd": "Autre / À déterminer"
+      "otherTbd": "Autre / À déterminer",
+      "saveError": "Impossible d'enregistrer les informations sur les enfants. Veuillez réessayer."
     },
     "step6": {
       "intro": "Créez jusqu'à 3 scénarios — comparez différentes hypothèses de règlement côte à côte. Chaque scénario peut avoir des hypothèses différentes pour la maison, la pension alimentaire et la pension pour enfants. Vous pouvez les modifier ultérieurement depuis votre tableau de bord.",

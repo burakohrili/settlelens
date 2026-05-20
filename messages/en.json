@@ -823,7 +823,8 @@
       "cat_business": "Business",
       "cat_crypto": "Crypto",
       "cat_other": "Other",
-      "mortgageExceedsValue": "Mortgage balance cannot exceed the asset value."
+      "mortgageExceedsValue": "Mortgage balance cannot exceed the asset value.",
+      "saveError": "Could not save your assets. Please try again."
     },
     "step3": {
       "hasDebts": "Do you have any debts (other than mortgages already entered)?",
@@ -869,7 +870,8 @@
       "retired": "Retired",
       "unemployed": "Unemployed",
       "perYear": "/yr",
-      "netExceedsGross": "Net income cannot exceed gross income."
+      "netExceedsGross": "Net income cannot exceed gross income.",
+      "saveError": "Could not save your income information. Please try again."
     },
     "step5": {
       "hasChildren": "Do you have any minor children (under 18)?",
@@ -885,7 +887,8 @@
       "joint5050": "Joint 50/50",
       "primaryMe": "Primary — Me",
       "primarySpouse": "Primary — Spouse",
-      "otherTbd": "Other / TBD"
+      "otherTbd": "Other / TBD",
+      "saveError": "Could not save children information. Please try again."
     },
     "step6": {
       "intro": "Build up to 3 scenarios — compare different settlement assumptions side by side. Each scenario can have different house, alimony, and child support assumptions. You can edit these later from your dashboard.",
