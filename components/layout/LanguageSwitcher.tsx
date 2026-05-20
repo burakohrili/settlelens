@@ -30,8 +30,15 @@ export function LanguageSwitcher({ variant = "light" }: Props) {
 
   function switchLocale(next: Locale) {
     const segments = pathname.split("/");
-    segments[1] = next;
-    router.push(segments.join("/") || `/${next}`);
+    if ((locales as readonly string[]).includes(segments[1])) {
+      // [lang] route — replace the locale prefix in the URL
+      segments[1] = next;
+      router.push(segments.join("/") || `/${next}`);
+    } else {
+      // (app) route — no locale in URL; set cookie and refresh in place
+      document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000`;
+      router.refresh();
+    }
   }
 
   const isDark = variant === "dark";
