@@ -468,6 +468,7 @@
     "emptyStep4": "10 yıllık finansal sonuçları karşılaştırın",
     "emptyCTA": "İlk Senaryomu Oluştur",
     "awaitingAnalysis": "Analiz Bekliyor",
+    "primaryScenarioHint": "Senaryo: {name}",
     "faqTitle": "Sık Sorulan Sorular",
     "faq_q1": "Analizim ne kadar doğru?",
     "faq_a1": "SettleLens yargı alanına özgü varsayımlar ve girdiğiniz finansal veriler kullanır. Gizli varlıklar, yargısal takdir yetkisi ve karmaşık anlaşmalar gerçek sonuçları değiştirebilir. Nitelikli bir avukatla doğrulayın.",

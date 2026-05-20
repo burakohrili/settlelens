@@ -468,6 +468,7 @@
     "emptyStep4": "10-Jahres-Finanzprognosen vergleichen",
     "emptyCTA": "Erstes Szenario erstellen",
     "awaitingAnalysis": "Analyse ausstehend",
+    "primaryScenarioHint": "Szenario: {name}",
     "faqTitle": "Häufig gestellte Fragen",
     "faq_q1": "Wie genau ist meine Analyse?",
     "faq_a1": "SettleLens verwendet länderspezifische Annahmen und die von Ihnen eingegebenen Finanzdaten. Versteckte Vermögenswerte, richterliches Ermessen und komplexe Vereinbarungen können die tatsächlichen Ergebnisse verändern. Überprüfen Sie dies immer mit einem qualifizierten Anwalt.",

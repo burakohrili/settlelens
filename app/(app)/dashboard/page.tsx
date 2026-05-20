@@ -136,16 +136,23 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   // Summary stats
   const analyzedScenarios = scenariosWithAnalysis.filter((s) => s.analysis);
-  const bestEntry = analyzedScenarios.reduce<{ value: number; name: string } | null>(
-    (best, s) => {
-      if (!s.analysis) return best;
-      if (!best || s.analysis.net_worth_year10 > best.value) {
-        return { value: s.analysis.net_worth_year10, name: s.scenario.name as string };
-      }
-      return best;
-    },
-    null
-  );
+
+  // primaryEntry = highest net_worth_year10 — canonical "primary scenario"
+  const primaryEntry = analyzedScenarios.reduce<{
+    value: number; name: string; scenarioId: string; analysis: Analysis;
+  } | null>((best, s) => {
+    if (!s.analysis) return best;
+    if (!best || s.analysis.net_worth_year10 > best.value) {
+      return {
+        value: s.analysis.net_worth_year10,
+        name: s.scenario.name as string,
+        scenarioId: s.scenario.id as string,
+        analysis: s.analysis,
+      };
+    }
+    return best;
+  }, null);
+
   const worstEntry = analyzedScenarios.reduce<{ value: number; name: string } | null>(
     (worst, s) => {
       if (!s.analysis) return worst;
@@ -156,9 +163,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     },
     null
   );
-  const bestYear10 = bestEntry?.value ?? -Infinity;
-  const bestScenarioName = bestEntry?.name ?? null;
-  const firstAnalysis = analyzedScenarios[0]?.analysis;
+
+  const primaryAnalysis = primaryEntry?.analysis ?? null;
+  const primaryScenarioName = primaryEntry?.name ?? null;
+  const bestYear10 = primaryEntry?.value ?? -Infinity;
+  const bestScenarioName = primaryScenarioName;
   const avgRisk =
     analyzedScenarios.length > 0
       ? Math.round(analyzedScenarios.reduce((s, a) => s + (a.analysis?.risk_score ?? 5), 0) / analyzedScenarios.length)
@@ -175,6 +184,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       { year: 10, value: analysis!.net_worth_year10 },
     ],
   }));
+
+  // primaryIdx: position of primaryEntry in scenariosWithAnalysis (= same index in allScenariosComparison)
+  const primaryIdx = primaryEntry
+    ? scenariosWithAnalysis.findIndex((s) => (s.scenario.id as string) === primaryEntry.scenarioId)
+    : 0;
 
   // Comparison table data — all scenarios (analyzed + unanalyzed)
   const allScenariosComparison = scenariosWithAnalysis.map(({ scenario, analysis }) => ({
@@ -334,7 +348,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           bestYear10={bestYear10 === -Infinity ? 0 : bestYear10}
           worstYear10={worstEntry?.value ?? 0}
           avgRisk={avgRisk}
-          firstMonthlyCashflow={firstAnalysis?.monthly_cash_flow ?? null}
+          firstMonthlyCashflow={primaryAnalysis?.monthly_cash_flow ?? null}
           currency={currency}
           locale={appLocale}
         />
@@ -346,10 +360,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("netWorthNow")}</p>
             <CountUpNumber
-              value={firstAnalysis?.net_worth_now ?? 0}
+              value={primaryAnalysis?.net_worth_now ?? 0}
               currency={currency}
-              className={cn("font-mono text-xl font-bold mt-1 block", (firstAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}
+              className={cn("font-mono text-xl font-bold mt-1 block", (primaryAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}
             />
+            {primaryScenarioName && (
+              <p className="font-ui text-xs text-[var(--brown)] mt-1 truncate">{t("primaryScenarioHint", { name: primaryScenarioName })}</p>
+            )}
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("bestYear10")}</p>
@@ -369,11 +386,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("monthlyCashFlow")}</p>
             <CountUpNumber
-              value={firstAnalysis?.monthly_cash_flow ?? 0}
+              value={primaryAnalysis?.monthly_cash_flow ?? 0}
               currency={currency}
               suffix={tScenario("perMonth")}
-              className={cn("font-mono text-xl font-bold mt-1 block", (firstAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}
+              className={cn("font-mono text-xl font-bold mt-1 block", (primaryAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}
             />
+            {primaryScenarioName && (
+              <p className="font-ui text-xs text-[var(--brown)] mt-1 truncate">{t("primaryScenarioHint", { name: primaryScenarioName })}</p>
+            )}
           </div>
           <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
             <p className="font-ui text-xs text-[var(--brown)] uppercase tracking-wide">{t("riskScore")}</p>
@@ -403,18 +423,22 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             currency={currency}
             locale={appLocale}
             awaitingLabel={t("awaitingAnalysis")}
+            recommendedIndex={primaryIdx !== -1 ? primaryIdx : 0}
           />
         </div>
       )}
 
       {/* Key risks */}
-      {hasAnalyses && firstAnalysis?.key_risks && (firstAnalysis.key_risks as string[]).length > 0 && (
+      {hasAnalyses && primaryAnalysis?.key_risks && (primaryAnalysis.key_risks as string[]).length > 0 && (
         <div className="rounded-xl border border-[var(--sand)] bg-white p-4 hover:shadow-md transition-shadow duration-200">
           <h2 className="font-ui text-sm font-semibold text-[var(--navy)] mb-3 flex items-center gap-2">
             <AlertTriangle size={16} className="text-[var(--danger)]" /> {t("keyRisks")}
+            {primaryScenarioName && (
+              <span className="font-normal text-xs text-[var(--brown)] ml-auto">{primaryScenarioName}</span>
+            )}
           </h2>
           <ul className="space-y-1.5">
-            {(firstAnalysis.key_risks as string[]).map((risk, i) => (
+            {(primaryAnalysis.key_risks as string[]).map((risk, i) => (
               <li key={i} className="font-ui text-sm text-[var(--brown)] flex items-start gap-2">
                 <span className="text-[var(--danger)] mt-0.5">•</span>
                 <span>{risk}</span>

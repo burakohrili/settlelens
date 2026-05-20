@@ -468,6 +468,7 @@
     "emptyStep4": "Compara los resultados financieros a 10 años",
     "emptyCTA": "Crear mi primer escenario",
     "awaitingAnalysis": "Análisis pendiente",
+    "primaryScenarioHint": "Escenario: {name}",
     "faqTitle": "Preguntas frecuentes",
     "faq_q1": "¿Qué tan preciso es mi análisis?",
     "faq_a1": "SettleLens usa suposiciones específicas de cada jurisdicción y los datos financieros que ingresaste. Los activos ocultos, la discrecionalidad judicial y los acuerdos complejos pueden alterar los resultados reales. Siempre verifica con un abogado cualificado.",
