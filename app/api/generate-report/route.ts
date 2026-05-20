@@ -61,20 +61,24 @@ export async function POST(req: NextRequest) {
   const debts = debtsRes.data ?? [];
   const scenarios = scenariosRes.data ?? [];
 
-  // 4. Fetch latest analysis for each scenario — single IN query instead of N+1
+  // 4. Fetch latest analysis per scenario via view — one row per scenario, no N+1
   const scenarioIds = scenarios.map((s) => s.id as string);
-  const { data: allAnalyses } = await (supabase as never as {
-    from: (t: string) => {
-      select: (s: string) => {
-        in: (c: string, v: string[]) => {
-          order: (col: string, opts: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null }>
+  const analysesMap = new Map<string, Record<string, unknown>>();
+  if (scenarioIds.length > 0) {
+    const { data: latestAnalyses } = await (supabase as never as {
+      from: (t: string) => {
+        select: (s: string) => {
+          in: (c: string, v: string[]) => Promise<{ data: Record<string, unknown>[] | null }>
         }
       }
+    }).from("latest_analysis_per_scenario").select("*").in("scenario_id", scenarioIds);
+    for (const a of latestAnalyses ?? []) {
+      analysesMap.set(a.scenario_id as string, a);
     }
-  }).from("analyses").select("*").in("scenario_id", scenarioIds).order("created_at", { ascending: false });
+  }
 
   const scenariosWithAnalysis = scenarios.map((s) => {
-    const analysis = (allAnalyses ?? []).find((a) => a.scenario_id === s.id);
+    const analysis = analysesMap.get(s.id as string) ?? null;
     return {
       name: s.name as string,
       net_worth_now: (analysis?.net_worth_now as number) ?? 0,

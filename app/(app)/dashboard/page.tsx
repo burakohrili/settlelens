@@ -114,29 +114,25 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const scenarioList = scenarios ?? [];
 
-  // Fetch latest analysis for each scenario
-  const scenariosWithAnalysis = await Promise.all(
-    scenarioList.map(async (s) => {
-      const { data: analyses } = await (supabase as never as {
-        from: (t: string) => {
-          select: (s: string) => {
-            eq: (c: string, v: string) => {
-              order: (col: string, opts: { ascending: boolean }) => {
-                limit: (n: number) => Promise<{ data: Analysis[] | null }>
-              }
-            }
-          }
+  // Fetch latest analysis per scenario — single IN() query via view
+  const scenarioIds = scenarioList.map((s) => s.id as string);
+  const analysesMap = new Map<string, Analysis>();
+  if (scenarioIds.length > 0) {
+    const { data: latestAnalyses } = await (supabase as never as {
+      from: (t: string) => {
+        select: (s: string) => {
+          in: (c: string, v: string[]) => Promise<{ data: Analysis[] | null }>
         }
-      })
-        .from("analyses")
-        .select("*")
-        .eq("scenario_id", s.id as string)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      return { scenario: s, analysis: analyses?.[0] ?? null };
-    })
-  );
+      }
+    }).from("latest_analysis_per_scenario").select("*").in("scenario_id", scenarioIds);
+    for (const a of latestAnalyses ?? []) {
+      analysesMap.set((a as unknown as Record<string, unknown>).scenario_id as string, a);
+    }
+  }
+  const scenariosWithAnalysis = scenarioList.map((s) => ({
+    scenario: s,
+    analysis: analysesMap.get(s.id as string) ?? null,
+  }));
 
   // Summary stats
   const analyzedScenarios = scenariosWithAnalysis.filter((s) => s.analysis);
