@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
-import { buildReportHTML } from "@/lib/pdf-generator";
+import { buildReportHTML, generatePDF } from "@/lib/pdf-generator";
 import { getJurisdiction, getCurrency, getJurisdictionName } from "@/lib/jurisdiction";
 import { NextRequest } from "next/server";
+
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   // 1. Auth
@@ -119,16 +121,14 @@ export async function POST(req: NextRequest) {
       metadata: { report_type: plan === "professional" ? "professional" : "standard", scenario_count: scenarios.length },
     });
 
-  // 7. Return HTML directly — browser handles print-to-PDF (avoids Puppeteer timeout)
-  const htmlWithPrint = html.replace(
-    "</body>",
-    `<script>window.addEventListener('load',function(){window.print();});</script></body>`
-  );
-  return new Response(htmlWithPrint, {
+  // 7. Generate PDF and return binary response
+  const pdfBuffer = await generatePDF(html);
+  return new Response(new Uint8Array(pdfBuffer), {
     headers: {
-      "Content-Type": "text/html; charset=utf-8",
+      "Content-Type": "application/pdf",
+      "Content-Disposition": 'attachment; filename="settlelens-report.pdf"',
       "Cache-Control": "no-store",
-      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:;",
+      "X-Content-Type-Options": "nosniff",
     },
   });
 }
