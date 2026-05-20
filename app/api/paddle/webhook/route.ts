@@ -2,6 +2,75 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { verifyPaddleSignature, getPlanFromPriceId } from "@/lib/paddle";
 import { sendEmail } from "@/lib/email";
 
+// Resolve user by paddle_customer_id stored in profiles
+async function resolveUserByCustomerId(
+  supabase: ReturnType<typeof createAdminClient>,
+  paddleCustomerId: string | undefined
+): Promise<string | undefined> {
+  if (!paddleCustomerId) return undefined;
+  const { data } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> };
+      };
+    };
+  })
+    .from("profiles")
+    .select("id")
+    .eq("paddle_customer_id", paddleCustomerId)
+    .single();
+  return data?.id;
+}
+
+// Resolve user by paddle_subscription_id — used as secondary lookup for subscription.updated
+async function resolveUserBySubscriptionId(
+  supabase: ReturnType<typeof createAdminClient>,
+  subscriptionId: string | undefined
+): Promise<string | undefined> {
+  if (!subscriptionId) return undefined;
+  const { data } = await (supabase as never as {
+    from: (t: string) => {
+      select: (s: string) => {
+        eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> };
+      };
+    };
+  })
+    .from("profiles")
+    .select("id")
+    .eq("paddle_subscription_id", subscriptionId)
+    .single();
+  return data?.id;
+}
+
+// Log unresolvable events — ops visibility
+async function logMappingMissing(
+  supabase: ReturnType<typeof createAdminClient>,
+  meta: {
+    eventId?: string;
+    eventType: string;
+    customerId?: string;
+    subscriptionId?: string;
+    priceId?: string;
+  }
+) {
+  console.error("[webhook] mapping_missing — no profile found", meta);
+  await (supabase as never as {
+    from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
+  })
+    .from("audit_log")
+    .insert({ action: "webhook_mapping_missing", metadata: meta, user_visible: false });
+  if (meta.eventId) {
+    await (supabase as never as {
+      from: (t: string) => {
+        update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
+      };
+    })
+      .from("webhook_events")
+      .update({ outcome: "mapping_missing" })
+      .eq("event_id", meta.eventId);
+  }
+}
+
 export async function POST(req: Request) {
   const rawBody = await req.text();
   const signature = req.headers.get("paddle-signature") ?? "";
@@ -33,31 +102,24 @@ export async function POST(req: Request) {
   const eventId = event.event_id as string | undefined;
   const data = event.data as Record<string, unknown>;
 
-  // Idempotency: skip already-processed events using a sentinel action key
+  // Idempotency: atomic INSERT into webhook_events (PRIMARY KEY = event_id).
+  // On duplicate delivery Postgres returns error code 23505 — return early.
   if (eventId) {
-    const sentinelAction = `paddle_evt_${eventId}`;
-    const { data: existing } = await (supabase as never as {
+    const { error: dedupErr } = await (supabase as never as {
       from: (t: string) => {
-        select: (s: string) => {
-          eq: (c: string, v: string) => {
-            limit: (n: number) => Promise<{ data: unknown[] | null }>;
-          };
-        };
+        insert: (d: unknown) => Promise<{ error: { code: string } | null }>;
       };
     })
-      .from("audit_log")
-      .select("id")
-      .eq("action", sentinelAction)
-      .limit(1);
-    if (existing && existing.length > 0) {
+      .from("webhook_events")
+      .insert({ event_id: eventId, event_type: eventType, outcome: "processed" });
+
+    if (dedupErr?.code === "23505") {
       return Response.json({ received: true, skipped: "duplicate" });
     }
-    // Record this event immediately so concurrent duplicates are rejected
-    await (supabase as never as {
-      from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
-    })
-      .from("audit_log")
-      .insert({ action: sentinelAction, metadata: { event_type: eventType }, user_visible: false });
+    // Other DB errors: log and fail open — Paddle retries on non-2xx, avoid that
+    if (dedupErr) {
+      console.error("[webhook] idempotency insert failed", { code: dedupErr.code, eventId });
+    }
   }
 
   switch (eventType) {
@@ -68,36 +130,15 @@ export async function POST(req: Request) {
         return Response.json({ error: "Invalid webhook payload: missing price id" }, { status: 400 });
       }
       const plan = getPlanFromPriceId(priceId);
-
-      // Resolve userId by paddle_customer_id (server-side lookup) to prevent client manipulation.
-      // Fall back to customData only for first-time customers whose profile may not yet have the customer_id.
       const paddleCustomerId = data.customer_id as string | undefined;
-      let userId: string | undefined;
-      if (paddleCustomerId) {
-        const { data: foundProfile } = await (supabase as never as {
-          from: (t: string) => {
-            select: (s: string) => {
-              eq: (c: string, v: string) => {
-                single: () => Promise<{ data: { id: string } | null }>;
-              };
-            };
-          };
-        })
-          .from("profiles")
-          .select("id")
-          .eq("paddle_customer_id", paddleCustomerId)
-          .single();
-        userId = foundProfile?.id;
-      }
-      // Fallback for new customers (no paddle_customer_id in profile yet)
+
+      const userId = await resolveUserByCustomerId(supabase, paddleCustomerId);
       if (!userId) {
-        userId = (data.custom_data as Record<string, string> | null)?.userId;
-        if (userId && paddleCustomerId) {
-          console.warn("[webhook] userId resolved from customData for new customer — verify paddle_customer_id mismatch", { paddleCustomerId });
-        }
+        await logMappingMissing(supabase, { eventId, eventType, customerId: paddleCustomerId, priceId });
+        return Response.json({ received: true });
       }
 
-      if (userId && plan !== "discovery") {
+      if (plan !== "discovery") {
         const updateData: Record<string, unknown> = {
           plan_type: plan,
           paddle_customer_id: data.customer_id,
@@ -170,25 +211,21 @@ export async function POST(req: Request) {
       }
       const plan = getPlanFromPriceId(activatedPriceId);
       const subCustomerId = data.customer_id as string | undefined;
-      let subUserId: string | undefined;
-      if (subCustomerId) {
-        const { data: fp } = await (supabase as never as {
-          from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> } } };
-        }).from("profiles").select("id").eq("paddle_customer_id", subCustomerId).single();
-        subUserId = fp?.id;
-      }
-      if (!subUserId) subUserId = (data.custom_data as Record<string, string> | null)?.userId;
 
-      if (subUserId) {
-        await (supabase as never as {
-          from: (t: string) => {
-            update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
-          };
-        })
-          .from("profiles")
-          .update({ plan_type: plan, paddle_subscription_id: data.id })
-          .eq("id", subUserId);
+      const subUserId = await resolveUserByCustomerId(supabase, subCustomerId);
+      if (!subUserId) {
+        await logMappingMissing(supabase, { eventId, eventType, customerId: subCustomerId, priceId: activatedPriceId });
+        return Response.json({ received: true });
       }
+
+      await (supabase as never as {
+        from: (t: string) => {
+          update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
+        };
+      })
+        .from("profiles")
+        .update({ plan_type: plan, paddle_subscription_id: data.id })
+        .eq("id", subUserId);
       break;
     }
 
@@ -200,31 +237,31 @@ export async function POST(req: Request) {
       }
       const plan = getPlanFromPriceId(updatedPriceId);
       const updCustomerId = data.customer_id as string | undefined;
-      let updUserId: string | undefined;
-      if (updCustomerId) {
-        const { data: fp } = await (supabase as never as {
-          from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { id: string } | null }> } } };
-        }).from("profiles").select("id").eq("paddle_customer_id", updCustomerId).single();
-        updUserId = fp?.id;
-      }
-      if (!updUserId) updUserId = (data.custom_data as Record<string, string> | null)?.userId;
+      const subscriptionId = data.id as string | undefined;
 
-      if (updUserId) {
-        await (supabase as never as {
-          from: (t: string) => {
-            update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
-          };
-        })
-          .from("profiles")
-          .update({ plan_type: plan })
-          .eq("id", updUserId);
+      // Primary: customer_id lookup. Secondary: subscription_id (already stored from activation).
+      const updUserId =
+        (await resolveUserByCustomerId(supabase, updCustomerId)) ??
+        (await resolveUserBySubscriptionId(supabase, subscriptionId));
+
+      if (!updUserId) {
+        await logMappingMissing(supabase, { eventId, eventType, customerId: updCustomerId, subscriptionId, priceId: updatedPriceId });
+        return Response.json({ received: true });
       }
+
+      await (supabase as never as {
+        from: (t: string) => {
+          update: (d: unknown) => { eq: (c: string, v: string) => Promise<unknown> };
+        };
+      })
+        .from("profiles")
+        .update({ plan_type: plan })
+        .eq("id", updUserId);
       break;
     }
 
     case "subscription.canceled": {
       const subId = data.id as string;
-      // Fetch email before downgrading
       const canceledProfile = await (supabase as never as {
         from: (t: string) => {
           select: (s: string) => {
@@ -238,7 +275,6 @@ export async function POST(req: Request) {
         .select("email")
         .eq("paddle_subscription_id", subId)
         .single();
-      // Downgrade plan
       await (supabase as never as {
         from: (t: string) => {
           update: (d: unknown) => {
@@ -249,7 +285,6 @@ export async function POST(req: Request) {
         .from("profiles")
         .update({ plan_type: "discovery", paddle_subscription_id: null })
         .eq("paddle_subscription_id", subId);
-      // Send cancellation email
       if (canceledProfile.data?.email) {
         await sendEmail({ type: "subscription-cancelled", to: canceledProfile.data.email });
       }
@@ -272,7 +307,6 @@ export async function POST(req: Request) {
           .select("email")
           .eq("paddle_customer_id", customerId)
           .single();
-
         if (profileResult.data?.email) {
           await sendEmail({ type: "payment-failed", to: profileResult.data.email });
         }
@@ -281,7 +315,6 @@ export async function POST(req: Request) {
     }
 
     case "subscription.past_due": {
-      // Subscription payment overdue — flag in audit log, send payment-failed email
       const subId = data.id as string;
       const pastDueProfile = await (supabase as never as {
         from: (t: string) => {
@@ -296,7 +329,6 @@ export async function POST(req: Request) {
         .select("email,id")
         .eq("paddle_subscription_id", subId)
         .single();
-
       if (pastDueProfile.data) {
         await (supabase as never as {
           from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
@@ -314,7 +346,6 @@ export async function POST(req: Request) {
     }
 
     case "subscription.paused": {
-      // Subscription paused — downgrade to discovery and notify
       const subId = data.id as string;
       const pausedProfile = await (supabase as never as {
         from: (t: string) => {
@@ -329,7 +360,6 @@ export async function POST(req: Request) {
         .select("email,id")
         .eq("paddle_subscription_id", subId)
         .single();
-
       if (pausedProfile.data) {
         await (supabase as never as {
           from: (t: string) => {
@@ -339,7 +369,6 @@ export async function POST(req: Request) {
           .from("profiles")
           .update({ plan_type: "discovery" })
           .eq("paddle_subscription_id", subId);
-
         await (supabase as never as {
           from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
         })
@@ -350,14 +379,12 @@ export async function POST(req: Request) {
             metadata: { subscription_id: subId },
             user_visible: false,
           });
-
         await sendEmail({ type: "subscription-cancelled", to: pausedProfile.data.email });
       }
       break;
     }
 
     case "refund.created": {
-      // Refund issued — downgrade to discovery
       const customerId = (data.customer as Record<string, string> | null)?.id ?? (data.customer_id as string | undefined);
       if (customerId) {
         const refundProfile = await (supabase as never as {
@@ -373,7 +400,6 @@ export async function POST(req: Request) {
           .select("id")
           .eq("paddle_customer_id", customerId)
           .single();
-
         if (refundProfile.data?.id) {
           await (supabase as never as {
             from: (t: string) => {
@@ -383,7 +409,6 @@ export async function POST(req: Request) {
             .from("profiles")
             .update({ plan_type: "discovery", paddle_subscription_id: null, plan_expires_at: null })
             .eq("id", refundProfile.data.id);
-
           await (supabase as never as {
             from: (t: string) => { insert: (d: unknown) => Promise<unknown> };
           })
