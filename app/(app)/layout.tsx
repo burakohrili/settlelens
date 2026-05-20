@@ -84,6 +84,8 @@ export default async function AppLayout({
     messages = (await import(`../../messages/en.json`)).default as Record<string, unknown>;
   }
 
+  const isOnboarding = !profile?.onboarding_completed;
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <LocaleSync locale={locale} />
@@ -101,7 +103,7 @@ export default async function AppLayout({
         locale={locale}
       />
       <div className="flex flex-1">
-        <AppSidebar planType={planType} locale={locale} />
+        {!isOnboarding && <AppSidebar planType={planType} locale={locale} />}
         <main id="main-content" className="flex-1 overflow-y-auto pb-16 md:pb-0">
           <div className="mx-auto max-w-5xl p-4 sm:p-6">
             <Disclaimer className="mb-4" />
