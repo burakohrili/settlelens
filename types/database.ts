@@ -257,6 +257,7 @@ export type Database = {
           child_support_monthly: number;
           child_support_direction: "i_receive" | "i_pay";
           business_outcome: "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable" | null;
+          vehicle_outcome: "i_keep" | "spouse_keeps" | "sell" | "not_applicable" | null;
           inflation_rate_override: number | null;
           offer_source: string | null;
           offer_raw_text: string | null;
@@ -281,6 +282,7 @@ export type Database = {
           child_support_monthly?: number;
           child_support_direction?: "i_receive" | "i_pay";
           business_outcome?: "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable" | null;
+          vehicle_outcome?: "i_keep" | "spouse_keeps" | "sell" | "not_applicable" | null;
           inflation_rate_override?: number | null;
           offer_source?: string | null;
           offer_raw_text?: string | null;
@@ -305,6 +307,7 @@ export type Database = {
           child_support_monthly?: number;
           child_support_direction?: "i_receive" | "i_pay";
           business_outcome?: "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable" | null;
+          vehicle_outcome?: "i_keep" | "spouse_keeps" | "sell" | "not_applicable" | null;
           inflation_rate_override?: number | null;
           offer_source?: string | null;
           offer_raw_text?: string | null;

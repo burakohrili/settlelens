@@ -31,6 +31,8 @@ type Scenario = {
   id: string;
   name: string;
   house_outcome: string;
+  vehicle_outcome: string;
+  business_outcome: string;
   retirement_split_me: number;
   alimony_monthly: number;
   alimony_years: number;
@@ -66,6 +68,8 @@ export default function ScenarioDetailPage() {
   const [editMode, setEditMode] = useState(false);
   const [editName, setEditName] = useState("");
   const [editHouse, setEditHouse] = useState("");
+  const [editVehicle, setEditVehicle] = useState("not_applicable");
+  const [editBusiness, setEditBusiness] = useState("not_applicable");
   const [editRetirement, setEditRetirement] = useState(50);
   const [editAlimonyMonthly, setEditAlimonyMonthly] = useState(0);
   const [editAlimonyYears, setEditAlimonyYears] = useState(0);
@@ -93,8 +97,14 @@ export default function ScenarioDetailPage() {
       }).from("profiles").select("country,state_province,plan_type,plan_expires_at").eq("id", user.id).single();
 
       if (profile) {
-        const country = profile.country as string;
-        setCurrency({ US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY" }[country] ?? "USD");
+        const countryCode = profile.country as string | null | undefined;
+        const COUNTRY_CURRENCY_MAP: Record<string, string> = { US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY" };
+        const LOCALE_CURRENCY_MAP: Record<string, string> = { tr: "TRY", de: "EUR", fr: "EUR", es: "EUR" };
+        setCurrency(
+          (countryCode ? (COUNTRY_CURRENCY_MAP[countryCode] ?? null) : null) ??
+          LOCALE_CURRENCY_MAP[locale] ??
+          "USD"
+        );
         setPlan(profile.plan_type as string ?? "discovery");
         setPlanExpiresAt(profile.plan_expires_at as string | null);
       }
@@ -106,6 +116,8 @@ export default function ScenarioDetailPage() {
         setScenario(s);
         setEditName(s.name);
         setEditHouse(s.house_outcome);
+        setEditVehicle(s.vehicle_outcome ?? "not_applicable");
+        setEditBusiness(s.business_outcome ?? "not_applicable");
         setEditRetirement(s.retirement_split_me);
         setEditAlimonyMonthly(s.alimony_monthly);
         setEditAlimonyYears(s.alimony_years);
@@ -115,6 +127,8 @@ export default function ScenarioDetailPage() {
         setOriginalValues({
           name: s.name,
           house: s.house_outcome,
+          vehicle: s.vehicle_outcome ?? "not_applicable",
+          business: s.business_outcome ?? "not_applicable",
           retirement: s.retirement_split_me,
           alimonyMonthly: s.alimony_monthly,
           alimonyYears: s.alimony_years,
@@ -168,6 +182,8 @@ export default function ScenarioDetailPage() {
         body: JSON.stringify({
           name: editName,
           house_outcome: editHouse,
+          vehicle_outcome: editVehicle,
+          business_outcome: editBusiness,
           retirement_split_me: editRetirement,
           alimony_monthly: editAlimonyMonthly,
           alimony_years: editAlimonyYears,
@@ -181,6 +197,8 @@ export default function ScenarioDetailPage() {
           ...prev,
           name: editName,
           house_outcome: editHouse,
+          vehicle_outcome: editVehicle,
+          business_outcome: editBusiness,
           retirement_split_me: editRetirement,
           alimony_monthly: editAlimonyMonthly,
           alimony_years: editAlimonyYears,
@@ -355,7 +373,34 @@ export default function ScenarioDetailPage() {
                 </select>
               </div>
               <div>
-                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("retirementSplit")}</label>
+                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("vehicle")}</label>
+                <select
+                  value={editVehicle}
+                  onChange={(e) => setEditVehicle(e.target.value)}
+                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
+                >
+                  <option value="i_keep">{tOffer("vehicle_i_keep")}</option>
+                  <option value="spouse_keeps">{tOffer("vehicle_spouse_keeps")}</option>
+                  <option value="sell">{tOffer("vehicle_sell")}</option>
+                  <option value="not_applicable">{tOffer("vehicle_not_applicable")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("business")}</label>
+                <select
+                  value={editBusiness}
+                  onChange={(e) => setEditBusiness(e.target.value)}
+                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
+                >
+                  <option value="i_keep">{tOffer("business_i_keep")}</option>
+                  <option value="spouse_keeps">{tOffer("business_spouse_keeps")}</option>
+                  <option value="split">{tOffer("business_split")}</option>
+                  <option value="sell">{tOffer("business_sell")}</option>
+                  <option value="not_applicable">{tOffer("business_not_applicable")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("investmentsLabel")}</label>
                 <input
                   type="number"
                   min={0}
@@ -413,6 +458,8 @@ export default function ScenarioDetailPage() {
                 disabled={saving || (originalValues !== null && (
                   editName === originalValues.name &&
                   editHouse === originalValues.house &&
+                  editVehicle === originalValues.vehicle &&
+                  editBusiness === originalValues.business &&
                   editRetirement === originalValues.retirement &&
                   editAlimonyMonthly === originalValues.alimonyMonthly &&
                   editAlimonyYears === originalValues.alimonyYears &&
@@ -436,7 +483,9 @@ export default function ScenarioDetailPage() {
         ) : (
         <div className="grid grid-cols-2 gap-2 font-ui text-sm">
           <div><span className="text-[var(--brown)]">{t("house")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`house_${scenario.house_outcome}` as "house_i_keep" | "house_spouse_keeps" | "house_sell" | "house_not_applicable")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("retirementSplit")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
+          <div><span className="text-[var(--brown)]">{t("vehicle")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`vehicle_${scenario.vehicle_outcome ?? "not_applicable"}` as "vehicle_i_keep" | "vehicle_spouse_keeps" | "vehicle_sell" | "vehicle_not_applicable")}</span></div>
+          <div><span className="text-[var(--brown)]">{t("business")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`business_${scenario.business_outcome ?? "not_applicable"}` as "business_i_keep" | "business_spouse_keeps" | "business_split" | "business_sell" | "business_not_applicable")}</span></div>
+          <div><span className="text-[var(--brown)]">{t("investmentsLabel")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
           <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency, locale)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
           <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")}</span></div>
         </div>

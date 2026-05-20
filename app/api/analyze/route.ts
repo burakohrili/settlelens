@@ -150,7 +150,7 @@ Debts:${JSON.stringify(debtsSummary)}
 Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
 Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net
 Children:${children.length}
-Scenario: house=${scenario.house_outcome}, retirement_split=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
+Scenario: house=${scenario.house_outcome}, vehicle=${(scenario.vehicle_outcome as string) ?? "not_applicable"}, business=${(scenario.business_outcome as string) ?? "not_applicable"}, retirement_investments_split=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 
 Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":""}`;

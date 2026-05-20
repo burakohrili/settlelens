@@ -14,6 +14,8 @@ type Scenario = {
   id?: string;
   name: string;
   house_outcome: string;
+  vehicle_outcome: string;
+  business_outcome: string;
   retirement_split_me: number;
   alimony_monthly: number;
   alimony_years: number;
@@ -26,6 +28,8 @@ function newScenario(name: string): Scenario {
   return {
     name,
     house_outcome: "sell",
+    vehicle_outcome: "not_applicable",
+    business_outcome: "not_applicable",
     retirement_split_me: 50,
     alimony_monthly: 0,
     alimony_years: 0,
@@ -39,13 +43,18 @@ function ScenarioCard({
   scenario,
   onChange,
   houseOptions,
+  vehicleOptions,
+  businessOptions,
   t,
 }: {
   scenario: Scenario;
   onChange: (field: keyof Scenario, value: unknown) => void;
   houseOptions: { value: string; label: string }[];
+  vehicleOptions: { value: string; label: string }[];
+  businessOptions: { value: string; label: string }[];
   t: (key: string) => string;
 }) {
+  const selectCls = "mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
   return (
     <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-3">
       <div>
@@ -53,16 +62,32 @@ function ScenarioCard({
         <Input value={scenario.name} onChange={(e) => onChange("name", e.target.value)} className="mt-1" placeholder={t("scenarioNamePlaceholder")} />
       </div>
 
-      <div>
-        <Label>{t("houseOutcome")}</Label>
-        <select value={scenario.house_outcome} onChange={(e) => onChange("house_outcome", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-        </select>
-      </div>
-
-      <div>
-        <Label>{t("retirementSplit")}</Label>
-        <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="mt-1" />
+      <div className="border-t border-[var(--sand)] pt-3">
+        <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-3">{t("assetsSection")}</p>
+        <div className="space-y-3">
+          <div>
+            <Label>{t("houseOutcome")}</Label>
+            <select value={scenario.house_outcome} onChange={(e) => onChange("house_outcome", e.target.value)} className={selectCls}>
+              {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label>{t("vehicleOutcome")}</Label>
+            <select value={scenario.vehicle_outcome} onChange={(e) => onChange("vehicle_outcome", e.target.value)} className={selectCls}>
+              {vehicleOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label>{t("businessOutcome")}</Label>
+            <select value={scenario.business_outcome} onChange={(e) => onChange("business_outcome", e.target.value)} className={selectCls}>
+              {businessOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <Label>{t("investmentsLabel")}</Label>
+            <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="mt-1" />
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -137,6 +162,21 @@ export default function Step6Page() {
     { value: "not_applicable", label: t("noHouse") },
   ];
 
+  const vehicleOptions = [
+    { value: "i_keep", label: t("iKeepVehicle") },
+    { value: "spouse_keeps", label: t("spouseKeepsVehicle") },
+    { value: "sell", label: t("weSellVehicle") },
+    { value: "not_applicable", label: t("noVehicle") },
+  ];
+
+  const businessOptions = [
+    { value: "i_keep", label: t("iKeepBusiness") },
+    { value: "spouse_keeps", label: t("spouseKeepsBusiness") },
+    { value: "split", label: t("weSplitBusiness") },
+    { value: "sell", label: t("weSellBusiness") },
+    { value: "not_applicable", label: t("noBusiness") },
+  ];
+
   async function handleStartAnalysis() {
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
@@ -201,6 +241,8 @@ export default function Step6Page() {
               scenario={scenario}
               onChange={(field, value) => updateScenario(i, field, value)}
               houseOptions={houseOptions}
+              vehicleOptions={vehicleOptions}
+              businessOptions={businessOptions}
               t={t}
             />
           </div>

@@ -64,8 +64,11 @@ export default function Step2Page() {
       if (!user) return;
       const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } })
         .from("profiles").select("country").eq("id", user.id).single();
+      const LOCALE_CURRENCY: Record<string, string> = { tr: "TRY", de: "EUR", fr: "EUR", es: "EUR" };
       if (profile?.country) {
-        setCurrency(COUNTRY_CURRENCY[profile.country as string] ?? "USD");
+        setCurrency(COUNTRY_CURRENCY[profile.country as string] ?? LOCALE_CURRENCY[locale] ?? "USD");
+      } else {
+        setCurrency(LOCALE_CURRENCY[locale] ?? "USD");
       }
       const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => Promise<{ data: Asset[] | null }> } } })
         .from("assets").select("*").eq("user_id", user.id);

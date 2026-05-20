@@ -35,6 +35,14 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (body.house_outcome !== undefined && !houseOutcomeValues.includes(body.house_outcome)) {
     return NextResponse.json({ error: "Invalid house_outcome" }, { status: 400 });
   }
+  const vehicleOutcomeValues = ["i_keep", "spouse_keeps", "sell", "not_applicable"];
+  if (body.vehicle_outcome !== undefined && !vehicleOutcomeValues.includes(body.vehicle_outcome)) {
+    return NextResponse.json({ error: "Invalid vehicle_outcome" }, { status: 400 });
+  }
+  const businessOutcomeValues = ["i_keep", "spouse_keeps", "split", "sell", "not_applicable"];
+  if (body.business_outcome !== undefined && !businessOutcomeValues.includes(body.business_outcome)) {
+    return NextResponse.json({ error: "Invalid business_outcome" }, { status: 400 });
+  }
   const directionValues = ["i_receive", "i_pay"];
   for (const field of ["alimony_direction", "child_support_direction"] as const) {
     if (body[field] !== undefined && !directionValues.includes(body[field])) {
@@ -43,7 +51,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   }
 
   const allowed = [
-    "name", "house_outcome", "retirement_split_me",
+    "name", "house_outcome", "vehicle_outcome", "business_outcome", "retirement_split_me",
     "alimony_monthly", "alimony_years", "alimony_direction",
     "child_support_monthly", "child_support_direction",
   ];

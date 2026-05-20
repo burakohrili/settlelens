@@ -14,6 +14,8 @@ import Link from "next/link";
 type ScenarioForm = {
   name: string;
   house_outcome: string;
+  vehicle_outcome: string;
+  business_outcome: string;
   retirement_split_me: number;
   alimony_monthly: number;
   alimony_years: number;
@@ -25,6 +27,8 @@ type ScenarioForm = {
 const DEFAULT_FORM: ScenarioForm = {
   name: "",
   house_outcome: "sell",
+  vehicle_outcome: "not_applicable",
+  business_outcome: "not_applicable",
   retirement_split_me: 50,
   alimony_monthly: 0,
   alimony_years: 0,
@@ -52,6 +56,21 @@ export default function NewScenarioPage() {
     { value: "spouse_keeps", label: t("spouseKeepsHouse") },
     { value: "sell", label: t("weSellHouse") },
     { value: "not_applicable", label: t("noHouse") },
+  ];
+
+  const vehicleOptions = [
+    { value: "i_keep", label: t("iKeepVehicle") },
+    { value: "spouse_keeps", label: t("spouseKeepsVehicle") },
+    { value: "sell", label: t("weSellVehicle") },
+    { value: "not_applicable", label: t("noVehicle") },
+  ];
+
+  const businessOptions = [
+    { value: "i_keep", label: t("iKeepBusiness") },
+    { value: "spouse_keeps", label: t("spouseKeepsBusiness") },
+    { value: "split", label: t("weSplitBusiness") },
+    { value: "sell", label: t("weSellBusiness") },
+    { value: "not_applicable", label: t("noBusiness") },
   ];
 
   async function handleSave() {
@@ -111,21 +130,42 @@ export default function NewScenarioPage() {
           />
         </div>
 
-        <div>
-          <Label>{t("houseOutcome")}</Label>
-          <select value={form.house_outcome} onChange={(e) => update("house_outcome", e.target.value)} className={selectCls}>
-            {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
-        </div>
+        <div className="border-b border-[var(--sand)] pb-4">
+          <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-3">
+            {t("assetsSection")}
+          </p>
+          <div className="space-y-3">
+            <div>
+              <Label>{t("houseOutcome")}</Label>
+              <select value={form.house_outcome} onChange={(e) => update("house_outcome", e.target.value)} className={selectCls}>
+                {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
 
-        <div>
-          <Label>{t("retirementSplit")} (%)</Label>
-          <Input
-            type="number" min={0} max={100}
-            value={form.retirement_split_me}
-            onChange={(e) => update("retirement_split_me", parseFloat(e.target.value) || 50)}
-            className="mt-1"
-          />
+            <div>
+              <Label>{t("vehicleOutcome")}</Label>
+              <select value={form.vehicle_outcome} onChange={(e) => update("vehicle_outcome", e.target.value)} className={selectCls}>
+                {vehicleOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <Label>{t("businessOutcome")}</Label>
+              <select value={form.business_outcome} onChange={(e) => update("business_outcome", e.target.value)} className={selectCls}>
+                {businessOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <Label>{t("investmentsLabel")}</Label>
+              <Input
+                type="number" min={0} max={100}
+                value={form.retirement_split_me}
+                onChange={(e) => update("retirement_split_me", parseFloat(e.target.value) || 50)}
+                className="mt-1"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="border-t border-[var(--sand)] pt-4">

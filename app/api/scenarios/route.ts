@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { SCENARIO_LIMITS } from "@/lib/plan-limits";
 
-const VALID_HOUSE = ["i_keep", "spouse_keeps", "sell", "not_applicable"] as const;
-const VALID_DIR   = ["i_receive", "i_pay"] as const;
-const VALID_TYPE  = ["custom", "offer_comparison"] as const;
+const VALID_HOUSE    = ["i_keep", "spouse_keeps", "sell", "not_applicable"] as const;
+const VALID_VEHICLE  = ["i_keep", "spouse_keeps", "sell", "not_applicable"] as const;
+const VALID_BUSINESS = ["i_keep", "spouse_keeps", "split", "sell", "not_applicable"] as const;
+const VALID_DIR      = ["i_receive", "i_pay"] as const;
+const VALID_TYPE     = ["custom", "offer_comparison"] as const;
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -40,6 +42,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid_house_outcome" }, { status: 400 });
   }
 
+  const vehicleOutcome = String(body.vehicle_outcome ?? "not_applicable");
+  if (!(VALID_VEHICLE as readonly string[]).includes(vehicleOutcome)) {
+    return NextResponse.json({ error: "invalid_vehicle_outcome" }, { status: 400 });
+  }
+
+  const businessOutcome = String(body.business_outcome ?? "not_applicable");
+  if (!(VALID_BUSINESS as readonly string[]).includes(businessOutcome)) {
+    return NextResponse.json({ error: "invalid_business_outcome" }, { status: 400 });
+  }
+
   const alimonyDir = String(body.alimony_direction ?? "i_receive");
   const csDir = String(body.child_support_direction ?? "i_receive");
   if (!(VALID_DIR as readonly string[]).includes(alimonyDir) || !(VALID_DIR as readonly string[]).includes(csDir)) {
@@ -65,6 +77,8 @@ export async function POST(req: NextRequest) {
       name,
       scenario_type: scenarioType as "custom" | "offer_comparison",
       house_outcome: houseOutcome as "i_keep" | "spouse_keeps" | "sell" | "not_applicable",
+      vehicle_outcome: vehicleOutcome as "i_keep" | "spouse_keeps" | "sell" | "not_applicable",
+      business_outcome: businessOutcome as "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable",
       retirement_split_me: retirementSplit,
       alimony_monthly: alimonyMonthly,
       alimony_years: alimonyYears,
