@@ -18,6 +18,7 @@ import { CountUpNumber } from "@/components/app/CountUpNumber";
 import { RiskGauge } from "@/components/app/RiskGauge";
 import { JourneyProgress } from "@/components/app/JourneyProgress";
 import { NarrativeInsight } from "@/components/app/NarrativeInsight";
+import { DashboardGreeting } from "@/components/app/DashboardGreeting";
 
 type Analysis = {
   net_worth_now: number;
@@ -225,9 +226,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       {/* Welcome header */}
       <div>
-        <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
-          {(() => { const h = new Date().getHours(); return h < 12 ? t("greeting.morning") : h < 17 ? t("greeting.afternoon") : t("greeting.evening"); })()}, {name.split(" ")[0]}.
-        </h1>
+        <DashboardGreeting name={name} />
         <p className="font-ui text-sm text-[var(--brown)] mt-1">
           {getJurisdictionName(j)} · {t("yearsOfMarriage", { count: marriageYears })} · {t("planLabel", { plan: plan.charAt(0).toUpperCase() + plan.slice(1) })}
         </p>
