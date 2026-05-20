@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
-  const inflation = (scenario.inflation_rate_override as number | null) ?? getInflationRate(country);
+  const inflation = Math.max(0, Math.min(0.50, (scenario.inflation_rate_override as number | null) ?? getInflationRate(country)));
   const investmentReturn = country === "TR" ? 0.08 : country === "UK" ? 0.04 : 0.05;
   const marriageYears = new Date().getFullYear() - ((profile.marriage_year as number) ?? 2010);
   const lang = (profile.preferred_language as string) ?? "en";
@@ -209,6 +209,15 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
     result = JSON.parse(safeText);
   } catch {
     return Response.json({ error: "AI response could not be parsed. Please try again." }, { status: 500 });
+  }
+
+  // Sanitize numeric fields — reject NaN/Infinity from AI output
+  const numericFields = ["net_worth_now", "year1", "year3", "year5", "year10", "monthly_cashflow", "alimony_range_low", "alimony_range_high", "child_support_estimate"];
+  for (const field of numericFields) {
+    if (!Number.isFinite(result[field] as number)) result[field] = 0;
+  }
+  if (!Number.isFinite(result.risk_score as number) || (result.risk_score as number) < 1 || (result.risk_score as number) > 10) {
+    result.risk_score = 5;
   }
 
   // 8. Add confidence label

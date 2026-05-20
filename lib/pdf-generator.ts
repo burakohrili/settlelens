@@ -34,7 +34,7 @@ type ReportData = {
   jurisdiction: string;
   date: string;
   lang: string;
-  assets: Array<{ name: string; category: string; current_value: number; owned_by: string; crypto_token?: string; crypto_quantity?: number; crypto_exchange?: string }>;
+  assets: Array<{ name: string; category: string; current_value: number; owned_by: string; mortgage_balance?: number; crypto_token?: string; crypto_quantity?: number; crypto_exchange?: string }>;
   debts: Array<{ name: string; category: string; balance: number; monthly_payment: number }>;
   scenarios: Array<{
     name: string;
@@ -403,7 +403,8 @@ export function buildReportHTML(data: ReportData): string {
   const isRtl = lang === "ar";
 
   const totalAssets = assets.reduce((s, a) => s + (a.current_value || 0), 0);
-  const totalDebts = debts.reduce((s, d) => s + (d.balance || 0), 0);
+  const totalMortgages = assets.reduce((s, a) => s + (a.mortgage_balance ?? 0), 0);
+  const totalDebts = debts.reduce((s, d) => s + (d.balance || 0), 0) + totalMortgages;
   const netWorth = totalAssets - totalDebts;
 
   const scenariosHTML = scenarios

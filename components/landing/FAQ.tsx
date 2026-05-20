@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -234,6 +234,7 @@ const FAQ_DATA: Record<string, { title: string; items: FAQItem[] }> = {
 
 export function FAQ() {
   const locale = useLocale();
+  const t = useTranslations("faq");
   const data = FAQ_DATA[locale] ?? FAQ_DATA.en;
   const [open, setOpen] = useState<number | null>(null);
 
@@ -300,29 +301,9 @@ export function FAQ() {
         </div>
 
         <p className="mt-8 text-center font-ui text-xs text-[var(--brown)]">
-          {locale === "tr"
-            ? "Başka sorunuz mu var? "
-            : locale === "de"
-            ? "Weitere Fragen? "
-            : locale === "fr"
-            ? "D'autres questions ? "
-            : locale === "es"
-            ? "¿Otras preguntas? "
-            : locale === "ar"
-            ? "أسئلة أخرى؟ "
-            : "More questions? "}
+          {t("moreQuestions")}{" "}
           <a href={`/${locale}/contact`} className="text-[var(--slate)] underline underline-offset-2 hover:text-[var(--navy)]">
-            {locale === "tr"
-              ? "Bize yazın"
-              : locale === "de"
-              ? "Schreiben Sie uns"
-              : locale === "fr"
-              ? "Écrivez-nous"
-              : locale === "es"
-              ? "Escríbenos"
-              : locale === "ar"
-              ? "راسلنا"
-              : "Contact us"}
+            {t("contactUs")}
           </a>
         </p>
       </div>

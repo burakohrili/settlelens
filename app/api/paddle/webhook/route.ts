@@ -64,7 +64,10 @@ export async function POST(req: Request) {
     case "transaction.completed": {
       const items = data.items as Array<{ price: { id: string } }> | null;
       const priceId = items?.[0]?.price?.id;
-      const plan = getPlanFromPriceId(priceId ?? "");
+      if (!priceId) {
+        return Response.json({ error: "Invalid webhook payload: missing price id" }, { status: 400 });
+      }
+      const plan = getPlanFromPriceId(priceId);
 
       // Resolve userId by paddle_customer_id (server-side lookup) to prevent client manipulation.
       // Fall back to customData only for first-time customers whose profile may not yet have the customer_id.
@@ -161,7 +164,11 @@ export async function POST(req: Request) {
 
     case "subscription.activated": {
       const items = data.items as Array<{ price: { id: string } }> | null;
-      const plan = getPlanFromPriceId(items?.[0]?.price?.id ?? "");
+      const activatedPriceId = items?.[0]?.price?.id;
+      if (!activatedPriceId) {
+        return Response.json({ error: "Invalid webhook payload: missing price id" }, { status: 400 });
+      }
+      const plan = getPlanFromPriceId(activatedPriceId);
       const subCustomerId = data.customer_id as string | undefined;
       let subUserId: string | undefined;
       if (subCustomerId) {
@@ -187,7 +194,11 @@ export async function POST(req: Request) {
 
     case "subscription.updated": {
       const items = data.items as Array<{ price: { id: string } }> | null;
-      const plan = getPlanFromPriceId(items?.[0]?.price?.id ?? "");
+      const updatedPriceId = items?.[0]?.price?.id;
+      if (!updatedPriceId) {
+        return Response.json({ error: "Invalid webhook payload: missing price id" }, { status: 400 });
+      }
+      const plan = getPlanFromPriceId(updatedPriceId);
       const updCustomerId = data.customer_id as string | undefined;
       let updUserId: string | undefined;
       if (updCustomerId) {

@@ -763,7 +763,12 @@
     "notifSecurityDesc": "Account login, password changes, and audit events. Always on.",
     "notifMarketingEnabled": "Email updates enabled.",
     "notifMarketingDisabled": "Email updates disabled.",
-    "notifMarketingFail": "Failed to update preference."
+    "notifMarketingFail": "Failed to update preference.",
+    "toggleMarketing": "Toggle marketing emails"
+  },
+  "faq": {
+    "moreQuestions": "More questions?",
+    "contactUs": "Contact us"
   },
   "onboarding_form": {
     "step1": {
@@ -815,7 +820,8 @@
       "cat_retirement": "Retirement/Investment",
       "cat_business": "Business",
       "cat_crypto": "Crypto",
-      "cat_other": "Other"
+      "cat_other": "Other",
+      "mortgageExceedsValue": "Mortgage balance cannot exceed the asset value."
     },
     "step3": {
       "hasDebts": "Do you have any debts (other than mortgages already entered)?",
@@ -860,7 +866,8 @@
       "partTime": "Part-time",
       "retired": "Retired",
       "unemployed": "Unemployed",
-      "perYear": "/yr"
+      "perYear": "/yr",
+      "netExceedsGross": "Net income cannot exceed gross income."
     },
     "step5": {
       "hasChildren": "Do you have any minor children (under 18)?",

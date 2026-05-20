@@ -763,7 +763,12 @@
     "notifSecurityDesc": "تسجيل الدخول وتغييرات كلمة المرور وأحداث التدقيق. دائمًا مفعّل.",
     "notifMarketingEnabled": "تم تفعيل تحديثات البريد.",
     "notifMarketingDisabled": "تم تعطيل تحديثات البريد.",
-    "notifMarketingFail": "تعذّر تحديث التفضيل."
+    "notifMarketingFail": "تعذّر تحديث التفضيل.",
+    "toggleMarketing": "تبديل رسائل التسويق"
+  },
+  "faq": {
+    "moreQuestions": "أسئلة أخرى؟",
+    "contactUs": "راسلنا"
   },
   "onboarding_form": {
     "step1": {
@@ -815,7 +820,8 @@
       "cat_business": "عمل تجاري",
       "cat_crypto": "عملة رقمية",
       "cat_other": "أخرى",
-      "cryptoPriceAtEntry": "سعر الشراء (اختياري)"
+      "cryptoPriceAtEntry": "سعر الشراء (اختياري)",
+      "mortgageExceedsValue": "لا يمكن أن يتجاوز رصيد الرهن العقاري قيمة الأصل."
     },
     "step3": {
       "hasDebts": "هل لديك ديون (غير الرهون العقارية المدخلة مسبقًا)؟",
@@ -860,7 +866,8 @@
       "partTime": "دوام جزئي",
       "retired": "متقاعد",
       "unemployed": "عاطل عن العمل",
-      "perYear": "/سنة"
+      "perYear": "/سنة",
+      "netExceedsGross": "لا يمكن أن يتجاوز صافي الدخل الدخل الإجمالي."
     },
     "step5": {
       "hasChildren": "هل لديك أطفال قاصرون (دون 18 عامًا)؟",

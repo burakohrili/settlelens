@@ -27,6 +27,17 @@ export async function DELETE(req: Request) {
 
   const adminClient = createAdminClient();
 
+  // Revoke session first — prevents any in-flight requests after account deletion starts
+  await (
+    adminClient as unknown as {
+      auth: {
+        admin: {
+          signOut: (uid: string) => Promise<unknown>;
+        };
+      };
+    }
+  ).auth.admin.signOut(user.id);
+
   // Soft-delete: set deleted_at — hard delete runs via pg_cron after 30 days
   await (
     adminClient as unknown as {
@@ -56,17 +67,6 @@ export async function DELETE(req: Request) {
       metadata: { deleted_at: new Date().toISOString() },
       user_visible: false,
     });
-
-  // Revoke the user's auth session (Supabase admin API)
-  await (
-    adminClient as unknown as {
-      auth: {
-        admin: {
-          signOut: (uid: string) => Promise<unknown>;
-        };
-      };
-    }
-  ).auth.admin.signOut(user.id);
 
   return Response.json({
     success: true,

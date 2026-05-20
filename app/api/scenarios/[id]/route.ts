@@ -11,6 +11,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   const body = await req.json();
 
+  if (body.name !== undefined) {
+    const nameStr = String(body.name);
+    if (nameStr.length === 0 || nameStr.length > 200) {
+      return NextResponse.json({ error: "Invalid name: must be 1-200 characters" }, { status: 400 });
+    }
+  }
   if (body.retirement_split_me !== undefined) {
     const v = Number(body.retirement_split_me);
     if (isNaN(v) || v < 0 || v > 100) return NextResponse.json({ error: "Invalid retirement_split_me" }, { status: 400 });

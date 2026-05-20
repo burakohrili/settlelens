@@ -135,6 +135,7 @@ export default function NewScenarioPage() {
             onChange={(e) => update("name", e.target.value)}
             className="mt-1"
             placeholder={t("scenarioNamePlaceholder")}
+            maxLength={200}
             autoFocus
           />
         </div>

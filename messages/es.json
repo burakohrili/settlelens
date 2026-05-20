@@ -763,7 +763,12 @@
     "notifSecurityDesc": "Inicios de sesión, cambios de contraseña y eventos de auditoría. Siempre activo.",
     "notifMarketingEnabled": "Actualizaciones por correo activadas.",
     "notifMarketingDisabled": "Actualizaciones por correo desactivadas.",
-    "notifMarketingFail": "No se pudo actualizar la preferencia."
+    "notifMarketingFail": "No se pudo actualizar la preferencia.",
+    "toggleMarketing": "Activar/desactivar correos de marketing"
+  },
+  "faq": {
+    "moreQuestions": "¿Otras preguntas?",
+    "contactUs": "Escríbenos"
   },
   "onboarding_form": {
     "step1": {
@@ -815,7 +820,8 @@
       "cat_business": "Negocio",
       "cat_crypto": "Cripto",
       "cat_other": "Otro",
-      "cryptoPriceAtEntry": "Precio de compra (opcional)"
+      "cryptoPriceAtEntry": "Precio de compra (opcional)",
+      "mortgageExceedsValue": "El saldo hipotecario no puede superar el valor del activo."
     },
     "step3": {
       "hasDebts": "¿Tiene deudas (distintas a las hipotecas ya registradas)?",
@@ -860,7 +866,8 @@
       "partTime": "A tiempo parcial",
       "retired": "Jubilado",
       "unemployed": "Desempleado",
-      "perYear": "/año"
+      "perYear": "/año",
+      "netExceedsGross": "El ingreso neto no puede superar el ingreso bruto."
     },
     "step5": {
       "hasChildren": "¿Tiene hijos menores de edad (menores de 18 años)?",

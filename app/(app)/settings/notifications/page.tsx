@@ -79,7 +79,7 @@ export default function NotificationsPage() {
 
   if (loading) {
     return (
-      <div className="flex h-32 items-center justify-center text-[#8B7355]">
+      <div className="flex h-32 items-center justify-center text-[var(--brown)]">
         {t("loading")}
       </div>
     );
@@ -88,27 +88,25 @@ export default function NotificationsPage() {
   return (
     <div className="max-w-2xl space-y-8">
       <div>
-        <h1
-          className="text-2xl font-bold text-[#1C2B3A]"
-          style={{ fontFamily: "Playfair Display, serif" }}
-        >
+        <h1 className="font-display text-2xl font-bold text-[var(--navy)]">
           {t("notificationsTitle")}
         </h1>
-        <p className="mt-1 text-sm text-[#8B7355]">{t("notificationsDesc")}</p>
+        <p className="mt-1 text-sm text-[var(--brown)]">{t("notificationsDesc")}</p>
       </div>
 
-      <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
-        <h2 className="font-semibold text-[#1C2B3A]">{t("emailNotificationsTitle")}</h2>
+      <div className="rounded-xl border border-[var(--sand)] bg-white p-6 space-y-4">
+        <h2 className="font-semibold text-[var(--navy)]">{t("emailNotificationsTitle")}</h2>
 
         {/* Marketing emails — toggleable */}
         <div className="flex items-start gap-4 py-2">
           <button
             onClick={handleMarketingToggle}
             disabled={saving}
-            className={`mt-0.5 flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${
-              marketingConsent ? "bg-[#4FA86E]" : "bg-[#D4C5B0]"
-            }`}
+            aria-label={t("toggleMarketing")}
             aria-pressed={marketingConsent}
+            className={`mt-0.5 flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${
+              marketingConsent ? "bg-[var(--green)]" : "bg-[var(--sand)]"
+            }`}
           >
             <span
               className={`h-5 w-5 rounded-full bg-white shadow transition-transform ${
@@ -117,24 +115,24 @@ export default function NotificationsPage() {
             />
           </button>
           <div className="flex-1">
-            <p className="text-sm font-medium text-[#1C2B3A]">{t("notifMarketing")}</p>
-            <p className="text-xs text-[#8B7355] mt-0.5">{t("notifMarketingDesc")}</p>
+            <p className="text-sm font-medium text-[var(--navy)]">{t("notifMarketing")}</p>
+            <p className="text-xs text-[var(--brown)] mt-0.5">{t("notifMarketingDesc")}</p>
           </div>
         </div>
 
         {/* Security alerts — always on, read-only */}
-        <div className="flex items-start gap-4 py-2 border-t border-[#F7F3EE]">
-          <div className="mt-0.5 flex h-6 w-11 shrink-0 items-center rounded-full bg-[#4FA86E] cursor-not-allowed opacity-70">
+        <div className="flex items-start gap-4 py-2 border-t border-[var(--cream)]">
+          <div className="mt-0.5 flex h-6 w-11 shrink-0 items-center rounded-full bg-[var(--green)] cursor-not-allowed opacity-70">
             <span className="h-5 w-5 rounded-full bg-white shadow translate-x-5" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-[#1C2B3A]">{t("notifSecurity")}</p>
-            <p className="text-xs text-[#8B7355] mt-0.5">{t("notifSecurityDesc")}</p>
+            <p className="text-sm font-medium text-[var(--navy)]">{t("notifSecurity")}</p>
+            <p className="text-xs text-[var(--brown)] mt-0.5">{t("notifSecurityDesc")}</p>
           </div>
         </div>
 
         {msg && (
-          <p className={`text-sm ${msg === t("notifMarketingFail") ? "text-[#E85252]" : "text-[#4FA86E]"}`}>
+          <p className={`text-sm ${msg === t("notifMarketingFail") ? "text-[var(--red)]" : "text-[var(--green)]"}`}>
             {msg}
           </p>
         )}

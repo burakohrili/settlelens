@@ -732,6 +732,20 @@
     "marketingEnabled": "Pazarlama e-postaları etkinleştirildi.",
     "marketingDisabled": "Pazarlama e-postaları devre dışı bırakıldı.",
     "marketingFail": "Tercih güncellenemedi.",
+    "kvkkConsentTitle": "KVKK Aydınlatma Metni",
+    "kvkkConsentNote": "Kayıt sırasında kabul edildi. Geri almak için support@settlelens.com ile iletişime geçin.",
+    "kvkkFormTitle": "KVKK Başvuru Formu",
+    "kvkkFormDesc": "KVKK kapsamındaki haklarınızı kullanmak için aşağıdaki formu doldurun. Talebiniz 30 gün içinde yanıtlanacaktır.",
+    "kvkkSubjectLabel": "Konu",
+    "kvkkSubjectPlaceholder": "Seçiniz",
+    "kvkkOption1": "Kişisel verilerimi öğrenmek istiyorum",
+    "kvkkOption2": "Verilerimin düzeltilmesini talep ediyorum",
+    "kvkkOption3": "Verilerimin silinmesini talep ediyorum",
+    "kvkkOption4": "İşlemeye itiraz ediyorum",
+    "kvkkOption5": "Diğer",
+    "kvkkMessageLabel": "Mesajınız",
+    "kvkkMessagePlaceholder": "Talebinizi açıklayın...",
+    "kvkkSubmitButton": "Başvuruyu Gönder",
     "dangerZone": "Tehlikeli Bölge",
     "deleteDesc1": "Hesabınızı silmek hemen devre dışı bırakacaktır. Tüm finansal verileriniz 30 gün içinde kalıcı olarak silinecektir. Bu işlem geri alınamaz.",
     "deleteDesc2": "Hesabınızı 30 gün içinde support@settlelens.com ile iletişime geçerek yeniden aktive edebilirsiniz.",
@@ -763,7 +777,12 @@
     "notifSecurityDesc": "Hesap girişi, şifre değişiklikleri ve denetim olayları. Her zaman açık.",
     "notifMarketingEnabled": "E-posta güncellemeleri etkinleştirildi.",
     "notifMarketingDisabled": "E-posta güncellemeleri devre dışı bırakıldı.",
-    "notifMarketingFail": "Tercih güncellenemedi."
+    "notifMarketingFail": "Tercih güncellenemedi.",
+    "toggleMarketing": "Pazarlama e-postalarını aç/kapat"
+  },
+  "faq": {
+    "moreQuestions": "Başka sorunuz mu var?",
+    "contactUs": "Bize yazın"
   },
   "onboarding_form": {
     "step1": {
@@ -815,7 +834,8 @@
       "cat_retirement": "Emeklilik/Yatırım",
       "cat_business": "İşletme",
       "cat_crypto": "Kripto",
-      "cat_other": "Diğer"
+      "cat_other": "Diğer",
+      "mortgageExceedsValue": "İpotek bakiyesi varlık değerini aşamaz."
     },
     "step3": {
       "hasDebts": "Girilen ipotekler dışında borcunuz var mı?",
@@ -860,7 +880,8 @@
       "partTime": "Yarı zamanlı",
       "retired": "Emekli",
       "unemployed": "İşsiz",
-      "perYear": "/yıl"
+      "perYear": "/yıl",
+      "netExceedsGross": "Net gelir brüt geliri aşamaz."
     },
     "step5": {
       "hasChildren": "18 yaşın altında küçük çocuğunuz var mı?",

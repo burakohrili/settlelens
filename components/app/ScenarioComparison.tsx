@@ -45,7 +45,7 @@ function riskIcon(score: number): string {
   return "●";
 }
 
-export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, awaitingLabel = "Awaiting Analysis" }: Props) {
+export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, awaitingLabel }: Props) {
   const t = useTranslations("scenarioComparison");
   const [activeTab, setActiveTab] = useState(0);
 
@@ -121,7 +121,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
                   {s.name}
                   {s.awaitingAnalysis && (
                     <a href={s.href} className="block mt-1 font-ui text-[9px] font-normal text-[var(--brown)] bg-[var(--cream)] border border-[var(--sand)] rounded px-1.5 py-0.5 hover:border-[var(--gold)] transition-colors">
-                      {awaitingLabel}
+                      {awaitingLabel ?? t("awaitingAnalysis")}
                     </a>
                   )}
                 </th>
@@ -180,7 +180,7 @@ export function ScenarioComparison({ scenarios, currency, recommendedIndex = 0, 
         {scenarios[activeTab] && (
           scenarios[activeTab].awaitingAnalysis ? (
             <div className="rounded-lg border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
-              <p className="font-ui text-sm text-[var(--brown)]">{awaitingLabel}</p>
+              <p className="font-ui text-sm text-[var(--brown)]">{awaitingLabel ?? t("awaitingAnalysis")}</p>
               {scenarios[activeTab].href && (
                 <a href={scenarios[activeTab].href} className="font-ui text-xs text-[var(--gold)] underline mt-2 block">
                   {scenarios[activeTab].name} →

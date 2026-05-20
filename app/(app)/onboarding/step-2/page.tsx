@@ -56,6 +56,7 @@ export default function Step2Page() {
   const supabase = createClient();
   const [assets, setAssets] = useState<Asset[]>([newAsset()]);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
@@ -86,6 +87,14 @@ export default function Step2Page() {
   const net = totalValue - totalMortgage;
 
   async function handleNext() {
+    setSaveError("");
+    for (const a of assets) {
+      if ((a.category === "real_estate" || a.category === "vehicle") &&
+          a.mortgage_balance > a.current_value && a.current_value > 0) {
+        setSaveError(t("mortgageExceedsValue"));
+        return;
+      }
+    }
     setSaving(true);
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
@@ -108,6 +117,11 @@ export default function Step2Page() {
       nextDisabled={saving || assets.some((a) => !a.name)}
     >
       <div className="space-y-4">
+        {saveError && (
+          <p className="rounded-md bg-red-50 px-3 py-2 font-ui text-sm text-[var(--danger)]" role="alert">
+            {saveError}
+          </p>
+        )}
         {assets.map((asset, i) => (
           <div key={i} className="rounded-lg border border-[var(--sand)] bg-white p-4">
             <div className="flex items-start justify-between gap-2">

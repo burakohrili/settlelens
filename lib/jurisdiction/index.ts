@@ -3,6 +3,12 @@ export function getJurisdiction(country: string, stateProvince?: string): string
     const COMMUNITY_PROP = ["AZ", "CA", "ID", "LA", "NV", "NM", "TX", "WA", "WI"];
     return COMMUNITY_PROP.includes(stateProvince || "") ? "us-community" : "us-equitable";
   }
+  if (country === "ES" && stateProvince &&
+    ["Cataluña", "Barcelona", "Girona", "Lleida", "Tarragona", "Illes Balears"].some(
+      r => stateProvince.includes(r)
+    )) {
+    return "es-catalonia";
+  }
   return ({ UK: "uk", DE: "de", FR: "fr", ES: "es", TR: "tr" } as Record<string, string>)[country] ?? "us-equitable";
 }
 
@@ -22,6 +28,7 @@ export function getJurisdictionName(jurisdiction: string): string {
     "de": "Germany — Zugewinngemeinschaft (BGB §1363)",
     "fr": "France — Communauté réduite aux acquêts (Art.1401)",
     "es": "Spain — Sociedad de Gananciales (CC Art.1344)",
+    "es-catalonia": "Spain (Catalonia/Balearic Islands) — Separació de béns",
     "tr": "Turkey — Edinilmiş Mallara Katılma (TMK 218-241)",
   };
   return names[jurisdiction] ?? jurisdiction;

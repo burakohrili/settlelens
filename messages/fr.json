@@ -763,7 +763,12 @@
     "notifSecurityDesc": "Connexions, changements de mot de passe et événements d'audit. Toujours actif.",
     "notifMarketingEnabled": "Mises à jour e-mail activées.",
     "notifMarketingDisabled": "Mises à jour e-mail désactivées.",
-    "notifMarketingFail": "Impossible de mettre à jour la préférence."
+    "notifMarketingFail": "Impossible de mettre à jour la préférence.",
+    "toggleMarketing": "Activer/désactiver les e-mails marketing"
+  },
+  "faq": {
+    "moreQuestions": "D'autres questions ?",
+    "contactUs": "Écrivez-nous"
   },
   "onboarding_form": {
     "step1": {
@@ -815,7 +820,8 @@
       "cat_business": "Entreprise",
       "cat_crypto": "Crypto",
       "cat_other": "Autre",
-      "cryptoPriceAtEntry": "Prix à l'achat (optionnel)"
+      "cryptoPriceAtEntry": "Prix à l'achat (optionnel)",
+      "mortgageExceedsValue": "Le solde hypothécaire ne peut pas dépasser la valeur du bien."
     },
     "step3": {
       "hasDebts": "Avez-vous des dettes (autres que les hypothèques déjà saisies) ?",
@@ -860,7 +866,8 @@
       "partTime": "Temps partiel",
       "retired": "Retraité",
       "unemployed": "Sans emploi",
-      "perYear": "/an"
+      "perYear": "/an",
+      "netExceedsGross": "Le revenu net ne peut pas dépasser le revenu brut."
     },
     "step5": {
       "hasChildren": "Avez-vous des enfants mineurs (moins de 18 ans) ?",

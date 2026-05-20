@@ -38,6 +38,7 @@ export default function Step4Page() {
   const [spouse, setSpouse] = useState<IncomeRow>(newIncome("spouse"));
   const [spouseUnknown, setSpouseUnknown] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     async function load() {
@@ -64,6 +65,7 @@ export default function Step4Page() {
   }
 
   async function handleNext() {
+    setSaveError("");
     const incomeNumericFields = ["annual_gross", "annual_net", "other_income_annual"] as const;
     for (const field of incomeNumericFields) {
       const v = Number(me[field]);
@@ -74,6 +76,14 @@ export default function Step4Page() {
         const v = Number(spouse[field]);
         if (isNaN(v) || v < 0 || v > 1_000_000_000) return;
       }
+    }
+    if (Number(me.annual_net) > Number(me.annual_gross) && Number(me.annual_gross) > 0) {
+      setSaveError(t("netExceedsGross"));
+      return;
+    }
+    if (!spouseUnknown && Number(spouse.annual_net) > Number(spouse.annual_gross) && Number(spouse.annual_gross) > 0) {
+      setSaveError(t("netExceedsGross"));
+      return;
     }
 
     setSaving(true);
@@ -113,6 +123,11 @@ export default function Step4Page() {
       nextDisabled={nextDisabled}
     >
       <div className="space-y-6">
+        {saveError && (
+          <p className="rounded-md bg-red-50 px-3 py-2 font-ui text-sm text-[var(--danger)]" role="alert">
+            {saveError}
+          </p>
+        )}
         <div className="rounded-lg border border-[var(--sand)] bg-white p-4">
           <p className="font-ui text-sm font-semibold text-[var(--navy)] mb-3">{t("myIncome")}</p>
           <div className="grid grid-cols-2 gap-3">

@@ -261,11 +261,10 @@ export default function PrivacyPage() {
               </div>
               <div>
                 <p className="text-sm font-medium text-[#1C2B3A]">
-                  KVKK Aydınlatma Metni
+                  {t("kvkkConsentTitle")}
                 </p>
                 <p className="text-xs text-[#8B7355]">
-                  Kayıt sırasında kabul edildi. Geri almak için
-                  support@settlelens.com ile iletişime geçin.
+                  {t("kvkkConsentNote")}
                 </p>
               </div>
             </div>
@@ -276,45 +275,42 @@ export default function PrivacyPage() {
       {/* KVKK request form — TR only */}
       {profile.country === "TR" && (
         <div className="rounded-xl border border-[#D4C5B0] bg-white p-6 space-y-4">
-          <h2 className="font-semibold text-[#1C2B3A]">KVKK Başvuru Formu</h2>
-          <p className="text-sm text-[#8B7355]">
-            KVKK kapsamındaki haklarınızı kullanmak için aşağıdaki formu
-            doldurun. Talebiniz 30 gün içinde yanıtlanacaktır.
-          </p>
+          <h2 className="font-semibold text-[#1C2B3A]">{t("kvkkFormTitle")}</h2>
+          <p className="text-sm text-[#8B7355]">{t("kvkkFormDesc")}</p>
           <div>
             <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-              Konu
+              {t("kvkkSubjectLabel")}
             </label>
             <select
               value={kvkkSubject}
               onChange={(e) => setKvkkSubject(e.target.value)}
               className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm"
             >
-              <option value="">Seçiniz</option>
-              <option value="access">Kişisel verilerimi öğrenmek istiyorum</option>
-              <option value="correction">Verilerimin düzeltilmesini talep ediyorum</option>
-              <option value="deletion">Verilerimin silinmesini talep ediyorum</option>
-              <option value="objection">İşlemeye itiraz ediyorum</option>
-              <option value="other">Diğer</option>
+              <option value="">{t("kvkkSubjectPlaceholder")}</option>
+              <option value="access">{t("kvkkOption1")}</option>
+              <option value="correction">{t("kvkkOption2")}</option>
+              <option value="deletion">{t("kvkkOption3")}</option>
+              <option value="objection">{t("kvkkOption4")}</option>
+              <option value="other">{t("kvkkOption5")}</option>
             </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-[#2E4D6B] mb-1">
-              Mesajınız
+              {t("kvkkMessageLabel")}
             </label>
             <textarea
               value={kvkkMessage}
               onChange={(e) => setKvkkMessage(e.target.value)}
               rows={4}
               className="w-full rounded-lg border border-[#D4C5B0] px-3 py-2 text-sm resize-none"
-              placeholder="Talebinizi açıklayın..."
+              placeholder={t("kvkkMessagePlaceholder")}
             />
           </div>
           <a
             href={`mailto:support@settlelens.com?subject=KVKK Başvurusu: ${kvkkSubject}&body=${encodeURIComponent(kvkkMessage)}`}
             className="inline-block rounded-lg bg-[#2E4D6B] px-5 py-2 text-sm font-semibold text-white hover:opacity-90"
           >
-            Başvuruyu Gönder
+            {t("kvkkSubmitButton")}
           </a>
         </div>
       )}

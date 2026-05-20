@@ -12,13 +12,22 @@ export async function POST(req: NextRequest) {
   // 2. Plan check
   const { data: profile } = await (supabase as never as {
     from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } }
-  }).from("profiles").select("name,country,state_province,plan_type,preferred_language").eq("id", user.id).single();
+  }).from("profiles").select("name,country,state_province,plan_type,preferred_language,plan_expires_at").eq("id", user.id).single();
 
   if (!profile) return Response.json({ error: "Profile not found" }, { status: 404 });
 
   const plan = profile.plan_type as string;
   if (plan === "discovery") {
     return Response.json({ error: "upgrade_required", plan: "discovery" }, { status: 403 });
+  }
+
+  // Plan expiry check
+  if (
+    (plan === "clarified" || plan === "strategist" || plan === "professional") &&
+    profile.plan_expires_at &&
+    new Date(profile.plan_expires_at as string) < new Date()
+  ) {
+    return Response.json({ error: "plan_expired" }, { status: 403 });
   }
 
   // 2.5 Rate limit: 5 PDFs per hour per user
