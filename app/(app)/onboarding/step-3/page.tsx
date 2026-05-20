@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { formatMoney } from "@/lib/money";
+import { getCurrency } from "@/lib/jurisdiction";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -32,12 +34,9 @@ function newDebt(): Debt {
   return { name: "", category: "credit_card", balance: 0, monthly_payment: 0, interest_rate: 0, owned_by: "joint" };
 }
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
-}
-
 export default function Step3Page() {
   const t = useTranslations("onboarding_form.step3");
+  const locale = useLocale();
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -46,11 +45,15 @@ export default function Step3Page() {
   const [hasDebts, setHasDebts] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } })
+        .from("profiles").select("country").eq("id", user.id).single();
+      if (profile?.country) setCurrency(getCurrency(profile.country as string));
       const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => Promise<{ data: Debt[] | null }> } } })
         .from("debts").select("*").eq("user_id", user.id);
       if (data && data.length > 0) { setHasDebts(true); setDebts(data); }
@@ -167,8 +170,8 @@ export default function Step3Page() {
             </button>
 
             <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm">
-              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalBalance")}</span><span className="font-semibold text-[var(--danger)]">{fmt(totalBalance)}</span></div>
-              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("monthlyPayments")}</span><span className="font-semibold">{fmt(totalMonthly)}/mo</span></div>
+              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalBalance")}</span><span className="font-semibold text-[var(--danger)]">{formatMoney(totalBalance, currency, locale)}</span></div>
+              <div className="flex justify-between"><span className="text-[var(--brown)]">{t("monthlyPayments")}</span><span className="font-semibold">{formatMoney(totalMonthly, currency, locale)}/mo</span></div>
             </div>
           </>
         )}

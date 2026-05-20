@@ -361,6 +361,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <CountUpNumber
               value={primaryAnalysis?.net_worth_now ?? 0}
               currency={currency}
+              locale={appLocale}
               className={cn("font-mono text-xl font-bold mt-1 block", (primaryAnalysis?.net_worth_now ?? 0) >= 0 ? "text-[var(--navy)]" : "text-[var(--danger)]")}
             />
             {primaryScenarioName && (
@@ -387,6 +388,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <CountUpNumber
               value={primaryAnalysis?.monthly_cash_flow ?? 0}
               currency={currency}
+              locale={appLocale}
               suffix={tScenario("perMonth")}
               className={cn("font-mono text-xl font-bold mt-1 block", (primaryAnalysis?.monthly_cash_flow ?? 0) >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}
             />

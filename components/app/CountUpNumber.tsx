@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { formatMoney } from "@/lib/money";
 
 type Props = {
   value: number;
   currency?: string;
+  locale?: string;
   integer?: boolean;
   suffix?: string;
   className?: string;
 };
 
-export function CountUpNumber({ value, currency, integer = false, suffix, className }: Props) {
+export function CountUpNumber({ value, currency, locale = "en", integer = false, suffix, className }: Props) {
   const [display, setDisplay] = useState(0);
   const rafRef = useRef<number | null>(null);
 
@@ -35,7 +37,7 @@ export function CountUpNumber({ value, currency, integer = false, suffix, classN
   const formatted = integer
     ? display.toString()
     : currency
-    ? new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(display)
+    ? formatMoney(display, currency, locale)
     : display.toString();
 
   return (

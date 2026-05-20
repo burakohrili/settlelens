@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { formatMoney } from "@/lib/money";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -44,12 +45,10 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   US: "USD", UK: "GBP", DE: "EUR", FR: "EUR", ES: "EUR", TR: "TRY",
 };
 
-function fmt(n: number, currency = "USD") {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(n);
-}
 
 export default function Step2Page() {
   const t = useTranslations("onboarding_form.step2");
+  const locale = useLocale();
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -275,9 +274,9 @@ export default function Step2Page() {
         </button>
 
         <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm">
-          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalAssets")}</span><span className="font-semibold">{fmt(totalValue, currency)}</span></div>
-          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalMortgage")}</span><span className="font-semibold text-[var(--danger)]">-{fmt(totalMortgage, currency)}</span></div>
-          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">{t("netAssets")}</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{fmt(net, currency)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalAssets")}</span><span className="font-semibold">{formatMoney(totalValue, currency, locale)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--brown)]">{t("totalMortgage")}</span><span className="font-semibold text-[var(--danger)]">-{formatMoney(totalMortgage, currency, locale)}</span></div>
+          <div className="flex justify-between border-t border-[var(--sand)] pt-1 mt-1"><span className="font-semibold text-[var(--navy)]">{t("netAssets")}</span><span className={cn("font-bold", net >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]")}>{formatMoney(net, currency, locale)}</span></div>
         </div>
       </div>
     </WizardLayout>

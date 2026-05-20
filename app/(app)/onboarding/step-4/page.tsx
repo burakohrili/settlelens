@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { formatMoney } from "@/lib/money";
+import { getCurrency } from "@/lib/jurisdiction";
 import { WizardLayout } from "@/components/app/WizardLayout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -19,16 +21,13 @@ type IncomeRow = {
   other_income_annual: number;
 };
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
-}
-
 function newIncome(person: "me" | "spouse"): IncomeRow {
   return { person, annual_gross: 0, annual_net: 0, employment_type: "employed", other_income_annual: 0 };
 }
 
 export default function Step4Page() {
   const t = useTranslations("onboarding_form.step4");
+  const locale = useLocale();
   const router = useRouter();
   const params = useParams();
   const lang = (params.lang as string) ?? "en";
@@ -39,11 +38,15 @@ export default function Step4Page() {
   const [spouseUnknown, setSpouseUnknown] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } })
+        .from("profiles").select("country").eq("id", user.id).single();
+      if (profile?.country) setCurrency(getCurrency(profile.country as string));
       const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => Promise<{ data: IncomeRow[] | null }> } } })
         .from("income").select("*").eq("user_id", user.id);
       if (data) {
@@ -196,11 +199,11 @@ export default function Step4Page() {
           <div className={cn("rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-sm")}>
             <div className="flex justify-between">
               <span className="text-[var(--brown)]">{t("combinedNet")}</span>
-              <span className="font-semibold text-[var(--navy)]">{fmt(totalHousehold)}{t("perYear")}</span>
+              <span className="font-semibold text-[var(--navy)]">{formatMoney(totalHousehold, currency, locale)}{t("perYear")}</span>
             </div>
             <div className="flex justify-between mt-1">
               <span className="text-[var(--brown)]">{t("monthly")}</span>
-              <span className="font-semibold">{fmt(totalHousehold / 12)}/mo</span>
+              <span className="font-semibold">{formatMoney(totalHousehold / 12, currency, locale)}/mo</span>
             </div>
           </div>
         )}

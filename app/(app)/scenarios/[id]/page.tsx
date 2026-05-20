@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { formatMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Loader2, ArrowLeft, AlertTriangle, HelpCircle, Pencil, Trash2 } from "lucide-react";
@@ -38,8 +39,8 @@ type Scenario = {
   child_support_direction: string;
 };
 
-function fmt(n: number, currency: string): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(n || 0);
+function fmt(n: number, currency: string, locale: string): string {
+  return formatMoney(n, currency, locale);
 }
 
 export default function ScenarioDetailPage() {
@@ -436,8 +437,8 @@ export default function ScenarioDetailPage() {
         <div className="grid grid-cols-2 gap-2 font-ui text-sm">
           <div><span className="text-[var(--brown)]">{t("house")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`house_${scenario.house_outcome}` as "house_i_keep" | "house_spouse_keeps" | "house_sell" | "house_not_applicable")}</span></div>
           <div><span className="text-[var(--brown)]">{t("retirementSplit")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
-          <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency)}{t("perMonth")}</span></div>
+          <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency, locale)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
+          <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")}</span></div>
         </div>
         )}
       </div>
@@ -484,11 +485,11 @@ export default function ScenarioDetailPage() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { label: t("netWorthNow"), value: fmt(analysis.net_worth_now, currency), color: "text-[var(--navy)]", tip: t("tipNetWorthNow") },
-              { label: t("year1"), value: fmt(analysis.net_worth_year1, currency), color: "text-[var(--navy)]", tip: t("tipYear1") },
-              { label: t("year5"), value: fmt(analysis.net_worth_year5, currency), color: "text-[var(--navy)]", tip: t("tipYear5") },
-              { label: t("year10"), value: fmt(analysis.net_worth_year10, currency), color: "text-[var(--gold)]", tip: t("tipYear10") },
-              { label: t("monthlyCashFlow"), value: `${fmt(analysis.monthly_cash_flow, currency)}${t("perMonth")}`, color: analysis.monthly_cash_flow >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]", tip: t("tipMonthlyCashFlow") },
+              { label: t("netWorthNow"), value: fmt(analysis.net_worth_now, currency, locale), color: "text-[var(--navy)]", tip: t("tipNetWorthNow") },
+              { label: t("year1"), value: fmt(analysis.net_worth_year1, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear1") },
+              { label: t("year5"), value: fmt(analysis.net_worth_year5, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear5") },
+              { label: t("year10"), value: fmt(analysis.net_worth_year10, currency, locale), color: "text-[var(--gold)]", tip: t("tipYear10") },
+              { label: t("monthlyCashFlow"), value: `${fmt(analysis.monthly_cash_flow, currency, locale)}${t("perMonth")}`, color: analysis.monthly_cash_flow >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]", tip: t("tipMonthlyCashFlow") },
               { label: t("riskScore"), value: `${analysis.risk_score}/10`, color: riskColor(analysis.risk_score), tip: t("tipRiskScore"), extra: riskLabel(analysis.risk_score) },
             ].map((c) => (
               <div key={c.label} className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
@@ -515,12 +516,12 @@ export default function ScenarioDetailPage() {
           <div className="rounded-lg border border-[var(--sand)] bg-white p-4">
             <p className="font-ui text-xs text-[var(--brown)] mb-2">{t("alimonyRange")}</p>
             <p className="font-mono text-sm font-bold text-[var(--navy)]">
-              {fmt(analysis.alimony_range_low, currency)} – {fmt(analysis.alimony_range_high, currency)}{t("perMonth")}
+              {fmt(analysis.alimony_range_low, currency, locale)} – {fmt(analysis.alimony_range_high, currency, locale)}{t("perMonth")}
             </p>
             {analysis.child_support_estimate > 0 && (
               <>
                 <p className="font-ui text-xs text-[var(--brown)] mt-3 mb-1">{t("childSupportEstimate")}</p>
-                <p className="font-mono text-sm font-bold text-[var(--navy)]">{fmt(analysis.child_support_estimate, currency)}{t("perMonth")}</p>
+                <p className="font-mono text-sm font-bold text-[var(--navy)]">{fmt(analysis.child_support_estimate, currency, locale)}{t("perMonth")}</p>
               </>
             )}
           </div>
