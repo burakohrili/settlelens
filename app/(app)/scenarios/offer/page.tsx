@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
-import { SCENARIO_LIMITS } from "@/lib/plan-limits";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { NumericInput } from "@/components/ui/NumericInput";
@@ -88,42 +87,30 @@ export default function OfferPage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { router.push(`/${locale}/login`); return; }
 
-    // Scenario limit check
-    const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } } }).from("profiles").select("plan_type").eq("id", user.id).single();
-    const { count: scenarioCount } = await (supabase as never as { from: (t: string) => { select: (s: string, o: Record<string, unknown>) => { eq: (c: string, v: string) => Promise<{ count: number | null }> } } }).from("scenarios").select("id", { count: "exact", head: true }).eq("user_id", user.id);
-    const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
-    if (limit !== -1 && (scenarioCount ?? 0) >= limit) {
-      setError(tScenarios("scenarioLimitReached"));
-      setLoading(false);
-      return;
-    }
+    // Create offer scenario via server-side API (quota enforced server-side)
+    const scenarioRes = await fetch("/api/scenarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: `${t(`source_${offerSource}`)} — ${new Date().toLocaleDateString()}`,
+        scenario_type: "offer_comparison",
+        house_outcome: houseOutcome,
+        retirement_split_me: parseFloat(retirementSplit) || 50,
+        alimony_monthly: parseFloat(alimonyMonthly) || 0,
+        alimony_years: parseInt(alimonyYears) || 0,
+        alimony_direction: alimonyDirection,
+        child_support_monthly: 0,
+        child_support_direction: "i_receive",
+        offer_source: offerSource,
+        offer_raw_text: offerRawText,
+      }),
+    });
+    const scenarioJson = await scenarioRes.json() as { id?: string; error?: string };
 
-    // Create offer scenario
-    const { data: scenario } = await (supabase as never as {
-      from: (t: string) => {
-        insert: (d: unknown) => {
-          select: () => { single: () => Promise<{ data: Record<string, unknown> | null }> }
-        }
-      }
-    }).from("scenarios").insert({
-      user_id: user.id,
-      name: `${t(`source_${offerSource}`)} — ${new Date().toLocaleDateString()}`,
-      scenario_type: "offer_comparison",
-      house_outcome: houseOutcome,
-      retirement_split_me: parseFloat(retirementSplit) || 50,
-      alimony_monthly: parseFloat(alimonyMonthly) || 0,
-      alimony_years: parseInt(alimonyYears) || 0,
-      alimony_direction: alimonyDirection,
-      child_support_monthly: 0,
-      child_support_direction: "i_receive",
-      offer_source: offerSource,
-      offer_raw_text: offerRawText,
-      offer_entered_at: new Date().toISOString(),
-      is_active: true,
-    }).select().single();
-
-    if (!scenario?.id) {
-      setError(t("saveError"));
+    if (!scenarioRes.ok) {
+      setError(scenarioJson.error === "scenario_limit_reached"
+        ? tScenarios("scenarioLimitReached")
+        : t("saveError"));
       setLoading(false);
       return;
     }
@@ -131,7 +118,7 @@ export default function OfferPage() {
     const res = await fetch("/api/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scenarioId: scenario.id }),
+      body: JSON.stringify({ scenarioId: scenarioJson.id }),
     });
 
     const body = await res.json();

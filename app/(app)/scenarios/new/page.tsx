@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
-import { createClient } from "@/lib/supabase/client";
-import { SCENARIO_LIMITS } from "@/lib/plan-limits";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { NumericInput } from "@/components/ui/NumericInput";
@@ -40,7 +38,6 @@ export default function NewScenarioPage() {
   const tScenarios = useTranslations("userScenarios");
   const locale = useLocale();
   const router = useRouter();
-  const supabase = createClient();
 
   const [form, setForm] = useState<ScenarioForm>(DEFAULT_FORM);
   const [saving, setSaving] = useState(false);
@@ -62,48 +59,23 @@ export default function NewScenarioPage() {
     setSaving(true);
     setError(null);
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      router.push(`/${locale}/login`);
-      return;
-    }
+    const res = await fetch("/api/scenarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, scenario_type: "custom" }),
+    });
+    const json = await res.json() as { id?: string; error?: string };
 
-    // Scenario limit check
-    const { data: profile } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } } }).from("profiles").select("plan_type").eq("id", user.id).single();
-    const { count: scenarioCount } = await (supabase as never as { from: (t: string) => { select: (s: string, o: Record<string, unknown>) => { eq: (c: string, v: string) => Promise<{ count: number | null }> } } }).from("scenarios").select("id", { count: "exact", head: true }).eq("user_id", user.id);
-    const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
-    if (limit !== -1 && (scenarioCount ?? 0) >= limit) {
-      setError(tScenarios("scenarioLimitReached"));
+    if (!res.ok) {
+      if (res.status === 401) { router.push(`/${locale}/login`); return; }
+      setError(json.error === "scenario_limit_reached"
+        ? tScenarios("scenarioLimitReached")
+        : t("saveError"));
       setSaving(false);
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error: insertError } = await (supabase as any)
-      .from("scenarios")
-      .insert({
-        user_id: user.id,
-        name: form.name.trim(),
-        scenario_type: "custom",
-        house_outcome: form.house_outcome,
-        retirement_split_me: form.retirement_split_me,
-        alimony_monthly: form.alimony_monthly,
-        alimony_years: form.alimony_years,
-        alimony_direction: form.alimony_direction,
-        child_support_monthly: form.child_support_monthly,
-        child_support_direction: form.child_support_direction,
-        is_active: true,
-      })
-      .select("id")
-      .single();
-
-    if (insertError || !data) {
-      setError(t("saveError"));
-      setSaving(false);
-      return;
-    }
-
-    router.push(`/scenarios/${data.id as string}`);
+    router.push(`/scenarios/${json.id as string}`);
   }
 
   const selectCls = "mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";

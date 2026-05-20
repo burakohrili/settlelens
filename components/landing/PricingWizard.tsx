@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ChevronRight, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { PLAN_DISPLAY } from "@/lib/plan-prices";
 
 type Lang = "en" | "tr" | "de" | "fr" | "es" | "ar";
 
@@ -52,9 +53,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "Scenario Package", reason: "3 analyses and 30-day access — ideal for a focused negotiation.", cta: "Get Scenario Package — $19" },
-      compare_long: { plan: "Process Package", reason: "Unlimited scenarios and 6-month access for the full process.", cta: "Get Process Package — $149" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "Attorney-ready exports and multi-client management.", cta: "Get Lawyer Edition — $79/mo" },
+      default: { plan: "Clarified", reason: "One scenario analysis + PDF — ideal for a single focused negotiation.", cta: `Get Clarified — ${PLAN_DISPLAY.clarified.prices.en} ${PLAN_DISPLAY.clarified.period.en}` },
+      compare_long: { plan: "Strategist", reason: "Unlimited scenarios and projections for the full negotiation process.", cta: `Get Strategist — ${PLAN_DISPLAY.strategist.prices.en}${PLAN_DISPLAY.strategist.period.en}` },
+      lawyer_pro: { plan: "Professional", reason: "Attorney-ready financial overview with evidence organizer.", cta: `Get Professional — ${PLAN_DISPLAY.professional.prices.en}${PLAN_DISPLAY.professional.period.en}` },
       early: { plan: "Discovery (Free)", reason: "Start free — see your net worth summary, no payment needed.", cta: "Start Free" },
     },
     restart: "Start over",
@@ -89,9 +90,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "Senaryo Paketi", reason: "3 analiz ve 30 günlük erişim — odaklı müzakere için ideal.", cta: "Senaryo Paketi Al — 499 ₺" },
-      compare_long: { plan: "Süreç Paketi", reason: "Sınırsız senaryo ve 6 aylık erişim — tam süreç için.", cta: "Süreç Paketi Al — 3.999 ₺" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "Uzun vadeli kullanım için avukatlığa hazır dışa aktarma.", cta: "Lawyer Edition Al — 1.999 ₺/ay" },
+      default: { plan: "Clarified", reason: "Tek senaryo analizi + PDF — tek bir odaklı müzakere için ideal.", cta: `Clarified Al — ${PLAN_DISPLAY.clarified.prices.tr} ${PLAN_DISPLAY.clarified.period.tr}` },
+      compare_long: { plan: "Strategist", reason: "Sınırsız senaryo ve projeksiyon — tüm müzakere süreci için.", cta: `Strategist Al — ${PLAN_DISPLAY.strategist.prices.tr}${PLAN_DISPLAY.strategist.period.tr}` },
+      lawyer_pro: { plan: "Professional", reason: "Avukatlığa hazır finansal özet ve kanıt düzenleyici.", cta: `Professional Al — ${PLAN_DISPLAY.professional.prices.tr}${PLAN_DISPLAY.professional.period.tr}` },
       early: { plan: "Discovery (Ücretsiz)", reason: "Ücretsiz başlayın — net varlık özetinizi görün, ödeme gerekmez.", cta: "Ücretsiz Başla" },
     },
     restart: "Yeniden başla",
@@ -126,9 +127,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "Szenario-Paket", reason: "3 Analysen und 30 Tage Zugang — ideal für eine gezielte Verhandlung.", cta: "Szenario-Paket holen — 18 €" },
-      compare_long: { plan: "Prozess-Paket", reason: "Unbegrenzte Szenarien und 6 Monate Zugang für den vollen Prozess.", cta: "Prozess-Paket holen — 139 €" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "Anwaltsgerechte Exporte für langfristige Nutzung.", cta: "Lawyer Edition holen — 74 €/Monat" },
+      default: { plan: "Clarified", reason: "Eine Szenarioanalyse + PDF — ideal für eine gezielte Verhandlung.", cta: `Clarified holen — ${PLAN_DISPLAY.clarified.prices.de} ${PLAN_DISPLAY.clarified.period.de}` },
+      compare_long: { plan: "Strategist", reason: "Unbegrenzte Szenarien und Projektionen für den gesamten Verhandlungsprozess.", cta: `Strategist holen — ${PLAN_DISPLAY.strategist.prices.de}${PLAN_DISPLAY.strategist.period.de}` },
+      lawyer_pro: { plan: "Professional", reason: "Anwaltsgerechte Finanzübersicht mit Belegnachweisen.", cta: `Professional holen — ${PLAN_DISPLAY.professional.prices.de}${PLAN_DISPLAY.professional.period.de}` },
       early: { plan: "Discovery (Kostenlos)", reason: "Kostenlos starten — Nettovermögensübersicht ohne Zahlung.", cta: "Kostenlos starten" },
     },
     restart: "Neu starten",
@@ -163,9 +164,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "Pack Scénario", reason: "3 analyses et 30 jours d'accès — idéal pour une négociation ciblée.", cta: "Obtenir le Pack Scénario — 18 €" },
-      compare_long: { plan: "Pack Processus", reason: "Scénarios illimités et 6 mois d'accès pour tout le processus.", cta: "Obtenir le Pack Processus — 139 €" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "Exports prêts pour avocat pour un usage prolongé.", cta: "Obtenir Lawyer Edition — 74 €/mois" },
+      default: { plan: "Clarified", reason: "Une analyse de scénario + PDF — idéal pour une négociation ciblée.", cta: `Obtenir Clarified — ${PLAN_DISPLAY.clarified.prices.fr} ${PLAN_DISPLAY.clarified.period.fr}` },
+      compare_long: { plan: "Strategist", reason: "Scénarios illimités et projections pour tout le processus de négociation.", cta: `Obtenir Strategist — ${PLAN_DISPLAY.strategist.prices.fr}${PLAN_DISPLAY.strategist.period.fr}` },
+      lawyer_pro: { plan: "Professional", reason: "Vue d'ensemble financière prête pour avocat avec organisateur de preuves.", cta: `Obtenir Professional — ${PLAN_DISPLAY.professional.prices.fr}${PLAN_DISPLAY.professional.period.fr}` },
       early: { plan: "Discovery (Gratuit)", reason: "Commencez gratuitement — résumé de votre patrimoine net sans paiement.", cta: "Commencer gratuitement" },
     },
     restart: "Recommencer",
@@ -200,9 +201,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "Paquete Escenario", reason: "3 análisis y 30 días de acceso — ideal para una negociación enfocada.", cta: "Obtener Paquete Escenario — 18 €" },
-      compare_long: { plan: "Paquete Proceso", reason: "Escenarios ilimitados y 6 meses de acceso para todo el proceso.", cta: "Obtener Paquete Proceso — 139 €" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "Exportaciones listas para abogado en uso prolongado.", cta: "Obtener Lawyer Edition — 74 €/mes" },
+      default: { plan: "Clarified", reason: "Un análisis de escenario + PDF — ideal para una negociación enfocada.", cta: `Obtener Clarified — ${PLAN_DISPLAY.clarified.prices.es} ${PLAN_DISPLAY.clarified.period.es}` },
+      compare_long: { plan: "Strategist", reason: "Escenarios ilimitados y proyecciones para todo el proceso de negociación.", cta: `Obtener Strategist — ${PLAN_DISPLAY.strategist.prices.es}${PLAN_DISPLAY.strategist.period.es}` },
+      lawyer_pro: { plan: "Professional", reason: "Resumen financiero listo para abogado con organizador de evidencias.", cta: `Obtener Professional — ${PLAN_DISPLAY.professional.prices.es}${PLAN_DISPLAY.professional.period.es}` },
       early: { plan: "Discovery (Gratis)", reason: "Empieza gratis — resumen de patrimonio neto sin pago.", cta: "Empezar gratis" },
     },
     restart: "Volver a empezar",
@@ -237,9 +238,9 @@ const WIZARD: Record<Lang, WizardData> = {
       },
     ],
     results: {
-      default: { plan: "حزمة السيناريو", reason: "3 تحليلات ووصول 30 يوماً — مثالي للتفاوض المركّز.", cta: "احصل على حزمة السيناريو — $19" },
-      compare_long: { plan: "حزمة العملية", reason: "سيناريوهات غير محدودة ووصول 6 أشهر للعملية الكاملة.", cta: "احصل على حزمة العملية — $149" },
-      lawyer_pro: { plan: "Lawyer Edition", reason: "صادرات جاهزة للمحامي للاستخدام الممتد.", cta: "احصل على Lawyer Edition — $79/شهر" },
+      default: { plan: "Clarified", reason: "تحليل سيناريو واحد + PDF — مثالي للتفاوض المركّز.", cta: `احصل على Clarified — ${PLAN_DISPLAY.clarified.prices.ar} ${PLAN_DISPLAY.clarified.period.ar}` },
+      compare_long: { plan: "Strategist", reason: "سيناريوهات وتوقعات غير محدودة لعملية التفاوض الكاملة.", cta: `احصل على Strategist — ${PLAN_DISPLAY.strategist.prices.ar}${PLAN_DISPLAY.strategist.period.ar}` },
+      lawyer_pro: { plan: "Professional", reason: "ملخص مالي جاهز للمحامي مع منظّم الأدلة.", cta: `احصل على Professional — ${PLAN_DISPLAY.professional.prices.ar}${PLAN_DISPLAY.professional.period.ar}` },
       early: { plan: "Discovery (مجاني)", reason: "ابدأ مجاناً — ملخص صافي الثروة بدون دفع.", cta: "ابدأ مجاناً" },
     },
     restart: "البدء من جديد",
