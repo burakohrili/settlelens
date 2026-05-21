@@ -39,16 +39,16 @@ export default function ReportPage() {
         return;
       }
 
-      // API returns HTML — open in new tab, browser print dialog appears automatically
-      const html = await res.text();
-      const blob = new Blob([html], { type: "text/html" });
+      const buffer = await res.arrayBuffer();
+      const blob = new Blob([buffer], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
-      const win = window.open(url, "_blank");
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "settlelens-report.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 30_000);
-      if (!win) {
-        setError(t("errorPopupBlocked") ?? "Please allow popups for this site and try again.");
-        return;
-      }
       setDone(true);
     } catch {
       setError(t("errorConnection"));

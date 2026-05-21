@@ -14,6 +14,7 @@ type Props = {
   firstMonthlyCashflow: number | null;
   currency: string;
   locale: string;
+  negotiationStrategy?: string;
 };
 
 export function NarrativeInsight({
@@ -26,6 +27,7 @@ export function NarrativeInsight({
   firstMonthlyCashflow,
   currency,
   locale,
+  negotiationStrategy,
 }: Props) {
   const t = useTranslations("dashboard.insight");
   const [visible, setVisible] = useState(false);
@@ -77,7 +79,15 @@ export function NarrativeInsight({
       }}
     >
       <Lightbulb size={16} className="text-[var(--gold)] shrink-0 mt-0.5" />
-      <p className="font-ui text-sm text-[var(--navy)] leading-relaxed">{insight}</p>
+      <div className="space-y-1">
+        <p className="font-ui text-sm text-[var(--navy)] leading-relaxed">{insight}</p>
+        {negotiationStrategy && (() => {
+          const summary = negotiationStrategy.split("|")[0]?.trim();
+          return summary ? (
+            <p className="font-ui text-xs text-[var(--brown)] leading-relaxed">{summary}</p>
+          ) : null;
+        })()}
+      </div>
     </div>
   );
 }

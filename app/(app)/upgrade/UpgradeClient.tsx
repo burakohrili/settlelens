@@ -4,17 +4,7 @@ import Script from "next/script";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
-
-const LOCALE_CURRENCY = {
-  en: "USD", tr: "TRY", de: "EUR", fr: "EUR", es: "EUR", ar: "USD",
-} as const;
-type Currency = "USD" | "GBP" | "EUR" | "TRY";
-
-const PLAN_PRICES: Record<string, Record<Currency, string>> = {
-  clarified:    { USD: "$19",   GBP: "£15",   EUR: "€18",   TRY: "₺499"   },
-  strategist:   { USD: "$149",  GBP: "£119",  EUR: "€139",  TRY: "₺3.999" },
-  professional: { USD: "$79",   GBP: "£63",   EUR: "€74",   TRY: "₺1.999" },
-};
+import { PLAN_DISPLAY } from "@/lib/plan-prices";
 
 const PLANS = [
   {
@@ -64,8 +54,6 @@ interface Props {
 export function UpgradeClient({ priceIds, paddleToken, paddleEnv }: Props) {
   const t = useTranslations("upgrade");
   const locale = useLocale();
-  const currency: Currency =
-    LOCALE_CURRENCY[locale as keyof typeof LOCALE_CURRENCY] ?? "USD";
   const router = useRouter();
   const [currentPlan, setCurrentPlan] = useState<string>("discovery");
   const [userEmail, setUserEmail] = useState<string>("");
@@ -244,7 +232,7 @@ export function UpgradeClient({ priceIds, paddleToken, paddleEnv }: Props) {
                       className={`text-3xl font-bold ${plan.accent ? "text-[#C8973A]" : "text-[#1C2B3A]"}`}
                       style={{ fontFamily: "DM Mono, monospace" }}
                     >
-                      {PLAN_PRICES[plan.id]?.[currency] ?? PLAN_PRICES[plan.id]["USD"]}
+                      {PLAN_DISPLAY[plan.id as keyof typeof PLAN_DISPLAY]?.prices[locale] ?? PLAN_DISPLAY[plan.id as keyof typeof PLAN_DISPLAY]?.prices["en"] ?? ""}
                     </span>
                     <span className={`text-sm ${plan.accent ? "text-gray-300" : "text-[#8B7355]"}`}>
                       {t(plan.billingKey)}

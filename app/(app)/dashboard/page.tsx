@@ -350,6 +350,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           firstMonthlyCashflow={primaryAnalysis?.monthly_cash_flow ?? null}
           currency={currency}
           locale={appLocale}
+          negotiationStrategy={primaryAnalysis?.negotiation_strategy ?? undefined}
         />
       )}
 

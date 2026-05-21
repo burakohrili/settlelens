@@ -158,7 +158,13 @@ Each asset in the Assets array has an "outcome" field. Use these rules for net w
 - "not_decided": treat conservatively as sell (50/50 after costs)
 For marital:true assets: apply the jurisdiction split formula to the marital portion only.
 For marital:false assets: owner field determines — "me" → 100% to user, "spouse" → 0% to user, "joint" → apply outcome rule.
-For TR/DE: if purchase_price is provided, marital_gain = current_value - purchase_price; apply splitFormula to marital_gain only; pre-marriage value stays with original owner.`;
+For TR/DE: if purchase_price is provided, marital_gain = current_value - purchase_price; apply splitFormula to marital_gain only; pre-marriage value stays with original owner.
+
+NEGOTIATION_STRATEGY FORMAT:
+Return negotiation_strategy as a single string with 4 sections separated by "|":
+"overall_position|asset_approach|support_approach|risk_mitigation"
+Each section: 1-2 sentences, calm factual tone. No "accept" or "reject".
+Example: "Strong equity position relative to debt.|Retaining primary residence offsets retirement shortfall.|Proposed support terms align with income gap.|Monitor housing cost inflation against cashflow projection."`;
 
   const debtsSummary = debts.map((d) => ({
     cat: d.category,
@@ -318,5 +324,5 @@ NEVER use "accept" or "reject". Say "this offer projects X outcome".`;
       });
   });
 
-  return Response.json({ success: true, data: result, pending_persist: true });
+  return Response.json({ success: true, data: result, missingFields, pending_persist: true });
 }

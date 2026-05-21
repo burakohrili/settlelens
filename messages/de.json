@@ -617,6 +617,8 @@
     "discoveryUpgradeMsg": "KI-Analyse erfordert einen kostenpflichtigen Plan. Upgraden Sie für 10-Jahres-Projektionen.",
     "clarifiedRemaining": "1 KI-Analyse verbleibt in Ihrem Clarified-Plan.",
     "clarifiedUsed": "Sie haben Ihre 1 Analyse verwendet. Upgraden Sie auf Strategist für unbegrenzte Analysen.",
+    "upgradeToAnalyzeAgain": "Für erneute Analyse upgraden →",
+    "missingFieldsWarning": "Diese Analyse wurde mit unvollständigen Daten erstellt ({fields}). Ergänzen Sie fehlende Angaben für genauere Ergebnisse.",
     "loadingHint": "Analyse mit Claude KI — dauert etwa 10–15 Sekunden…",
     "step1": "Finanzdaten werden vorbereitet…",
     "step2": "KI-Analyse wird gestartet…",

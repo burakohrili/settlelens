@@ -88,6 +88,7 @@ export default function ScenarioDetailPage() {
   const [plan, setPlan] = useState("discovery");
   const [planExpiresAt, setPlanExpiresAt] = useState<string | null>(null);
   const [analysisCount, setAnalysisCount] = useState(0);
+  const [missingFields, setMissingFields] = useState<string[]>([]);
 
   // Edit state
   const [editMode, setEditMode] = useState(false);
@@ -286,6 +287,7 @@ export default function ScenarioDetailPage() {
       const body = await res.json();
       if (!res.ok) {
         setError(mapAnalysisError(body.error));
+        if (body.error === "analysis_limit_reached") setAnalysisCount((c) => Math.max(c, 1));
       } else {
         setAnalysis({
           ...body.data,
@@ -297,6 +299,8 @@ export default function ScenarioDetailPage() {
           raw_json: body.data,
           created_at: new Date().toISOString(),
         });
+        setAnalysisCount((c) => c + 1);
+        if (body.missingFields?.length > 0) setMissingFields(body.missingFields);
       }
     } catch {
       setError(t("errorNetwork"));
@@ -619,17 +623,25 @@ export default function ScenarioDetailPage() {
             <p className="font-ui text-xs text-[var(--brown)] italic">{String(analysis.raw_json.confidence_label_text)}</p>
           )}
 
+          {missingFields.length > 0 && (
+            <div className="rounded-md bg-amber-50 border border-amber-200 p-3">
+              <p className="font-ui text-xs text-amber-800">{t("missingFieldsWarning", { fields: missingFields.join(", ") })}</p>
+            </div>
+          )}
+
           {error && (
             <div className="rounded-md bg-red-50 border border-red-200 p-3">
               <p role="alert" aria-live="polite" className="font-ui text-sm text-red-700">{error}</p>
             </div>
           )}
 
-          <button onClick={handleRunAnalysis} disabled={loading}
-            className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]", loading && "opacity-70 cursor-not-allowed")}
-          >
-            {loading ? <><Loader2 size={14} className="mr-1 animate-spin" /> {t("rerunning")}</> : t("rerunAnalysis")}
-          </button>
+          {!(plan === "clarified" && analysisCount >= 1) && (
+            <button onClick={handleRunAnalysis} disabled={loading}
+              className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]", loading && "opacity-70 cursor-not-allowed")}
+            >
+              {loading ? <><Loader2 size={14} className="mr-1 animate-spin" /> {t("rerunning")}</> : t("rerunAnalysis")}
+            </button>
+          )}
         </div>
       ) : (
         <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">
@@ -637,10 +649,18 @@ export default function ScenarioDetailPage() {
             {plan === "discovery" ? t("discoveryUpgradeMsg") : t("noAnalysisYet")}
           </p>
           {error && <p role="alert" aria-live="polite" className="font-ui text-sm text-red-600 mb-3">{error}</p>}
-          <button onClick={handleRunAnalysis} disabled={loading}
+          <button
+            onClick={plan === "clarified" && analysisCount >= 1 ? () => router.push(`/${locale}/upgrade`) : handleRunAnalysis}
+            disabled={loading}
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90", loading && "opacity-70 cursor-not-allowed")}
           >
-            {loading ? <><Loader2 size={16} className="mr-2 animate-spin" /> {t("analyzing")}</> : plan === "discovery" ? t("upgradeToAnalyze") : t("runAnalysis")}
+            {loading
+              ? <><Loader2 size={16} className="mr-2 animate-spin" /> {t("analyzing")}</>
+              : plan === "discovery"
+              ? t("upgradeToAnalyze")
+              : plan === "clarified" && analysisCount >= 1
+              ? t("upgradeToAnalyzeAgain")
+              : t("runAnalysis")}
           </button>
         </div>
       )}

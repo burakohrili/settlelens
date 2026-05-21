@@ -617,6 +617,8 @@
     "discoveryUpgradeMsg": "L'analyse IA nécessite un plan payant. Mettez à niveau pour voir vos projections sur 10 ans.",
     "clarifiedRemaining": "1 analyse IA restante sur votre plan Clarified.",
     "clarifiedUsed": "Vous avez utilisé votre 1 analyse. Passez à Strategist pour des analyses illimitées.",
+    "upgradeToAnalyzeAgain": "Mettre à niveau pour analyser à nouveau →",
+    "missingFieldsWarning": "Cette analyse a été effectuée avec des données incomplètes ({fields}). Ajoutez les informations manquantes pour un résultat plus précis.",
     "loadingHint": "Analyse avec Claude IA — environ 10–15 secondes…",
     "tipNetWorthNow": "Votre patrimoine net actuel dans ce scénario : actifs totaux moins dettes totales.",
     "tipYear1": "Patrimoine net projeté après 1 an, tenant compte de la pension alimentaire et des changements d'actifs.",

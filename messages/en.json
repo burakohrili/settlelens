@@ -617,6 +617,8 @@
     "discoveryUpgradeMsg": "AI analysis requires a paid plan. Upgrade to see your 10-year projections.",
     "clarifiedRemaining": "1 AI analysis remaining on your Clarified plan.",
     "clarifiedUsed": "You have used your 1 analysis. Upgrade to Strategist for unlimited analyses.",
+    "upgradeToAnalyzeAgain": "Upgrade to Analyze Again →",
+    "missingFieldsWarning": "This analysis used incomplete data ({fields}). Add missing information for a more accurate result.",
     "loadingHint": "Analyzing with Claude AI — this takes about 10–15 seconds…",
     "step1": "Preparing your financial data…",
     "step2": "Starting AI analysis…",
