@@ -945,7 +945,18 @@
       "saving": "Enregistrement...",
       "saveScenario": "Enregistrer le scénario",
       "saveError": "Impossible d'enregistrer le scénario. Veuillez réessayer.",
-      "disclaimerLabel": "Avertissement"
+      "disclaimerLabel": "Avertissement",
+      "outcome_not_decided": "Pas encore décidé",
+      "outcome_i_keep": "Je le garde",
+      "outcome_spouse_keeps": "Le conjoint le garde",
+      "outcome_sell": "Nous le vendons",
+      "outcome_split": "Nous partageons la valeur",
+      "catRealEstate": "Immobilier",
+      "catVehicle": "Véhicule",
+      "catBusiness": "Entreprise",
+      "noPhysicalAssets": "Aucun bien immobilier, véhicule ou entreprise ajouté pour l'instant. Les résultats peuvent être configurés après ajout des actifs.",
+      "toMe": "pour moi",
+      "investmentsHint": "S'applique aux comptes bancaires, retraite, épargne, investissements et crypto"
     }
   },
   "blog": {

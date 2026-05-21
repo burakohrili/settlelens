@@ -30,9 +30,6 @@ type Analysis = {
 type Scenario = {
   id: string;
   name: string;
-  house_outcome: string;
-  vehicle_outcome: string;
-  business_outcome: string;
   retirement_split_me: number;
   alimony_monthly: number;
   alimony_years: number;
@@ -41,13 +38,40 @@ type Scenario = {
   child_support_direction: string;
 };
 
+type AssetOverride = {
+  asset_id: string;
+  outcome: string;
+  split_pct_me: number;
+  assets: {
+    id: string;
+    name: string;
+    category: string;
+    current_value: number;
+    owned_by: string | null;
+  } | null;
+};
+
+const PHYSICAL_CATEGORIES = ["real_estate", "vehicle", "business"] as const;
+type PhysicalCat = typeof PHYSICAL_CATEGORIES[number];
+
 function fmt(n: number, currency: string, locale: string): string {
   return formatMoney(n, currency, locale);
 }
 
+function outcomeLabel(outcome: string, t: (k: string) => string): string {
+  const map: Record<string, string> = {
+    not_decided: t("outcome_not_decided"),
+    i_keep:      t("outcome_i_keep"),
+    spouse_keeps:t("outcome_spouse_keeps"),
+    sell:        t("outcome_sell"),
+    split:       t("outcome_split"),
+  };
+  return map[outcome] ?? outcome;
+}
+
 export default function ScenarioDetailPage() {
   const t = useTranslations("scenario_detail");
-  const tOffer = useTranslations("scenario_offer");
+  const tStep6 = useTranslations("onboarding_form.step6");
   const locale = useLocale();
   const params = useParams();
   const router = useRouter();
@@ -56,6 +80,7 @@ export default function ScenarioDetailPage() {
 
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
+  const [overrides, setOverrides] = useState<AssetOverride[]>([]);
   const [currency, setCurrency] = useState("USD");
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
@@ -67,17 +92,14 @@ export default function ScenarioDetailPage() {
   // Edit state
   const [editMode, setEditMode] = useState(false);
   const [editName, setEditName] = useState("");
-  const [editHouse, setEditHouse] = useState("");
-  const [editVehicle, setEditVehicle] = useState("not_applicable");
-  const [editBusiness, setEditBusiness] = useState("not_applicable");
   const [editRetirement, setEditRetirement] = useState(50);
   const [editAlimonyMonthly, setEditAlimonyMonthly] = useState(0);
   const [editAlimonyYears, setEditAlimonyYears] = useState(0);
   const [editAlimonyDir, setEditAlimonyDir] = useState("i_receive");
   const [editChildSupport, setEditChildSupport] = useState(0);
   const [editChildDir, setEditChildDir] = useState("i_receive");
+  const [editOverrides, setEditOverrides] = useState<Record<string, string>>({}); // asset_id → outcome
   const [saving, setSaving] = useState(false);
-  const [originalValues, setOriginalValues] = useState<Record<string, unknown> | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -94,7 +116,7 @@ export default function ScenarioDetailPage() {
 
       const { data: profile } = await (supabase as never as {
         from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } }
-      }).from("profiles").select("country,state_province,plan_type,plan_expires_at").eq("id", user.id).single();
+      }).from("profiles").select("country,plan_type,plan_expires_at").eq("id", user.id).single();
 
       if (profile) {
         const countryCode = profile.country as string | null | undefined;
@@ -115,28 +137,25 @@ export default function ScenarioDetailPage() {
       if (s) {
         setScenario(s);
         setEditName(s.name);
-        setEditHouse(s.house_outcome);
-        setEditVehicle(s.vehicle_outcome ?? "not_applicable");
-        setEditBusiness(s.business_outcome ?? "not_applicable");
         setEditRetirement(s.retirement_split_me);
         setEditAlimonyMonthly(s.alimony_monthly);
         setEditAlimonyYears(s.alimony_years);
         setEditAlimonyDir(s.alimony_direction);
         setEditChildSupport(s.child_support_monthly);
         setEditChildDir(s.child_support_direction ?? "i_receive");
-        setOriginalValues({
-          name: s.name,
-          house: s.house_outcome,
-          vehicle: s.vehicle_outcome ?? "not_applicable",
-          business: s.business_outcome ?? "not_applicable",
-          retirement: s.retirement_split_me,
-          alimonyMonthly: s.alimony_monthly,
-          alimonyYears: s.alimony_years,
-          alimonyDir: s.alimony_direction,
-          childSupport: s.child_support_monthly,
-          childDir: s.child_support_direction ?? "i_receive",
-        });
       }
+
+      // Load per-asset overrides
+      try {
+        const oRes = await fetch(`/api/scenarios/${scenarioId}/asset-overrides`);
+        if (oRes.ok) {
+          const oJson = await oRes.json() as { overrides: AssetOverride[] };
+          setOverrides(oJson.overrides ?? []);
+          const map: Record<string, string> = {};
+          for (const o of oJson.overrides ?? []) map[o.asset_id] = o.outcome;
+          setEditOverrides(map);
+        }
+      } catch { /* silent — overrides optional */ }
 
       const { data: analyses } = await (supabase as never as {
         from: (t: string) => {
@@ -152,7 +171,6 @@ export default function ScenarioDetailPage() {
 
       if (analyses?.[0]) setAnalysis(analyses[0]);
 
-      // Fetch total analysis count for clarified quota display
       const { count } = await (supabase as never as {
         from: (t: string) => {
           select: (s: string, opts: { count: string; head: boolean }) => {
@@ -163,17 +181,18 @@ export default function ScenarioDetailPage() {
       setAnalysisCount(count ?? 0);
     }
     load();
-  }, [supabase, scenarioId, router, locale]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarioId, locale]);
 
-  function mapAnalysisError(code: string | undefined, body?: { detail?: string }): string {
+  function mapAnalysisError(code: string | undefined): string {
     if (code === "upgrade_required") return t("errorUpgrade");
     if (code === "analysis_limit_reached") return t("errorLimitReached");
-    if (code === "Rate limit exceeded. Please try again later.") return t("errorBusy");
     if (code === "analysis_timeout") return t("errorTimeout");
     return t("errorBusy");
   }
 
   async function handleSaveEdit() {
+    if (!scenario) return;
     setSaving(true);
     try {
       const res = await fetch(`/api/scenarios/${scenarioId}`, {
@@ -181,9 +200,6 @@ export default function ScenarioDetailPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: editName,
-          house_outcome: editHouse,
-          vehicle_outcome: editVehicle,
-          business_outcome: editBusiness,
           retirement_split_me: editRetirement,
           alimony_monthly: editAlimonyMonthly,
           alimony_years: editAlimonyYears,
@@ -192,13 +208,29 @@ export default function ScenarioDetailPage() {
           child_support_direction: editChildDir,
         }),
       });
+
+      // Save per-asset overrides
+      const overrideList = overrides.map((o) => ({
+        asset_id: o.asset_id,
+        outcome: editOverrides[o.asset_id] ?? o.outcome,
+        split_pct_me: o.split_pct_me,
+      }));
+      if (overrideList.length > 0) {
+        await fetch(`/api/scenarios/${scenarioId}/asset-overrides`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ overrides: overrideList }),
+        });
+        // Refresh overrides in state
+        setOverrides((prev) =>
+          prev.map((o) => ({ ...o, outcome: editOverrides[o.asset_id] ?? o.outcome }))
+        );
+      }
+
       if (res.ok) {
         setScenario((prev) => prev ? {
           ...prev,
           name: editName,
-          house_outcome: editHouse,
-          vehicle_outcome: editVehicle,
-          business_outcome: editBusiness,
           retirement_split_me: editRetirement,
           alimony_monthly: editAlimonyMonthly,
           alimony_years: editAlimonyYears,
@@ -217,22 +249,16 @@ export default function ScenarioDetailPage() {
     setDeleting(true);
     try {
       const res = await fetch(`/api/scenarios/${scenarioId}`, { method: "DELETE" });
-      if (res.ok) {
-        router.push(`/${locale}/dashboard`);
-      }
+      if (res.ok) router.push(`/${locale}/dashboard`);
     } finally {
       setDeleting(false);
     }
   }
 
   async function handleRunAnalysis() {
-    if (plan === "discovery") {
-      router.push("/upgrade");
-      return;
-    }
+    if (plan === "discovery") { router.push("/upgrade"); return; }
     if (plan === "clarified" && planExpiresAt && new Date() > new Date(planExpiresAt)) {
-      router.push("/upgrade");
-      return;
+      router.push("/upgrade"); return;
     }
     setLoading(true);
     setStep(1);
@@ -259,7 +285,7 @@ export default function ScenarioDetailPage() {
       }
       const body = await res.json();
       if (!res.ok) {
-        setError(mapAnalysisError(body.error, body));
+        setError(mapAnalysisError(body.error));
       } else {
         setAnalysis({
           ...body.data,
@@ -291,9 +317,21 @@ export default function ScenarioDetailPage() {
 
   const riskColor = (score: number) =>
     score >= 7 ? "text-[var(--danger)]" : score >= 4 ? "text-[var(--gold)]" : "text-[var(--gain)]";
-
   const riskLabel = (score: number) =>
     score >= 7 ? t("riskHigh") : score >= 4 ? t("riskMedium") : t("riskLow");
+
+  const selectCls = "w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]";
+
+  const groupedOverrides = PHYSICAL_CATEGORIES.reduce<Record<string, AssetOverride[]>>((acc, cat) => {
+    acc[cat] = overrides.filter((o) => o.assets?.category === cat);
+    return acc;
+  }, { real_estate: [], vehicle: [], business: [] });
+
+  const catLabel: Record<string, string> = {
+    real_estate: tStep6("catRealEstate"),
+    vehicle: tStep6("catVehicle"),
+    business: tStep6("catBusiness"),
+  };
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -304,16 +342,13 @@ export default function ScenarioDetailPage() {
             <h3 className="font-display text-base font-bold text-[var(--navy)]">{t("deleteScenario")}</h3>
             <p className="font-ui text-sm text-[var(--brown)]">{t("deleteConfirm")}</p>
             <div className="flex gap-2">
-              <button
-                onClick={handleDelete}
-                disabled={deleting}
+              <button onClick={handleDelete} disabled={deleting}
                 className={cn(buttonVariants({ variant: "destructive" }), "flex-1", deleting && "opacity-70")}
               >
                 {deleting ? <Loader2 size={14} className="animate-spin mr-1" /> : null}
                 {t("deleteConfirmBtn")}
               </button>
-              <button
-                onClick={() => setShowDeleteConfirm(false)}
+              <button onClick={() => setShowDeleteConfirm(false)}
                 className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-[var(--sand)]")}
               >
                 {t("cancelBtn")}
@@ -328,152 +363,117 @@ export default function ScenarioDetailPage() {
           <ArrowLeft size={18} />
         </Link>
         <h1 className="font-display text-xl font-bold text-[var(--navy)] flex-1">{scenario.name}</h1>
-        <button
-          onClick={() => setEditMode(!editMode)}
-          title={t("editScenario")}
+        <button onClick={() => setEditMode(!editMode)} title={t("editScenario")}
           className="p-1.5 rounded text-[var(--brown)] hover:text-[var(--navy)] hover:bg-[var(--cream)] transition-colors"
         >
           <Pencil size={16} />
         </button>
-        <button
-          onClick={() => setShowDeleteConfirm(true)}
-          title={t("deleteScenario")}
+        <button onClick={() => setShowDeleteConfirm(true)} title={t("deleteScenario")}
           className="p-1.5 rounded text-[var(--brown)] hover:text-[var(--danger)] hover:bg-red-50 transition-colors"
         >
           <Trash2 size={16} />
         </button>
       </div>
 
-      {/* Scenario summary / Edit form */}
+      {/* Scenario terms */}
       <div className="rounded-xl border border-[var(--sand)] bg-white p-4">
         <h2 className="font-ui text-xs font-semibold text-[var(--brown)] uppercase mb-3">{t("scenarioTerms")}</h2>
+
         {editMode ? (
           <div className="space-y-3">
             <div>
               <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("editScenario")}</label>
-              <input
-                type="text"
-                value={editName}
-                onChange={(e) => setEditName(e.target.value)}
-                className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
-              />
+              <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)}
+                className={selectCls} />
             </div>
+
+            {/* Per-asset overrides */}
+            {overrides.length > 0 && (
+              <div className="border-t border-[var(--sand)] pt-3">
+                <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-2">
+                  {tStep6("assetsSection")}
+                </p>
+                <div className="space-y-3">
+                  {PHYSICAL_CATEGORIES.map((cat) => {
+                    const catOvr = groupedOverrides[cat];
+                    if (catOvr.length === 0) return null;
+                    return (
+                      <div key={cat}>
+                        <p className="font-ui text-xs text-[var(--brown)] font-semibold mb-1">{catLabel[cat]}</p>
+                        {catOvr.map((o) => (
+                          <div key={o.asset_id} className="flex items-center gap-3 mb-2">
+                            <span className="font-ui text-sm flex-1 truncate text-[var(--navy)]">{o.assets?.name}</span>
+                            <select
+                              value={editOverrides[o.asset_id] ?? o.outcome}
+                              onChange={(e) => setEditOverrides((prev) => ({ ...prev, [o.asset_id]: e.target.value }))}
+                              className="w-40 border border-[var(--sand)] rounded-md px-2 py-1.5 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
+                            >
+                              <option value="not_decided">{tStep6("outcome_not_decided")}</option>
+                              <option value="i_keep">{tStep6("outcome_i_keep")}</option>
+                              <option value="spouse_keeps">{tStep6("outcome_spouse_keeps")}</option>
+                              <option value="sell">{tStep6("outcome_sell")}</option>
+                              {(cat as string) === "business" && (
+                                <option value="split">{tStep6("outcome_split")}</option>
+                              )}
+                            </select>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("house")}</label>
-                <select
-                  value={editHouse}
-                  onChange={(e) => setEditHouse(e.target.value)}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
-                >
-                  <option value="i_keep">{tOffer("house_i_keep")}</option>
-                  <option value="spouse_keeps">{tOffer("house_spouse_keeps")}</option>
-                  <option value="sell">{tOffer("house_sell")}</option>
-                  <option value="not_applicable">{tOffer("house_not_applicable")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("vehicle")}</label>
-                <select
-                  value={editVehicle}
-                  onChange={(e) => setEditVehicle(e.target.value)}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
-                >
-                  <option value="i_keep">{tOffer("vehicle_i_keep")}</option>
-                  <option value="spouse_keeps">{tOffer("vehicle_spouse_keeps")}</option>
-                  <option value="sell">{tOffer("vehicle_sell")}</option>
-                  <option value="not_applicable">{tOffer("vehicle_not_applicable")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("business")}</label>
-                <select
-                  value={editBusiness}
-                  onChange={(e) => setEditBusiness(e.target.value)}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
-                >
-                  <option value="i_keep">{tOffer("business_i_keep")}</option>
-                  <option value="spouse_keeps">{tOffer("business_spouse_keeps")}</option>
-                  <option value="split">{tOffer("business_split")}</option>
-                  <option value="sell">{tOffer("business_sell")}</option>
-                  <option value="not_applicable">{tOffer("business_not_applicable")}</option>
-                </select>
-              </div>
-              <div>
                 <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("investmentsLabel")}</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={editRetirement}
+                <input type="number" min={0} max={100} value={editRetirement}
                   onChange={(e) => setEditRetirement(Number(e.target.value))}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
-                />
+                  className={cn(selectCls, "font-mono")} />
               </div>
               <div>
                 <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("alimony")} {t("perMonth")}</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={editAlimonyMonthly}
+                <input type="number" min={0} value={editAlimonyMonthly}
                   onChange={(e) => setEditAlimonyMonthly(Number(e.target.value))}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
-                />
+                  className={cn(selectCls, "font-mono")} />
               </div>
               <div>
                 <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("alimony")} {t("yr")}</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={editAlimonyYears}
+                <input type="number" min={0} value={editAlimonyYears}
                   onChange={(e) => setEditAlimonyYears(Number(e.target.value))}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
-                />
+                  className={cn(selectCls, "font-mono")} />
               </div>
               <div>
                 <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("alimony")}</label>
-                <select
-                  value={editAlimonyDir}
-                  onChange={(e) => setEditAlimonyDir(e.target.value)}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-ui text-sm focus:outline-none focus:border-[var(--gold)]"
-                >
+                <select value={editAlimonyDir} onChange={(e) => setEditAlimonyDir(e.target.value)} className={selectCls}>
                   <option value="i_receive">{t("i_receive")}</option>
                   <option value="i_pay">{t("i_pay")}</option>
                 </select>
               </div>
               <div>
                 <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("childSupport")} {t("perMonth")}</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={editChildSupport}
+                <input type="number" min={0} value={editChildSupport}
                   onChange={(e) => setEditChildSupport(Number(e.target.value))}
-                  className="w-full border border-[var(--sand)] rounded-md px-3 py-2 font-mono text-sm focus:outline-none focus:border-[var(--gold)]"
-                />
+                  className={cn(selectCls, "font-mono")} />
+              </div>
+              <div>
+                <label className="font-ui text-xs text-[var(--brown)] block mb-1">{t("childSupport")}</label>
+                <select value={editChildDir} onChange={(e) => setEditChildDir(e.target.value)} className={selectCls}>
+                  <option value="i_receive">{t("i_receive")}</option>
+                  <option value="i_pay">{t("i_pay")}</option>
+                </select>
               </div>
             </div>
+
             <div className="flex gap-2 pt-1">
-              <button
-                onClick={handleSaveEdit}
-                disabled={saving || (originalValues !== null && (
-                  editName === originalValues.name &&
-                  editHouse === originalValues.house &&
-                  editVehicle === originalValues.vehicle &&
-                  editBusiness === originalValues.business &&
-                  editRetirement === originalValues.retirement &&
-                  editAlimonyMonthly === originalValues.alimonyMonthly &&
-                  editAlimonyYears === originalValues.alimonyYears &&
-                  editAlimonyDir === originalValues.alimonyDir &&
-                  editChildSupport === originalValues.childSupport &&
-                  editChildDir === originalValues.childDir
-                ))}
+              <button onClick={handleSaveEdit} disabled={saving}
                 className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90", saving && "opacity-70")}
               >
                 {saving ? <Loader2 size={14} className="animate-spin mr-1" /> : null}
                 {t("saveChanges")}
               </button>
-              <button
-                onClick={() => setEditMode(false)}
+              <button onClick={() => setEditMode(false)}
                 className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]")}
               >
                 {t("cancelBtn")}
@@ -481,14 +481,41 @@ export default function ScenarioDetailPage() {
             </div>
           </div>
         ) : (
-        <div className="grid grid-cols-2 gap-2 font-ui text-sm">
-          <div><span className="text-[var(--brown)]">{t("house")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`house_${scenario.house_outcome}` as "house_i_keep" | "house_spouse_keeps" | "house_sell" | "house_not_applicable")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("vehicle")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`vehicle_${scenario.vehicle_outcome ?? "not_applicable"}` as "vehicle_i_keep" | "vehicle_spouse_keeps" | "vehicle_sell" | "vehicle_not_applicable")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("business")}:</span> <span className="font-medium text-[var(--navy)]">{tOffer(`business_${scenario.business_outcome ?? "not_applicable"}` as "business_i_keep" | "business_spouse_keeps" | "business_split" | "business_sell" | "business_not_applicable")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("investmentsLabel")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
-          <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency, locale)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
-          <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")}</span></div>
-        </div>
+          <div className="space-y-3 font-ui text-sm">
+            {/* Per-asset outcomes */}
+            {overrides.length > 0 && (
+              <div>
+                <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-2">
+                  {tStep6("assetsSection")}
+                </p>
+                <div className="space-y-3">
+                  {PHYSICAL_CATEGORIES.map((cat) => {
+                    const catOvr = groupedOverrides[cat];
+                    if (catOvr.length === 0) return null;
+                    return (
+                      <div key={cat}>
+                        <p className="font-ui text-xs text-[var(--brown)] font-semibold mb-1">{catLabel[cat]}</p>
+                        <div className="space-y-1">
+                          {catOvr.map((o) => (
+                            <div key={o.asset_id} className="flex items-center justify-between">
+                              <span className="text-[var(--brown)]">{o.assets?.name}</span>
+                              <span className="font-medium text-[var(--navy)]">{outcomeLabel(o.outcome, tStep6)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-2 border-t border-[var(--sand)] pt-3">
+              <div><span className="text-[var(--brown)]">{t("investmentsLabel")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
+              <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency, locale)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
+              <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")}</span></div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -504,7 +531,7 @@ export default function ScenarioDetailPage() {
         </div>
       )}
 
-      {/* 4-adımlı analiz ilerleme göstergesi */}
+      {/* Analysis progress indicator */}
       {loading && step > 0 && (
         <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 space-y-2">
           {[t("step1"), t("step2"), t("step3"), t("step4")].map((label, i) => (
@@ -517,10 +544,7 @@ export default function ScenarioDetailPage() {
               )}>
                 {step > i + 1 ? "✓" : i + 1}
               </span>
-              <p className={cn(
-                "font-ui text-xs",
-                step === i + 1 ? "text-[var(--navy)] font-semibold" : "text-[var(--brown)]"
-              )}>
+              <p className={cn("font-ui text-xs", step === i + 1 ? "text-[var(--navy)] font-semibold" : "text-[var(--brown)]")}>
                 {step === i + 1 && <Loader2 size={11} className="inline mr-1 animate-spin" />}
                 {label}
               </p>
@@ -535,29 +559,23 @@ export default function ScenarioDetailPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
               { label: t("netWorthNow"), value: fmt(analysis.net_worth_now, currency, locale), color: "text-[var(--navy)]", tip: t("tipNetWorthNow") },
-              { label: t("year1"), value: fmt(analysis.net_worth_year1, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear1") },
-              { label: t("year5"), value: fmt(analysis.net_worth_year5, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear5") },
-              { label: t("year10"), value: fmt(analysis.net_worth_year10, currency, locale), color: "text-[var(--gold)]", tip: t("tipYear10") },
+              { label: t("year1"),       value: fmt(analysis.net_worth_year1, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear1") },
+              { label: t("year5"),       value: fmt(analysis.net_worth_year5, currency, locale), color: "text-[var(--navy)]", tip: t("tipYear5") },
+              { label: t("year10"),      value: fmt(analysis.net_worth_year10, currency, locale), color: "text-[var(--gold)]", tip: t("tipYear10") },
               { label: t("monthlyCashFlow"), value: `${fmt(analysis.monthly_cash_flow, currency, locale)}${t("perMonth")}`, color: analysis.monthly_cash_flow >= 0 ? "text-[var(--gain)]" : "text-[var(--danger)]", tip: t("tipMonthlyCashFlow") },
-              { label: t("riskScore"), value: `${analysis.risk_score}/10`, color: riskColor(analysis.risk_score), tip: t("tipRiskScore"), extra: riskLabel(analysis.risk_score) },
+              { label: t("riskScore"),   value: `${analysis.risk_score}/10`, color: riskColor(analysis.risk_score), tip: t("tipRiskScore"), extra: riskLabel(analysis.risk_score) },
             ].map((c) => (
               <div key={c.label} className="rounded-lg border border-[var(--sand)] bg-white p-3 text-center">
                 <p className="font-ui text-xs text-[var(--brown)] flex items-center justify-center gap-1">
                   {c.label}
-                  <span
-                    title={c.tip}
-                    aria-label={c.tip}
-                    tabIndex={0}
-                    role="button"
+                  <span title={c.tip} aria-label={c.tip} tabIndex={0} role="button"
                     className="cursor-help text-[var(--sand)] hover:text-[var(--brown)] focus:text-[var(--brown)] focus:outline-none transition-colors"
                   >
                     <HelpCircle size={11} />
                   </span>
                 </p>
                 <p className={cn("font-mono text-base font-bold mt-1", c.color)}>{c.value}</p>
-                {"extra" in c && c.extra && (
-                  <p className={cn("font-ui text-xs mt-0.5 font-medium", c.color)}>{c.extra}</p>
-                )}
+                {"extra" in c && c.extra && <p className={cn("font-ui text-xs mt-0.5 font-medium", c.color)}>{c.extra}</p>}
               </div>
             ))}
           </div>
@@ -607,9 +625,7 @@ export default function ScenarioDetailPage() {
             </div>
           )}
 
-          <button
-            onClick={handleRunAnalysis}
-            disabled={loading}
+          <button onClick={handleRunAnalysis} disabled={loading}
             className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]", loading && "opacity-70 cursor-not-allowed")}
           >
             {loading ? <><Loader2 size={14} className="mr-1 animate-spin" /> {t("rerunning")}</> : t("rerunAnalysis")}
@@ -621,16 +637,13 @@ export default function ScenarioDetailPage() {
             {plan === "discovery" ? t("discoveryUpgradeMsg") : t("noAnalysisYet")}
           </p>
           {error && <p role="alert" aria-live="polite" className="font-ui text-sm text-red-600 mb-3">{error}</p>}
-          <button
-            onClick={handleRunAnalysis}
-            disabled={loading}
+          <button onClick={handleRunAnalysis} disabled={loading}
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90", loading && "opacity-70 cursor-not-allowed")}
           >
             {loading ? <><Loader2 size={16} className="mr-2 animate-spin" /> {t("analyzing")}</> : plan === "discovery" ? t("upgradeToAnalyze") : t("runAnalysis")}
           </button>
         </div>
       )}
-
     </div>
   );
 }

@@ -945,7 +945,18 @@
       "saving": "جارٍ الحفظ...",
       "saveScenario": "حفظ السيناريو",
       "saveError": "تعذر حفظ السيناريو. يرجى المحاولة مرة أخرى.",
-      "disclaimerLabel": "إخلاء مسؤولية"
+      "disclaimerLabel": "إخلاء مسؤولية",
+      "outcome_not_decided": "لم يُقرر بعد",
+      "outcome_i_keep": "أحتفظ به",
+      "outcome_spouse_keeps": "الزوج/الزوجة يحتفظ به",
+      "outcome_sell": "نبيعه",
+      "outcome_split": "نقسّم القيمة",
+      "catRealEstate": "عقارات",
+      "catVehicle": "مركبة",
+      "catBusiness": "نشاط تجاري",
+      "noPhysicalAssets": "لم يتم إضافة عقارات أو مركبات أو أعمال تجارية بعد. يمكن تهيئة نتائج الأصول بعد إضافتها.",
+      "toMe": "لي",
+      "investmentsHint": "ينطبق على الحسابات المصرفية والتقاعد والمدخرات والاستثمارات والعملات المشفرة"
     }
   },
   "blog": {

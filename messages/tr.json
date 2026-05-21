@@ -959,7 +959,18 @@
       "saving": "Kaydediliyor...",
       "saveScenario": "Senaryoyu Kaydet",
       "saveError": "Senaryo kaydedilemedi. Lütfen tekrar deneyin.",
-      "disclaimerLabel": "Sorumluluk Reddi"
+      "disclaimerLabel": "Sorumluluk Reddi",
+      "outcome_not_decided": "Henüz karar verilmedi",
+      "outcome_i_keep": "Ben alıyorum",
+      "outcome_spouse_keeps": "Eşim alıyor",
+      "outcome_sell": "Satıyoruz",
+      "outcome_split": "Değeri paylaşıyoruz",
+      "catRealEstate": "Gayrimenkul",
+      "catVehicle": "Araç",
+      "catBusiness": "İşletme",
+      "noPhysicalAssets": "Henüz gayrimenkul, araç veya işletme eklenmedi. Varlık sonuçları, varlık eklendikten sonra yapılandırılabilir.",
+      "toMe": "bende kalır",
+      "investmentsHint": "Banka hesapları, emeklilik, tasarruf, yatırım ve kripto için geçerlidir"
     }
   },
   "blog": {

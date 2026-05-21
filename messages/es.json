@@ -945,7 +945,18 @@
       "saving": "Guardando...",
       "saveScenario": "Guardar escenario",
       "saveError": "No se pudo guardar el escenario. Por favor, inténtelo de nuevo.",
-      "disclaimerLabel": "Aviso legal"
+      "disclaimerLabel": "Aviso legal",
+      "outcome_not_decided": "Aún no decidido",
+      "outcome_i_keep": "Me lo quedo",
+      "outcome_spouse_keeps": "El cónyuge se lo queda",
+      "outcome_sell": "Lo vendemos",
+      "outcome_split": "Dividimos el valor",
+      "catRealEstate": "Bienes Raíces",
+      "catVehicle": "Vehículo",
+      "catBusiness": "Negocio",
+      "noPhysicalAssets": "Aún no se han añadido bienes raíces, vehículos o negocios. Los resultados de activos se pueden configurar después de añadir activos.",
+      "toMe": "para mí",
+      "investmentsHint": "Aplica a cuentas bancarias, jubilación, ahorros, inversiones y cripto"
     }
   },
   "blog": {

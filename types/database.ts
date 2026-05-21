@@ -452,6 +452,27 @@ export type Database = {
         };
         Relationships: [];
       };
+      scenario_asset_overrides: {
+        Row: {
+          id: string;
+          scenario_id: string;
+          asset_id: string;
+          outcome: "i_keep" | "spouse_keeps" | "sell" | "split" | "not_decided";
+          split_pct_me: number;
+        };
+        Insert: {
+          id?: string;
+          scenario_id: string;
+          asset_id: string;
+          outcome?: "i_keep" | "spouse_keeps" | "sell" | "split" | "not_decided";
+          split_pct_me?: number;
+        };
+        Update: {
+          outcome?: "i_keep" | "spouse_keeps" | "sell" | "split" | "not_decided";
+          split_pct_me?: number;
+        };
+        Relationships: [];
+      };
       webhook_events: {
         Row: {
           event_id: string;

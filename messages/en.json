@@ -945,7 +945,18 @@
       "saving": "Saving...",
       "saveScenario": "Save Scenario",
       "saveError": "Could not save scenario. Please try again.",
-      "disclaimerLabel": "Disclaimer"
+      "disclaimerLabel": "Disclaimer",
+      "outcome_not_decided": "Not decided yet",
+      "outcome_i_keep": "I keep it",
+      "outcome_spouse_keeps": "Spouse keeps it",
+      "outcome_sell": "We sell it",
+      "outcome_split": "We split the value",
+      "catRealEstate": "Real Estate",
+      "catVehicle": "Vehicle",
+      "catBusiness": "Business",
+      "noPhysicalAssets": "No real estate, vehicles, or businesses added yet. Asset outcomes can be configured after adding assets.",
+      "toMe": "to me",
+      "investmentsHint": "Applies to bank accounts, retirement, savings, investments, and crypto"
     }
   },
   "blog": {

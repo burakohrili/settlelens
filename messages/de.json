@@ -945,7 +945,18 @@
       "saving": "Wird gespeichert...",
       "saveScenario": "Szenario speichern",
       "saveError": "Szenario konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
-      "disclaimerLabel": "Haftungsausschluss"
+      "disclaimerLabel": "Haftungsausschluss",
+      "outcome_not_decided": "Noch nicht entschieden",
+      "outcome_i_keep": "Ich behalte es",
+      "outcome_spouse_keeps": "Ehepartner behält es",
+      "outcome_sell": "Wir verkaufen es",
+      "outcome_split": "Wir teilen den Wert",
+      "catRealEstate": "Immobilien",
+      "catVehicle": "Fahrzeug",
+      "catBusiness": "Unternehmen",
+      "noPhysicalAssets": "Noch keine Immobilien, Fahrzeuge oder Unternehmen hinzugefügt. Vermögensergebnisse können nach dem Hinzufügen von Vermögenswerten konfiguriert werden.",
+      "toMe": "für mich",
+      "investmentsHint": "Gilt für Bankkonten, Rente, Ersparnisse, Investitionen und Krypto"
     }
   },
   "blog": {

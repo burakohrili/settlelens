@@ -10,12 +10,15 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+type AssetItem = {
+  id: string;
+  name: string;
+  category: string;
+};
+
 type Scenario = {
   id?: string;
   name: string;
-  house_outcome: string;
-  vehicle_outcome: string;
-  business_outcome: string;
   retirement_split_me: number;
   alimony_monthly: number;
   alimony_years: number;
@@ -27,9 +30,6 @@ type Scenario = {
 function newScenario(name: string): Scenario {
   return {
     name,
-    house_outcome: "sell",
-    vehicle_outcome: "not_applicable",
-    business_outcome: "not_applicable",
     retirement_split_me: 50,
     alimony_monthly: 0,
     alimony_years: 0,
@@ -39,22 +39,50 @@ function newScenario(name: string): Scenario {
   };
 }
 
+const PHYSICAL_CATEGORIES = ["real_estate", "vehicle", "business"] as const;
+type PhysicalCat = typeof PHYSICAL_CATEGORIES[number];
+
+function outcomeOptions(category: PhysicalCat, t: (k: string) => string) {
+  const base = [
+    { value: "not_decided", label: t("outcome_not_decided") },
+    { value: "i_keep",       label: t("outcome_i_keep")       },
+    { value: "spouse_keeps", label: t("outcome_spouse_keeps")  },
+    { value: "sell",         label: t("outcome_sell")          },
+  ];
+  if (category === "business") base.push({ value: "split", label: t("outcome_split") });
+  return base;
+}
+
 function ScenarioCard({
   scenario,
+  index,
   onChange,
-  houseOptions,
-  vehicleOptions,
-  businessOptions,
+  assets,
+  overrides,
+  onOverrideChange,
   t,
 }: {
   scenario: Scenario;
+  index: number;
   onChange: (field: keyof Scenario, value: unknown) => void;
-  houseOptions: { value: string; label: string }[];
-  vehicleOptions: { value: string; label: string }[];
-  businessOptions: { value: string; label: string }[];
+  assets: AssetItem[];
+  overrides: Record<string, string>;
+  onOverrideChange: (assetId: string, outcome: string) => void;
   t: (key: string) => string;
 }) {
   const selectCls = "mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+  const grouped = PHYSICAL_CATEGORIES.reduce<Record<string, AssetItem[]>>((acc, cat) => {
+    acc[cat] = assets.filter((a) => a.category === cat);
+    return acc;
+  }, { real_estate: [], vehicle: [], business: [] });
+
+  const catLabel: Record<string, string> = {
+    real_estate: t("catRealEstate"),
+    vehicle: t("catVehicle"),
+    business: t("catBusiness"),
+  };
+
   return (
     <div className="rounded-lg border border-[var(--sand)] bg-white p-4 space-y-3">
       <div>
@@ -64,29 +92,46 @@ function ScenarioCard({
 
       <div className="border-t border-[var(--sand)] pt-3">
         <p className="font-ui text-xs font-semibold text-[var(--navy)] uppercase tracking-wide mb-3">{t("assetsSection")}</p>
-        <div className="space-y-3">
-          <div>
-            <Label>{t("houseOutcome")}</Label>
-            <select value={scenario.house_outcome} onChange={(e) => onChange("house_outcome", e.target.value)} className={selectCls}>
-              {houseOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
+
+        {assets.length === 0 ? (
+          <p className="font-ui text-xs text-[var(--brown)] italic">{t("noPhysicalAssets")}</p>
+        ) : (
+          <div className="space-y-3">
+            {PHYSICAL_CATEGORIES.map((cat) => {
+              const catAssets = grouped[cat];
+              if (catAssets.length === 0) return null;
+              return (
+                <div key={cat}>
+                  <p className="font-ui text-xs text-[var(--navy)] font-semibold mb-2">{catLabel[cat]}</p>
+                  <div className="space-y-2">
+                    {catAssets.map((asset) => (
+                      <div key={asset.id} className="flex items-center gap-3">
+                        <span className="font-ui text-sm text-[var(--navy)] flex-1 min-w-0 truncate" title={asset.name}>{asset.name}</span>
+                        <select
+                          value={overrides[`${index}:${asset.id}`] ?? "not_decided"}
+                          onChange={(e) => onOverrideChange(`${index}:${asset.id}`, e.target.value)}
+                          className="w-44 rounded-md border border-input bg-background px-2 py-1.5 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {outcomeOptions(cat, t).map((o) => (
+                            <option key={o.value} value={o.value}>{o.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div>
-            <Label>{t("vehicleOutcome")}</Label>
-            <select value={scenario.vehicle_outcome} onChange={(e) => onChange("vehicle_outcome", e.target.value)} className={selectCls}>
-              {vehicleOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
+        )}
+
+        <div className="mt-3">
+          <Label>{t("investmentsLabel")}</Label>
+          <div className="flex items-center gap-2 mt-1">
+            <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="w-24" />
+            <span className="font-ui text-sm text-[var(--brown)]">% {t("toMe")}</span>
           </div>
-          <div>
-            <Label>{t("businessOutcome")}</Label>
-            <select value={scenario.business_outcome} onChange={(e) => onChange("business_outcome", e.target.value)} className={selectCls}>
-              {businessOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
-          </div>
-          <div>
-            <Label>{t("investmentsLabel")}</Label>
-            <Input type="number" min={0} max={100} value={scenario.retirement_split_me} onChange={(e) => onChange("retirement_split_me", parseFloat(e.target.value) || 50)} className="mt-1" />
-          </div>
+          <p className="font-ui text-xs text-[var(--brown)] mt-1">{t("investmentsHint")}</p>
         </div>
       </div>
 
@@ -101,7 +146,7 @@ function ScenarioCard({
         </div>
         <div className="col-span-2">
           <Label>{t("alimonyDirection")}</Label>
-          <select value={scenario.alimony_direction} onChange={(e) => onChange("alimony_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <select value={scenario.alimony_direction} onChange={(e) => onChange("alimony_direction", e.target.value)} className={selectCls}>
             <option value="i_receive">{t("iReceive")}</option>
             <option value="i_pay">{t("iPay")}</option>
           </select>
@@ -115,7 +160,7 @@ function ScenarioCard({
         </div>
         <div>
           <Label>{t("alimonyDirection")}</Label>
-          <select value={scenario.child_support_direction} onChange={(e) => onChange("child_support_direction", e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <select value={scenario.child_support_direction} onChange={(e) => onChange("child_support_direction", e.target.value)} className={selectCls}>
             <option value="i_receive">{t("iReceive")}</option>
             <option value="i_pay">{t("iPay")}</option>
           </select>
@@ -137,6 +182,9 @@ export default function Step6Page() {
     newScenario(t("scenarioB")),
     newScenario(t("scenarioC")),
   ]);
+  const [assets, setAssets] = useState<AssetItem[]>([]);
+  // Key format: "{scenarioIndex}:{asset_id}" → outcome
+  const [overrides, setOverrides] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -144,76 +192,103 @@ export default function Step6Page() {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
-      const { data } = await (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { limit: (n: number) => Promise<{ data: Scenario[] | null }> } } } })
-        .from("scenarios").select("*").eq("user_id", user.id).limit(3);
-      if (data && data.length > 0) setScenarios(data);
+
+      // Load existing scenarios
+      const { data: existingScenarios } = await (supabase as never as {
+        from: (t: string) => { select: (s: string) => { eq: (col: string, val: string) => { limit: (n: number) => Promise<{ data: Scenario[] | null }> } } }
+      }).from("scenarios").select("*").eq("user_id", user.id).limit(3);
+      if (existingScenarios && existingScenarios.length > 0) setScenarios(existingScenarios);
+
+      // Load physical assets
+      const { data: assetData } = await (supabase as never as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (c: string, v: string) => {
+              in: (c: string, v: string[]) => {
+                order: (c: string) => { order: (c: string) => Promise<{ data: AssetItem[] | null }> }
+              }
+            }
+          }
+        }
+      }).from("assets").select("id, name, category").eq("user_id", user.id)
+        .in("category", [...PHYSICAL_CATEGORIES])
+        .order("category").order("name");
+      if (assetData) setAssets(assetData as AssetItem[]);
     }
     load();
-  }, [supabase]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function updateScenario(i: number, field: keyof Scenario, value: unknown) {
     setScenarios((prev) => prev.map((s, idx) => idx === i ? { ...s, [field]: value } : s));
   }
 
-  const houseOptions = [
-    { value: "i_keep", label: t("iKeepHouse") },
-    { value: "spouse_keeps", label: t("spouseKeepsHouse") },
-    { value: "sell", label: t("weSellHouse") },
-    { value: "not_applicable", label: t("noHouse") },
-  ];
-
-  const vehicleOptions = [
-    { value: "i_keep", label: t("iKeepVehicle") },
-    { value: "spouse_keeps", label: t("spouseKeepsVehicle") },
-    { value: "sell", label: t("weSellVehicle") },
-    { value: "not_applicable", label: t("noVehicle") },
-  ];
-
-  const businessOptions = [
-    { value: "i_keep", label: t("iKeepBusiness") },
-    { value: "spouse_keeps", label: t("spouseKeepsBusiness") },
-    { value: "split", label: t("weSplitBusiness") },
-    { value: "sell", label: t("weSellBusiness") },
-    { value: "not_applicable", label: t("noBusiness") },
-  ];
+  function handleOverrideChange(key: string, outcome: string) {
+    setOverrides((prev) => ({ ...prev, [key]: outcome }));
+  }
 
   async function handleStartAnalysis() {
     setSaving(true);
+    setSaveError(null);
     const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await (supabase as never as {
-        from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } }
-      }).from("profiles").select("plan_type").eq("id", user.id).single();
+    if (!user) { setSaving(false); return; }
 
-      await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
-        .from("scenarios").delete().eq("user_id", user.id);
+    const { data: profile } = await (supabase as never as {
+      from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } }
+    }).from("profiles").select("plan_type").eq("id", user.id).single();
 
-      const allRows = scenarios.filter((s) => s.name).map((s) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { id: _id, ...rest } = s;
-        return { ...rest, user_id: user.id, scenario_type: "custom", is_active: true };
-      });
+    // Delete existing scenarios
+    await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
+      .from("scenarios").delete().eq("user_id", user.id);
 
-      const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
-      const rows = limit === -1 ? allRows : allRows.slice(0, limit);
+    const allRows = scenarios.filter((s) => s.name).map((s) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _id, ...rest } = s;
+      return { ...rest, user_id: user.id, scenario_type: "custom", is_active: true };
+    });
 
-      if (rows.length > 0) {
-        const { error } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
-          .from("scenarios").insert(rows);
-        if (error) {
-          setSaving(false);
-          return;
-        }
-      }
+    const limit = SCENARIO_LIMITS[profile?.plan_type ?? "discovery"] ?? 3;
+    const rows = limit === -1 ? allRows : allRows.slice(0, limit);
 
-      const { error: profileError } = await (supabase as never as { from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<{ error: { message: string } | null }> } } })
-        .from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
-      if (profileError) {
-        setSaveError(profileError.message);
+    if (rows.length > 0) {
+      const { data: inserted, error } = await (supabase as never as {
+        from: (t: string) => { insert: (d: unknown[]) => { select: (s: string) => Promise<{ data: { id: string }[] | null; error: { message: string } | null }> } }
+      }).from("scenarios").insert(rows).select("id");
+
+      if (error || !inserted) {
+        setSaveError(t("saveError"));
         setSaving(false);
         return;
       }
+
+      // Save per-asset overrides for each scenario
+      for (let i = 0; i < inserted.length; i++) {
+        const scenarioId = inserted[i].id;
+        const overrideList = assets.map((a) => ({
+          asset_id: a.id,
+          outcome: overrides[`${i}:${a.id}`] ?? "not_decided",
+          split_pct_me: 50,
+        }));
+        if (overrideList.length > 0) {
+          await fetch(`/api/scenarios/${scenarioId}/asset-overrides`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ overrides: overrideList }),
+          });
+        }
+      }
     }
+
+    const { error: profileError } = await (supabase as never as {
+      from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<{ error: { message: string } | null }> } }
+    }).from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+
+    if (profileError) {
+      setSaveError(profileError.message);
+      setSaving(false);
+      return;
+    }
+
     router.push("/dashboard");
   }
 
@@ -239,10 +314,11 @@ export default function Step6Page() {
             <p className="font-ui text-xs font-semibold text-[var(--navy)] mb-2 uppercase tracking-wide">{t("scenarioLabel", { n: i + 1 })}</p>
             <ScenarioCard
               scenario={scenario}
+              index={i}
               onChange={(field, value) => updateScenario(i, field, value)}
-              houseOptions={houseOptions}
-              vehicleOptions={vehicleOptions}
-              businessOptions={businessOptions}
+              assets={assets}
+              overrides={overrides}
+              onOverrideChange={handleOverrideChange}
               t={t}
             />
           </div>

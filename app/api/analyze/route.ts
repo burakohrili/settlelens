@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   if (!scenarioId) return Response.json({ error: "scenarioId required" }, { status: 400 });
 
   // 4. Fetch all user data in parallel
-  const [profileRes, assetsRes, debtsRes, incomeRes, childrenRes, scenarioRes] = await Promise.all([
+  const [profileRes, assetsRes, debtsRes, incomeRes, childrenRes, scenarioRes, overridesRes] = await Promise.all([
     (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } })
       .from("profiles").select("*").eq("id", user.id).single(),
     (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => Promise<{ data: Record<string, unknown>[] | null }> } } })
@@ -53,6 +53,8 @@ export async function POST(req: NextRequest) {
       .from("children").select("*").eq("user_id", user.id),
     (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { eq: (c2: string, v2: string) => { single: () => Promise<{ data: Record<string, unknown> | null }> } } } } })
       .from("scenarios").select("*").eq("id", scenarioId).eq("user_id", user.id).single(),
+    (supabase as never as { from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => Promise<{ data: Record<string, unknown>[] | null }> } } })
+      .from("scenario_asset_overrides").select("asset_id,outcome,split_pct_me,assets(id,name,category,current_value)").eq("scenario_id", scenarioId),
   ]);
 
   if (!profileRes.data) return Response.json({ error: "Profile not found" }, { status: 404 });
@@ -90,6 +92,7 @@ export async function POST(req: NextRequest) {
   const debts = debtsRes.data ?? [];
   const income = incomeRes.data ?? [];
   const children = childrenRes.data ?? [];
+  const assetOverrides = overridesRes.data ?? [];
 
   const country = profile.country as string;
   const j = getJurisdiction(country, profile.state_province as string);
@@ -144,13 +147,28 @@ ${riskGuidance}`;
     owner: d.owned_by,
   }));
 
+  // Build per-asset outcome block from overrides (or fall back to legacy categorical fields)
+  type OverrideAsset = Record<string, unknown>;
+  const perAssetOutcomes = (assetOverrides as OverrideAsset[]).map((o) => {
+    const a = o.assets as Record<string, unknown> | null;
+    return {
+      name: a?.name ?? "Asset",
+      category: a?.category ?? "other",
+      value: a?.current_value ?? 0,
+      outcome: o.outcome,
+    };
+  });
+  const assetOutcomeStr = perAssetOutcomes.length > 0
+    ? `Per-asset outcomes:${JSON.stringify(perAssetOutcomes)}`
+    : `house=${scenario.house_outcome ?? "not_applicable"}, vehicle=${(scenario.vehicle_outcome as string) ?? "not_applicable"}, business=${(scenario.business_outcome as string) ?? "not_applicable"}`;
+
   let userPrompt = `Jurisdiction:${j} | Marriage years:${marriageYears} | Currency:${currency}
 Assets:${JSON.stringify(assetsSummary)}
 Debts:${JSON.stringify(debtsSummary)}
 Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
 Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net
 Children:${children.length}
-Scenario: house=${scenario.house_outcome}, vehicle=${(scenario.vehicle_outcome as string) ?? "not_applicable"}, business=${(scenario.business_outcome as string) ?? "not_applicable"}, retirement_investments_split=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
+Scenario: ${assetOutcomeStr}, financial_assets_split_me=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 
 Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":""}`;

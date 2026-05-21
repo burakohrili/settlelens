@@ -37,18 +37,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid_name" }, { status: 400 });
   }
 
-  const houseOutcome = String(body.house_outcome ?? "sell");
-  if (!(VALID_HOUSE as readonly string[]).includes(houseOutcome)) {
+  // house/vehicle/business outcome: optional — per-asset overrides are preferred
+  const houseOutcome = body.house_outcome ? String(body.house_outcome) : null;
+  if (houseOutcome && !(VALID_HOUSE as readonly string[]).includes(houseOutcome)) {
     return NextResponse.json({ error: "invalid_house_outcome" }, { status: 400 });
   }
 
-  const vehicleOutcome = String(body.vehicle_outcome ?? "not_applicable");
-  if (!(VALID_VEHICLE as readonly string[]).includes(vehicleOutcome)) {
+  const vehicleOutcome = body.vehicle_outcome ? String(body.vehicle_outcome) : null;
+  if (vehicleOutcome && !(VALID_VEHICLE as readonly string[]).includes(vehicleOutcome)) {
     return NextResponse.json({ error: "invalid_vehicle_outcome" }, { status: 400 });
   }
 
-  const businessOutcome = String(body.business_outcome ?? "not_applicable");
-  if (!(VALID_BUSINESS as readonly string[]).includes(businessOutcome)) {
+  const businessOutcome = body.business_outcome ? String(body.business_outcome) : null;
+  if (businessOutcome && !(VALID_BUSINESS as readonly string[]).includes(businessOutcome)) {
     return NextResponse.json({ error: "invalid_business_outcome" }, { status: 400 });
   }
 
@@ -76,9 +77,9 @@ export async function POST(req: NextRequest) {
       user_id: user.id,
       name,
       scenario_type: scenarioType as "custom" | "offer_comparison",
-      house_outcome: houseOutcome as "i_keep" | "spouse_keeps" | "sell" | "not_applicable",
-      vehicle_outcome: vehicleOutcome as "i_keep" | "spouse_keeps" | "sell" | "not_applicable",
-      business_outcome: businessOutcome as "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable",
+      ...(houseOutcome    && { house_outcome:    houseOutcome    as "i_keep" | "spouse_keeps" | "sell" | "not_applicable" }),
+      ...(vehicleOutcome  && { vehicle_outcome:  vehicleOutcome  as "i_keep" | "spouse_keeps" | "sell" | "not_applicable" }),
+      ...(businessOutcome && { business_outcome: businessOutcome as "i_keep" | "spouse_keeps" | "split" | "sell" | "not_applicable" }),
       retirement_split_me: retirementSplit,
       alimony_monthly: alimonyMonthly,
       alimony_years: alimonyYears,
