@@ -67,11 +67,26 @@ export default function NewScenarioPage() {
   const [overrides, setOverrides] = useState<Record<string, string>>({}); // asset_id → outcome
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [scenarioCount, setScenarioCount] = useState<number | null>(null);
+  const [planType, setPlanType] = useState<string>("discovery");
 
   useEffect(() => {
     async function loadAssets() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+
+      // Fetch plan and scenario count to show proactive limit warning
+      const [profileRes, countRes] = await Promise.all([
+        (supabase as never as {
+          from: (t: string) => { select: (s: string) => { eq: (c: string, v: string) => { single: () => Promise<{ data: { plan_type: string } | null }> } } }
+        }).from("profiles").select("plan_type").eq("id", user.id).single(),
+        (supabase as never as {
+          from: (t: string) => { select: (s: string, opts: { count: string; head: boolean }) => { eq: (c: string, v: string) => Promise<{ count: number | null }> } }
+        }).from("scenarios").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+      ]);
+      if (profileRes.data) setPlanType(profileRes.data.plan_type ?? "discovery");
+      if (countRes.count !== null) setScenarioCount(countRes.count);
+
       const { data } = await (supabase as never as {
         from: (t: string) => {
           select: (s: string) => {
@@ -292,13 +307,25 @@ export default function NewScenarioPage() {
         <p className="font-ui text-sm text-[var(--red)] bg-[var(--red)]/10 border border-[var(--red)]/20 rounded-lg px-4 py-3">{error}</p>
       )}
 
+      {(() => {
+        const limit = planType === "discovery" || planType === "clarified" ? 3 : -1;
+        if (limit > 0 && scenarioCount !== null && scenarioCount >= limit) {
+          return (
+            <p className="font-ui text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
+              {tScenarios("scenarioLimitReached")}
+            </p>
+          );
+        }
+        return null;
+      })()}
+
       <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
         <strong>{t("disclaimerLabel")}:</strong> {t("disclaimer")}
       </div>
 
       <button
         onClick={handleSave}
-        disabled={saving || !form.name.trim()}
+        disabled={saving || !form.name.trim() || ((() => { const l = planType === "discovery" || planType === "clarified" ? 3 : -1; return l > 0 && scenarioCount !== null && scenarioCount >= l; })())}
         className={cn(
           buttonVariants(),
           "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90 w-full",

@@ -618,6 +618,7 @@
     "clarifiedRemaining": "1 AI analysis remaining on your Clarified plan.",
     "clarifiedUsed": "You have used your 1 analysis. Upgrade to Strategist for unlimited analyses.",
     "upgradeToAnalyzeAgain": "Upgrade to Analyze Again →",
+    "notDecidedWarning": "{count} asset(s) have no outcome set — default 50/50 split will be applied. Edit the scenario to set outcomes.",
     "missingFieldsWarning": "This analysis used incomplete data ({fields}). Add missing information for a more accurate result.",
     "loadingHint": "Analyzing with Claude AI — this takes about 10–15 seconds…",
     "step1": "Preparing your financial data…",

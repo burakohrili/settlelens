@@ -115,6 +115,7 @@ export async function POST(req: NextRequest) {
       negotiation_strategy: (analysis?.negotiation_strategy as string) ?? "",
       key_risks: (analysis?.key_risks as string[]) ?? [],
       confidence_label_text: ((analysis?.raw_json as Record<string, unknown>)?.confidence_label_text as string) ?? "",
+      questions_for_your_lawyer: ((analysis?.raw_json as Record<string, unknown>)?.questions_for_your_lawyer as string[]) ?? [],
       assets: scenarioAssets as never,
       retirement_split_me: splitPct,
     };
@@ -132,6 +133,7 @@ export async function POST(req: NextRequest) {
       { year: "numeric", month: "long", day: "numeric" }
     ),
     lang: (profile.preferred_language as string) ?? "en",
+    isLawyerEdition: plan === "professional",
     assets: assets as never,
     debts: debts as never,
     scenarios: scenariosWithAnalysis,

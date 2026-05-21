@@ -49,8 +49,9 @@ type ReportData = {
   jurisdiction: string;
   date: string;
   lang: string;
+  isLawyerEdition?: boolean;
   assets: ReportAsset[];
-  debts: Array<{ name: string; category: string; balance: number; monthly_payment: number }>;
+  debts: Array<{ name: string; category: string; balance: number; monthly_payment: number; owned_by?: string }>;
   scenarios: Array<{
     name: string;
     net_worth_now: number;
@@ -97,7 +98,7 @@ function calcUserShare(a: ReportAsset): number {
   if (a.outcome === "sell") return equity * 0.92 * 0.5;
   if (a.outcome.startsWith("split:")) {
     const pct = parseFloat(a.outcome.replace("split:", "").replace("%_to_me", "")) / 100;
-    return (a.current_value ?? 0) * (isNaN(pct) ? 0.5 : pct);
+    return ((a.current_value ?? 0) - (a.mortgage_balance ?? 0)) * (isNaN(pct) ? 0.5 : pct);
   }
   return equity * 0.5;
 }
@@ -153,6 +154,8 @@ type LabelSet = {
   yourShare: string;
   maritalGainNote: string;
   financialAssetNote: string;
+  lawyerEditionBadge: string;
+  questionsForLawyer: string;
 };
 
 const REPORT_LABELS: Record<string, LabelSet> = {
@@ -207,6 +210,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "Your Share",
     maritalGainNote: "* Assets with original purchase price: marital appreciation is calculated separately under applicable jurisdiction rules.",
     financialAssetNote: "Financial assets (bank/retirement/investments) split at",
+    lawyerEditionBadge: "Attorney-Ready Financial Overview",
+    questionsForLawyer: "Questions for Your Lawyer",
   },
   tr: {
     reportTitle: "Finansal Analiz Raporu",
@@ -259,6 +264,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "Payınız",
     maritalGainNote: "* Satın alma fiyatı olan varlıklar: Evlilik kazancı, geçerli yargı kurallarına göre ayrıca hesaplanır.",
     financialAssetNote: "Finansal varlıklar (banka/emeklilik/yatırım) şu oranda bölünüyor",
+    lawyerEditionBadge: "Avukata Hazır Finansal Özet",
+    questionsForLawyer: "Avukatınıza Soracağınız Sorular",
   },
   de: {
     reportTitle: "Finanzanalyse-Bericht",
@@ -311,6 +318,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "Ihr Anteil",
     maritalGainNote: "* Vermögenswerte mit Kaufpreis: Ehezeitlicher Zugewinn wird nach geltendem Recht separat berechnet.",
     financialAssetNote: "Finanzielle Vermögenswerte (Bank/Rente/Investitionen) aufgeteilt zu",
+    lawyerEditionBadge: "Anwaltsgerechte Finanzübersicht",
+    questionsForLawyer: "Fragen für Ihren Anwalt",
   },
   fr: {
     reportTitle: "Rapport d'analyse financière",
@@ -363,6 +372,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "Votre part",
     maritalGainNote: "* Actifs avec prix d'achat : la plus-value maritale est calculée séparément selon les règles juridictionnelles applicables.",
     financialAssetNote: "Actifs financiers (banque/retraite/investissements) partagés à",
+    lawyerEditionBadge: "Aperçu financier pour votre avocat",
+    questionsForLawyer: "Questions pour votre avocat",
   },
   es: {
     reportTitle: "Informe de análisis financiero",
@@ -415,6 +426,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "Su parte",
     maritalGainNote: "* Activos con precio de compra: la apreciación marital se calcula por separado según las normas jurisdiccionales aplicables.",
     financialAssetNote: "Activos financieros (banco/jubilación/inversiones) divididos al",
+    lawyerEditionBadge: "Resumen financiero para su abogado",
+    questionsForLawyer: "Preguntas para su abogado",
   },
   ar: {
     reportTitle: "تقرير التحليل المالي",
@@ -467,6 +480,8 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     yourShare: "حصتك",
     maritalGainNote: "* الأصول ذات سعر الشراء: تُحسب الزيادة الزوجية بشكل منفصل وفقاً للقواعد القانونية المعمول بها.",
     financialAssetNote: "الأصول المالية (البنك/التقاعد/الاستثمارات) مقسّمة بنسبة",
+    lawyerEditionBadge: "نظرة مالية شاملة للمحامي",
+    questionsForLawyer: "أسئلة لمحاميك",
   },
 };
 
@@ -485,7 +500,7 @@ function riskColor(score: number): string {
 }
 
 export function buildReportHTML(data: ReportData): string {
-  const { userName, jurisdiction, date, lang, assets, debts, scenarios, currency } = data;
+  const { userName, jurisdiction, date, lang, assets, debts, scenarios, currency, isLawyerEdition } = data;
   const safeUserName = escapeHtml(userName);
   const safeJurisdiction = escapeHtml(jurisdiction);
   const L = REPORT_LABELS[lang] ?? REPORT_LABELS.en;
@@ -551,6 +566,18 @@ export function buildReportHTML(data: ReportData): string {
         </table>
         ${s.key_risks?.length ? `<p style="margin-top:10px;"><strong>${L.keyRisks}:</strong> ${(s.key_risks as string[]).map(escapeHtml).join("; ")}</p>` : ""}
         ${s.negotiation_strategy ? `<p style="margin-top:8px;"><strong>${L.financialNote}:</strong> ${escapeHtml(s.negotiation_strategy)}</p>` : ""}
+        ${isLawyerEdition && (s as unknown as Record<string, unknown>).questions_for_your_lawyer
+          ? (() => {
+              const qs = (s as unknown as Record<string, unknown>).questions_for_your_lawyer as string[];
+              if (!Array.isArray(qs) || qs.length === 0) return "";
+              return `<div style="margin-top:12px;background:#F7F3EE;border-left:3px solid #C8973A;padding:10px 14px;border-radius:0 4px 4px 0;">
+                <strong style="font-size:11px;color:#1C2B3A;">${L.questionsForLawyer}:</strong>
+                <ul style="margin-top:6px;padding-left:16px;">
+                  ${qs.map((q) => `<li style="font-size:10px;color:#2E4D6B;margin-bottom:4px;">${escapeHtml(q)}</li>`).join("")}
+                </ul>
+              </div>`;
+            })()
+          : ""}
       </div>`;
       }
     )
@@ -587,12 +614,13 @@ export function buildReportHTML(data: ReportData): string {
 
 <div class="cover">
   <h1>SettleLens</h1>
-  <h2>${L.reportTitle}</h2>
+  <h2>${isLawyerEdition ? L.lawyerEditionBadge : L.reportTitle}</h2>
   <div class="meta">
     <div>${L.preparedFor}: ${safeUserName}</div>
     <div>${L.date}: ${date}</div>
     <div>${L.jurisdiction}: ${safeJurisdiction}</div>
     <div>${L.scenariosAnalyzed}: ${scenarios.length}</div>
+    ${isLawyerEdition ? `<div style="margin-top:8px;font-size:10px;color:#C8973A;font-weight:bold;">★ LAWYER EDITION</div>` : ""}
   </div>
 </div>
 
@@ -643,8 +671,8 @@ export function buildReportHTML(data: ReportData): string {
 <section>
   <h2>${L.debts}</h2>
   <table class="data-table">
-    <tr><th>${L.name}</th><th>${L.category}</th><th>${L.balance}</th><th>${L.monthlyPayment}</th></tr>
-    ${debts.map((d) => `<tr><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.category)}</td><td>${fmtL(d.balance)}</td><td>${fmtL(d.monthly_payment)}${L.mo}</td></tr>`).join("")}
+    <tr><th>${L.name}</th><th>${L.category}</th><th>${L.balance}</th><th>${L.monthlyPayment}</th><th>${L.ownedBy}</th></tr>
+    ${debts.map((d) => `<tr><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.category)}</td><td>${fmtL(d.balance)}</td><td>${fmtL(d.monthly_payment)}${L.mo}</td><td>${escapeHtml(d.owned_by ?? "—")}</td></tr>`).join("")}
   </table>
 </section>
 

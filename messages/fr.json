@@ -618,6 +618,7 @@
     "clarifiedRemaining": "1 analyse IA restante sur votre plan Clarified.",
     "clarifiedUsed": "Vous avez utilisé votre 1 analyse. Passez à Strategist pour des analyses illimitées.",
     "upgradeToAnalyzeAgain": "Mettre à niveau pour analyser à nouveau →",
+    "notDecidedWarning": "{count} actif(s) sans résultat défini — répartition 50/50 par défaut appliquée. Modifiez le scénario pour définir les résultats.",
     "missingFieldsWarning": "Cette analyse a été effectuée avec des données incomplètes ({fields}). Ajoutez les informations manquantes pour un résultat plus précis.",
     "loadingHint": "Analyse avec Claude IA — environ 10–15 secondes…",
     "tipNetWorthNow": "Votre patrimoine net actuel dans ce scénario : actifs totaux moins dettes totales.",

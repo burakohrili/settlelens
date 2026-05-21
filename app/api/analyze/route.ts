@@ -153,7 +153,7 @@ ASSET OUTCOME CALCULATION RULES:
 Each asset in the Assets array has an "outcome" field. Use these rules for net worth calculation:
 - "i_keep": user receives 100% of (current_value - mortgage) for that asset
 - "spouse_keeps": user receives 0% of that asset; exclude from user net worth entirely
-- "sell": user receives 50% of net equity (current_value - mortgage - 8% sale costs); if contribution_ratio < 1, use contribution_ratio instead of 50%
+- "sell": user receives 50% of net equity (current_value - mortgage - 8% sale costs)
 - "split:N%_to_me": user receives N% of current_value (applies to financial assets: bank, retirement, crypto, investment)
 - "not_decided": treat conservatively as sell (50/50 after costs)
 For marital:true assets: apply the jurisdiction split formula to the marital portion only.
@@ -171,6 +171,7 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
     bal: d.balance,
     pay: d.monthly_payment,
     owner: d.owned_by,
+    rate: d.interest_rate,
   }));
 
   // Build unified asset list: physical assets get per-asset outcome from overrides,
@@ -183,7 +184,8 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
   }
 
   const FINANCIAL_CATS = new Set(["bank", "retirement", "investment", "crypto", "other"]);
-  const splitPct = scenario.retirement_split_me as number;
+  const rawSplitPct = scenario.retirement_split_me as number;
+  const splitPct = Number.isFinite(rawSplitPct) && rawSplitPct >= 0 && rawSplitPct <= 100 ? rawSplitPct : 50;
 
   const unifiedAssets = assets.map((a) => {
     const isFinancial = FINANCIAL_CATS.has(a.category as string);
@@ -209,9 +211,9 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
 JurisdictionRules:${jurisdictionRule ? JSON.stringify(jurisdictionRule) : "apply general equitable principles"}
 Assets:${JSON.stringify(unifiedAssets)}
 Debts:${JSON.stringify(debtsSummary)}
-Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
-Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net
-Children:${children.length}
+Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net, gross:${(myIncome?.annual_gross as number) ?? 0}, type:${(myIncome?.employment_type as string) ?? "unknown"}, other_income:${(myIncome?.other_income_annual as number) ?? 0}
+Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net, gross:${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_gross as number) ?? 0)}, type:${(spouseIncome?.employment_type as string) ?? "unknown"}, other_income:${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.other_income_annual as number) ?? 0)}
+Children:${children.length > 0 ? children.map((c) => `age ${c.age as number}, custody:${c.custody_arrangement as string}`).join("; ") : "none"}
 Scenario: alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 

@@ -535,6 +535,20 @@ export default function ScenarioDetailPage() {
         </div>
       )}
 
+      {/* not_decided asset warning */}
+      {(() => {
+        const undecided = overrides.filter((o) => !o.outcome || o.outcome === "not_decided");
+        if (undecided.length === 0) return null;
+        return (
+          <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 flex items-start gap-2">
+            <AlertTriangle size={15} className="text-amber-600 mt-0.5 shrink-0" />
+            <p className="font-ui text-xs text-amber-700">
+              {t("notDecidedWarning", { count: undecided.length })}
+            </p>
+          </div>
+        );
+      })()}
+
       {/* Analysis progress indicator */}
       {loading && step > 0 && (
         <div className="rounded-md bg-[var(--cream)] border border-[var(--sand)] p-3 space-y-2">

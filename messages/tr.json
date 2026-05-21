@@ -618,6 +618,7 @@
     "clarifiedRemaining": "Clarified planınızda 1 AI analiz hakkınız var.",
     "clarifiedUsed": "1 analizinizi kullandınız. Sınırsız analiz için Strategist'e yükseltin.",
     "upgradeToAnalyzeAgain": "Tekrar Analiz İçin Yükseltin →",
+    "notDecidedWarning": "{count} varlık için sonuç belirlenmedi — varsayılan %50 bölüşüm uygulanacak. Senaryo düzenleyerek sonuçları belirleyin.",
     "missingFieldsWarning": "Bu analiz eksik verilerle yapıldı ({fields}). Daha doğru sonuç için eksik bilgileri ekleyin.",
     "loadingHint": "Claude AI ile analiz yapılıyor — yaklaşık 10–15 saniye sürer…",
     "step1": "Finansal verileriniz hazırlanıyor…",
