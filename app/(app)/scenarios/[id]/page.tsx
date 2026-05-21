@@ -657,9 +657,6 @@ export default function ScenarioDetailPage() {
             </button>
           )}
 
-          <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
-            <strong>{tStep6("disclaimerLabel")}:</strong> {tStep6("disclaimer")}
-          </div>
         </div>
       ) : (
         <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">

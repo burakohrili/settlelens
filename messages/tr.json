@@ -747,9 +747,9 @@
       "strategist": "Strategist",
       "professional": "Professional",
       "price_discovery": "Ücretsiz",
-      "price_clarified": "₺899 tek seferlik",
-      "price_strategist": "₺1.299/ay",
-      "price_professional": "₺3.299/ay"
+      "price_clarified": "₺499 tek seferlik · 30 gün",
+      "price_strategist": "₺3.999 tek seferlik · 6 ay",
+      "price_professional": "₺1.999/ay"
     },
     "privacyTitle": "Gizlilik ve Veriler",
     "privacyDesc": "Verilerinizi, onaylarınızı ve hesap silme işlemlerini yönetin.",
@@ -1118,6 +1118,7 @@
     "f_strategist_3": "Enflasyon senaryo modellemesi",
     "f_strategist_4": "10 yıllık projeksiyonlar",
     "f_strategist_5": "Teklif karşılaştırma aracı",
+    "f_strategist_6": "6 ay erişim",
     "f_professional_1": "Strategist'teki her şey",
     "f_professional_2": "Avukata hazır finansal dışa aktarım",
     "f_professional_3": "Kanıt organizatörü",

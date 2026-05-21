@@ -5,13 +5,13 @@ export const PLAN_DISPLAY: Record<
 > = {
   clarified: {
     name: "Scenario Package",
-    prices: { en: "$19", tr: "₺499", de: "17 €", fr: "17 €", es: "17 €", ar: "$19" },
-    period: { en: "one-time", tr: "tek seferlik", de: "einmalig", fr: "unique", es: "único", ar: "مرة واحدة" },
+    prices: { en: "$19", tr: "₺499", de: "18 €", fr: "18 €", es: "18 €", ar: "$19" },
+    period: { en: "one-time · 30 days", tr: "tek seferlik · 30 gün", de: "einmalig · 30 Tage", fr: "unique · 30 jours", es: "único · 30 días", ar: "لمرة واحدة · 30 يوماً" },
   },
   strategist: {
     name: "Process Package",
     prices: { en: "$149", tr: "₺3.999", de: "139 €", fr: "139 €", es: "139 €", ar: "$149" },
-    period: { en: "one-time", tr: "tek seferlik", de: "einmalig", fr: "unique", es: "único", ar: "مرة واحدة" },
+    period: { en: "one-time · 6 months", tr: "tek seferlik · 6 ay", de: "einmalig · 6 Monate", fr: "unique · 6 mois", es: "único · 6 meses", ar: "لمرة واحدة · 6 أشهر" },
   },
   professional: {
     name: "Lawyer Edition",

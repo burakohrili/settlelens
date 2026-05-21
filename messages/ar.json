@@ -747,9 +747,9 @@
       "strategist": "Strategist",
       "professional": "Professional",
       "price_discovery": "مجاني",
-      "price_clarified": "29 $ مرة واحدة",
-      "price_strategist": "39 $/شهر",
-      "price_professional": "99 $/شهر"
+      "price_clarified": "19 $ لمرة واحدة · 30 يوماً",
+      "price_strategist": "149 $ لمرة واحدة · 6 أشهر",
+      "price_professional": "79 $/شهر"
     },
     "privacyTitle": "الخصوصية والبيانات",
     "privacyDesc": "إدارة بياناتك وموافقاتك وحذف الحساب.",
@@ -1104,6 +1104,7 @@
     "f_strategist_3": "نمذجة سيناريوهات التضخم",
     "f_strategist_4": "إسقاطات 10 سنوات",
     "f_strategist_5": "أداة مقارنة العروض",
+    "f_strategist_6": "وصول 6 أشهر",
     "f_professional_1": "كل شيء في Strategist",
     "f_professional_2": "تصدير مالي جاهز للمحامي",
     "f_professional_3": "منظّم الأدلة",

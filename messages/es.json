@@ -747,9 +747,9 @@
       "strategist": "Strategist",
       "professional": "Professional",
       "price_discovery": "Gratis",
-      "price_clarified": "36 € único",
-      "price_strategist": "36 €/mes",
-      "price_professional": "92 €/mes"
+      "price_clarified": "18 € único · 30 días",
+      "price_strategist": "139 € único · 6 meses",
+      "price_professional": "74 €/mes"
     },
     "privacyTitle": "Privacidad y datos",
     "privacyDesc": "Gestione sus datos, consentimientos y eliminación de cuenta.",
@@ -1104,6 +1104,7 @@
     "f_strategist_3": "Modelización de escenarios de inflación",
     "f_strategist_4": "Proyecciones a 10 años",
     "f_strategist_5": "Herramienta de comparación de ofertas",
+    "f_strategist_6": "Acceso 6 meses",
     "f_professional_1": "Todo de Strategist",
     "f_professional_2": "Exportación financiera lista para abogado",
     "f_professional_3": "Organizador de evidencias",

@@ -747,9 +747,9 @@
       "strategist": "Strategist",
       "professional": "Professional",
       "price_discovery": "Free",
-      "price_clarified": "$29 one-time",
-      "price_strategist": "$39/month",
-      "price_professional": "$99/month"
+      "price_clarified": "$19 one-time · 30 days",
+      "price_strategist": "$149 one-time · 6 months",
+      "price_professional": "$79/month"
     },
     "privacyTitle": "Privacy & Data",
     "privacyDesc": "Manage your data, consents, and account deletion.",
@@ -1104,6 +1104,7 @@
     "f_strategist_3": "Inflation scenario modeling",
     "f_strategist_4": "10-year projections",
     "f_strategist_5": "Offer comparison tool",
+    "f_strategist_6": "6-month access",
     "f_professional_1": "Everything in Strategist",
     "f_professional_2": "Attorney-ready financial export",
     "f_professional_3": "Evidence organizer",
