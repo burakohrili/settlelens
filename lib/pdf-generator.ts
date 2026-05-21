@@ -29,12 +29,27 @@ export async function generatePDF(html: string): Promise<Buffer> {
   return Buffer.from(pdf);
 }
 
+type ReportAsset = {
+  name: string;
+  category: string;
+  current_value: number;
+  owned_by: string;
+  mortgage_balance?: number;
+  purchase_price?: number | null;
+  is_marital?: boolean;
+  outcome?: string;      // i_keep | spouse_keeps | sell | split:N%_to_me | not_decided
+  split_pct_me?: number; // for financial assets
+  crypto_token?: string;
+  crypto_quantity?: number;
+  crypto_exchange?: string;
+};
+
 type ReportData = {
   userName: string;
   jurisdiction: string;
   date: string;
   lang: string;
-  assets: Array<{ name: string; category: string; current_value: number; owned_by: string; mortgage_balance?: number; crypto_token?: string; crypto_quantity?: number; crypto_exchange?: string }>;
+  assets: ReportAsset[];
   debts: Array<{ name: string; category: string; balance: number; monthly_payment: number }>;
   scenarios: Array<{
     name: string;
@@ -51,9 +66,41 @@ type ReportData = {
     negotiation_strategy: string;
     key_risks: string[];
     confidence_label_text: string;
+    assets?: ReportAsset[];  // per-scenario assets with outcome
+    retirement_split_me?: number;
   }>;
   currency: string;
 };
+
+const OUTCOME_PDF_LABELS: Record<string, Record<string, string>> = {
+  i_keep:       { en: "I Keep", tr: "Bende kalıyor", de: "Ich behalte", fr: "Je garde", es: "Lo conservo", ar: "أحتفظ به" },
+  spouse_keeps: { en: "Spouse Keeps", tr: "Eşimde kalıyor", de: "Partner behält", fr: "Conjoint garde", es: "Cónyuge conserva", ar: "الزوج يحتفظ" },
+  sell:         { en: "Sell", tr: "Satış", de: "Verkauf", fr: "Vente", es: "Venta", ar: "بيع" },
+  not_decided:  { en: "Not Decided", tr: "Karar verilmedi", de: "Unentschieden", fr: "Non décidé", es: "Sin decidir", ar: "غير محدد" },
+};
+
+function outcomeLabel(outcome: string | undefined, lang: string): string {
+  if (!outcome || outcome === "not_decided") return OUTCOME_PDF_LABELS.not_decided[lang] ?? OUTCOME_PDF_LABELS.not_decided.en;
+  if (outcome.startsWith("split:")) {
+    const pct = outcome.replace("split:", "").replace("%_to_me", "");
+    const splitWord = { en: "Split", tr: "Paylaş", de: "Teilen", fr: "Partage", es: "División", ar: "تقسيم" }[lang] ?? "Split";
+    return `${splitWord} ${pct}%`;
+  }
+  return OUTCOME_PDF_LABELS[outcome]?.[lang] ?? OUTCOME_PDF_LABELS[outcome]?.en ?? outcome;
+}
+
+function calcUserShare(a: ReportAsset): number {
+  const equity = (a.current_value ?? 0) - (a.mortgage_balance ?? 0);
+  if (!a.outcome || a.outcome === "not_decided") return equity * 0.5;
+  if (a.outcome === "i_keep") return equity;
+  if (a.outcome === "spouse_keeps") return 0;
+  if (a.outcome === "sell") return equity * 0.92 * 0.5;
+  if (a.outcome.startsWith("split:")) {
+    const pct = parseFloat(a.outcome.replace("split:", "").replace("%_to_me", "")) / 100;
+    return (a.current_value ?? 0) * (isNaN(pct) ? 0.5 : pct);
+  }
+  return equity * 0.5;
+}
 
 type LabelSet = {
   reportTitle: string;
@@ -100,6 +147,12 @@ type LabelSet = {
   heldAt: string;
   qty: string;
   token: string;
+  assetAllocation: string;
+  mortgage: string;
+  outcome: string;
+  yourShare: string;
+  maritalGainNote: string;
+  financialAssetNote: string;
 };
 
 const REPORT_LABELS: Record<string, LabelSet> = {
@@ -148,6 +201,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "Held at",
     qty: "Qty",
     token: "Token",
+    assetAllocation: "Asset Allocation by Scenario",
+    mortgage: "Mortgage / Loan",
+    outcome: "Outcome",
+    yourShare: "Your Share",
+    maritalGainNote: "* Assets with original purchase price: marital appreciation is calculated separately under applicable jurisdiction rules.",
+    financialAssetNote: "Financial assets (bank/retirement/investments) split at",
   },
   tr: {
     reportTitle: "Finansal Analiz Raporu",
@@ -194,6 +253,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "Saklandığı yer",
     qty: "Miktar",
     token: "Token",
+    assetAllocation: "Senaryoya Göre Varlık Dağılımı",
+    mortgage: "Mortgage / Kredi",
+    outcome: "Karar",
+    yourShare: "Payınız",
+    maritalGainNote: "* Satın alma fiyatı olan varlıklar: Evlilik kazancı, geçerli yargı kurallarına göre ayrıca hesaplanır.",
+    financialAssetNote: "Finansal varlıklar (banka/emeklilik/yatırım) şu oranda bölünüyor",
   },
   de: {
     reportTitle: "Finanzanalyse-Bericht",
@@ -240,6 +305,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "Aufbewahrt bei",
     qty: "Menge",
     token: "Token",
+    assetAllocation: "Vermögensaufteilung nach Szenario",
+    mortgage: "Hypothek / Darlehen",
+    outcome: "Ergebnis",
+    yourShare: "Ihr Anteil",
+    maritalGainNote: "* Vermögenswerte mit Kaufpreis: Ehezeitlicher Zugewinn wird nach geltendem Recht separat berechnet.",
+    financialAssetNote: "Finanzielle Vermögenswerte (Bank/Rente/Investitionen) aufgeteilt zu",
   },
   fr: {
     reportTitle: "Rapport d'analyse financière",
@@ -286,6 +357,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "Conservé chez",
     qty: "Quantité",
     token: "Token",
+    assetAllocation: "Répartition des actifs par scénario",
+    mortgage: "Hypothèque / Prêt",
+    outcome: "Issue",
+    yourShare: "Votre part",
+    maritalGainNote: "* Actifs avec prix d'achat : la plus-value maritale est calculée séparément selon les règles juridictionnelles applicables.",
+    financialAssetNote: "Actifs financiers (banque/retraite/investissements) partagés à",
   },
   es: {
     reportTitle: "Informe de análisis financiero",
@@ -332,6 +409,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "Custodiado en",
     qty: "Cantidad",
     token: "Token",
+    assetAllocation: "Distribución de activos por escenario",
+    mortgage: "Hipoteca / Préstamo",
+    outcome: "Resultado",
+    yourShare: "Su parte",
+    maritalGainNote: "* Activos con precio de compra: la apreciación marital se calcula por separado según las normas jurisdiccionales aplicables.",
+    financialAssetNote: "Activos financieros (banco/jubilación/inversiones) divididos al",
   },
   ar: {
     reportTitle: "تقرير التحليل المالي",
@@ -378,6 +461,12 @@ const REPORT_LABELS: Record<string, LabelSet> = {
     heldAt: "محتفظ به في",
     qty: "الكمية",
     token: "الرمز",
+    assetAllocation: "توزيع الأصول حسب السيناريو",
+    mortgage: "الرهن العقاري / القرض",
+    outcome: "النتيجة",
+    yourShare: "حصتك",
+    maritalGainNote: "* الأصول ذات سعر الشراء: تُحسب الزيادة الزوجية بشكل منفصل وفقاً للقواعد القانونية المعمول بها.",
+    financialAssetNote: "الأصول المالية (البنك/التقاعد/الاستثمارات) مقسّمة بنسبة",
   },
 };
 
@@ -408,12 +497,46 @@ export function buildReportHTML(data: ReportData): string {
   const totalDebts = debts.reduce((s, d) => s + (d.balance || 0), 0) + totalMortgages;
   const netWorth = totalAssets - totalDebts;
 
+  const PHYSICAL_CATS_PDF = new Set(["real_estate", "vehicle", "business"]);
+  const FINANCIAL_CATS_PDF = new Set(["bank", "retirement", "investment", "crypto", "other"]);
+
   const scenariosHTML = scenarios
     .map(
-      (s, i) => `
+      (s, i) => {
+        const scenarioAssets = s.assets ?? assets;
+        const physicalAssets = scenarioAssets.filter((a) => PHYSICAL_CATS_PDF.has(a.category));
+        const financialAssets = scenarioAssets.filter((a) => FINANCIAL_CATS_PDF.has(a.category));
+        const splitPct = s.retirement_split_me ?? 50;
+        const financialTotal = financialAssets.reduce((sum, a) => sum + (a.current_value ?? 0), 0);
+        const hasPurchasePrice = physicalAssets.some((a) => a.purchase_price && a.purchase_price > 0);
+
+        const assetBreakdownHTML = physicalAssets.length > 0 ? `
+        <h4 style="font-size:11px;color:#1C2B3A;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.5px;">${L.assetAllocation}</h4>
+        <table class="data-table" style="font-size:10px;">
+          <tr>
+            <th>${L.name}</th>
+            <th>${L.currentValue}</th>
+            <th>${L.mortgage}</th>
+            <th>${L.outcome}</th>
+            <th style="text-align:right;">${L.yourShare}</th>
+          </tr>
+          ${physicalAssets.map((a) => `<tr>
+            <td>${escapeHtml(a.name)}</td>
+            <td>${fmtL(a.current_value ?? 0)}</td>
+            <td>${(a.mortgage_balance ?? 0) > 0 ? fmtL(a.mortgage_balance ?? 0) : "—"}</td>
+            <td>${outcomeLabel(a.outcome, lang)}</td>
+            <td style="text-align:right;font-weight:bold;">${fmtL(calcUserShare(a))}</td>
+          </tr>`).join("")}
+        </table>
+        ${financialAssets.length > 0 ? `<p style="font-size:10px;color:#8B7355;margin-top:6px;">${L.financialAssetNote} ${splitPct}% → ${fmtL(financialTotal * splitPct / 100)}</p>` : ""}
+        ${hasPurchasePrice ? `<p style="font-size:9px;color:#8B7355;margin-top:4px;font-style:italic;">${L.maritalGainNote}</p>` : ""}
+        ` : "";
+
+        return `
       <div class="scenario-block" style="break-inside:avoid;">
         <h3 style="color:#1C2B3A;border-bottom:2px solid #C8973A;padding-bottom:4px;">${L.scenario} ${i + 1}: ${escapeHtml(s.name)}</h3>
         <p style="font-size:11px;color:#6b6b6b;font-style:italic;margin-top:0;">${escapeHtml(s.confidence_label_text)}</p>
+        ${assetBreakdownHTML}
         <table class="data-table">
           <tr><th>${L.metric}</th><th>${L.value}</th></tr>
           <tr><td>${L.netWorthNow}</td><td>${fmtL(s.net_worth_now)}</td></tr>
@@ -428,7 +551,8 @@ export function buildReportHTML(data: ReportData): string {
         </table>
         ${s.key_risks?.length ? `<p style="margin-top:10px;"><strong>${L.keyRisks}:</strong> ${(s.key_risks as string[]).map(escapeHtml).join("; ")}</p>` : ""}
         ${s.negotiation_strategy ? `<p style="margin-top:8px;"><strong>${L.financialNote}:</strong> ${escapeHtml(s.negotiation_strategy)}</p>` : ""}
-      </div>`
+      </div>`;
+      }
     )
     .join("<hr style='margin:24px 0;border-color:#D4C5B0;'>");
 

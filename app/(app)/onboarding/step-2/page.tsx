@@ -22,6 +22,8 @@ type Asset = {
   owned_by: "joint" | "me" | "spouse";
   is_marital: boolean;
   mortgage_balance: number;
+  acquisition_year?: number;
+  contribution_ratio?: number;  // UI: 0-100, stored as 0-1
   crypto_token?: string;
   crypto_quantity?: number;
   crypto_exchange?: string;
@@ -102,7 +104,12 @@ export default function Step2Page() {
     if (user) {
       await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
         .from("assets").delete().eq("user_id", user.id);
-      const rows = assets.filter((a) => a.name).map((a) => ({ ...a, user_id: user.id, id: undefined }));
+      const rows = assets.filter((a) => a.name).map((a) => ({
+        ...a,
+        user_id: user.id,
+        id: undefined,
+        contribution_ratio: a.contribution_ratio !== undefined ? a.contribution_ratio / 100 : 1,
+      }));
       if (rows.length > 0) {
         const { error: insertError } = await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<{ error: { message: string } | null }> } })
           .from("assets").insert(rows);
@@ -185,7 +192,7 @@ export default function Step2Page() {
                     className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 </div>
-                {asset.category === "real_estate" && (
+                {(asset.category === "real_estate" || asset.category === "vehicle") && (
                   <div>
                     <Label htmlFor={`asset-mortgage-${i}`}>{t("mortgageBalance")}</Label>
                     <NumericInput
@@ -194,6 +201,42 @@ export default function Step2Page() {
                       min={0}
                       className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
+                  </div>
+                )}
+
+                {(asset.category === "real_estate" || asset.category === "vehicle" || asset.category === "business") && (
+                  <div>
+                    <Label htmlFor={`asset-acqyear-${i}`}>{t("acquisitionYear")}</Label>
+                    <Input
+                      id={`asset-acqyear-${i}`}
+                      type="number"
+                      min={1900}
+                      max={new Date().getFullYear()}
+                      value={asset.acquisition_year ?? ""}
+                      onChange={(e) => updateAsset(i, "acquisition_year", parseInt(e.target.value) || undefined)}
+                      placeholder={String(new Date().getFullYear() - 5)}
+                      className="mt-1"
+                    />
+                    <p className="font-ui text-xs text-[var(--brown)] mt-0.5">{t("acquisitionYearHint")}</p>
+                  </div>
+                )}
+
+                {(asset.category === "real_estate" || asset.category === "business") && (
+                  <div>
+                    <Label htmlFor={`asset-contrib-${i}`}>{t("contributionRatio")}</Label>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Input
+                        id={`asset-contrib-${i}`}
+                        type="number"
+                        min={0}
+                        max={100}
+                        value={asset.contribution_ratio !== undefined ? asset.contribution_ratio : 100}
+                        onChange={(e) => updateAsset(i, "contribution_ratio", Math.min(100, Math.max(0, parseFloat(e.target.value) || 100)))}
+                        className="w-20"
+                      />
+                      <span className="font-ui text-sm text-[var(--brown)]">%</span>
+                    </div>
+                    <p className="font-ui text-xs text-[var(--brown)] mt-0.5">{t("contributionRatioHint")}</p>
                   </div>
                 )}
 

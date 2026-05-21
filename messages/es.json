@@ -315,10 +315,26 @@
   },
   "trust": {
     "cards": [
-      { "icon": "🔒", "title": "Tus datos nunca se venden", "desc": "Los datos financieros nunca se comparten con anunciantes ni terceros. Jamás." },
-      { "icon": "🧾", "title": "Sin datos sensibles en registros", "desc": "Los datos de activos, ingresos y escenarios nunca se escriben en consolas de desarrollador." },
-      { "icon": "👤", "title": "Solo tú ves tus datos", "desc": "La seguridad a nivel de filas de Supabase garantiza que cada consulta esté limitada a tu cuenta." },
-      { "icon": "🗑️", "title": "Exporta o elimina cuando quieras", "desc": "Descarga todos tus datos en JSON o elimina tu cuenta permanentemente — sin fricciones." }
+      {
+        "icon": "🔒",
+        "title": "Tus datos nunca se venden",
+        "desc": "Los datos financieros nunca se comparten con anunciantes ni terceros. Jamás."
+      },
+      {
+        "icon": "🧾",
+        "title": "Sin datos sensibles en registros",
+        "desc": "Los datos de activos, ingresos y escenarios nunca se escriben en consolas de desarrollador."
+      },
+      {
+        "icon": "👤",
+        "title": "Solo tú ves tus datos",
+        "desc": "La seguridad a nivel de filas de Supabase garantiza que cada consulta esté limitada a tu cuenta."
+      },
+      {
+        "icon": "🗑️",
+        "title": "Exporta o elimina cuando quieras",
+        "desc": "Descarga todos tus datos en JSON o elimina tu cuenta permanentemente — sin fricciones."
+      }
     ],
     "title": "Diseñado para uno de los momentos más sensibles de la vida",
     "intro": "Durante un divorcio, las personas deben compartir los datos financieros más personales de sus vidas. SettleLens está diseñado para ganarse y mantener esa confianza.",
@@ -663,7 +679,9 @@
       "joint": "Conjunto",
       "me": "Yo",
       "spouse": "Cónyuge",
-      "perYear": "/ año"
+      "perYear": "/ año",
+      "mortgageBalance": "Hipoteca / saldo del préstamo",
+      "purchasePrice": "Precio de compra original"
     },
     "navAccount": "Cuenta",
     "navBilling": "Facturación",
@@ -836,7 +854,11 @@
       "cat_other": "Otro",
       "cryptoPriceAtEntry": "Precio de compra (opcional)",
       "mortgageExceedsValue": "El saldo hipotecario no puede superar el valor del activo.",
-      "saveError": "No se pudieron guardar tus activos. Por favor, inténtalo de nuevo."
+      "saveError": "No se pudieron guardar tus activos. Por favor, inténtalo de nuevo.",
+      "acquisitionYear": "Año de adquisición",
+      "acquisitionYearHint": "Año de compra — usado para el cálculo de ganancias maritales",
+      "contributionRatio": "Su aportación (%)",
+      "contributionRatioHint": "% de este activo que financió personalmente (predeterminado: 100%)"
     },
     "step3": {
       "hasDebts": "¿Tiene deudas (distintas a las hipotecas ya registradas)?",

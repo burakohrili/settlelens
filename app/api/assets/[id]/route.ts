@@ -19,9 +19,21 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       }
     }
   }
+  if (body.contribution_ratio !== undefined) {
+    const cr = Number(body.contribution_ratio);
+    if (isNaN(cr) || cr < 0 || cr > 1) {
+      return NextResponse.json({ error: "Invalid contribution_ratio (must be 0–1)" }, { status: 400 });
+    }
+  }
+  if (body.acquisition_year !== undefined) {
+    const ay = Number(body.acquisition_year);
+    if (!Number.isInteger(ay) || ay < 1900 || ay > new Date().getFullYear()) {
+      return NextResponse.json({ error: "Invalid acquisition_year" }, { status: 400 });
+    }
+  }
   const allowed = ["name", "current_value", "owned_by", "mortgage_balance", "category",
     "purchase_price", "crypto_quantity", "crypto_price_at_entry", "crypto_token",
-    "crypto_exchange", "notes", "is_marital", "acquisition_year"];
+    "crypto_exchange", "notes", "is_marital", "acquisition_year", "contribution_ratio"];
   const update: Record<string, unknown> = {};
   for (const key of allowed) {
     if (key in body) update[key] = body[key];

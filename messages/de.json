@@ -315,10 +315,26 @@
   },
   "trust": {
     "cards": [
-      { "icon": "🔒", "title": "Ihre Daten werden nie verkauft", "desc": "Finanzdaten werden nie an Werbetreibende oder Dritte weitergegeben. Niemals." },
-      { "icon": "🧾", "title": "Keine sensiblen Daten in Logs", "desc": "Vermögens-, Einkommens- und Szenariodaten werden nie in Entwicklerkonsolen geschrieben." },
-      { "icon": "👤", "title": "Nur Sie sehen Ihre Daten", "desc": "Supabase Row Level Security stellt sicher, dass jede Abfrage auf Ihr Konto beschränkt ist." },
-      { "icon": "🗑️", "title": "Jederzeit exportieren oder löschen", "desc": "Laden Sie alle Daten als JSON herunter oder löschen Sie Ihr Konto dauerhaft — ohne Hürden." }
+      {
+        "icon": "🔒",
+        "title": "Ihre Daten werden nie verkauft",
+        "desc": "Finanzdaten werden nie an Werbetreibende oder Dritte weitergegeben. Niemals."
+      },
+      {
+        "icon": "🧾",
+        "title": "Keine sensiblen Daten in Logs",
+        "desc": "Vermögens-, Einkommens- und Szenariodaten werden nie in Entwicklerkonsolen geschrieben."
+      },
+      {
+        "icon": "👤",
+        "title": "Nur Sie sehen Ihre Daten",
+        "desc": "Supabase Row Level Security stellt sicher, dass jede Abfrage auf Ihr Konto beschränkt ist."
+      },
+      {
+        "icon": "🗑️",
+        "title": "Jederzeit exportieren oder löschen",
+        "desc": "Laden Sie alle Daten als JSON herunter oder löschen Sie Ihr Konto dauerhaft — ohne Hürden."
+      }
     ],
     "title": "Für einen der sensibelsten Momente des Lebens",
     "intro": "In einer Scheidung müssen Menschen die persönlichsten Finanzdaten ihres Lebens teilen. SettleLens ist darauf ausgelegt, dieses Vertrauen zu verdienen und zu bewahren.",
@@ -663,7 +679,9 @@
       "joint": "Gemeinsam",
       "me": "Ich",
       "spouse": "Ehepartner",
-      "perYear": "/ Jahr"
+      "perYear": "/ Jahr",
+      "mortgageBalance": "Hypothek / Darlehenssaldo",
+      "purchasePrice": "Ursprünglicher Kaufpreis"
     },
     "navAccount": "Konto",
     "navBilling": "Abrechnung",
@@ -836,7 +854,11 @@
       "cat_crypto": "Krypto",
       "cat_other": "Sonstiges",
       "mortgageExceedsValue": "Die Hypothek darf den Vermögenswert nicht übersteigen.",
-      "saveError": "Ihre Vermögenswerte konnten nicht gespeichert werden. Bitte versuchen Sie es erneut."
+      "saveError": "Ihre Vermögenswerte konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "acquisitionYear": "Erwerbsjahr",
+      "acquisitionYearHint": "Anschaffungsjahr — für Zugewinnberechnung verwendet",
+      "contributionRatio": "Ihr Finanzierungsanteil (%)",
+      "contributionRatioHint": "% des Vermögenswerts, den Sie persönlich finanziert haben (Standard: 100%)"
     },
     "step3": {
       "hasDebts": "Haben Sie Schulden (außer den bereits eingetragenen Hypotheken)?",

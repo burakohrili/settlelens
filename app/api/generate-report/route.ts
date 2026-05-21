@@ -62,24 +62,44 @@ export async function POST(req: NextRequest) {
   const debts = debtsRes.data ?? [];
   const scenarios = scenariosRes.data ?? [];
 
-  // 4. Fetch latest analysis per scenario via view — one row per scenario, no N+1
+  // 4. Fetch latest analysis per scenario + per-asset overrides — both in parallel
   const scenarioIds = scenarios.map((s) => s.id as string);
   const analysesMap = new Map<string, Record<string, unknown>>();
+  const overrideMap = new Map<string, { outcome: string; split_pct_me: number }>();
+
   if (scenarioIds.length > 0) {
-    const { data: latestAnalyses } = await (supabase as never as {
-      from: (t: string) => {
-        select: (s: string) => {
-          in: (c: string, v: string[]) => Promise<{ data: Record<string, unknown>[] | null }>
-        }
-      }
-    }).from("latest_analysis_per_scenario").select("*").in("scenario_id", scenarioIds);
-    for (const a of latestAnalyses ?? []) {
+    const [analysesRes, overridesRes] = await Promise.all([
+      (supabase as never as {
+        from: (t: string) => { select: (s: string) => { in: (c: string, v: string[]) => Promise<{ data: Record<string, unknown>[] | null }> } }
+      }).from("latest_analysis_per_scenario").select("*").in("scenario_id", scenarioIds),
+      (supabase as never as {
+        from: (t: string) => { select: (s: string) => { in: (c: string, v: string[]) => Promise<{ data: Record<string, unknown>[] | null }> } }
+      }).from("scenario_asset_overrides").select("scenario_id,asset_id,outcome,split_pct_me").in("scenario_id", scenarioIds),
+    ]);
+    for (const a of analysesRes.data ?? []) {
       analysesMap.set(a.scenario_id as string, a);
+    }
+    for (const o of overridesRes.data ?? []) {
+      overrideMap.set(`${o.scenario_id as string}:${o.asset_id as string}`, {
+        outcome: o.outcome as string,
+        split_pct_me: o.split_pct_me as number,
+      });
     }
   }
 
   const scenariosWithAnalysis = scenarios.map((s) => {
     const analysis = analysesMap.get(s.id as string) ?? null;
+    const splitPct = (s.retirement_split_me as number) ?? 50;
+    const FINANCIAL_CATS = new Set(["bank", "retirement", "investment", "crypto", "other"]);
+    const scenarioAssets = assets.map((a) => {
+      const override = overrideMap.get(`${s.id as string}:${a.id as string}`);
+      const isFinancial = FINANCIAL_CATS.has(a.category as string);
+      return {
+        ...a,
+        outcome: isFinancial ? `split:${splitPct}%_to_me` : (override?.outcome ?? "not_decided"),
+        split_pct_me: isFinancial ? splitPct : (override?.split_pct_me ?? 50),
+      };
+    });
     return {
       name: s.name as string,
       net_worth_now: (analysis?.net_worth_now as number) ?? 0,
@@ -95,6 +115,8 @@ export async function POST(req: NextRequest) {
       negotiation_strategy: (analysis?.negotiation_strategy as string) ?? "",
       key_risks: (analysis?.key_risks as string[]) ?? [],
       confidence_label_text: ((analysis?.raw_json as Record<string, unknown>)?.confidence_label_text as string) ?? "",
+      assets: scenarioAssets as never,
+      retirement_split_me: splitPct,
     };
   });
 

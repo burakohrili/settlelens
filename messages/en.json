@@ -315,10 +315,26 @@
   },
   "trust": {
     "cards": [
-      { "icon": "🔒", "title": "Your data is never sold", "desc": "Financial data is never shared with advertisers or third parties. Ever." },
-      { "icon": "🧾", "title": "No sensitive data in logs", "desc": "Asset, income, and scenario data is never written to developer consoles or error logs." },
-      { "icon": "👤", "title": "Only you can see your data", "desc": "Supabase Row Level Security enforces that every query is scoped to your account." },
-      { "icon": "🗑️", "title": "Export or delete anytime", "desc": "Download all your data as JSON or permanently delete your account — no friction, no dark patterns." }
+      {
+        "icon": "🔒",
+        "title": "Your data is never sold",
+        "desc": "Financial data is never shared with advertisers or third parties. Ever."
+      },
+      {
+        "icon": "🧾",
+        "title": "No sensitive data in logs",
+        "desc": "Asset, income, and scenario data is never written to developer consoles or error logs."
+      },
+      {
+        "icon": "👤",
+        "title": "Only you can see your data",
+        "desc": "Supabase Row Level Security enforces that every query is scoped to your account."
+      },
+      {
+        "icon": "🗑️",
+        "title": "Export or delete anytime",
+        "desc": "Download all your data as JSON or permanently delete your account — no friction, no dark patterns."
+      }
     ],
     "title": "Built for One of Life's Most Sensitive Moments",
     "intro": "During divorce, people must share the most personal financial data of their lives. SettleLens is designed to earn and keep that trust.",
@@ -663,7 +679,9 @@
       "joint": "Joint",
       "me": "Me",
       "spouse": "Spouse",
-      "perYear": "/ yr"
+      "perYear": "/ yr",
+      "mortgageBalance": "Mortgage / loan balance",
+      "purchasePrice": "Original purchase price"
     },
     "navAccount": "Account",
     "navBilling": "Billing",
@@ -836,7 +854,11 @@
       "cat_crypto": "Crypto",
       "cat_other": "Other",
       "mortgageExceedsValue": "Mortgage balance cannot exceed the asset value.",
-      "saveError": "Could not save your assets. Please try again."
+      "saveError": "Could not save your assets. Please try again.",
+      "acquisitionYear": "Purchase year",
+      "acquisitionYearHint": "Year acquired — used for marital gain calculation",
+      "contributionRatio": "Your funding share (%)",
+      "contributionRatioHint": "% of this asset you personally financed (default: 100%)"
     },
     "step3": {
       "hasDebts": "Do you have any debts (other than mortgages already entered)?",

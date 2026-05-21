@@ -315,10 +315,26 @@
   },
   "trust": {
     "cards": [
-      { "icon": "🔒", "title": "Vos données ne sont jamais vendues", "desc": "Les données financières ne sont jamais partagées avec des annonceurs ou des tiers. Jamais." },
-      { "icon": "🧾", "title": "Pas de données sensibles dans les logs", "desc": "Les données d'actifs, de revenus et de scénarios ne sont jamais écrites dans les consoles développeur." },
-      { "icon": "👤", "title": "Seul vous voyez vos données", "desc": "La sécurité au niveau des lignes de Supabase garantit que chaque requête est limitée à votre compte." },
-      { "icon": "🗑️", "title": "Exportez ou supprimez à tout moment", "desc": "Téléchargez toutes vos données en JSON ou supprimez définitivement votre compte — sans friction." }
+      {
+        "icon": "🔒",
+        "title": "Vos données ne sont jamais vendues",
+        "desc": "Les données financières ne sont jamais partagées avec des annonceurs ou des tiers. Jamais."
+      },
+      {
+        "icon": "🧾",
+        "title": "Pas de données sensibles dans les logs",
+        "desc": "Les données d'actifs, de revenus et de scénarios ne sont jamais écrites dans les consoles développeur."
+      },
+      {
+        "icon": "👤",
+        "title": "Seul vous voyez vos données",
+        "desc": "La sécurité au niveau des lignes de Supabase garantit que chaque requête est limitée à votre compte."
+      },
+      {
+        "icon": "🗑️",
+        "title": "Exportez ou supprimez à tout moment",
+        "desc": "Téléchargez toutes vos données en JSON ou supprimez définitivement votre compte — sans friction."
+      }
     ],
     "title": "Conçu pour l'un des moments les plus sensibles de la vie",
     "intro": "Lors d'un divorce, les personnes doivent partager les données financières les plus personnelles de leur vie. SettleLens est conçu pour mériter et maintenir cette confiance.",
@@ -663,7 +679,9 @@
       "joint": "Joint",
       "me": "Moi",
       "spouse": "Conjoint(e)",
-      "perYear": "/ an"
+      "perYear": "/ an",
+      "mortgageBalance": "Hypothèque / solde du prêt",
+      "purchasePrice": "Prix d'achat d'origine"
     },
     "navAccount": "Compte",
     "navBilling": "Facturation",
@@ -836,7 +854,11 @@
       "cat_other": "Autre",
       "cryptoPriceAtEntry": "Prix à l'achat (optionnel)",
       "mortgageExceedsValue": "Le solde hypothécaire ne peut pas dépasser la valeur du bien.",
-      "saveError": "Impossible d'enregistrer vos actifs. Veuillez réessayer."
+      "saveError": "Impossible d'enregistrer vos actifs. Veuillez réessayer.",
+      "acquisitionYear": "Année d'acquisition",
+      "acquisitionYearHint": "Année d'achat — utilisée pour le calcul des acquêts",
+      "contributionRatio": "Votre part de financement (%)",
+      "contributionRatioHint": "% de cet actif que vous avez personnellement financé (défaut: 100%)"
     },
     "step3": {
       "hasDebts": "Avez-vous des dettes (autres que les hypothèques déjà saisies) ?",

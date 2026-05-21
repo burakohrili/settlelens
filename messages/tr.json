@@ -315,10 +315,26 @@
   },
   "trust": {
     "cards": [
-      { "icon": "🔒", "title": "Verileriniz asla satılmaz", "desc": "Finansal verileriniz hiçbir zaman reklamcılara veya üçüncü taraflara paylaşılmaz." },
-      { "icon": "🧾", "title": "Loglarda hassas veri yok", "desc": "Varlık, gelir ve senaryo verileri hiçbir zaman geliştirici konsoluna yazılmaz." },
-      { "icon": "👤", "title": "Verilerinizi yalnızca siz görürsünüz", "desc": "Supabase Row Level Security, her sorgunun yalnızca kendi hesabınıza erişmesini zorunlu kılar." },
-      { "icon": "🗑️", "title": "İstediğiniz zaman dışa aktarın veya silin", "desc": "Tüm verilerinizi JSON olarak indirin ya da hesabınızı kalıcı olarak silin — zorluk yok." }
+      {
+        "icon": "🔒",
+        "title": "Verileriniz asla satılmaz",
+        "desc": "Finansal verileriniz hiçbir zaman reklamcılara veya üçüncü taraflara paylaşılmaz."
+      },
+      {
+        "icon": "🧾",
+        "title": "Loglarda hassas veri yok",
+        "desc": "Varlık, gelir ve senaryo verileri hiçbir zaman geliştirici konsoluna yazılmaz."
+      },
+      {
+        "icon": "👤",
+        "title": "Verilerinizi yalnızca siz görürsünüz",
+        "desc": "Supabase Row Level Security, her sorgunun yalnızca kendi hesabınıza erişmesini zorunlu kılar."
+      },
+      {
+        "icon": "🗑️",
+        "title": "İstediğiniz zaman dışa aktarın veya silin",
+        "desc": "Tüm verilerinizi JSON olarak indirin ya da hesabınızı kalıcı olarak silin — zorluk yok."
+      }
     ],
     "title": "Hayatın En Hassas Anlarından Biri İçin Tasarlandı",
     "intro": "Boşanma sürecinde insanlar hayatlarının en kişisel finansal verilerini paylaşmak zorunda kalır. SettleLens bu güveni hak etmek için tasarlanmıştır.",
@@ -663,7 +679,9 @@
       "joint": "Ortak",
       "me": "Ben",
       "spouse": "Eşim",
-      "perYear": "/ yıl"
+      "perYear": "/ yıl",
+      "mortgageBalance": "Mortgage / kredi bakiyesi",
+      "purchasePrice": "Orijinal satın alma fiyatı"
     },
     "navAccount": "Hesap",
     "navBilling": "Fatura",
@@ -850,7 +868,11 @@
       "cat_crypto": "Kripto",
       "cat_other": "Diğer",
       "mortgageExceedsValue": "İpotek bakiyesi varlık değerini aşamaz.",
-      "saveError": "Varlıklarınız kaydedilemedi. Lütfen tekrar deneyin."
+      "saveError": "Varlıklarınız kaydedilemedi. Lütfen tekrar deneyin.",
+      "acquisitionYear": "Edinim yılı",
+      "acquisitionYearHint": "Satın alma yılı — evlilik kazancı hesabı için kullanılır",
+      "contributionRatio": "Katkı payınız (%)",
+      "contributionRatioHint": "Bu varlığı kişisel olarak finanse ettiğiniz oran (varsayılan: %100)"
     },
     "step3": {
       "hasDebts": "Girilen ipotekler dışında borcunuz var mı?",

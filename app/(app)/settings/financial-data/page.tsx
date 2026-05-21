@@ -11,7 +11,7 @@ import { getAppLocale } from "@/lib/get-app-locale";
 
 const VALID_LOCALES = ["en", "tr", "de", "fr", "es", "ar"];
 
-type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number };
+type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number; purchase_price: number | null };
 type Debt = { id: string; name: string; category: string; balance: number; owned_by: string };
 type Income = { id: string; person: string; annual_net: number; employment_type: string };
 type Child = { id: string; age: number; custody_arrangement: string };
@@ -37,7 +37,7 @@ export default async function FinancialDataPage() {
   const db = supabase as any;
 
   const [assetsRes, debtsRes, incomeRes, childrenRes] = await Promise.all([
-    db.from("assets").select("id, name, category, current_value, owned_by, mortgage_balance").eq("user_id", user.id).order("created_at"),
+    db.from("assets").select("id, name, category, current_value, owned_by, mortgage_balance, purchase_price").eq("user_id", user.id).order("created_at"),
     db.from("debts").select("id, name, category, balance, owned_by").eq("user_id", user.id).order("created_at"),
     db.from("income").select("id, person, annual_net, employment_type").eq("user_id", user.id).order("created_at"),
     db.from("children").select("id, age, custody_arrangement").eq("user_id", user.id).order("created_at"),
@@ -62,6 +62,8 @@ export default async function FinancialDataPage() {
     joint: t("joint"),
     me: t("me"),
     spouse: t("spouse"),
+    mortgageBalance: t("mortgageBalance"),
+    purchasePrice: t("purchasePrice"),
   };
 
   return (

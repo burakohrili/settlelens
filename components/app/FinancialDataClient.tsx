@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { NumericInput } from "@/components/ui/NumericInput";
 
-type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number };
+type Asset = { id: string; name: string; category: string; current_value: number; owned_by: string; mortgage_balance: number; purchase_price: number | null };
 type Debt = { id: string; name: string; category: string; balance: number; owned_by: string };
 
 type Labels = {
@@ -21,6 +21,8 @@ type Labels = {
   joint: string;
   me: string;
   spouse: string;
+  mortgageBalance?: string;
+  purchasePrice?: string;
 };
 
 function fmt(n: number) {
@@ -35,6 +37,8 @@ const CATEGORY_ICON: Record<string, React.ReactNode> = {
   crypto: <TrendingDown size={14} />,
 };
 
+const PHYSICAL_CATS = new Set(["real_estate", "vehicle", "business"]);
+
 export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; labels: Labels }) {
   const router = useRouter();
   const [assets, setAssets] = useState(initialAssets);
@@ -42,6 +46,9 @@ export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; l
   const [editName, setEditName] = useState("");
   const [editValue, setEditValue] = useState(0);
   const [editOwner, setEditOwner] = useState("");
+  const [editMortgage, setEditMortgage] = useState(0);
+  const [editPurchasePrice, setEditPurchasePrice] = useState<number | null>(null);
+  const [editCategory, setEditCategory] = useState("");
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -51,19 +58,32 @@ export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; l
     setEditName(a.name);
     setEditValue(a.current_value);
     setEditOwner(a.owned_by);
+    setEditMortgage(a.mortgage_balance ?? 0);
+    setEditPurchasePrice(a.purchase_price ?? null);
+    setEditCategory(a.category);
     setDeleteId(null);
   }
 
   async function saveEdit(id: string) {
     setSaving(true);
     try {
+      const body: Record<string, unknown> = { name: editName, current_value: editValue, owned_by: editOwner };
+      if (editCategory === "real_estate" || editCategory === "vehicle") {
+        body.mortgage_balance = editMortgage;
+      }
+      if (PHYSICAL_CATS.has(editCategory) && editPurchasePrice !== null) {
+        body.purchase_price = editPurchasePrice;
+      }
       const res = await fetch(`/api/assets/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: editName, current_value: editValue, owned_by: editOwner }),
+        body: JSON.stringify(body),
       });
       if (res.ok) {
-        setAssets((prev) => prev.map((a) => a.id === id ? { ...a, name: editName, current_value: editValue, owned_by: editOwner } : a));
+        setAssets((prev) => prev.map((a) => a.id === id ? {
+          ...a, name: editName, current_value: editValue, owned_by: editOwner,
+          mortgage_balance: editMortgage, purchase_price: editPurchasePrice,
+        } : a));
         setEditId(null);
         router.refresh();
       }
@@ -118,6 +138,20 @@ export function AssetList({ initialAssets, labels }: { initialAssets: Asset[]; l
                   <option value="spouse">{labels.spouse}</option>
                 </select>
               </div>
+              {(editCategory === "real_estate" || editCategory === "vehicle") && labels.mortgageBalance && (
+                <div className="flex items-center gap-2">
+                  <span className="font-ui text-xs text-[var(--brown)] w-32 shrink-0">{labels.mortgageBalance}</span>
+                  <NumericInput value={editMortgage} onChange={setEditMortgage} min={0}
+                    className="flex-1 border border-[var(--sand)] rounded px-2 py-1 font-mono text-sm focus:outline-none focus:border-[var(--gold)]" />
+                </div>
+              )}
+              {PHYSICAL_CATS.has(editCategory) && labels.purchasePrice && (
+                <div className="flex items-center gap-2">
+                  <span className="font-ui text-xs text-[var(--brown)] w-32 shrink-0">{labels.purchasePrice}</span>
+                  <NumericInput value={editPurchasePrice ?? 0} onChange={(v) => setEditPurchasePrice(v || null)} min={0}
+                    className="flex-1 border border-[var(--sand)] rounded px-2 py-1 font-mono text-sm focus:outline-none focus:border-[var(--gold)]" />
+                </div>
+              )}
               <div className="flex gap-2">
                 <button
                   onClick={() => saveEdit(a.id)}
