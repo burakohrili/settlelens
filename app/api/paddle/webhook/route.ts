@@ -145,10 +145,15 @@ export async function POST(req: Request) {
           paddle_customer_id: data.customer_id,
         };
 
-        // One-time plan: set 14-day expiry
+        // One-time plans: set access window
         if (plan === "clarified") {
           const expiresAt = new Date();
-          expiresAt.setDate(expiresAt.getDate() + 14);
+          expiresAt.setDate(expiresAt.getDate() + 30);
+          updateData.plan_expires_at = expiresAt.toISOString();
+        }
+        if (plan === "strategist") {
+          const expiresAt = new Date();
+          expiresAt.setDate(expiresAt.getDate() + 180);
           updateData.plan_expires_at = expiresAt.toISOString();
         }
 

@@ -635,7 +635,7 @@ export default function ScenarioDetailPage() {
             </div>
           )}
 
-          {!(plan === "clarified" && analysisCount >= 1) && (
+          {!(plan === "clarified" && analysisCount >= 3) && (
             <button onClick={handleRunAnalysis} disabled={loading}
               className={cn(buttonVariants({ variant: "outline" }), "border-[var(--sand)]", loading && "opacity-70 cursor-not-allowed")}
             >
@@ -650,7 +650,7 @@ export default function ScenarioDetailPage() {
           </p>
           {error && <p role="alert" aria-live="polite" className="font-ui text-sm text-red-600 mb-3">{error}</p>}
           <button
-            onClick={plan === "clarified" && analysisCount >= 1 ? () => router.push(`/${locale}/upgrade`) : handleRunAnalysis}
+            onClick={plan === "clarified" && analysisCount >= 3 ? () => router.push(`/${locale}/upgrade`) : handleRunAnalysis}
             disabled={loading}
             className={cn(buttonVariants(), "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90", loading && "opacity-70 cursor-not-allowed")}
           >
@@ -658,7 +658,7 @@ export default function ScenarioDetailPage() {
               ? <><Loader2 size={16} className="mr-2 animate-spin" /> {t("analyzing")}</>
               : plan === "discovery"
               ? t("upgradeToAnalyze")
-              : plan === "clarified" && analysisCount >= 1
+              : plan === "clarified" && analysisCount >= 3
               ? t("upgradeToAnalyzeAgain")
               : t("runAnalysis")}
           </button>

@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
         }
       }
     }).from("analyses").select("id", { count: "exact", head: true }).eq("user_id", user.id);
-    if ((analysisCount ?? 0) >= 1) {
+    if ((analysisCount ?? 0) >= 3) {
       return Response.json({ error: "analysis_limit_reached" }, { status: 403 });
     }
   }
