@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
   const profile = profileRes.data;
   const scenario = scenarioRes.data;
 
-  // 4.5 Plan check — block discovery, enforce clarified 1-analysis limit
+  // 4.5 Plan check — block discovery, enforce clarified 3-analysis limit
   const planType = (profile.plan_type as string) ?? "discovery";
   if (planType === "discovery") {
     return Response.json({ error: "upgrade_required" }, { status: 403 });
@@ -154,7 +154,7 @@ Each asset in the Assets array has an "outcome" field. Use these rules for net w
 - "i_keep": user receives 100% of (current_value - mortgage) for that asset
 - "spouse_keeps": user receives 0% of that asset; exclude from user net worth entirely
 - "sell": user receives 50% of net equity (current_value - mortgage - 8% sale costs)
-- "split:N%_to_me": user receives N% of current_value (applies to financial assets: bank, retirement, crypto, investment)
+- "split:N%_to_me": user receives N% of (current_value - mortgage) for that asset (applies to financial assets: bank, retirement, crypto, investment — typically mortgage=0)
 - "not_decided": treat conservatively as sell (50/50 after costs)
 For marital:true assets: apply the jurisdiction split formula to the marital portion only.
 For marital:false assets: owner field determines — "me" → 100% to user, "spouse" → 0% to user, "joint" → apply outcome rule.
@@ -195,7 +195,6 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
       val: a.current_value,
       purchase_price: (a.purchase_price as number | null) ?? null,
       acquisition_year: (a.acquisition_year as number | null) ?? null,
-      contribution_ratio: (a.contribution_ratio as number | null) ?? 1,
       owner: a.owned_by,
       marital: a.is_marital,
       mortgage: (a.mortgage_balance as number) ?? 0,
@@ -217,7 +216,8 @@ Children:${children.length > 0 ? children.map((c) => `age ${c.age as number}, cu
 Scenario: alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 
-Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":""}`;
+Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":"","questions_for_your_lawyer":["","",""]}
+questions_for_your_lawyer: provide 3 specific questions this user should ask their lawyer, based on their jurisdiction, assets, and scenario. Calm, professional tone.`;
 
   // Offer comparison mode
   if (scenario.scenario_type === "offer_comparison") {

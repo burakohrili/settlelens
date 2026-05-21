@@ -92,7 +92,7 @@ function outcomeLabel(outcome: string | undefined, lang: string): string {
 
 function calcUserShare(a: ReportAsset): number {
   const equity = (a.current_value ?? 0) - (a.mortgage_balance ?? 0);
-  if (!a.outcome || a.outcome === "not_decided") return equity * 0.5;
+  if (!a.outcome || a.outcome === "not_decided") return equity * 0.92 * 0.5;
   if (a.outcome === "i_keep") return equity;
   if (a.outcome === "spouse_keeps") return 0;
   if (a.outcome === "sell") return equity * 0.92 * 0.5;

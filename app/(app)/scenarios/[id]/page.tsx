@@ -517,7 +517,7 @@ export default function ScenarioDetailPage() {
             <div className="grid grid-cols-2 gap-2 border-t border-[var(--sand)] pt-3">
               <div><span className="text-[var(--brown)]">{t("investmentsLabel")}:</span> <span className="font-medium text-[var(--navy)]">{scenario.retirement_split_me}{t("toMe")}</span></div>
               <div><span className="text-[var(--brown)]">{t("alimony")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.alimony_monthly, currency, locale)}{t("perMonth")} × {scenario.alimony_years}{t("yr")} ({t(scenario.alimony_direction as "i_receive" | "i_pay")})</span></div>
-              <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")}</span></div>
+              <div><span className="text-[var(--brown)]">{t("childSupport")}:</span> <span className="font-medium text-[var(--navy)]">{fmt(scenario.child_support_monthly, currency, locale)}{t("perMonth")} ({t(scenario.child_support_direction as "i_receive" | "i_pay")})</span></div>
             </div>
           </div>
         )}
@@ -527,11 +527,11 @@ export default function ScenarioDetailPage() {
       {plan === "clarified" && (
         <div className={cn(
           "rounded-md border px-3 py-2 font-ui text-xs flex items-center gap-2",
-          analysisCount >= 1
+          analysisCount >= 3
             ? "border-[var(--danger)] bg-red-50 text-[var(--danger)]"
             : "border-[var(--gold)] bg-amber-50 text-[var(--brown)]"
         )}>
-          <span>{analysisCount >= 1 ? t("clarifiedUsed") : t("clarifiedRemaining")}</span>
+          <span>{analysisCount >= 3 ? t("clarifiedUsed") : t("clarifiedRemaining")}</span>
         </div>
       )}
 
@@ -656,6 +656,10 @@ export default function ScenarioDetailPage() {
               {loading ? <><Loader2 size={14} className="mr-1 animate-spin" /> {t("rerunning")}</> : t("rerunAnalysis")}
             </button>
           )}
+
+          <div className="rounded-md border border-[var(--sand)] bg-[var(--cream)] p-3 font-ui text-xs text-[var(--brown)]">
+            <strong>{tStep6("disclaimerLabel")}:</strong> {tStep6("disclaimer")}
+          </div>
         </div>
       ) : (
         <div className="rounded-xl border border-[var(--sand)] bg-[var(--cream)] p-6 text-center">

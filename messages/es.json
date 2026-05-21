@@ -937,6 +937,7 @@
       "alimonyMonthly": "Pensión alimenticia (mensual)",
       "alimonyYears": "Duración (años)",
       "alimonyDirection": "Dirección",
+      "childSupportDirection": "Dirección",
       "iReceive": "Recibo",
       "iPay": "Pago",
       "childSupport": "Manutención infantil (mensual)",

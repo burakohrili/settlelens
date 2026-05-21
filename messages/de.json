@@ -937,6 +937,7 @@
       "alimonyMonthly": "Unterhalt (monatlich)",
       "alimonyYears": "Dauer (Jahre)",
       "alimonyDirection": "Richtung",
+      "childSupportDirection": "Richtung",
       "iReceive": "Ich erhalte",
       "iPay": "Ich zahle",
       "childSupport": "Kindesunterhalt (monatlich)",

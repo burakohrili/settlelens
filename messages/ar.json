@@ -937,6 +937,7 @@
       "alimonyMonthly": "النفقة الزوجية (شهريًا)",
       "alimonyYears": "المدة (بالسنوات)",
       "alimonyDirection": "الاتجاه",
+      "childSupportDirection": "الاتجاه",
       "iReceive": "أستلم",
       "iPay": "أدفع",
       "childSupport": "نفقة الأطفال (شهريًا)",

@@ -293,7 +293,7 @@ export default function NewScenarioPage() {
               <NumericInput value={form.child_support_monthly} onChange={(v) => update("child_support_monthly", v)} min={0} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 font-ui text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
             </div>
             <div>
-              <Label>{t("alimonyDirection")}</Label>
+              <Label>{t("childSupportDirection")}</Label>
               <select value={form.child_support_direction} onChange={(e) => update("child_support_direction", e.target.value)} className={selectCls}>
                 <option value="i_receive">{t("iReceive")}</option>
                 <option value="i_pay">{t("iPay")}</option>

@@ -937,6 +937,7 @@
       "alimonyMonthly": "Alimony / spousal support (monthly)",
       "alimonyYears": "Duration (years)",
       "alimonyDirection": "Direction",
+      "childSupportDirection": "Direction",
       "iReceive": "I receive",
       "iPay": "I pay",
       "childSupport": "Child support (monthly)",
