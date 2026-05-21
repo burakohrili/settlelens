@@ -132,14 +132,6 @@ Include "Not legal or financial advice — for informational modeling only" in t
 Use jurisdiction-specific formulas only. Be conservative in projections.
 ${riskGuidance}`;
 
-  const assetsSummary = assets.map((a) => ({
-    cat: a.category,
-    val: a.current_value,
-    owner: a.owned_by,
-    marital: a.is_marital,
-    mortgage: a.mortgage_balance ?? 0,
-  }));
-
   const debtsSummary = debts.map((d) => ({
     cat: d.category,
     bal: d.balance,
@@ -147,28 +139,40 @@ ${riskGuidance}`;
     owner: d.owned_by,
   }));
 
-  // Build per-asset outcome block from overrides (or fall back to legacy categorical fields)
+  // Build unified asset list: physical assets get per-asset outcome from overrides,
+  // financial assets get the shared split percentage.
   type OverrideAsset = Record<string, unknown>;
-  const perAssetOutcomes = (assetOverrides as OverrideAsset[]).map((o) => {
+  const overrideMap = new Map<string, string>();
+  for (const o of assetOverrides as OverrideAsset[]) {
     const a = o.assets as Record<string, unknown> | null;
+    if (a?.id) overrideMap.set(a.id as string, o.outcome as string);
+  }
+
+  const FINANCIAL_CATS = new Set(["bank", "retirement", "investment", "crypto", "other"]);
+  const splitPct = scenario.retirement_split_me as number;
+
+  const unifiedAssets = assets.map((a) => {
+    const isFinancial = FINANCIAL_CATS.has(a.category as string);
     return {
-      name: a?.name ?? "Asset",
-      category: a?.category ?? "other",
-      value: a?.current_value ?? 0,
-      outcome: o.outcome,
+      name: a.name,
+      cat: a.category,
+      val: a.current_value,
+      owner: a.owned_by,
+      marital: a.is_marital,
+      mortgage: (a.mortgage_balance as number) ?? 0,
+      outcome: isFinancial
+        ? `split:${splitPct}%_to_me`
+        : (overrideMap.get(a.id as string) ?? scenario.house_outcome ?? "not_decided"),
     };
   });
-  const assetOutcomeStr = perAssetOutcomes.length > 0
-    ? `Per-asset outcomes:${JSON.stringify(perAssetOutcomes)}`
-    : `house=${scenario.house_outcome ?? "not_applicable"}, vehicle=${(scenario.vehicle_outcome as string) ?? "not_applicable"}, business=${(scenario.business_outcome as string) ?? "not_applicable"}`;
 
   let userPrompt = `Jurisdiction:${j} | Marriage years:${marriageYears} | Currency:${currency}
-Assets:${JSON.stringify(assetsSummary)}
+Assets:${JSON.stringify(unifiedAssets)}
 Debts:${JSON.stringify(debtsSummary)}
 Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
 Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((spouseIncome?.annual_net as number) ?? 0)}/yr net
 Children:${children.length}
-Scenario: ${assetOutcomeStr}, financial_assets_split_me=${scenario.retirement_split_me}%, alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
+Scenario: alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
 
 Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":""}`;
