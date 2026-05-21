@@ -1,5 +1,22 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
+import { turkeyRules } from "@/lib/jurisdiction/turkey";
+import { ukRules } from "@/lib/jurisdiction/uk";
+import { germanyRules } from "@/lib/jurisdiction/germany";
+import { franceRules } from "@/lib/jurisdiction/france";
+import { spainRules } from "@/lib/jurisdiction/spain";
+import { usCommunityRules, usEquitableRules } from "@/lib/jurisdiction/us";
+
+const JURISDICTION_RULES: Record<string, unknown> = {
+  tr: turkeyRules,
+  uk: ukRules,
+  de: germanyRules,
+  fr: franceRules,
+  es: spainRules,
+  "es-catalonia": spainRules,
+  "us-community": usCommunityRules,
+  "us-equitable": usEquitableRules,
+};
 
 const sanitizeForPrompt = (s: unknown): string =>
   String(s ?? "").replace(/[\r\n]+/g, " ").slice(0, 500);
@@ -130,7 +147,18 @@ RULES: Return ONLY valid JSON. No markdown. No preamble. No trailing text.
 ${langInstruction}
 Include "Not legal or financial advice — for informational modeling only" in the notes field.
 Use jurisdiction-specific formulas only. Be conservative in projections.
-${riskGuidance}`;
+${riskGuidance}
+
+ASSET OUTCOME CALCULATION RULES:
+Each asset in the Assets array has an "outcome" field. Use these rules for net worth calculation:
+- "i_keep": user receives 100% of (current_value - mortgage) for that asset
+- "spouse_keeps": user receives 0% of that asset; exclude from user net worth entirely
+- "sell": user receives 50% of net equity (current_value - mortgage - 8% sale costs); if contribution_ratio < 1, use contribution_ratio instead of 50%
+- "split:N%_to_me": user receives N% of current_value (applies to financial assets: bank, retirement, crypto, investment)
+- "not_decided": treat conservatively as sell (50/50 after costs)
+For marital:true assets: apply the jurisdiction split formula to the marital portion only.
+For marital:false assets: owner field determines — "me" → 100% to user, "spouse" → 0% to user, "joint" → apply outcome rule.
+For TR/DE: if purchase_price is provided, marital_gain = current_value - purchase_price; apply splitFormula to marital_gain only; pre-marriage value stays with original owner.`;
 
   const debtsSummary = debts.map((d) => ({
     cat: d.category,
@@ -157,6 +185,9 @@ ${riskGuidance}`;
       name: a.name,
       cat: a.category,
       val: a.current_value,
+      purchase_price: (a.purchase_price as number | null) ?? null,
+      acquisition_year: (a.acquisition_year as number | null) ?? null,
+      contribution_ratio: (a.contribution_ratio as number | null) ?? 1,
       owner: a.owned_by,
       marital: a.is_marital,
       mortgage: (a.mortgage_balance as number) ?? 0,
@@ -166,7 +197,10 @@ ${riskGuidance}`;
     };
   });
 
+  const jurisdictionRule = JURISDICTION_RULES[j] ?? null;
+
   let userPrompt = `Jurisdiction:${j} | Marriage years:${marriageYears} | Currency:${currency}
+JurisdictionRules:${jurisdictionRule ? JSON.stringify(jurisdictionRule) : "apply general equitable principles"}
 Assets:${JSON.stringify(unifiedAssets)}
 Debts:${JSON.stringify(debtsSummary)}
 Income A(me):${(myIncome?.annual_net as number) ?? 0}/yr net
