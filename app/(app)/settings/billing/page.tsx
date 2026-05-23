@@ -32,6 +32,7 @@ export default function BillingPage() {
   const [cancelConfirm, setCancelConfirm] = useState(false);
   const [canceling, setCanceling] = useState(false);
   const [cancelMsg, setCancelMsg] = useState("");
+  const [portalLoading, setPortalLoading] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -66,6 +67,24 @@ export default function BillingPage() {
     }
     load();
   }, [router, supabase]);
+
+  const handleManagePayment = async () => {
+    setPortalLoading(true);
+    try {
+      const res = await fetch("/api/paddle/customer-portal", { method: "POST" });
+      if (res.ok) {
+        const { url } = await res.json();
+        window.open(url, "_blank", "noopener,noreferrer");
+      } else {
+        const { error } = await res.json().catch(() => ({}));
+        alert(error ?? t("cancelFail"));
+      }
+    } catch {
+      alert(t("cancelFail"));
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   const handleCancelSubscription = async () => {
     if (!profile?.paddle_subscription_id) return;
@@ -179,14 +198,14 @@ export default function BillingPage() {
           <p className="text-sm text-[#8B7355]">{t("subscriptionNote")}</p>
 
           <div className="flex flex-wrap gap-3">
-            <a
-              href="https://customer.paddle.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg border border-[#D4C5B0] px-4 py-2 text-sm font-medium text-[#2E4D6B] hover:border-[#2E4D6B] transition-colors"
+            <button
+              onClick={handleManagePayment}
+              disabled={portalLoading}
+              className="flex items-center gap-2 rounded-lg border border-[#D4C5B0] px-4 py-2 text-sm font-medium text-[#2E4D6B] hover:border-[#2E4D6B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
+              {portalLoading && <Loader2 size={14} className="animate-spin" />}
               {t("managePayment")}
-            </a>
+            </button>
 
             {!cancelConfirm && (
               <button
