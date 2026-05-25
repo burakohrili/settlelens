@@ -32,6 +32,12 @@ export default function Page() {
         { q: "What if I don't have access to all financial documents?", a: "Start with what you have. Your attorney can help obtain formal discovery if documents are inaccessible. SettleLens lets you enter estimated values and flag items that need verification." },
         { q: "Can I share my SettleLens report directly with my attorney?", a: "Yes. The Lawyer Edition PDF is designed for exactly this purpose. It's clearly labeled as financial modeling (not a legal document) and structured for professional review." },
       ],
+      relatedLinks: [
+        { title: "Equitable Distribution — Step by Step", href: "/en/equitable-distribution-divorce", description: "How property division works in 41 states — identify, value, model" },
+        { title: "What Is a QDRO?", href: "/en/what-is-a-qdro", description: "Retirement account division — what your attorney needs to know" },
+        { title: "How Is Alimony Calculated?", href: "/en/how-is-alimony-calculated", description: "Spousal support calculation methods and state-by-state variations" },
+        { title: "Divorce Financial Planning Guide", href: "/en/divorce-financial-planning", description: "All financial aspects of your divorce — one complete guide" },
+      ],
       ctaText: "Build My Financial Summary",
       ctaHref: "/en/register",
       ctaSub: "Start free — no credit card required",

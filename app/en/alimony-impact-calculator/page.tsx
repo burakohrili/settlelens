@@ -22,6 +22,12 @@ export default function Page() {
         { q: "Can SettleLens predict what a judge will award?", a: "No. Alimony decisions involve judicial discretion and many personal factors. SettleLens models the financial impact of different amounts — it does not predict legal outcomes." },
         { q: "Does the model account for modification over time?", a: "You can model different durations and enter potential modification scenarios as separate runs. SettleLens does not automatically model court-ordered modifications." },
       ],
+      relatedLinks: [
+        { title: "How Is Alimony Calculated?", href: "/en/how-is-alimony-calculated", description: "Income formulas, state variations, duration rules, and the 10-year dollar impact" },
+        { title: "Child Support in Divorce", href: "/en/child-support-divorce", description: "Income shares model, state guidelines, and 10-year cost projection" },
+        { title: "Build a Settlement Agreement", href: "/en/divorce-agreement-simulator", description: "Simulate full settlement proposals and compare them side by side" },
+        { title: "Spousal Support Planning Checklist", href: "/en/divorce-checklist/spousal-support-planning", description: "What to document before agreeing to any alimony amount or duration" },
+      ],
       ctaText: "Model My Alimony Scenarios",
       ctaHref: "/en/register",
       ctaSub: "Start free — no credit card required",

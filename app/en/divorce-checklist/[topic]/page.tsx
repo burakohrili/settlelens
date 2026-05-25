@@ -9,9 +9,9 @@ const CHECKLIST_TOPICS = [
     description: "Organize your financial picture before your first attorney meeting. This checklist helps you prepare the documents and numbers your lawyer needs.",
     items: [
       { heading: "Income Documentation", checks: ["Last 3 years of tax returns (joint and individual)", "Recent pay stubs (last 3 months)", "Spouse's income documents if available", "Self-employment income records, P&L statements", "Investment and rental income statements"] },
-      { heading: "Asset Inventory", checks: ["Real estate â€” address, estimated value, mortgage balance", "Bank and brokerage account statements (last 6 months)", "Retirement accounts â€” 401(k), IRA, pension statements", "Vehicles â€” make, model, year, current value, loan balance", "Business interests â€” ownership percentage, estimated value"] },
+      { heading: "Asset Inventory", checks: ["Real estate  -  address, estimated value, mortgage balance", "Bank and brokerage account statements (last 6 months)", "Retirement accounts  -  401(k), IRA, pension statements", "Vehicles  -  make, model, year, current value, loan balance", "Business interests  -  ownership percentage, estimated value"] },
       { heading: "Debt Records", checks: ["Mortgage statement with payoff amount", "Car loan statements", "Credit card balances for all accounts (joint and individual)", "Student loan balances", "Any other personal loans or lines of credit"] },
-      { heading: "Insurance", checks: ["Life insurance policies â€” face value, cash value", "Health insurance coverage details", "Disability insurance"] },
+      { heading: "Insurance", checks: ["Life insurance policies  -  face value, cash value", "Health insurance coverage details", "Disability insurance"] },
       { heading: "Legal Documents", checks: ["Marriage certificate", "Prenuptial or postnuptial agreement (if applicable)", "Any existing court orders (child support, custody)", "Wills and trusts"] },
     ],
   },
@@ -22,8 +22,8 @@ const CHECKLIST_TOPICS = [
     items: [
       { heading: "Warning Signs of Hidden Assets", checks: ["Sudden decline in business income or revenue", "Large cash withdrawals you cannot account for", "Unexplained loans repaid to friends or family", "New debt you were not aware of", "Business expenses that seem unusually high", "Overpayment of taxes (to receive a refund after divorce)"] },
       { heading: "Documents to Request", checks: ["Business financial statements and tax returns", "Bank statements for all accounts (personal and business)", "Credit card statements", "Cryptocurrency exchange account history", "Offshore bank account disclosures (FBAR filings)", "Pension and deferred compensation plan documents"] },
-      { heading: "Professional Help", checks: ["Forensic accountant â€” traces financial irregularities", "Certified divorce financial analyst (CDFA)", "Private investigator (for lifestyle investigations)", "Attorney subpoena power â€” requires formal discovery"] },
-      { heading: "Red Flags in Specific Asset Types", checks: ["Real estate â€” look for deeds transferred to relatives", "Business â€” look for inflated salaries to employees who are family", "Crypto â€” check for wallet addresses not disclosed", "Collectibles â€” art, jewelry, wine collections often undervalued"] },
+      { heading: "Professional Help", checks: ["Forensic accountant  -  traces financial irregularities", "Certified divorce financial analyst (CDFA)", "Private investigator (for lifestyle investigations)", "Attorney subpoena power  -  requires formal discovery"] },
+      { heading: "Red Flags in Specific Asset Types", checks: ["Real estate  -  look for deeds transferred to relatives", "Business  -  look for inflated salaries to employees who are family", "Crypto  -  check for wallet addresses not disclosed", "Collectibles  -  art, jewelry, wine collections often undervalued"] },
     ],
   },
   {
@@ -31,9 +31,9 @@ const CHECKLIST_TOPICS = [
     title: "Keeping vs. Selling the House in Divorce: Financial Checklist",
     description: "The house is often the biggest financial decision in a divorce. Use this checklist to evaluate whether keeping, selling, or transferring the home makes financial sense.",
     items: [
-      { heading: "If You Want to Keep the House", checks: ["Can you qualify for the mortgage alone? (Check debt-to-income ratio)", "Can you afford monthly payments on your post-divorce income?", "Budget for maintenance, taxes, and insurance alone", "Factor in the opportunity cost â€” what else could you do with the equity?", "Get a current appraisal to ensure fair equity calculation"] },
-      { heading: "If You Want to Sell", checks: ["Estimate net sale proceeds (value âˆ’ mortgage âˆ’ 6% selling costs)", "Agree on listing price and timeline with your attorney", "Clarify how proceeds will be split", "Plan for capital gains tax implications if equity exceeds $250K ($500K married)"] },
-      { heading: "If Your Spouse Keeps the House", checks: ["Ensure your name is removed from the mortgage (refinance required)", "Get the buyout amount in writing â€” based on current equity", "Confirm deed transfer is completed at closing", "Check that the transfer does not trigger a taxable event"] },
+      { heading: "If You Want to Keep the House", checks: ["Can you qualify for the mortgage alone? (Check debt-to-income ratio)", "Can you afford monthly payments on your post-divorce income?", "Budget for maintenance, taxes, and insurance alone", "Factor in the opportunity cost  -  what else could you do with the equity?", "Get a current appraisal to ensure fair equity calculation"] },
+      { heading: "If You Want to Sell", checks: ["Estimate net sale proceeds (value âˆ' mortgage âˆ' 6% selling costs)", "Agree on listing price and timeline with your attorney", "Clarify how proceeds will be split", "Plan for capital gains tax implications if equity exceeds $250K ($500K married)"] },
+      { heading: "If Your Spouse Keeps the House", checks: ["Ensure your name is removed from the mortgage (refinance required)", "Get the buyout amount in writing  -  based on current equity", "Confirm deed transfer is completed at closing", "Check that the transfer does not trigger a taxable event"] },
       { heading: "10-Year Financial Comparison", checks: ["Model 'I keep' vs 'sell' vs 'spouse keeps' in SettleLens", "Compare net worth at year 5 and year 10 under each scenario", "Factor in mortgage payments vs investing the equity elsewhere", "Consider school districts, relocation costs, and emotional factors separately"] },
     ],
   },
@@ -44,8 +44,8 @@ const CHECKLIST_TOPICS = [
     items: [
       { heading: "Locate All Retirement Accounts", checks: ["401(k) and 403(b) from current and prior employers", "Traditional IRA and Roth IRA accounts", "Defined benefit (pension) plans", "Military retirement (USFSPA)", "Federal government retirement (FERS/CSRS)", "Stock option and deferred compensation plans"] },
       { heading: "Determine the Marital Portion", checks: ["Date of marriage and date of separation are the key dates", "Request a benefit statement for the marriage start date", "Calculate contributions and growth during the marriage", "Identify any pre-marital balance that is separate property"] },
-      { heading: "QDRO Process Checklist", checks: ["Hire a QDRO attorney â€” do not use a general template", "Request plan administrator's pre-approval of QDRO language", "Get the QDRO signed by the judge at the same time as the divorce decree", "Submit the approved QDRO to the plan administrator immediately", "Confirm the transfer within 60 days of submission"] },
-      { heading: "Tax Considerations", checks: ["Traditional 401(k)/IRA: taxable at withdrawal â€” discount for present value", "Roth IRA: tax-free growth â€” may be worth more than a traditional account of equal size", "Pension: get actuarial valuation for offset method", "Do not withdraw funds directly â€” roll over to avoid 10% penalty"] },
+      { heading: "QDRO Process Checklist", checks: ["Hire a QDRO attorney  -  do not use a general template", "Request plan administrator's pre-approval of QDRO language", "Get the QDRO signed by the judge at the same time as the divorce decree", "Submit the approved QDRO to the plan administrator immediately", "Confirm the transfer within 60 days of submission"] },
+      { heading: "Tax Considerations", checks: ["Traditional 401(k)/IRA: taxable at withdrawal  -  discount for present value", "Roth IRA: tax-free growth  -  may be worth more than a traditional account of equal size", "Pension: get actuarial valuation for offset method", "Do not withdraw funds directly  -  roll over to avoid 10% penalty"] },
     ],
   },
   {
@@ -53,10 +53,10 @@ const CHECKLIST_TOPICS = [
     title: "Divorce Financial Checklist for Business Owners",
     description: "Business ownership adds significant complexity to a divorce. This checklist covers valuation, income calculation, and how to protect your business interests.",
     items: [
-      { heading: "Business Valuation", checks: ["Hire a certified business valuator (CBV/ABV/CVA)", "Determine the marital portion (how much of the business was built during the marriage?)", "Choose valuation method: income approach, market approach, or asset approach", "Separate personal goodwill (non-marital) from enterprise goodwill (marital)", "Get valuations from both parties â€” expect different numbers"] },
-      { heading: "Income Calculation", checks: ["Business income for alimony/support purposes differs from the P&L", "Add back non-business expenses paid through the business", "Identify owner perks (vehicle, phone, travel) that are really compensation", "Average income over 3â€“5 years if highly variable"] },
+      { heading: "Business Valuation", checks: ["Hire a certified business valuator (CBV/ABV/CVA)", "Determine the marital portion (how much of the business was built during the marriage?)", "Choose valuation method: income approach, market approach, or asset approach", "Separate personal goodwill (non-marital) from enterprise goodwill (marital)", "Get valuations from both parties  -  expect different numbers"] },
+      { heading: "Income Calculation", checks: ["Business income for alimony/support purposes differs from the P&L", "Add back non-business expenses paid through the business", "Identify owner perks (vehicle, phone, travel) that are really compensation", "Average income over 3 - 5 years if highly variable"] },
       { heading: "Settlement Options", checks: ["Buy-out: one spouse keeps business, pays the other their share", "Co-ownership: both remain owners (usually not recommended)", "Sale: sell the business and split proceeds", "Structured payments: buy-out paid over time (reduces liquidity pressure)"] },
-      { heading: "Protect Your Business During the Divorce", checks: ["Do not make major business decisions without attorney's advice", "Document all business expenses carefully", "Do not comingle personal and business funds", "Keep employees and partners informed appropriately â€” rumors hurt value"] },
+      { heading: "Protect Your Business During the Divorce", checks: ["Do not make major business decisions without attorney's advice", "Document all business expenses carefully", "Do not comingle personal and business funds", "Keep employees and partners informed appropriately  -  rumors hurt value"] },
     ],
   },
   {
@@ -66,8 +66,34 @@ const CHECKLIST_TOPICS = [
     items: [
       { heading: "Child Support Calculation Inputs", checks: ["Each parent's gross monthly income", "Percentage of overnight custody time (parenting time)", "Number of children and their ages", "Health insurance premium for children", "Work-related childcare costs", "State-specific guideline formula"] },
       { heading: "Child-Related Expenses to Address", checks: ["Health insurance: who provides it and at what cost?", "Out-of-pocket medical expenses: how are extraordinary costs split?", "Childcare and after-school programs", "Educational expenses: private school, tutoring, college savings", "Extracurricular activities: who pays?", "Transportation between homes"] },
-      { heading: "Custody Arrangement Financial Impact", checks: ["50/50 custody often reduces child support significantly", "Primary custody reduces your net income but increases your support received", "Tax exemption for dependents: negotiate who claims each child", "Child Tax Credit eligibility â€” tied to who claims the dependent"] },
+      { heading: "Custody Arrangement Financial Impact", checks: ["50/50 custody often reduces child support significantly", "Primary custody reduces your net income but increases your support received", "Tax exemption for dependents: negotiate who claims each child", "Child Tax Credit eligibility - tied to who claims the dependent"] },
       { heading: "Long-Term Planning", checks: ["College savings: 529 plan contributions post-divorce", "Life insurance: ensure child support is protected if paying parent dies", "Estate planning: update beneficiaries and guardianship designations", "Disability insurance: protect child support income stream"] },
+    ],
+  },
+  {
+    slug: "spousal-support-planning",
+    title: "Spousal Support Planning Checklist - Before Agreeing to Any Amount",
+    description: "Alimony is one of the most negotiable elements of a divorce and one of the most financially impactful. This checklist helps you prepare before agreeing to any amount or duration.",
+    items: [
+      { heading: "Income Documentation (Both Spouses)", checks: ["Pay stubs for the last 3 months (both spouses)", "Tax returns for the last 3 years (joint and individual)", "W-2s and 1099s for all income sources", "Business income statements if self-employed (P&L, Schedule C)", "Investment income, rental income, dividends", "Any bonuses, commissions, or irregular compensation"] },
+      { heading: "Standard of Living Analysis", checks: ["Monthly household expenses during the marriage (utilities, food, transport)", "Housing costs (mortgage or rent) post-separation for each spouse", "Subscriptions, memberships, and lifestyle expenses", "Vacation and entertainment budget during the marriage", "Health insurance costs for both spouses post-divorce", "Document the marital standard of living - courts use this as a benchmark"] },
+      { heading: "Earning Capacity Assessment", checks: ["Current employment status and job title for each spouse", "Years out of the workforce (if applicable) - affects earning capacity", "Education and professional credentials", "Job market research for the lower-earning spouse's field", "Any career sacrifices made to support the other spouse's education or career", "Health limitations that affect employability"] },
+      { heading: "Duration and Termination Analysis", checks: ["Length of the marriage (key factor in most states)", "Research your state's alimony duration guidelines", "Check if your state has a statutory formula or leaves it to judicial discretion", "Remarriage of the recipient terminates alimony in almost all states", "Cohabitation of the recipient terminates or reduces alimony in many states", "Model 3-year, 5-year, and 8-year scenarios in SettleLens"] },
+      { heading: "Tax Implications (Post-TCJA 2019)", checks: ["Alimony is NOT deductible for the paying spouse (agreements after Dec 31, 2018)", "Alimony is NOT taxable income for the receiving spouse (post-2018 agreements)", "Pre-2019 agreements: old rules (deductible/includible) may still apply - verify", "Factor the after-tax cost into your settlement modeling", "Lump-sum alimony vs. monthly payments - different tax treatment in some states", "Consult a CPA or tax attorney for your specific situation"] },
+      { heading: "Supporting Documents", checks: ["Career progression records and pay history for both spouses", "Records of any career interruptions (childcare, relocation for spouse's job)", "Current job postings in your field (for earning capacity analysis)", "Health records if disability or chronic illness is a factor", "Records of contributions to the other spouse's education or career advancement"] },
+    ],
+  },
+  {
+    slug: "tax-implications-divorce",
+    title: "Divorce Tax Checklist - What the IRS Will Ask",
+    description: "Divorce has significant tax consequences that most people overlook until it is too late. This checklist covers the key tax issues before, during, and after your divorce.",
+    items: [
+      { heading: "Filing Status in the Year of Divorce", checks: ["If divorced by Dec 31, you are Single or Head of Household for the full year", "Head of Household requires: unmarried + paid more than half the home costs + qualifying dependent", "Filing jointly vs. separately in the year of divorce - compare the tax liability", "If still legally married on Dec 31, you may still file jointly (requires agreement)", "Separate filing often results in higher total tax - calculate both before deciding", "Coordinate with your spouse or attorney on filing status for the divorce year"] },
+      { heading: "Alimony Tax Treatment", checks: ["Post-2018 agreements: alimony NOT deductible for payor, NOT income for recipient", "Pre-2019 agreements: alimony IS deductible for payor, IS taxable income for recipient", "Confirm which rules apply to your agreement based on execution date", "Lump-sum property settlement is not alimony - different tax rules apply", "Child support is never deductible and never taxable income", "Document any payments clearly as alimony vs. property settlement vs. child support"] },
+      { heading: "Home Sale Capital Gains", checks: ["If selling the marital home, each spouse can exclude up to $250,000 gain (if eligible)", "Joint filers can exclude up to $500,000 - but only if both meet the 2-year ownership and use test", "After divorce, each spouse gets a $250,000 exclusion individually", "If one spouse keeps the house, timing the sale after divorce may affect which exclusion applies", "Calculate your gain: sale price minus purchase price minus improvements minus selling costs", "If gain exceeds exclusion, the excess is taxable - plan accordingly"] },
+      { heading: "Retirement Account Tax Considerations", checks: ["QDRO transfers are tax-free if rolled into an IRA - do NOT accept a check", "Taking cash from a QDRO transfer (not rolling over) triggers income tax plus potential penalties", "Traditional 401(k) and IRA: taxable at withdrawal - discount the present value by your tax rate", "Roth IRA: tax-free at withdrawal - may be worth more than an equal traditional balance", "Do not withdraw funds directly from retirement accounts - roll over to avoid 10% penalty", "Work with a tax professional before choosing between offset and direct split"] },
+      { heading: "Child-Related Tax Items", checks: ["Dependency exemption: only one parent can claim each child per year", "Child Tax Credit ($2,000/child) goes to the parent who claims the exemption", "Earned Income Tax Credit: only the custodial parent can claim this", "Childcare expenses tax credit: goes to the parent who pays and claims the child", "529 plan account control: designate the account owner carefully post-divorce", "Update W-4 withholding after divorce to reflect new filing status and allowances"] },
+      { heading: "Business and Investment Tax Issues", checks: ["Transferring business interests in divorce is generally tax-free between spouses", "Receiving business assets with low tax basis means higher capital gains when you sell later", "Stock options and restricted stock units: understand vesting schedule and tax timing", "Cryptocurrency transfers in divorce are tax-free, but selling later triggers capital gains based on original cost basis", "Investment accounts: check the cost basis of transferred brokerage accounts", "Consult a CPA before finalizing any asset transfers - tax basis matters enormously"] },
     ],
   },
 ];
@@ -179,7 +205,7 @@ export default async function DivorceChecklistPage({ params }: Props) {
             href="/en/register"
             className="mt-4 inline-block rounded-lg bg-[#C8973A] px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90"
           >
-            Start Free Analysis â†’
+            Start Free Analysis â†'
           </Link>
         </div>
 

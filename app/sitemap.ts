@@ -12,6 +12,16 @@ const CHECKLIST_TOPICS = [
   "retirement-accounts",
   "business-owner",
   "children-support",
+  "spousal-support-planning",
+  "tax-implications-divorce",
+];
+
+const EN_SEO_PAGES = [
+  "/en/what-is-equitable-distribution",
+  "/en/equitable-distribution-divorce",
+  "/en/how-is-alimony-calculated",
+  "/en/child-support-divorce",
+  "/en/what-is-a-qdro",
 ];
 
 const DE_CHECKLIST_TOPICS = [
@@ -96,6 +106,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/de/kindesunterhalt-scheidung`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
   ];
 
+  const enSeoPagesExtra: MetadataRoute.Sitemap = EN_SEO_PAGES.map((url) => ({
+    url: `${BASE}${url}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticPages,
     ...methodologyPages,
@@ -106,5 +123,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...checklistPages,
     ...deChecklistPages,
     ...deSeoPagesExtra,
+    ...enSeoPagesExtra,
   ];
 }

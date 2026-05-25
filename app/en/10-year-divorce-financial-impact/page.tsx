@@ -22,6 +22,12 @@ export default function Page() {
         { q: "How reliable is a 10-year financial projection?", a: "All projections are estimates based on your inputs and configurable assumptions. Market returns, inflation, and personal circumstances will differ. SettleLens shows a labeled confidence level with each result — use it as a planning guide, not a guarantee." },
         { q: "Which plans include 10-year projections?", a: "10-year AI projections are included in the Scenario Package and above. The free Discovery plan includes a basic net worth summary." },
       ],
+      relatedLinks: [
+        { title: "How Alimony Is Calculated", href: "/en/how-is-alimony-calculated", description: "Spousal support formulas and the long-term dollar impact modeled" },
+        { title: "Child Support in Divorce", href: "/en/child-support-divorce", description: "$750/month × 12 years = $108,000 — see your full 10-year obligation" },
+        { title: "Keep or Sell the House?", href: "/en/keep-or-sell-house-divorce", description: "Three house scenarios compared financially over 10 years" },
+        { title: "Compare Your Scenarios", href: "/en/compare-divorce-settlement-scenarios", description: "Put multiple settlement proposals side by side and see the difference" },
+      ],
       ctaText: "See My 10-Year Projection",
       ctaHref: "/en/register",
       ctaSub: "Start free — no credit card required",

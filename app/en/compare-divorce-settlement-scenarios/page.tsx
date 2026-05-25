@@ -22,6 +22,12 @@ export default function Page() {
         { q: "How many scenarios can I create?", a: "Free Discovery plan includes 3 scenarios (without AI analysis). Paid plans include unlimited scenarios with 10-year AI projections." },
         { q: "Can I modify a scenario after creating it?", a: "Yes. All scenarios are editable. You can adjust any variable — house outcome, alimony, retirement split — and the projection updates immediately." },
       ],
+      relatedLinks: [
+        { title: "Equitable Distribution Guide", href: "/en/equitable-distribution-divorce", description: "How property division works — identify, classify, value, model" },
+        { title: "How Is Alimony Calculated?", href: "/en/how-is-alimony-calculated", description: "Spousal support formulas, duration rules, and negotiation framing" },
+        { title: "What Is a QDRO?", href: "/en/what-is-a-qdro", description: "Retirement split options: direct division vs. offset method compared" },
+        { title: "Build a Full Settlement", href: "/en/divorce-agreement-simulator", description: "Simulate complete settlement proposals from scratch" },
+      ],
       ctaText: "Compare My Scenarios",
       ctaHref: "/en/register",
       ctaSub: "Start free — no credit card required",

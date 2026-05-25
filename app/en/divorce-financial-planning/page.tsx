@@ -22,6 +22,12 @@ export default function Page() {
         { q: "Can I use SettleLens before I decide to divorce?", a: "Yes. SettleLens is designed for early-stage 'what if' modeling. Understanding the financial picture before making a decision can help you approach the process more clearly." },
         { q: "Does SettleLens account for taxes?", a: "SettleLens models pre-tax income and post-tax cash flow estimates based on your inputs. For detailed tax planning, consult a CPA or financial advisor." },
       ],
+      relatedLinks: [
+        { title: "Equitable Distribution — Step by Step", href: "/en/equitable-distribution-divorce", description: "How marital property is identified, valued, and divided in 41 states" },
+        { title: "How Is Alimony Calculated?", href: "/en/how-is-alimony-calculated", description: "Spousal support formulas, duration rules, and long-term financial impact" },
+        { title: "Child Support in Divorce", href: "/en/child-support-divorce", description: "Income shares model, self-support reserve, and 10-year cost planning" },
+        { title: "What Is a QDRO?", href: "/en/what-is-a-qdro", description: "Retirement account division in divorce — how it works without tax penalties" },
+      ],
       ctaText: "Start My Financial Plan",
       ctaHref: "/en/register",
       ctaSub: "Start free — no credit card required",
