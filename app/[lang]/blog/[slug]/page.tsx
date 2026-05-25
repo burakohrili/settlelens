@@ -25,7 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} — SettleLens`,
     description: post.description,
-    alternates: { canonical: `https://settlelens.com/${lang}/blog/${slug}` },
+    alternates: {
+      canonical: `https://settlelens.com/${lang}/blog/${slug}`,
+      languages: {
+        "x-default": `https://settlelens.com/en/blog/${slug}`,
+      },
+    },
     openGraph: {
       title: post.title,
       description: post.description,

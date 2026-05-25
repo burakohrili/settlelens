@@ -39,10 +39,12 @@ export async function generateMetadata({ params }: Props) {
       description: t("description"),
       url: `https://settlelens.com/${lang}`,
       siteName: "SettleLens",
-      images: [{ url: `/og/${lang}.png`, width: 1200, height: 630 }],
+      type: "website",
     },
     alternates: {
+      canonical: `https://settlelens.com/${lang}`,
       languages: {
+        "x-default": "https://settlelens.com/en",
         en: "/en",
         tr: "/tr",
         de: "/de",
@@ -54,9 +56,40 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
+const SOFTWARE_APP_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "SettleLens",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  url: "https://settlelens.com",
+  description:
+    "AI-powered financial modeling for divorce settlements. Compare scenarios, project 10-year net worth, and prepare for attorney meetings.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    description: "Free Discovery plan. Paid plans from $19.",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "SettleLens",
+    url: "https://settlelens.com",
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "support@settlelens.com",
+      contactType: "customer support",
+    },
+  },
+};
+
 export default function LandingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_APP_SCHEMA) }}
+      />
       <Header />
       <main id="main-content">
         {/*

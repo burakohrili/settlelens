@@ -1,5 +1,18 @@
+import type { Metadata } from "next";
 import { LegalPageLayout } from "@/components/layout/LegalPageLayout";
 import { getTranslations } from "next-intl/server";
+
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "about" });
+  return {
+    title: `${t("title")} — SettleLens`,
+    description: t("story_p").slice(0, 160),
+    alternates: { canonical: `https://settlelens.com/${lang}/about` },
+  };
+}
 
 export default async function AboutPage() {
   const t = await getTranslations("about");

@@ -15,7 +15,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `SettleLens Blog — ${t("title")}`,
     description: t("subtitle"),
-    alternates: { canonical: `https://settlelens.com/${lang}/blog` },
+    alternates: {
+      canonical: `https://settlelens.com/${lang}/blog`,
+      languages: {
+        "x-default": "https://settlelens.com/en/blog",
+        en: "https://settlelens.com/en/blog",
+        tr: "https://settlelens.com/tr/blog",
+        de: "https://settlelens.com/de/blog",
+        fr: "https://settlelens.com/fr/blog",
+        es: "https://settlelens.com/es/blog",
+        ar: "https://settlelens.com/ar/blog",
+      },
+    },
   };
 }
 

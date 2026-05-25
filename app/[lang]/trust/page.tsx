@@ -1,6 +1,19 @@
+import type { Metadata } from "next";
 import { LegalPageLayout } from "@/components/layout/LegalPageLayout";
 import { getTranslations } from "next-intl/server";
 import { Shield, Lock, Eye, Download, Trash2, CreditCard, Database } from "lucide-react";
+
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "trust" });
+  return {
+    title: `${t("title")} — SettleLens`,
+    description: t("intro").slice(0, 160),
+    alternates: { canonical: `https://settlelens.com/${lang}/trust` },
+  };
+}
 
 export default async function TrustPage() {
   const t = await getTranslations("trust");

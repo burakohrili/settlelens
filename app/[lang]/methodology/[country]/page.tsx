@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { LegalPageLayout } from "@/components/layout/LegalPageLayout";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -164,6 +165,20 @@ type Props = {
 };
 
 export const dynamicParams = false;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang, country } = await params;
+  const data = COUNTRY_DATA[country];
+  if (!data) return {};
+  const descSnippet = data.framework.slice(0, 130);
+  return {
+    title: `${data.name} Divorce Property Division — Methodology | SettleLens`,
+    description: `How SettleLens models divorce asset division in ${data.name}. ${descSnippet}...`,
+    alternates: {
+      canonical: `https://settlelens.com/${lang}/methodology/${country}`,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return VALID_COUNTRIES.map((country) => ({ country }));
