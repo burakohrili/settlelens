@@ -1,10 +1,11 @@
 import { NextIntlClientProvider } from "next-intl";
 import messages from "../../messages/es.json";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 export default function EsLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" dir="ltr" className="h-full antialiased">
+      <GoogleTagManager gtmId="GTM-M6LRP7BB" />
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider locale="es" messages={messages}>
           {children}

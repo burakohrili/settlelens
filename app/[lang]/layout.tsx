@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostHogProvider } from "@/components/layout/PostHogProvider";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { QuickExit } from "@/components/layout/QuickExit";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 type Props = {
   children: React.ReactNode;
@@ -37,6 +37,7 @@ export default async function LangLayout({ children, params }: Props) {
 
   return (
     <html lang={lang} dir={dir} className="h-full antialiased">
+      <GoogleTagManager gtmId="GTM-M6LRP7BB" />
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
           <PostHogProvider>
