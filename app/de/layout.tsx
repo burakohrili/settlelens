@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import messages from "../../messages/de.json";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function DeLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export default function DeLayout({ children }: { children: React.ReactNode }) {
         <NextIntlClientProvider locale="de" messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <GoogleAnalytics gaId="G-V6D0B14RE1" />
       </body>
     </html>
   );

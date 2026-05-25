@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { PostHogProvider } from "@/components/layout/PostHogProvider";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { QuickExit } from "@/components/layout/QuickExit";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 type Props = {
   children: React.ReactNode;
@@ -44,6 +45,7 @@ export default async function LangLayout({ children, params }: Props) {
             <QuickExit />
           </PostHogProvider>
         </NextIntlClientProvider>
+        <GoogleAnalytics gaId="G-V6D0B14RE1" />
       </body>
     </html>
   );

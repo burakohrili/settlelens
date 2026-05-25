@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import messages from "../../messages/tr.json";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function TrLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export default function TrLayout({ children }: { children: React.ReactNode }) {
         <NextIntlClientProvider locale="tr" messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <GoogleAnalytics gaId="G-V6D0B14RE1" />
       </body>
     </html>
   );
