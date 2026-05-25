@@ -14,6 +14,13 @@ const CHECKLIST_TOPICS = [
   "children-support",
 ];
 
+const DE_CHECKLIST_TOPICS = [
+  "vor-anwaltsgespraech",
+  "vermoegensdokumentation",
+  "hausbeurteilung",
+  "unterhaltsplanung",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -75,6 +82,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const deChecklistPages: MetadataRoute.Sitemap = DE_CHECKLIST_TOPICS.map((t) => ({
+    url: `${BASE}/de/scheidung-checkliste/${t}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const deSeoPagesExtra: MetadataRoute.Sitemap = [
+    { url: `${BASE}/de/zugewinnausgleich-berechnen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+    { url: `${BASE}/de/was-bedeutet-zugewinnausgleich`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${BASE}/de/ehegattenunterhalt-berechnen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+    { url: `${BASE}/de/kindesunterhalt-scheidung`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+  ];
+
   return [
     ...staticPages,
     ...methodologyPages,
@@ -83,5 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...trCityPages,
     ...deStatePages,
     ...checklistPages,
+    ...deChecklistPages,
+    ...deSeoPagesExtra,
   ];
 }

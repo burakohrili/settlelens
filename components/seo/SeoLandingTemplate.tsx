@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 export interface SeoFaqItem { q: string; a: string }
 export interface SeoSection { heading: string; body: string }
 
+export interface SeoRelatedLink { title: string; href: string; description: string }
+
 export interface SeoPageConfig {
   locale: string;
   badge: string;
@@ -16,14 +18,20 @@ export interface SeoPageConfig {
   sections: SeoSection[];
   checklist?: string[];
   faq?: SeoFaqItem[];
+  relatedLinks?: SeoRelatedLink[];
   ctaText: string;
   ctaHref: string;
   ctaSub?: string;
   disclaimer: string;
 }
 
+const RELATED_LABEL: Record<string, string> = {
+  de: "Verwandte Themen", tr: "İlgili Konular", fr: "Sujets connexes",
+  es: "Temas relacionados", ar: "مواضيع ذات صلة", en: "Related Topics",
+};
+
 export function SeoLandingTemplate({ config }: { config: SeoPageConfig }) {
-  const { locale, badge, headline, intro, sections, checklist, faq, ctaText, ctaHref, ctaSub, disclaimer } = config;
+  const { locale, badge, headline, intro, sections, checklist, faq, relatedLinks, ctaText, ctaHref, ctaSub, disclaimer } = config;
 
   return (
     <>
@@ -93,6 +101,29 @@ export function SeoLandingTemplate({ config }: { config: SeoPageConfig }) {
                     <p className="font-ui font-semibold text-[var(--navy)] mb-2">{item.q}</p>
                     <p className="font-body text-sm text-[var(--brown)] leading-relaxed">{item.a}</p>
                   </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Related Links */}
+        {relatedLinks && relatedLinks.length > 0 && (
+          <section className="bg-[var(--cream)] py-12 px-4">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-xl font-bold text-[var(--navy)] mb-6">
+                {RELATED_LABEL[locale] ?? RELATED_LABEL.en}
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {relatedLinks.map((link, i) => (
+                  <Link
+                    key={i}
+                    href={link.href}
+                    className="flex flex-col gap-1 border border-[var(--sand)] rounded-xl p-4 bg-white hover:border-[var(--slate)] transition-colors"
+                  >
+                    <span className="font-ui text-sm font-semibold text-[var(--navy)]">{link.title}</span>
+                    <span className="font-body text-xs text-[var(--brown)]">{link.description}</span>
+                  </Link>
                 ))}
               </div>
             </div>

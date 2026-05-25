@@ -22,6 +22,12 @@ export default function Page() {
         { q: "Kann SettleLens den genauen Unterhaltsbetrag berechnen?", a: "Nein. Der Unterhaltsbetrag wird vom Gericht festgesetzt und hängt von vielen individuellen Faktoren ab. SettleLens modelliert die finanziellen Auswirkungen verschiedener Beträge — als Referenzrahmen für Ihre Verhandlung." },
         { q: "Wie lange wird Unterhalt in der Regel gezahlt?", a: "Das variiert stark je nach Einzelfall. Ehegattenunterhalt kann befristet oder unbefristet sein; Kindesunterhalt läuft bis zur Volljährigkeit (bzw. Abschluss der Erstausbildung). SettleLens rechnet diese Dauer in die Gesamtprojektion ein." },
       ],
+      relatedLinks: [
+        { title: "Ehegattenunterhalt berechnen", href: "/de/ehegattenunterhalt-berechnen", description: "Trennungsunterhalt und nachehelicher Unterhalt — 3/7-Methode und Befristung" },
+        { title: "Kindesunterhalt bei Scheidung", href: "/de/kindesunterhalt-scheidung", description: "Düsseldorfer Tabelle 2026 mit Einkommensstufen und Altersgruppen" },
+        { title: "Finanzplanung bei Scheidung", href: "/de/scheidung-finanzplanung", description: "Gesamtüberblick: Zugewinn, Unterhalt, Haus, Rente" },
+        { title: "Scheidung Checkliste Unterhaltsplanung", href: "/de/scheidung-checkliste/unterhaltsplanung", description: "Vollständige Checkliste für Ihre Unterhaltsplanung" },
+      ],
       ctaText: "Meine Unterhaltsszenarien modellieren",
       ctaHref: "/de/register",
       ctaSub: "Kostenlos starten — keine Kreditkarte erforderlich",

@@ -22,6 +22,12 @@ export default function Page() {
         { q: "Gilt die Zugewinngemeinschaft automatisch?", a: "Ja, sofern kein Ehevertrag mit anderem Güterstand (z.B. Gütertrennung) geschlossen wurde. SettleLens wendet BGB §1363 als Standard an." },
         { q: "Wie wird der Zugewinn berechnet?", a: "Der Zugewinn ist die Differenz zwischen Anfangsvermögen (Beginn der Ehe) und Endvermögen (Zeitpunkt der Zustellung des Scheidungsantrags). SettleLens unterstützt Sie dabei, Anfangs- und Endvermögen beider Parteien zu strukturieren." },
       ],
+      relatedLinks: [
+        { title: "Zugewinnausgleich berechnen", href: "/de/zugewinnausgleich-berechnen", description: "Schritt-für-Schritt-Anleitung: Formel, Beispiel, häufige Fehler" },
+        { title: "Ehegattenunterhalt berechnen", href: "/de/ehegattenunterhalt-berechnen", description: "Trennungsunterhalt und nachehelicher Unterhalt — 3/7-Methode erklärt" },
+        { title: "Kindesunterhalt bei Scheidung", href: "/de/kindesunterhalt-scheidung", description: "Düsseldorfer Tabelle 2026 und Selbstbehalt im Überblick" },
+        { title: "Scheidungsvereinbarung simulieren", href: "/de/scheidungsvereinbarung-simulator", description: "Gesamtpaket modellieren: Vermögen + Unterhalt + Haus" },
+      ],
       ctaText: "Meine Scheidungsfinanzen planen",
       ctaHref: "/de/register",
       ctaSub: "Kostenlos starten — keine Kreditkarte erforderlich",

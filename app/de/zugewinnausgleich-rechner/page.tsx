@@ -22,6 +22,12 @@ export default function Page() {
         { q: "Kann ich den Zugewinnausgleich vertraglich ausschließen?", a: "Ja, durch einen notariell beglaubigten Ehevertrag können Sie Gütertrennung vereinbaren. Besteht bereits ein Ehevertrag, wenden Sie sich an Ihren Anwalt für eine Überprüfung." },
         { q: "Was passiert mit Schulden beim Zugewinnausgleich?", a: "Schulden mindern das Endvermögen. Ist das Endvermögen einer Partei negativ, wird ihr Anfangsvermögen auf null gesetzt — ein negatives Anfangsvermögen wird hingegen berücksichtigt." },
       ],
+      relatedLinks: [
+        { title: "Zugewinnausgleich berechnen", href: "/de/zugewinnausgleich-berechnen", description: "Schritt-für-Schritt-Anleitung mit Formel und vollständigem Rechenbeispiel" },
+        { title: "Was bedeutet Zugewinnausgleich?", href: "/de/was-bedeutet-zugewinnausgleich", description: "Einfache Erklärung der gesetzlichen Grundlagen — ohne Juristendeutsch" },
+        { title: "Finanzplanung bei Scheidung", href: "/de/scheidung-finanzplanung", description: "Gesamtüberblick: Zugewinn, Unterhalt, Immobilien, Rente" },
+        { title: "Szenarien vergleichen", href: "/de/scheidung-szenarien-vergleichen", description: "Verschiedene Einigungsszenarien finanziell nebeneinander analysieren" },
+      ],
       ctaText: "Meinen Zugewinnausgleich modellieren",
       ctaHref: "/de/register",
       ctaSub: "Kostenlos starten — keine Kreditkarte erforderlich",
