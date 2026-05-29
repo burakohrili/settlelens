@@ -54,7 +54,7 @@ export default function Page() {
         ],
         relatedLinks: [
           { title: "Retirement Accounts Divorce Checklist", href: "/en/divorce-checklist/retirement-accounts", description: "Complete checklist for locating, valuing, and dividing retirement accounts" },
-          { title: "Equitable Distribution — Step by Step", href: "/en/equitable-distribution-divorce", description: "How all marital property is identified, valued, and divided" },
+          { title: "Pension Sharing Order — UK", href: "/en/pension-sharing-order-divorce", description: "The UK equivalent of a QDRO — how pension sharing orders work in England and Wales" },
           { title: "10-Year Net Worth Projections", href: "/en/10-year-divorce-financial-impact", description: "Model how different retirement splits affect your long-term financial position" },
           { title: "Offset vs. Split — Compare Scenarios", href: "/en/compare-divorce-settlement-scenarios", description: "Keep the 401(k) or trade it for home equity? See the numbers." },
         ],

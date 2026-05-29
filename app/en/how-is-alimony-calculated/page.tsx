@@ -55,7 +55,7 @@ export default function Page() {
         relatedLinks: [
           { title: "Model Your Alimony Scenarios", href: "/en/alimony-impact-calculator", description: "See the 10-year financial impact of different alimony amounts and durations" },
           { title: "Child Support in Divorce", href: "/en/child-support-divorce", description: "How child support is calculated — income shares model, guidelines, long-term cost" },
-          { title: "Build a Settlement Agreement", href: "/en/divorce-agreement-simulator", description: "Simulate full settlement proposals and compare them side by side" },
+          { title: "Spousal Maintenance UK", href: "/en/spousal-maintenance-uk", description: "How spousal maintenance is calculated in England and Wales under MCA 1973" },
           { title: "Spousal Support Planning Checklist", href: "/en/divorce-checklist/spousal-support-planning", description: "What to document before agreeing to any alimony amount" },
         ],
         ctaText: "Model My Alimony Scenarios",

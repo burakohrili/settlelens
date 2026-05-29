@@ -24,6 +24,14 @@ const EN_SEO_PAGES = [
   "/en/what-is-a-qdro",
 ];
 
+const EN_UK_PAGES = [
+  "/en/divorce-financial-settlement-uk",
+  "/en/consent-order-divorce-uk",
+  "/en/spousal-maintenance-uk",
+  "/en/pension-sharing-order-divorce",
+  "/en/form-e-divorce",
+];
+
 const DE_CHECKLIST_TOPICS = [
   "vor-anwaltsgespraech",
   "vermoegensdokumentation",
@@ -113,6 +121,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const enUkPagesExtra: MetadataRoute.Sitemap = EN_UK_PAGES.map((url) => ({
+    url: `${BASE}${url}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     ...staticPages,
     ...methodologyPages,
@@ -124,5 +139,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...deChecklistPages,
     ...deSeoPagesExtra,
     ...enSeoPagesExtra,
+    ...enUkPagesExtra,
   ];
 }
