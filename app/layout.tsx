@@ -10,6 +10,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://settlelens.com"),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   title: "SettleLens — See Your Settlement Clearly",
   description:
     "AI-powered financial modeling for divorce settlements. See your 10-year financial future across every scenario.",

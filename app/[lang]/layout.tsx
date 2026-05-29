@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${t("siteName")} — ${t("tagline")}`,
     description: t("description"),
+    robots: { index: true, follow: true },
   };
 }
 
