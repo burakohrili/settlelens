@@ -35,6 +35,22 @@ export function SeoLandingTemplate({ config }: { config: SeoPageConfig }) {
 
   return (
     <>
+      {faq && faq.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faq.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            }),
+          }}
+        />
+      )}
       <Header />
       <main className="bg-[var(--cream)]">
 

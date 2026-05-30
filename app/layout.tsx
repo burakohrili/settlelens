@@ -22,10 +22,16 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/favicon.ico",
   },
+  openGraph: {
+    images: [{ url: "https://settlelens.com/og-image.png", width: 1200, height: 630, alt: "SettleLens — See Your Settlement Clearly" }],
+    type: "website",
+    siteName: "SettleLens",
+  },
   twitter: {
     card: "summary_large_image",
     site: "@settlelens",
     creator: "@settlelens",
+    images: ["https://settlelens.com/og-image.png"],
   },
 };
 
@@ -34,5 +40,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "SettleLens",
+            url: "https://settlelens.com",
+            logo: "https://settlelens.com/og-image.png",
+            contactPoint: {
+              "@type": "ContactPoint",
+              email: "hello@settlelens.com",
+              contactType: "customer service",
+            },
+            sameAs: [],
+          }),
+        }}
+      />
+      {children}
+    </>
+  );
 }

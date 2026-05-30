@@ -17,3 +17,4 @@ export { FAQ } from "./FAQ";
 export { ComparisonTable } from "./ComparisonTable";
 export { PricingWizard } from "./PricingWizard";
 export { FounderNote } from "./FounderNote";
+export { SeoLinksSection } from "./SeoLinksSection";

@@ -6,6 +6,7 @@ import {
   FearHook,
   UserScenarios,
   HowItWorks,
+  SeoLinksSection,
   WhatItDoesNotDo,
   FeatureGrid,
   CountryCoverage,
@@ -113,6 +114,7 @@ export default function LandingPage() {
 
         <UserScenarios />
         <HowItWorks />
+        <SeoLinksSection />
         <WhatItDoesNotDo />
         <FeatureGrid />
         <CountryCoverage />
