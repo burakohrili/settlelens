@@ -36,6 +36,15 @@ export function sanitizeAIOutput(raw: string): string {
           return rSafe ? r : "[Risk filtered]";
         });
       }
+      if (Array.isArray(parsed.questions_for_your_lawyer)) {
+        parsed.questions_for_your_lawyer = (parsed.questions_for_your_lawyer as unknown[])
+          .filter((q) => typeof q === "string")
+          .map((q) => {
+            const { safe: qSafe } = guardAIOutput(q as string);
+            return qSafe ? q : null;
+          })
+          .filter(Boolean);
+      }
       return JSON.stringify(parsed);
     } catch {
       return raw;

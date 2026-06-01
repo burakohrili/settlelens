@@ -115,7 +115,10 @@ export async function POST(req: NextRequest) {
   const j = getJurisdiction(country, profile.state_province as string);
   const currency = getCurrency(country);
   const inflation = Math.max(0, Math.min(0.50, (scenario.inflation_rate_override as number | null) ?? getInflationRate(country)));
-  const investmentReturn = country === "TR" ? 0.08 : country === "UK" ? 0.04 : 0.05;
+  const INVESTMENT_RETURNS: Record<string, number> = {
+    TR: 0.18, UK: 0.04, DE: 0.05, FR: 0.05, ES: 0.05, US: 0.07,
+  };
+  const investmentReturn = INVESTMENT_RETURNS[country] ?? 0.06;
   const marriageYears = new Date().getFullYear() - ((profile.marriage_year as number) ?? 2010);
   const lang = (profile.preferred_language as string) ?? "en";
 
@@ -158,7 +161,7 @@ Each asset in the Assets array has an "outcome" field. Use these rules for net w
 - "not_decided": treat conservatively as sell (50/50 after costs)
 For marital:true assets: apply the jurisdiction split formula to the marital portion only.
 For marital:false assets: owner field determines — "me" → 100% to user, "spouse" → 0% to user, "joint" → apply outcome rule.
-For TR/DE: if purchase_price is provided, marital_gain = current_value - purchase_price; apply splitFormula to marital_gain only; pre-marriage value stays with original owner.
+For TR/DE: if purchase_price is provided, first apply inflation adjustment: adjusted_purchase_price = purchase_price * (1 + avg_annual_inflation) ^ years_held, where avg_annual_inflation = 0.30 for TR, 0.02 for DE, and years_held = current_year - acquisition_year (default 5 if unknown). Then marital_gain = current_value - adjusted_purchase_price. Apply splitFormula to marital_gain only; pre-marriage value stays with original owner. If purchase_price is missing, treat full current_value as marital gain. Note inflation adjustment in confidence field — set confidence to "scenario-model" for TR assets.
 
 NEGOTIATION_STRATEGY FORMAT:
 Return negotiation_strategy as a single string with 4 sections separated by "|":
@@ -184,11 +187,13 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
   }
 
   const FINANCIAL_CATS = new Set(["bank", "retirement", "investment", "crypto", "other"]);
+  const BUSINESS_CATS = new Set(["business"]);
   const rawSplitPct = scenario.retirement_split_me as number;
   const splitPct = Number.isFinite(rawSplitPct) && rawSplitPct >= 0 && rawSplitPct <= 100 ? rawSplitPct : 50;
 
   const unifiedAssets = assets.map((a) => {
     const isFinancial = FINANCIAL_CATS.has(a.category as string);
+    const isBusiness = BUSINESS_CATS.has(a.category as string);
     return {
       name: a.name,
       cat: a.category,
@@ -200,11 +205,17 @@ Example: "Strong equity position relative to debt.|Retaining primary residence o
       mortgage: (a.mortgage_balance as number) ?? 0,
       outcome: isFinancial
         ? `split:${splitPct}%_to_me`
-        : (overrideMap.get(a.id as string) ?? scenario.house_outcome ?? "not_decided"),
+        : isBusiness
+          ? (overrideMap.get(a.id as string) ?? scenario.business_outcome ?? "not_decided")
+          : (overrideMap.get(a.id as string) ?? scenario.house_outcome ?? "not_decided"),
     };
   });
 
   const jurisdictionRule = JURISDICTION_RULES[j] ?? null;
+
+  const frenchLumpsumNote = country === "FR"
+    ? "NOTE for FR: French prestation compensatoire (Art.270) prefers lump sum over monthly. Set alimony_range_low/high as ANNUAL lump sum estimates, not monthly. Set confidence to 'scenario-model'.\n"
+    : "";
 
   let userPrompt = `Jurisdiction:${j} | Marriage years:${marriageYears} | Currency:${currency}
 JurisdictionRules:${jurisdictionRule ? JSON.stringify(jurisdictionRule) : "apply general equitable principles"}
@@ -215,7 +226,7 @@ Income B(spouse):${(spouseIncome?.annual_net as number) === -1 ? "unknown" : ((s
 Children:${children.length > 0 ? children.map((c) => `age ${c.age as number}, custody:${c.custody_arrangement as string}`).join("; ") : "none"}
 Scenario: alimony=${scenario.alimony_monthly}/mo×${scenario.alimony_years}yr(${scenario.alimony_direction}), child_support=${scenario.child_support_monthly}/mo(${scenario.child_support_direction})
 Inflation:${(inflation * 100).toFixed(1)}%, Investment return:${(investmentReturn * 100).toFixed(0)}%, Response language:${lang}
-
+${frenchLumpsumNote}
 Return JSON: {"net_worth_now":0,"year1":0,"year3":0,"year5":0,"year10":0,"monthly_cashflow":0,"alimony_range_low":0,"alimony_range_high":0,"child_support_estimate":0,"risk_score":5,"key_risks":[],"negotiation_strategy":"","confidence":"medium","notes":"","questions_for_your_lawyer":["","",""]}
 questions_for_your_lawyer: provide 3 specific questions this user should ask their lawyer, based on their jurisdiction, assets, and scenario. Calm, professional tone.`;
 

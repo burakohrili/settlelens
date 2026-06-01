@@ -22,6 +22,13 @@ const EN_SEO_PAGES = [
   "/en/how-is-alimony-calculated",
   "/en/child-support-divorce",
   "/en/what-is-a-qdro",
+  "/en/10-year-divorce-financial-impact",
+  "/en/alimony-impact-calculator",
+  "/en/compare-divorce-settlement-scenarios",
+  "/en/divorce-agreement-simulator",
+  "/en/divorce-financial-planning",
+  "/en/divorce-lawyer-preparation-checklist",
+  "/en/keep-or-sell-house-divorce",
 ];
 
 const EN_UK_PAGES = [
@@ -112,6 +119,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/de/was-bedeutet-zugewinnausgleich`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
     { url: `${BASE}/de/ehegattenunterhalt-berechnen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
     { url: `${BASE}/de/kindesunterhalt-scheidung`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+    { url: `${BASE}/de/scheidung-finanzplanung`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+    { url: `${BASE}/de/scheidung-haus-behalten-oder-verkaufen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
+    { url: `${BASE}/de/scheidungsvereinbarung-simulator`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${BASE}/de/scheidung-szenarien-vergleichen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${BASE}/de/unterhalt-finanzielle-auswirkungen`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 },
   ];
 
   const enSeoPagesExtra: MetadataRoute.Sitemap = EN_SEO_PAGES.map((url) => ({
