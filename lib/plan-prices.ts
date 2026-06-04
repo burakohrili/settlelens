@@ -4,18 +4,18 @@ export const PLAN_DISPLAY: Record<
   { name: string; prices: Record<string, string>; period: Record<string, string> }
 > = {
   clarified: {
-    name: "Scenario Package",
-    prices: { en: "$19", tr: "₺499", de: "18 €", fr: "18 €", es: "18 €", ar: "$19" },
-    period: { en: "one-time · 30 days", tr: "tek seferlik · 30 gün", de: "einmalig · 30 Tage", fr: "unique · 30 jours", es: "único · 30 días", ar: "لمرة واحدة · 30 يوماً" },
+    name: "Clarified",
+    prices: { en: "$29", tr: "₺899", de: "27 €", fr: "27 €", es: "27 €", ar: "$29" },
+    period: { en: "one-time · 14 days", tr: "tek seferlik · 14 gün", de: "einmalig · 14 Tage", fr: "unique · 14 jours", es: "único · 14 días", ar: "لمرة واحدة · 14 يوماً" },
   },
   strategist: {
-    name: "Process Package",
-    prices: { en: "$149", tr: "₺3.999", de: "139 €", fr: "139 €", es: "139 €", ar: "$149" },
-    period: { en: "one-time · 6 months", tr: "tek seferlik · 6 ay", de: "einmalig · 6 Monate", fr: "unique · 6 mois", es: "único · 6 meses", ar: "لمرة واحدة · 6 أشهر" },
+    name: "Strategist",
+    prices: { en: "$39", tr: "₺1.299", de: "36 €", fr: "36 €", es: "36 €", ar: "$39" },
+    period: { en: "/month", tr: "/ay", de: "/Monat", fr: "/mois", es: "/mes", ar: "/شهر" },
   },
   professional: {
-    name: "Lawyer Edition",
-    prices: { en: "$79", tr: "₺1.999", de: "74 €", fr: "74 €", es: "74 €", ar: "$79" },
-    period: { en: "/mo", tr: "/ay", de: "/Monat", fr: "/mois", es: "/mes", ar: "/شهر" },
+    name: "Professional",
+    prices: { en: "$99", tr: "₺3.299", de: "92 €", fr: "92 €", es: "92 €", ar: "$99" },
+    period: { en: "/month", tr: "/ay", de: "/Monat", fr: "/mois", es: "/mes", ar: "/شهر" },
   },
 };

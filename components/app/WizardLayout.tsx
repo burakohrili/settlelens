@@ -11,6 +11,8 @@ type Props = {
   totalSteps?: number;
   onBack?: () => void;
   onNext?: () => void;
+  onSkip?: () => void;
+  skipLabel?: string;
   nextDisabled?: boolean;
   nextLabel?: string;
   children: React.ReactNode;
@@ -21,6 +23,8 @@ export function WizardLayout({
   totalSteps = 6,
   onBack,
   onNext,
+  onSkip,
+  skipLabel,
   nextDisabled = false,
   nextLabel,
   children,
@@ -66,19 +70,29 @@ export function WizardLayout({
           <span />
         )}
 
-        {onNext && (
-          <button
-            onClick={onNext}
-            disabled={nextDisabled}
-            className={cn(
-              buttonVariants(),
-              "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90",
-              nextDisabled && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            {nextLabel ?? t("next")}
-          </button>
-        )}
+        <div className="flex items-center gap-3">
+          {onSkip && (
+            <button
+              onClick={onSkip}
+              className={cn(buttonVariants({ variant: "ghost" }), "text-[var(--brown)] text-sm")}
+            >
+              {skipLabel ?? t("skip")}
+            </button>
+          )}
+          {onNext && (
+            <button
+              onClick={onNext}
+              disabled={nextDisabled}
+              className={cn(
+                buttonVariants(),
+                "bg-[var(--gold)] text-[var(--navy)] font-semibold hover:bg-[var(--gold)]/90",
+                nextDisabled && "opacity-50 cursor-not-allowed"
+              )}
+            >
+              {nextLabel ?? t("next")}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

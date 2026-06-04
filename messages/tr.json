@@ -121,46 +121,45 @@
       },
       {
         "id": "clarified",
-        "name": "Senaryo Paketi",
-        "price": "499 ₺",
-        "period": "tek seferlik · 30 gün erişim",
+        "name": "Clarified",
+        "price": "899 ₺",
+        "period": "tek seferlik · 14 gün erişim",
+        "badge": "İlk adım için en popüler",
         "features": [
-          "3 AI destekli senaryo analizi",
-          "3'e kadar anlaşma senaryosu",
-          "Profesyonel PDF rapor",
+          "1 AI destekli senaryo analizi",
           "10 yıllık finansal projeksiyon",
-          "30 gün erişim"
+          "Profesyonel PDF rapor",
+          "14 gün erişim",
+          "7 gün iade garantisi"
         ],
-        "cta": "Başla"
+        "cta": "Başla — 899 ₺"
       },
       {
         "id": "strategist",
-        "name": "Süreç Paketi",
-        "price": "3.999 ₺",
-        "period": "tek seferlik · 6 ay erişim",
-        "badge": "Tam süreç için en iyi",
+        "name": "Strategist",
+        "price": "1.299 ₺",
+        "period": "aylık",
         "features": [
-          "Sınırsız analiz",
+          "Sınırsız senaryo analizi",
           "Sınırsız senaryo",
           "Premium PDF raporlar",
           "Enflasyon dahil 10 yıllık projeksiyon",
-          "6 ay erişim"
+          "Teklif karşılaştırma aracı"
         ],
-        "cta": "Süreç Paketini Al"
+        "cta": "Strategist'i Al"
       },
       {
         "id": "professional",
-        "name": "Lawyer Edition",
-        "price": "1.999 ₺",
+        "name": "Professional",
+        "price": "3.299 ₺",
         "period": "aylık",
         "features": [
-          "Süreç Paketi'ndeki her şey",
+          "Strategist'teki her şey",
           "Avukata hazır Excel + PDF",
-          "Çoklu müvekkil yönetimi",
           "Kanıt organizatörü",
           "Öncelikli destek"
         ],
-        "cta": "Lawyer Edition Al"
+        "cta": "Professional'ı Al"
       }
     ],
     "footerNote": "Tüm planlar: Güvenli, gizli. Finansal modelleme, hukuki tavsiye değil. Ücretli planlarda 7 gün iade garantisi."
@@ -262,6 +261,7 @@
     ],
     "next": "Devam",
     "back": "Geri",
+    "skip": "Şimdilik atla",
     "save": "Kaydet ve Devam",
     "stepOf": "{current}. adım / {total}"
   },

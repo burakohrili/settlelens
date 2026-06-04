@@ -227,6 +227,32 @@ export default function Step6Page() {
     setOverrides((prev) => ({ ...prev, [key]: outcome }));
   }
 
+  async function handleSkip() {
+    setSaving(true);
+    setSaveError(null);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setSaving(false); return; }
+    const defaultScenario = {
+      name: "My Base Scenario",
+      user_id: user.id,
+      scenario_type: "custom",
+      is_active: true,
+      retirement_split_me: 50,
+      alimony_monthly: 0,
+      alimony_years: 0,
+      alimony_direction: "i_receive",
+      child_support_monthly: 0,
+      child_support_direction: "i_receive",
+    };
+    await (supabase as never as { from: (t: string) => { delete: () => { eq: (col: string, val: string) => Promise<unknown> } } })
+      .from("scenarios").delete().eq("user_id", user.id);
+    await (supabase as never as { from: (t: string) => { insert: (d: unknown[]) => Promise<unknown> } })
+      .from("scenarios").insert([defaultScenario]);
+    await (supabase as never as { from: (t: string) => { update: (d: Record<string, unknown>) => { eq: (col: string, val: string) => Promise<unknown> } } })
+      .from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
+    router.push("/dashboard");
+  }
+
   async function handleStartAnalysis() {
     setSaving(true);
     setSaveError(null);
@@ -299,6 +325,8 @@ export default function Step6Page() {
       currentStep={6}
       onBack={() => router.push(`/${lang}/onboarding/step-5`)}
       onNext={handleStartAnalysis}
+      onSkip={handleSkip}
+      skipLabel="Skip for now"
       nextDisabled={nextDisabled}
       nextLabel={t("goToDashboard")}
     >

@@ -121,46 +121,45 @@
       },
       {
         "id": "clarified",
-        "name": "Scenario Package",
-        "price": "$19",
-        "period": "one-time · 30-day access",
+        "name": "Clarified",
+        "price": "$29",
+        "period": "one-time · 14-day access",
+        "badge": "Most popular first step",
         "features": [
-          "3 AI-powered scenario analyses",
-          "Up to 3 settlement scenarios",
+          "1 AI-powered scenario analysis",
+          "10-year financial projection",
           "Professional PDF report",
-          "10-year financial projections",
-          "30-day access"
+          "14-day access",
+          "7-day money-back guarantee"
         ],
-        "cta": "Get Started"
+        "cta": "Get Started — $29"
       },
       {
         "id": "strategist",
-        "name": "Process Package",
-        "price": "$149",
-        "period": "one-time · 6-month access",
-        "badge": "Best for full process",
+        "name": "Strategist",
+        "price": "$39",
+        "period": "per month",
         "features": [
-          "Unlimited analyses",
+          "Unlimited scenario analyses",
           "Unlimited scenarios",
           "Premium PDF reports",
           "10-year projections with inflation",
-          "6-month access"
+          "Offer comparison tool"
         ],
-        "cta": "Get Process Package"
+        "cta": "Get Strategist"
       },
       {
         "id": "professional",
-        "name": "Lawyer Edition",
-        "price": "$79",
+        "name": "Professional",
+        "price": "$99",
         "period": "per month",
         "features": [
-          "Everything in Process Package",
+          "Everything in Strategist",
           "Attorney-ready Excel + PDF export",
-          "Multi-client management",
           "Evidence organizer",
           "Priority support"
         ],
-        "cta": "Get Lawyer Edition"
+        "cta": "Get Professional"
       }
     ],
     "footerNote": "All plans: Secure, private. Financial modeling, not legal advice. 7-day money-back guarantee on paid plans."
@@ -262,6 +261,7 @@
     ],
     "next": "Continue",
     "back": "Back",
+    "skip": "Skip for now",
     "save": "Save & Continue",
     "stepOf": "Step {current} of {total}"
   },
